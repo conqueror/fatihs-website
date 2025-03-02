@@ -1,36 +1,64 @@
-![static-sveltekit](https://github.com/olawanlejoel/static-sveltekit-demo/assets/57611810/826b7bba-0948-450c-804c-de2e25508ba9)
+# Fatih Nayebi's Personal Website
 
-# How To Build a Static Site With SvelteKit
+This is a personal website built with SvelteKit and hosted on Kinsta Static Site Hosting.
 
-This article explains how to build a static site with Sveltekit and deploy it to Kinsta.
+## Features
 
-Read the [full article](https://kinsta.com/blog/static-sveltekit/).
+- Responsive design
+- Modern UI with clean aesthetics
+- Sections for research, publications, blog, news, and consulting
+- Contact form for inquiries
 
-## Installation
-1. Clone or fork the repository.
+## Tech Stack
 
-## Kinsta Static Site Hosting Setup
-### Dependency Management
+- SvelteKit - Frontend framework
+- CSS - Styling
+- Kinsta - Hosting
 
-Kinsta automatically installs dependencies defined in your `package.json` file during the deployment process.
+## Development
 
-### Setting the Build Command, Node version, and Publish directory
+### Prerequisites
 
-After connecting the repository, **Static Site Hosting** will automatically populate all the fields with the correct values.
-| Configuration option |Value     |
-| ----------------- | --------------- |
-| Build command     | `npm run build` |
-| Node version      | 18.16.0         |
-| Publish directory | `build`         |
+- Node.js (v16 or later)
+- npm
 
+### Setup
 
-### Deployment Lifecycle
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/fatihs-website.git
+cd fatihs-website
+```
 
-Whenever a deployment is initiated (through creating an application or re-deploying due to an incoming commit), the build command is run, followed by the deployment of the Publish Directory content.
+2. Install dependencies
+```bash
+npm install
+```
 
-## What is Kinsta
-Kinsta is a developer-centric cloud host / PaaS. We’re striving to make it easier for you to share your web projects with your users. Focus on coding and building, and we’ll take care of deployment and provide fast, scalable hosting. + 24/7 expert-only support.
+3. Start the development server
+```bash
+npm run dev -- --open
+```
 
-- [Start your free trial](https://kinsta.com/signup/?product_type=app-db)
-- [Application Hosting](https://kinsta.com/application-hosting)
-- [Database Hosting](https://kinsta.com/database-hosting)
+### Building for Production
+
+```bash
+npm run build
+```
+
+The built files will be in the `build` directory, ready to be deployed to Kinsta Static Site Hosting.
+
+## Deployment
+
+This site is configured for deployment on Kinsta Static Site Hosting. Follow these steps to deploy:
+
+1. Build the project
+2. Upload the contents of the `build` directory to Kinsta via Git integration or manual upload
+
+## License
+
+MIT
+
+## Contact
+
+For any inquiries, please reach out via the contact form on the website or directly at contact@fatihnayebi.com.
