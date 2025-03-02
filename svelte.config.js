@@ -15,6 +15,21 @@ const config = {
 			precompress: false,
 			strict: true,
 		}),
+		
+		// Exclude the search page from prerendering since it uses form actions
+		prerender: {
+			entries: ['*'],
+			handleHttpError: ({ path, referrer, message }) => {
+				// Exclude search routes from prerendering
+				if (path === '/search' || path.startsWith('/search?')) {
+					return;
+				}
+				
+				// Otherwise, throw the error
+				console.error(`${path} referred from ${referrer}: ${message}`);
+				throw new Error(message);
+			}
+		}
 	},
 };
 

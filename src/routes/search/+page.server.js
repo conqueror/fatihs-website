@@ -1,63 +1,29 @@
-import { searchContent } from '$lib/utils/markdown';
-
-export const actions = {
-  /**
-   * Search form submission handler
-   */
-  default: async ({ request }) => {
-    const formData = await request.formData();
-    const query = formData.get('query') || '';
-    const type = formData.get('type') || 'all';
-    
-    // Search options based on selected type
-    const searchOptions = {
-      searchBlog: type === 'all' || type === 'blog',
-      searchPublications: type === 'all' || type === 'publication'
-    };
-    
-    const results = searchContent(query, searchOptions);
-    
-    return {
-      query,
-      type,
-      results: results.allResults,
-      blogResults: results.blogPosts,
-      publicationResults: results.publications
-    };
-  }
-};
+// We no longer need server-side search since we're doing it client-side
+// We'll just provide initial data structure
 
 /**
- * Initial page load handler
+ * Initial page load handler - provides structure for search results
  */
 export function load({ url }) {
   // Handle direct access to search page with query params in URL
-  const query = url.searchParams.get('query') || '';
-  const type = url.searchParams.get('type') || 'all';
+  // In a prerendering context, url.searchParams may not be available
+  let query = '';
+  let type = 'all';
   
-  if (!query) {
-    return {
-      query: '',
-      type: 'all',
-      results: [],
-      blogResults: [],
-      publicationResults: []
-    };
+  try {
+    // Only try to access searchParams if it's available
+    query = url.searchParams?.get('query') || '';
+    type = url.searchParams?.get('type') || 'all';
+  } catch (error) {
+    // If searchParams is not available, use default values
+    console.log('Search params not available during prerendering');
   }
-  
-  // Perform search using the query parameters
-  const searchOptions = {
-    searchBlog: type === 'all' || type === 'blog',
-    searchPublications: type === 'all' || type === 'publication'
-  };
-  
-  const results = searchContent(query, searchOptions);
   
   return {
     query,
     type,
-    results: results.allResults,
-    blogResults: results.blogPosts,
-    publicationResults: results.publications
+    results: [],
+    blogResults: [],
+    publicationResults: []
   };
 } 
