@@ -1,3 +1,8 @@
+<script>
+	export let data;
+	const { featuredPosts, featuredPublications } = data;
+</script>
+
 <div class="home-container">
 	<div class="hero-section">
 		<div class="hero-content">
@@ -36,22 +41,51 @@
 	</div>
 
 	<div class="latest-section">
-		<div class="latest-news">
-			<h2>Latest News</h2>
-			<div class="news-item">
-				<span class="date">March 2, 2023</span>
-				<h3>Website Launch</h3>
-				<p>I'm excited to announce the launch of my new personal website built with SvelteKit.</p>
-				<a href="/news" class="text-link">Read more →</a>
-			</div>
-		</div>
 		<div class="latest-blog">
-			<h2>Latest from the Blog</h2>
-			<div class="blog-item">
-				<h3>The Future of AI in Healthcare</h3>
-				<p>How machine learning models are revolutionizing diagnosis and treatment planning.</p>
-				<a href="/blog" class="text-link">Read post →</a>
-			</div>
+			<h2>Featured Blog Posts</h2>
+			{#if featuredPosts && featuredPosts.length > 0}
+				{#each featuredPosts as post}
+					<div class="blog-item">
+						<span class="date">{new Date(post.date).toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						})}</span>
+						<h3>{post.title}</h3>
+						<p>{post.excerpt}</p>
+						<a href={`/blog/${post.slug}`} class="text-link">Read post →</a>
+					</div>
+				{/each}
+			{:else}
+				<div class="blog-item">
+					<h3>The Future of AI in Healthcare</h3>
+					<p>How machine learning models are revolutionizing diagnosis and treatment planning.</p>
+					<a href="/blog" class="text-link">Read post →</a>
+				</div>
+			{/if}
+			<a href="/blog" class="view-all-link">View all blog posts →</a>
+		</div>
+		
+		<div class="latest-publications">
+			<h2>Featured Publications</h2>
+			{#if featuredPublications && featuredPublications.length > 0}
+				{#each featuredPublications as publication}
+					<div class="publication-item">
+						<span class="date">{new Date(publication.date).getFullYear()}</span>
+						<h3>{publication.title}</h3>
+						<p class="publication-journal">{publication.journal}</p>
+						<a href={`/publications/${publication.slug}`} class="text-link">View details →</a>
+					</div>
+				{/each}
+			{:else}
+				<div class="publication-item">
+					<span class="date">2022</span>
+					<h3>Neural Networks for Predictive Analytics in Healthcare</h3>
+					<p class="publication-journal">Journal of AI in Medicine</p>
+					<a href="/publications" class="text-link">View details →</a>
+				</div>
+			{/if}
+			<a href="/publications" class="view-all-link">View all publications →</a>
 		</div>
 	</div>
 </div>
@@ -199,8 +233,14 @@
 		margin-bottom: 1.5rem;
 	}
 
-	.news-item, .blog-item {
+	.blog-item, .publication-item {
 		margin-bottom: 2rem;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid #eee;
+	}
+	
+	.blog-item:last-of-type, .publication-item:last-of-type {
+		border-bottom: none;
 	}
 
 	.date {
@@ -210,16 +250,20 @@
 		font-size: 0.9rem;
 	}
 
-	.news-item h3, .blog-item h3 {
+	.blog-item h3, .publication-item h3 {
 		font-size: 1.25rem;
 		margin-bottom: 0.75rem;
 		color: #333;
 	}
 
-	.news-item p, .blog-item p {
+	.blog-item p, .publication-item p {
 		margin-bottom: 1rem;
 		color: #666;
 		line-height: 1.5;
+	}
+	
+	.publication-journal {
+		font-style: italic;
 	}
 
 	.text-link {
@@ -229,6 +273,18 @@
 	}
 
 	.text-link:hover {
+		text-decoration: underline;
+	}
+	
+	.view-all-link {
+		display: inline-block;
+		margin-top: 1rem;
+		color: #5333ed;
+		text-decoration: none;
+		font-weight: 500;
+	}
+	
+	.view-all-link:hover {
 		text-decoration: underline;
 	}
 
@@ -248,16 +304,11 @@
 		}
 		
 		.hero-content h1 {
-			font-size: 2.5rem;
+			font-size: 2.75rem;
 		}
 		
-		.highlights-section {
-			padding: 2rem 0;
-		}
-		
-		.latest-section {
-			grid-template-columns: 1fr;
-			gap: 2rem;
+		.hero-content h2 {
+			font-size: 1.5rem;
 		}
 	}
 </style>
