@@ -147,4 +147,78 @@ export function getPublicationBySlug(slug) {
     console.error(`Error getting publication with slug ${slug}:`, error);
     return null;
   }
+}
+
+/**
+ * Search for content across blog posts and publications
+ * @param {string} query - Search query
+ * @param {Object} options - Search options
+ * @param {boolean} options.searchBlog - Whether to search blog posts
+ * @param {boolean} options.searchPublications - Whether to search publications
+ * @param {string[]} options.fields - Fields to search (title, excerpt, content, tags, etc.)
+ * @returns {Object} - Search results categorized by type
+ */
+export function searchContent(query, options = {}) {
+  const {
+    searchBlog = true,
+    searchPublications = true,
+    fields = ['title', 'excerpt', 'rawContent', 'tags', 'author']
+  } = options;
+  
+  if (!query) {
+    return {
+      blogPosts: [],
+      publications: []
+    };
+  }
+  
+  // Normalize query for case-insensitive search
+  const normalizedQuery = query.toLowerCase();
+  
+  // Search function that checks if any field contains the query
+  const itemMatchesQuery = (item) => {
+    return fields.some(field => {
+      // Handle array fields like tags
+      if (Array.isArray(item[field])) {
+        return item[field].some(value => 
+          String(value).toLowerCase().includes(normalizedQuery)
+        );
+      }
+      
+      // Handle regular string fields
+      if (item[field] && typeof item[field] === 'string') {
+        return item[field].toLowerCase().includes(normalizedQuery);
+      }
+      
+      return false;
+    });
+  };
+  
+  let blogPosts = [];
+  let publications = [];
+  
+  if (searchBlog) {
+    const allPosts = getAllBlogPosts();
+    blogPosts = allPosts.filter(itemMatchesQuery).map(post => ({
+      ...post,
+      type: 'blog'
+    }));
+  }
+  
+  if (searchPublications) {
+    const allPublications = getAllPublications();
+    publications = allPublications.filter(itemMatchesQuery).map(pub => ({
+      ...pub,
+      type: 'publication'
+    }));
+  }
+  
+  return {
+    blogPosts,
+    publications,
+    // Combined results for mixed display
+    allResults: [...blogPosts, ...publications].sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    })
+  };
 } 
