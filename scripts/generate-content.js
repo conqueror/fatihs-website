@@ -22,11 +22,14 @@ renderer.code = function (code, lang, isEscaped) {
   // If no language is specified, use 'text'
   const language = lang || 'text';
   
-  // Ensure code is a string
-  const codeStr = String(code || '');
-  const escapedCode = !isEscaped ? escapeHtml(codeStr) : codeStr;
+  // Ensure we have a proper string for code content
+  const codeContent = typeof code === 'string' ? code : String(code || '');
   
-  // Apply syntax highlighting at build time
+  // Trim any trailing special characters that might be causing issues
+  const trimmedCode = codeContent.replace(/[%\s]+$/, '');
+  
+  // Apply syntax highlighting
+  const escapedCode = !isEscaped ? escapeHtml(trimmedCode) : trimmedCode;
   const highlightedCode = syntaxHighlight(escapedCode, language);
   
   // Return HTML with proper language classes for syntax highlighting
@@ -45,10 +48,9 @@ function escapeHtml(text) {
 
 // Function to apply syntax highlighting
 function syntaxHighlight(code, language) {
-  // Return escaped code if no language or unsupported language
-  if (!code || code === '[object Object]') {
-    console.warn(`Found [object Object] in code block with language ${language}. This indicates a potential issue with the markdown source.`);
-    return escapeHtml(String(code));
+  // Return empty string if code is empty
+  if (!code) {
+    return '';
   }
   
   let html = code;
