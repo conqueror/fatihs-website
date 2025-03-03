@@ -13,24 +13,29 @@ const config = {
 			assets: 'build',
 			fallback: 'index.html',
 			precompress: false,
-			strict: true,
+			strict: false,
 		}),
 		
-		// Exclude the search page from prerendering since it uses form actions
+		// Ensure all routes are prerendered for static site
 		prerender: {
 			entries: ['*'],
 			handleHttpError: ({ path, referrer, message }) => {
-				// Exclude search routes from prerendering
+				// Only exclude search routes from prerendering
 				if (path === '/search' || path.startsWith('/search?')) {
 					return;
 				}
 				
-				// Otherwise, throw the error
-				console.error(`${path} referred from ${referrer}: ${message}`);
+				// otherwise fail the build
 				throw new Error(message);
 			}
+		},
+		
+		// Ensure paths are relative to handle nested routes correctly
+		paths: {
+			base: '',
+			assets: ''
 		}
-	},
+	}
 };
 
 export default config;
