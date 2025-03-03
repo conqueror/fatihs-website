@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import DOMPurify from 'dompurify';
     import { storage } from '$lib/utils/storage';
+    import { browser } from '$app/environment';
     
     export let data;
     const { post } = data;
@@ -14,14 +15,28 @@
             if (post?.content) {
                 sanitizedContent = DOMPurify.sanitize(post.content);
                 
-                // Example of using the safe storage utility (if needed)
-                // Store last viewed post for history
-                if (post?.slug) {
+                // Only attempt to store history if we're in the browser
+                if (browser && post?.slug) {
+                    // No need to wrap this in try/catch as our storage utility already handles errors
+                    storage.setItem('lastViewedPost', post.slug);
+                    
+                    // Update recently viewed posts list if possible
                     try {
-                        storage.setItem('lastViewedPost', post.slug);
+                        const recentPostsJSON = storage.getItem('recentPosts') || '[]';
+                        const recentPosts = JSON.parse(recentPostsJSON);
+                        
+                        // Add current post to the recent list if not already there
+                        if (!recentPosts.includes(post.slug)) {
+                            // Keep only the 5 most recent posts
+                            recentPosts.unshift(post.slug);
+                            if (recentPosts.length > 5) {
+                                recentPosts.pop();
+                            }
+                            
+                            storage.setItem('recentPosts', JSON.stringify(recentPosts));
+                        }
                     } catch (e) {
-                        // Silently fail if storage isn't available
-                        console.log('Note: Unable to save last viewed post to storage');
+                        // Silently ignore any JSON parsing errors
                     }
                 }
             }

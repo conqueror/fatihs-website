@@ -18,7 +18,7 @@ const config = {
 			assets: 'build',
 			fallback: 'index.html',
 			precompress: false,
-			strict: true
+			strict: false
 		}),
 		prerender: {
 			handleHttpError: ({ path, referrer, message }) => {
@@ -32,10 +32,12 @@ const config = {
 			},
 			handleMissingId: 'warn',
 			entries: ['*'],
+			crawl: true,
 			origin: 'https://fatihnayebi.com'
 		},
 		paths: {
-			base: ''
+			base: '',
+			relative: false
 		},
 		appDir: '_app',
 		files: {
@@ -45,7 +47,7 @@ const config = {
 			mode: 'auto',
 			directives: {
 				'default-src': ["'self'"],
-				'script-src': ["'self'", "'unsafe-inline'"],
+				'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
 				'style-src': ["'self'", "'unsafe-inline'"],
 				'img-src': ["'self'", 'data:', 'blob:'],
 				'connect-src': ["'self'"],
