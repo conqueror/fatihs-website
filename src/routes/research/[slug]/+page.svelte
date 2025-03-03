@@ -26,6 +26,82 @@
     };
 </script>
 
+<style>
+    /* Custom styling for markdown content */
+    .markdown-content :global(h1) {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        color: #1E3A8A;
+    }
+    
+    .markdown-content :global(h2) {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #1E3A8A;
+    }
+    
+    .markdown-content :global(h3) {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: #1E3A8A;
+    }
+    
+    .markdown-content :global(p) {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .markdown-content :global(ul), .markdown-content :global(ol) {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .markdown-content :global(ul) {
+        list-style-type: disc;
+    }
+    
+    .markdown-content :global(ol) {
+        list-style-type: decimal;
+    }
+    
+    .markdown-content :global(li) {
+        margin-bottom: 0.5rem;
+    }
+    
+    .markdown-content :global(a) {
+        color: #1E3A8A;
+        text-decoration: underline;
+    }
+    
+    .markdown-content :global(blockquote) {
+        border-left: 4px solid #E5E7EB;
+        padding-left: 1rem;
+        font-style: italic;
+        margin: 1rem 0;
+    }
+    
+    .markdown-content :global(code) {
+        background-color: #F3F4F6;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-family: monospace;
+    }
+    
+    .markdown-content :global(pre) {
+        background-color: #F3F4F6;
+        padding: 1rem;
+        border-radius: 0.25rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+</style>
+
 <svelte:head>
     <title>{researchArea.title} | Research | Fatih Nayebi</title>
     <meta name="description" content={researchArea.excerpt || `Details about ${researchArea.title} research by Fatih Nayebi`}>
@@ -59,7 +135,7 @@
             <span>Collaborators: {researchArea.collaborators}</span>
         </div>
         
-        <div class="prose prose-primary max-w-none mb-8">
+        <div class="markdown-content max-w-none mb-8">
             {@html researchArea.content}
         </div>
         
