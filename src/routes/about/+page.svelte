@@ -94,10 +94,13 @@
 					<div class="flex flex-wrap gap-3">
 						{#each ['Supply Chain Optimization', 'Supply Chain Management', 'Omni-Channel Marketing', 'Artificial Intelligence', 'Machine Learning', 'Deep Learning', 'Data Science'] as skill, i}
 							<div 
+								role="button"
+								tabindex="0"
 								class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-md hover:bg-primary hover:text-white"
 								style="transition-delay: {i * 50}ms"
 								on:mouseenter={() => hoveredSkill = skill}
 								on:mouseleave={() => hoveredSkill = null}
+								on:keydown={(e) => e.key === 'Enter' && (hoveredSkill = hoveredSkill === skill ? null : skill)}
 							>
 								{skill}
 							</div>
