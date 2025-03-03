@@ -1,4 +1,4 @@
-import matter from 'gray-matter';
+import blogPosts from 'virtual:blog-posts';
 import { marked } from 'marked';
 import DOMPurify from 'isomorphic-dompurify';
 
@@ -51,15 +51,10 @@ const BLOG_POSTS = Object.entries(blogFiles).map(([filepath, content]) => {
  * @returns {Array} Array of blog posts
  */
 export function getAllBlogPosts(featured = false) {
-  const posts = BLOG_POSTS.map(post => ({
-    ...post,
-    date: post.date.toISOString() // Convert Date to string for serialization
-  }));
-  
   if (featured) {
-    return posts.filter(post => post.featured);
+    return blogPosts.filter(post => post.featured);
   }
-  return posts;
+  return blogPosts;
 }
 
 /**
@@ -68,13 +63,7 @@ export function getAllBlogPosts(featured = false) {
  * @returns {Object|null} The blog post or null if not found
  */
 export function getBlogPostBySlug(slug) {
-  const post = BLOG_POSTS.find(post => post.slug === slug);
-  if (!post) return null;
-  
-  return {
-    ...post,
-    date: post.date.toISOString() // Convert Date to string for serialization
-  };
+  return blogPosts.find(post => post.slug === slug) || null;
 }
 
 // Pre-loaded publications data
@@ -150,10 +139,7 @@ export function searchContent(query) {
   
   const lowerQuery = query.toLowerCase();
   
-  const filteredBlogPosts = BLOG_POSTS.map(post => ({
-    ...post,
-    date: post.date.toISOString()
-  })).filter(post => {
+  const filteredBlogPosts = blogPosts.filter(post => {
     return (
       post.title.toLowerCase().includes(lowerQuery) ||
       post.excerpt.toLowerCase().includes(lowerQuery) ||
