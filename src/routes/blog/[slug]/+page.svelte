@@ -1,6 +1,8 @@
 <script>
     import { onMount } from 'svelte';
     import DOMPurify from 'dompurify';
+    import { storage } from '$lib/utils/storage';
+    
     export let data;
     const { post } = data;
     let isLoading = true;
@@ -11,6 +13,17 @@
         try {
             if (post?.content) {
                 sanitizedContent = DOMPurify.sanitize(post.content);
+                
+                // Example of using the safe storage utility (if needed)
+                // Store last viewed post for history
+                if (post?.slug) {
+                    try {
+                        storage.setItem('lastViewedPost', post.slug);
+                    } catch (e) {
+                        // Silently fail if storage isn't available
+                        console.log('Note: Unable to save last viewed post to storage');
+                    }
+                }
             }
         } catch (error) {
             console.error('Error sanitizing content:', error);
