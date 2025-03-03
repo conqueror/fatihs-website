@@ -33,9 +33,6 @@
 
 {#if visible}
 <div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
-	<!-- Background decorative elements -->
-	<div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
-	<div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
 	
 	<h1 class="text-5xl font-bold mb-8 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>About Me</h1>
 
@@ -202,9 +199,6 @@
 		<div class="md:w-2/5 flex flex-col items-center sticky top-24 self-start z-0">
 			<AnimateInView type="scale" delay={300}>
 				<div class="relative w-full max-w-xs">
-					<!-- Decorative elements -->
-					<div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-full opacity-50 blur-xl"></div>
-					<div class="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-600 rounded-full opacity-50 blur-xl"></div>
 					
 					<div class="p-2 bg-white rounded-xl shadow-lg relative z-0">
 						<div class="bg-gradient-to-r from-gray-50 to-gray-100 p-4 rounded-lg">
@@ -245,7 +239,7 @@
 	
 	<AnimateInView type="fade" delay={1400}>
 		<div class="mt-10 bg-gradient-to-br from-gray-50 to-white p-8 rounded-lg shadow-sm border border-gray-100 relative">
-			<div class="absolute top-0 right-0 w-40 h-40 bg-primary rounded-full opacity-5"></div>
+			
 			<h2 class="text-3xl font-bold mb-8 text-primary flex items-center">
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path d="M12 14l9-5-9-5-9 5 9 5z" />
