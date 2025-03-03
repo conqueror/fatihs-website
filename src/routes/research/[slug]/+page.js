@@ -1,7 +1,15 @@
-import { getResearchAreaBySlug } from '$lib/utils/research.js';
+import { getResearchAreaBySlug, getAllResearchAreas } from '$lib/utils/research.js';
 import { error } from '@sveltejs/kit';
 
 export const prerender = true;
+
+// Generate entries for all research areas
+export function entries() {
+  const researchAreas = getAllResearchAreas();
+  return researchAreas.map(area => ({
+    slug: area.slug
+  }));
+}
 
 export function load({ params }) {
     const { slug } = params;
