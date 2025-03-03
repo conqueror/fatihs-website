@@ -40,6 +40,20 @@ const config = {
 		appDir: 'app',
 		files: {
 			assets: 'static'
+		},
+		csp: {
+			mode: 'auto',
+			directives: {
+				'default-src': ["'self'"],
+				'script-src': ["'self'", "'unsafe-inline'"],
+				'style-src': ["'self'", "'unsafe-inline'"],
+				'img-src': ["'self'", 'data:', 'blob:'],
+				'connect-src': ["'self'"],
+				'frame-src': ["'self'"],
+				'font-src': ["'self'"],
+				'object-src': ["'none'"],
+				'base-uri': ["'self'"]
+			}
 		}
 	}
 };
