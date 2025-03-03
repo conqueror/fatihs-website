@@ -7,6 +7,81 @@
 		<link rel="apple-touch-icon-precomposed" href="%sveltekit.assets%/apple-touch-icon-precomposed.png" />
 		<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			// Early initialization to handle storage access errors
+			// This runs before SvelteKit's own code and will prevent 
+			// uncaught errors when storage access is restricted
+			(function() {
+				try {
+					// Create placeholders for storage APIs if they're not accessible
+					// This prevents errors when SvelteKit or other scripts try to access storage
+					if (typeof localStorage === 'undefined' || typeof sessionStorage === 'undefined') {
+						var memoryStorage = {};
+						Object.defineProperty(window, 'localStorage', {
+							value: {
+								getItem: function(key) { return memoryStorage[key] || null; },
+								setItem: function(key, value) { memoryStorage[key] = value; },
+								removeItem: function(key) { delete memoryStorage[key]; },
+								clear: function() { memoryStorage = {}; }
+							},
+							writable: false
+						});
+						
+						var sessionMemoryStorage = {};
+						Object.defineProperty(window, 'sessionStorage', {
+							value: {
+								getItem: function(key) { return sessionMemoryStorage[key] || null; },
+								setItem: function(key, value) { sessionMemoryStorage[key] = value; },
+								removeItem: function(key) { delete sessionMemoryStorage[key]; },
+								clear: function() { sessionMemoryStorage = {}; }
+							},
+							writable: false
+						});
+					} else {
+						// Test if storage is actually accessible
+						var testKey = '__test_storage_' + Math.random();
+						try {
+							localStorage.setItem(testKey, 'test');
+							localStorage.removeItem(testKey);
+						} catch (e) {
+							// If not accessible, create a fallback
+							var memoryStorage = {};
+							window._originalLocalStorage = window.localStorage;
+							Object.defineProperty(window, 'localStorage', {
+								value: {
+									getItem: function(key) { return memoryStorage[key] || null; },
+									setItem: function(key, value) { memoryStorage[key] = value; },
+									removeItem: function(key) { delete memoryStorage[key]; },
+									clear: function() { memoryStorage = {}; }
+								},
+								writable: false
+							});
+						}
+						
+						try {
+							sessionStorage.setItem(testKey, 'test');
+							sessionStorage.removeItem(testKey);
+						} catch (e) {
+							// If not accessible, create a fallback
+							var sessionMemoryStorage = {};
+							window._originalSessionStorage = window.sessionStorage;
+							Object.defineProperty(window, 'sessionStorage', {
+								value: {
+									getItem: function(key) { return sessionMemoryStorage[key] || null; },
+									setItem: function(key, value) { sessionMemoryStorage[key] = value; },
+									removeItem: function(key) { delete sessionMemoryStorage[key]; },
+									clear: function() { sessionMemoryStorage = {}; }
+								},
+								writable: false
+							});
+						}
+					}
+				} catch (e) {
+					// If anything goes wrong, log it but don't crash
+					console.warn('Storage polyfill initialization error:', e);
+				}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

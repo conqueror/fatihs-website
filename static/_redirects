@@ -1,15 +1,25 @@
-/*    /index.html   200
+# Kinsta SPA Routing - redirect all paths to index.html to enable client-side routing
+/*                    /index.html                   200
 
-# SPA fallback to handle client-side routing
-/*    /index.html    200
+# More specific routes to ensure proper handling 
+/blog                 /index.html                   200
+/contact              /index.html                   200
+/about                /index.html                   200
+/research             /index.html                   200
+/publications         /index.html                   200
+/posts                /index.html                   200
+/news                 /index.html                   200
+/components           /index.html                   200
+/consulting           /index.html                   200
+/search               /index.html                   200
 
-# Explicitly handle dynamic routes
-/blog/*             /index.html    200
-/publications/*     /index.html    200
-/posts/*            /index.html    200
+# All dynamic routes 
+/blog/*               /index.html                   200
+/publications/*       /index.html                   200
+/posts/*              /index.html                   200
 
-# Handle the apple touch icon requests
-/apple-touch-icon.png            /apple-touch-icon.png              200
+# Explicit asset redirects
+/apple-touch-icon.png             /apple-touch-icon.png              200
 /apple-touch-icon-precomposed.png /apple-touch-icon-precomposed.png  200
 
 # Explicit redirect for /blog
