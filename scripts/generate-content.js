@@ -56,157 +56,16 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
-// Function to apply syntax highlighting
+// Simplified syntax highlighting function that doesn't cause HTML entity issues
 function syntaxHighlight(code, language) {
   // Return empty string if code is empty
   if (!code) {
     return '';
   }
   
-  let html = code;
-  
-  // Basic syntax highlighting implementation
-  if (language === 'javascript' || language === 'js') {
-    // Keywords
-    html = html.replace(
-      /\b(const|let|var|function|if|else|return|for|while|class|new|import|export|from|async|await|try|catch)\b/g, 
-      '<span class="token keyword">$1</span>'
-    );
-    // Strings
-    html = html.replace(
-      /(['"`])((?:\\.|(?!\1)[^\\])*)\1/g, 
-      '<span class="token string">$1$2$1</span>'
-    );
-    // Comments
-    html = html.replace(
-      /\/\/(.*)/g, 
-      '<span class="token comment">//$1</span>'
-    );
-    // Numbers
-    html = html.replace(
-      /\b(\d+(\.\d+)?)\b/g,
-      '<span class="token number">$1</span>'
-    );
-  } 
-  else if (language === 'python') {
-    // Keywords
-    html = html.replace(
-      /\b(def|class|import|from|as|if|elif|else|while|for|in|return|try|except|finally|with|pass|lambda)\b/g, 
-      '<span class="token keyword">$1</span>'
-    );
-    // Strings
-    html = html.replace(
-      /(['"])((?:\\.|(?!\1)[^\\])*)\1/g, 
-      '<span class="token string">$1$2$1</span>'
-    );
-    // Comments
-    html = html.replace(
-      /#(.*)/g, 
-      '<span class="token comment">#$1</span>'
-    );
-    // Numbers
-    html = html.replace(
-      /\b(\d+(\.\d+)?)\b/g,
-      '<span class="token number">$1</span>'
-    );
-  } 
-  else if (language === 'html' || language === 'markup' || language === 'xml') {
-    // Tags
-    html = html.replace(
-      /(&lt;\/?)(\w+)([^&]*?)(\/?&gt;)/g, 
-      '$1<span class="token tag">$2</span>$3$4'
-    );
-    // Attributes
-    html = html.replace(
-      /(\s+)(\w+)(=)(".*?")/g, 
-      '$1<span class="token attr-name">$2</span>$3<span class="token attr-value">$4</span>'
-    );
-  } 
-  else if (language === 'css') {
-    // Selectors
-    html = html.replace(
-      /([.#]\w+|\w+)(\s*){/g, 
-      '<span class="token selector">$1</span>$2{'
-    );
-    // Properties
-    html = html.replace(
-      /(\s+)([\w-]+)(\s*:)/g, 
-      '$1<span class="token property">$2</span>$3'
-    );
-    // Values
-    html = html.replace(
-      /(:)(\s*)(#[a-fA-F0-9]+|\d+\.?\d*|\d*\.?\d+\w+|"[^"]*"|'[^']*')/g, 
-      '$1$2<span class="token value">$3</span>'
-    );
-  }
-  else if (language === 'bash' || language === 'sh') {
-    // Comments
-    html = html.replace(
-      /#(.*)/g, 
-      '<span class="token comment">#$1</span>'
-    );
-    // Commands
-    html = html.replace(
-      /^(\s*)([\w./-]+)/gm, 
-      '$1<span class="token command">$2</span>'
-    );
-    // Options/flags
-    html = html.replace(
-      /(\s)(-{1,2}[\w-]+)/g, 
-      '$1<span class="token parameter">$2</span>'
-    );
-    // Strings
-    html = html.replace(
-      /(['"])((?:\\.|(?!\1)[^\\])*)\1/g, 
-      '<span class="token string">$1$2$1</span>'
-    );
-  }
-  else if (language === 'svelte') {
-    // Script and style tags
-    html = html.replace(
-      /(&lt;\/?)(\w+)([^&]*?)(\/?&gt;)/g, 
-      '$1<span class="token tag">$2</span>$3$4'
-    );
-    // Attributes
-    html = html.replace(
-      /(\s+)([\w:]+)(=)(".*?")/g, 
-      '$1<span class="token attr-name">$2</span>$3<span class="token attr-value">$4</span>'
-    );
-    // Svelte directives
-    html = html.replace(
-      /(\s+)(\{[#:/][\w\s]+\})/g,
-      '$1<span class="token keyword">$2</span>'
-    );
-    // JS in curly braces
-    html = html.replace(
-      /(\{)([^{}]+)(\})/g,
-      '$1<span class="token expression">$2</span>$3'
-    );
-    // Keywords in script
-    html = html.replace(
-      /(&lt;script&gt;[\s\S]*?)(\b(const|let|var|function|if|else|return|for|while|class|new|import|export|from)\b)([\s\S]*?&lt;\/script&gt;)/g,
-      '$1<span class="token keyword">$2</span>$4'
-    );
-  }
-  else if (language === 'bibtex') {
-    // BibTeX specific highlighting
-    html = html.replace(
-      /@(\w+)/g, 
-      '@<span class="token keyword">$1</span>'
-    );
-    // Field names
-    html = html.replace(
-      /(\s+)(\w+)(\s*=)/g, 
-      '$1<span class="token property">$2</span>$3'
-    );
-    // Field values
-    html = html.replace(
-      /(=\s*)({[^}]*})/g, 
-      '$1<span class="token string">$2</span>'
-    );
-  }
-  
-  return html;
+  // Just escape the code - no syntax highlighting for now
+  // This ensures the code is displayed properly without formatting issues
+  return escapeHtml(code);
 }
 
 // Configure marked with our custom renderer and options
@@ -217,6 +76,30 @@ marked.setOptions({
   headerIds: true,
   langPrefix: 'language-'
 });
+
+// Function to sanitize HTML content and fix any [object Object] in code blocks
+function sanitizeHtml(html, codeBlocks = []) {
+  if (!html) return '';
+  
+  // Replace any [object Object] in code blocks with the original code content
+  let blockIndex = 0;
+  return html.replace(/<pre class="language-([^"]*)"><code class="language-[^"]*">\[object Object\]<\/code><\/pre>/g, (match, language) => {
+    // If we have extracted code blocks, use them
+    if (codeBlocks.length > 0 && blockIndex < codeBlocks.length) {
+      const { language: extractedLang, code } = codeBlocks[blockIndex++];
+      // Use the extracted language if available, otherwise use the one from the match
+      const lang = extractedLang || language || 'text';
+      
+      // Apply minimal processing to the code - just escape HTML entities
+      const processedCode = syntaxHighlight(code, lang);
+      
+      return `<pre class="language-${lang}"><code class="language-${lang}">${processedCode}</code></pre>`;
+    }
+    
+    // Fallback if no code blocks are available
+    return match.replace('[object Object]', '// Unable to retrieve original code');
+  });
+}
 
 function processContent(contentType) {
   console.log(`Processing ${contentType}...`);
@@ -237,27 +120,43 @@ function processContent(contentType) {
       bibTexContent = bibTexMatch[1];
     }
     
+    // Extract all code blocks to preserve them
+    let codeBlocks = [];
+    const codeBlockRegex = /```(?:\s*(\w+))?\n([\s\S]*?)```/g;
+    let match;
+    
+    while ((match = codeBlockRegex.exec(content)) !== null) {
+      const language = match[1] || 'text';
+      const code = match[2];
+      codeBlocks.push({ language, code });
+    }
+    
     // Process markdown to HTML with syntax highlighting
     const renderer = new marked.Renderer();
     
     // Custom renderer for code blocks
     renderer.code = function(code, language) {
-      // If no language is specified, use 'text'
+      // If language is not specified, use 'text'
       const lang = language || 'text';
       
-      // Handle all code blocks consistently
-      let codeContent = typeof code === 'string' ? code : String(code || '');
+      // If code content is [object Object], it might be a placeholder
+      if (code === '[object Object]') {
+        return `<pre class="language-${lang}"><code class="language-${lang}">[object Object]</code></pre>`;
+      }
       
-      // Apply syntax highlighting
-      const highlightedCode = syntaxHighlight(codeContent, lang);
+      // Use the original code content with minimal processing
+      const codeContent = typeof code === 'string' ? code : String(code || '');
+      
+      // Just escape HTML entities without complex formatting
+      const processedCode = syntaxHighlight(codeContent, lang);
       
       // Return HTML with proper language classes
-      return `<pre class="language-${lang}"><code class="language-${lang}">${highlightedCode}</code></pre>`;
+      return `<pre class="language-${lang}"><code class="language-${lang}">${processedCode}</code></pre>`;
     };
     
     let html = marked.parse(content, { renderer });
     
-    // Post-process HTML to fix BibTeX blocks
+    // Post-process HTML to fix BibTeX blocks and any other issues
     if (bibTexContent && contentType === 'publications') {
       // Replace [object Object] in code blocks with the actual BibTeX content
       html = html.replace(
@@ -265,6 +164,9 @@ function processContent(contentType) {
         `<pre class="language-bibtex"><code class="language-bibtex">${escapeHtml(bibTexContent)}</code></pre>`
       );
     }
+    
+    // Final sanitization to catch any remaining [object Object] issues and replace with original code
+    html = sanitizeHtml(html, codeBlocks);
     
     const slug = path.basename(file, '.md');
     items.push({
