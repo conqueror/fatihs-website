@@ -5,7 +5,7 @@
     
     // Access the data loaded in +page.server.js
     export let data;
-    const { posts } = data;
+    const { blogPosts } = data;
     
     let visible = false;
     
@@ -31,8 +31,8 @@
     </p>
     
     <div class="space-y-12">
-        {#if posts && posts.length > 0}
-            {#each posts as post, i}
+        {#if blogPosts && blogPosts.length > 0}
+            {#each blogPosts as post, i}
                 <AnimateInView type="scale" delay={300 + (i * 150)}>
                     <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-500 hover:shadow-md">
                         <div class="post-meta flex justify-between items-center mb-4">

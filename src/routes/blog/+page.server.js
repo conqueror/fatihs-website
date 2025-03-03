@@ -1,12 +1,11 @@
 import { getAllBlogPosts } from '$lib/utils/markdown';
 
-/**
- * Load function to fetch blog posts data during server-side rendering
- */
-export function load() {
-  const posts = getAllBlogPosts();
+/** @type {import('./$types').PageServerLoad} */
+export async function load() {
+  // Get all blog posts, not just featured ones
+  const blogPosts = getAllBlogPosts(false);
   
   return {
-    posts
+    blogPosts
   };
 } 
