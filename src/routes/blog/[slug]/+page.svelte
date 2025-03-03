@@ -12,16 +12,28 @@
     let isLoading = true;
     let hasError = false;
     let sanitizedContent = '';
+    let contentContainer;
 
     onMount(() => {
         try {
             if (post?.content) {
+                console.log('Processing blog post content');
+                
                 // Only sanitize if DOMPurify is available (it should be in browser context)
                 if (browser && typeof DOMPurify !== 'undefined') {
-                    sanitizedContent = DOMPurify.sanitize(post.content);
+                    // Set sanitize options to allow classes and data attributes for syntax highlighting
+                    const sanitizeOptions = {
+                        ADD_TAGS: ['pre', 'code'],
+                        ADD_ATTR: ['class', 'data-language'],
+                        ALLOW_DATA_ATTR: true
+                    };
+                    
+                    sanitizedContent = DOMPurify.sanitize(post.content, sanitizeOptions);
+                    console.log('Content sanitized');
                 } else {
                     // Fallback: just use the raw content if DOMPurify is unavailable
                     sanitizedContent = post.content;
+                    console.log('Using unsanitized content (no DOMPurify)');
                 }
                 
                 // Only attempt to store history if we're in the browser context
@@ -54,29 +66,20 @@
                         console.debug('Storage error ignored:', storageError);
                     }
                 }
-                
-                // Apply syntax highlighting after the content is rendered
-                setTimeout(() => {
-                    if (browser) {
-                        highlightAll();
-                        
-                        // Add data-language attribute to code blocks based on their class
-                        const preBlocks = document.querySelectorAll('pre[class*="language-"]');
-                        preBlocks.forEach(pre => {
-                            const className = pre.className;
-                            const match = className.match(/language-(\w+)/);
-                            if (match && match[1]) {
-                                pre.setAttribute('data-language', match[1]);
-                            }
-                        });
-                    }
-                }, 0);
             }
         } catch (error) {
             console.error('Error processing content:', error);
             hasError = true;
         } finally {
             isLoading = false;
+            
+            // Apply syntax highlighting after the DOM has been updated with the content
+            setTimeout(() => {
+                if (browser && contentContainer) {
+                    console.log('Applying syntax highlighting');
+                    highlightAll();
+                }
+            }, 100);
         }
     });
 </script>
@@ -116,7 +119,7 @@
             {/if}
         </div>
         
-        <div class="blog-content">
+        <div class="blog-content" bind:this={contentContainer}>
             {@html sanitizedContent || post.content || '<p>No content available</p>'}
         </div>
         

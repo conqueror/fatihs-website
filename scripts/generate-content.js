@@ -8,48 +8,40 @@ import { marked } from 'marked';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Configure marked to add language classes to code blocks
-marked.setOptions({
-  highlight: function(code, lang) {
-    // Just pass the code through, Prism will handle highlighting on the client
-    return code;
-  },
-  langPrefix: 'language-', // Prefix for language class (e.g., language-js)
-  gfm: true, // Enable GitHub Flavored Markdown
-  breaks: true, // Convert line breaks to <br>
-  headerIds: true, // Add IDs to headers
-  mangle: false, // Don't escape autolinked emails
-  pedantic: false, // Common Markdown implementation, not pedantic mode
-  sanitize: false, // Don't sanitize - we sanitize with DOMPurify later
-  smartLists: true, // Smart list handling
-  smartypants: true // Smart punctuation
-});
-
-// Custom renderer to ensure proper code highlighting
+// Set up a custom renderer for marked
 const renderer = new marked.Renderer();
 
-// Custom renderer for code blocks
-renderer.code = function(code, language) {
-  // Ensure code is a string
-  const codeStr = typeof code === 'string' ? code : String(code);
+// Override the code block renderer to properly format code with language classes
+renderer.code = function(code, language = '', isEscaped) {
+  // Ensure we have a language specified (default to 'text' if none)
+  const lang = language || 'text';
   
-  // Escape HTML in code to prevent issues
-  const escapedCode = codeStr
+  // Clean the code by ensuring it's a string and properly escaped
+  const codeStr = String(code);
+  const escapedCode = !isEscaped ? escapeHtml(codeStr) : codeStr;
+  
+  // Return HTML with proper language classes for syntax highlighting
+  return `<pre class="language-${lang}"><code class="language-${lang}">${escapedCode}</code></pre>`;
+};
+
+// Helper function to escape HTML
+function escapeHtml(text) {
+  return String(text)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
 
-  // Default to "text" if no language specified
-  const lang = language || 'text';
-  
-  // Return HTML with proper language classes
-  return `<pre class="language-${lang}"><code class="language-${lang}">${escapedCode}</code></pre>`;
-};
-
-// Use the custom renderer
-marked.use({ renderer });
+// Configure marked with our custom renderer and options
+marked.setOptions({
+  renderer: renderer,
+  gfm: true,
+  breaks: true,
+  headerIds: true,
+  langPrefix: 'language-'
+});
 
 // Process all content types
 function processContent(contentType) {
@@ -63,7 +55,7 @@ function processContent(contentType) {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
     
-    // Convert markdown to HTML
+    // Convert markdown to HTML with our custom renderer
     const htmlContent = marked.parse(content);
     
     return {
