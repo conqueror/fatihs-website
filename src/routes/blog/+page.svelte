@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { fade, fly, scale } from 'svelte/transition';
     import AnimateInView from '$lib/AnimateInView.svelte';
+    import { browser } from '$app/environment';
     
     // Access the data loaded in +page.js
     export let data;
@@ -10,6 +11,7 @@
     let visible = false;
     
     onMount(() => {
+        if (!browser) return;
         visible = true;
     });
 </script>
@@ -19,14 +21,13 @@
     <meta name="description" content="Thoughts and insights on AI, machine learning, and technology by Fatih Nayebi.">
 </svelte:head>
 
-{#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+<div class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
     <!-- Background decorative elements -->
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
     
-    <h1 class="text-5xl font-bold mb-4 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Blog</h1>
-    <p class="text-lg text-center mb-12 max-w-3xl mx-auto" in:fly={{ y: 30, duration: 800, delay: 500 }}>
+    <h1 class="text-5xl font-bold mb-4 text-center text-primary" class:opacity-0={!visible} class:opacity-100={visible} style="transition: opacity 0.8s">Blog</h1>
+    <p class="text-lg text-center mb-12 max-w-3xl mx-auto" class:opacity-0={!visible} class:opacity-100={visible} style="transition: opacity 0.8s, transform 0.8s; transform: translateY({visible ? '0' : '30px'})">
         Thoughts and insights on AI, machine learning, and technology.
     </p>
     
@@ -76,7 +77,6 @@
         {/if}
     </div>
 </div>
-{/if}
 
 <style>
     h1 {

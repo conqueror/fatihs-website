@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { fade, fly, scale } from 'svelte/transition';
+  import { browser } from '$app/environment';
   
   export let type = 'fade'; // fade, fly, scale
   export let delay = 0;
@@ -13,6 +14,8 @@
   let element;
   
   onMount(() => {
+    if (!browser) return;
+    
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -31,7 +34,7 @@
 </script>
 
 <div bind:this={element}>
-  {#if visible}
+  {#if visible && browser}
     {#if type === 'fade'}
       <div in:fade={{ delay, duration }}>
         <slot />
