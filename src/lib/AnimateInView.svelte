@@ -1,6 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-  import { fade, fly, scale } from 'svelte/transition';
   import { browser } from '$app/environment';
   
   export let type = 'fade'; // fade, fly, scale
@@ -34,23 +33,53 @@
 </script>
 
 <div bind:this={element}>
-  {#if visible && browser}
-    {#if type === 'fade'}
-      <div in:fade={{ delay, duration }}>
-        <slot />
-      </div>
-    {:else if type === 'fly'}
-      <div in:fly={{ y, x, delay, duration }}>
-        <slot />
-      </div>
-    {:else if type === 'scale'}
-      <div in:scale={{ start, delay, duration }}>
-        <slot />
-      </div>
-    {/if}
-  {:else}
-    <div class="opacity-0">
-      <slot />
-    </div>
-  {/if}
-</div> 
+  <div class="animate-wrapper" 
+       class:visible
+       class:fade={type === 'fade'}
+       class:fly={type === 'fly'}
+       class:scale={type === 'scale'}
+       style="--delay: {delay}ms; --duration: {duration}ms; --y: {y}px; --x: {x}px; --start: {start}">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .animate-wrapper {
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .animate-wrapper.visible {
+    opacity: 1;
+  }
+  
+  .animate-wrapper {
+    transition-duration: var(--duration);
+    transition-delay: var(--delay);
+  }
+  
+  .fly:not(.visible) {
+    transform: translate(var(--x), var(--y));
+  }
+  
+  .fly.visible {
+    transform: translate(0, 0);
+  }
+  
+  .scale:not(.visible) {
+    transform: scale(var(--start));
+  }
+  
+  .scale.visible {
+    transform: scale(1);
+  }
+  
+  .fade:not(.visible) {
+    opacity: 0;
+  }
+  
+  .fade.visible {
+    opacity: 1;
+  }
+</style> 

@@ -1,6 +1,5 @@
 <script>
     import { onMount } from 'svelte';
-    import { fade, fly, scale } from 'svelte/transition';
     import AnimateInView from '$lib/AnimateInView.svelte';
     import { browser } from '$app/environment';
     
@@ -8,10 +7,9 @@
     export let data;
     const { blogPosts } = data;
     
-    let visible = false;
+    let visible = browser;
     
     onMount(() => {
-        if (!browser) return;
         visible = true;
     });
 </script>
@@ -26,10 +24,12 @@
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
     
-    <h1 class="text-5xl font-bold mb-4 text-center text-primary" class:opacity-0={!visible} class:opacity-100={visible} style="transition: opacity 0.8s">Blog</h1>
-    <p class="text-lg text-center mb-12 max-w-3xl mx-auto" class:opacity-0={!visible} class:opacity-100={visible} style="transition: opacity 0.8s, transform 0.8s; transform: translateY({visible ? '0' : '30px'})">
-        Thoughts and insights on AI, machine learning, and technology.
-    </p>
+    <div class="animate-header" class:visible>
+        <h1 class="text-5xl font-bold mb-4 text-center text-primary">Blog</h1>
+        <p class="text-lg text-center mb-12 max-w-3xl mx-auto">
+            Thoughts and insights on AI, machine learning, and technology.
+        </p>
+    </div>
     
     <div class="space-y-12">
         {#if blogPosts && blogPosts.length > 0}
@@ -94,6 +94,17 @@
     .post-date {
         color: #666;
         font-size: 0.9rem;
+    }
+    
+    .animate-header {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .animate-header.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
     
     @media (max-width: 768px) {
