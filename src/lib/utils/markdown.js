@@ -1,7 +1,6 @@
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import DOMPurify from 'isomorphic-dompurify';
-import blogPosts from 'virtual:blog-posts';
 
 // Configure marked options
 marked.setOptions({
@@ -32,7 +31,7 @@ const BLOG_POSTS = Object.entries(blogFiles).map(([filepath, content]) => {
     return {
       slug,
       title: data.title,
-      date: data.date,
+      date: new Date(data.date),
       excerpt: data.excerpt,
       tags: data.tags || [],
       author: data.author || 'Fatih Nayebi',
@@ -44,7 +43,39 @@ const BLOG_POSTS = Object.entries(blogFiles).map(([filepath, content]) => {
     console.error(`Error processing markdown file ${filepath}:`, error);
     return null;
   }
-}).filter(Boolean).sort((a, b) => new Date(b.date) - new Date(a.date));
+}).filter(Boolean).sort((a, b) => b.date - a.date);
+
+/**
+ * Get all blog posts
+ * @param {boolean} featured - Whether to only return featured posts
+ * @returns {Array} Array of blog posts
+ */
+export function getAllBlogPosts(featured = false) {
+  const posts = BLOG_POSTS.map(post => ({
+    ...post,
+    date: post.date.toISOString() // Convert Date to string for serialization
+  }));
+  
+  if (featured) {
+    return posts.filter(post => post.featured);
+  }
+  return posts;
+}
+
+/**
+ * Get a blog post by its slug
+ * @param {string} slug - The slug of the blog post
+ * @returns {Object|null} The blog post or null if not found
+ */
+export function getBlogPostBySlug(slug) {
+  const post = BLOG_POSTS.find(post => post.slug === slug);
+  if (!post) return null;
+  
+  return {
+    ...post,
+    date: post.date.toISOString() // Convert Date to string for serialization
+  };
+}
 
 // Pre-loaded publications data
 const PUBLICATIONS = [
@@ -84,27 +115,6 @@ const PUBLICATIONS = [
 ];
 
 /**
- * Get all blog posts
- * @param {boolean} featured - Whether to only return featured posts
- * @returns {Array} Array of blog posts
- */
-export function getAllBlogPosts(featured = false) {
-  if (featured) {
-    return blogPosts.filter(post => post.featured);
-  }
-  return blogPosts;
-}
-
-/**
- * Get a blog post by its slug
- * @param {string} slug - The slug of the blog post
- * @returns {Object|null} The blog post or null if not found
- */
-export function getBlogPostBySlug(slug) {
-  return blogPosts.find(post => post.slug === slug);
-}
-
-/**
  * Get all publications
  * @param {boolean} featured - Filter by featured status
  * @returns {Object[]} Array of publications
@@ -140,7 +150,10 @@ export function searchContent(query) {
   
   const lowerQuery = query.toLowerCase();
   
-  const filteredBlogPosts = blogPosts.filter(post => {
+  const filteredBlogPosts = BLOG_POSTS.map(post => ({
+    ...post,
+    date: post.date.toISOString()
+  })).filter(post => {
     return (
       post.title.toLowerCase().includes(lowerQuery) ||
       post.excerpt.toLowerCase().includes(lowerQuery) ||
