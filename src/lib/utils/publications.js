@@ -1,6 +1,6 @@
 // Import the generated publications list
 import { browser } from '$app/environment';
-import publicationsList from '$lib/generated/publications-list.json';
+import publicationsList from '$lib/generated/publications.json';
 
 // Fallback data in case the JSON import fails
 const FALLBACK_PUBLICATIONS = [

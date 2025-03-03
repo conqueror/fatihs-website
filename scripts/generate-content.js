@@ -218,93 +218,83 @@ marked.setOptions({
   langPrefix: 'language-'
 });
 
-// Process all content types
 function processContent(contentType) {
   console.log(`Processing ${contentType}...`);
+  const contentDir = `src/content/${contentType}`;
+  const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
   
-  const contentDir = path.join(path.resolve(__dirname, '..'), `src/content/${contentType}`);
-  const files = fs.readdirSync(contentDir).filter(f => f.endsWith('.md'));
+  const items = [];
   
-  const items = files.map(filename => {
-    const filePath = path.join(contentDir, filename);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data, content } = matter(fileContents);
-    
-    // Extract all code blocks from content
-    let codeBlocks = {};
-    const codeBlockRegex = /```(?:\s*(\w+))?\n([\s\S]*?)\n```/g;
-    let match;
-    let blockIndex = 0;
-    
-    while ((match = codeBlockRegex.exec(content)) !== null) {
-      const language = match[1] || 'text';
-      const code = match[2];
-      const blockId = `code-block-${blockIndex++}`;
-      codeBlocks[blockId] = { language, code };
-    }
+  for (const file of files) {
+    const filePath = path.join(contentDir, file);
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const { data, content } = matter(fileContent);
     
     // Extract BibTeX content if it exists
     let bibTexContent = '';
-    const bibTexMatch = content.match(/```(?:\s*|bibtex)\n(@[\s\S]*?)\n```/);
+    const bibTexMatch = content.match(/```(?:\s*|bibtex)\n([@\s\S]*?)\n```/);
     if (bibTexMatch && bibTexMatch[1]) {
       bibTexContent = bibTexMatch[1];
     }
     
-    // Set options for the renderer
-    marked.setOptions({
-      renderer: renderer,
-      gfm: true,
-      breaks: true,
-      headerIds: true,
-      langPrefix: 'language-',
-      bibTexContent: bibTexContent,
-      codeBlocks: codeBlocks
-    });
+    // Process markdown to HTML with syntax highlighting
+    const renderer = new marked.Renderer();
     
-    // Convert markdown to HTML with our custom renderer
-    const htmlContent = marked.parse(content);
-    
-    return {
-      slug: filename.replace('.md', ''),
-      ...data,
-      content: htmlContent,
-      rawContent: content
+    // Custom renderer for code blocks
+    renderer.code = function(code, language) {
+      // If no language is specified, use 'text'
+      const lang = language || 'text';
+      
+      // Handle all code blocks consistently
+      let codeContent = typeof code === 'string' ? code : String(code || '');
+      
+      // Apply syntax highlighting
+      const highlightedCode = syntaxHighlight(codeContent, lang);
+      
+      // Return HTML with proper language classes
+      return `<pre class="language-${lang}"><code class="language-${lang}">${highlightedCode}</code></pre>`;
     };
-  });
-  
-  // Sort items (by date for blog/publications, by order for research)
-  if (contentType === 'research') {
-    items.sort((a, b) => (a.order || 0) - (b.order || 0));
-  } else {
-    items.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    let html = marked.parse(content, { renderer });
+    
+    // Post-process HTML to fix BibTeX blocks
+    if (bibTexContent && contentType === 'publications') {
+      // Replace [object Object] in code blocks with the actual BibTeX content
+      html = html.replace(
+        /<pre class="language-(?:text|bibtex)"><code class="language-(?:text|bibtex)">\[object Object\]<\/code><\/pre>/g,
+        `<pre class="language-bibtex"><code class="language-bibtex">${escapeHtml(bibTexContent)}</code></pre>`
+      );
+    }
+    
+    const slug = path.basename(file, '.md');
+    items.push({
+      slug,
+      ...data,
+      content: html
+    });
   }
   
-  // Write processed items to JSON file
-  const targetDir = path.join(path.resolve(__dirname, '..'), 'src/lib/generated');
-  
-  // Make sure target directory exists
-  if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir, { recursive: true });
-  }
-  
-  const outputFile = contentType === 'research' ? 'research-areas.json' : 
-                     contentType === 'blog' ? 'blog-posts.json' : 'publications-list.json';
-  
+  // Write to JSON file
   fs.writeFileSync(
-    path.join(targetDir, outputFile),
+    `src/lib/generated/${contentType === 'blog' ? 'blog-posts' : contentType === 'publications' ? 'publications' : 'research-areas'}.json`,
     JSON.stringify(items, null, 2)
   );
   
   console.log(`✓ Generated ${items.length} ${contentType} items`);
+  return items;
 }
 
 // Process all content types
 try {
+  // Create the directory if it doesn't exist
+  if (!fs.existsSync('src/lib/generated')) {
+    fs.mkdirSync('src/lib/generated', { recursive: true });
+  }
+  
   processContent('blog');
   processContent('publications');
   processContent('research');
   console.log('Content generation complete!');
 } catch (error) {
   console.error('Error generating content:', error);
-  process.exit(1);
 } 
