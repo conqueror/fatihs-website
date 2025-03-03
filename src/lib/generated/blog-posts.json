@@ -2,7 +2,7 @@
   {
     "slug": "optimizing-for-ai-agents",
     "title": "Optimizing Applications, Websites, and Services for Discoverability and Usability by AI Agents",
-    "date": "2025-02-23",
+    "date": "2025-02-23T00:00:00.000Z",
     "excerpt": "How to make your digital products more discoverable and usable by AI agents in an increasingly AI-driven world.",
     "tags": [
       "AI",
@@ -17,7 +17,7 @@
   {
     "slug": "assortment-planning-optimization-rl",
     "title": "Assortment Planning and Optimization with Reinforcement Learning",
-    "date": "2025-02-16",
+    "date": "2025-02-16T00:00:00.000Z",
     "excerpt": "How retailers are using reinforcement learning to optimize product assortment decisions and maximize revenue.",
     "tags": [
       "Reinforcement Learning",
@@ -33,7 +33,7 @@
   {
     "slug": "agentic-ai-future-automation",
     "title": "Agentic AI and the Future of Automation",
-    "date": "2025-01-10",
+    "date": "2025-01-10T00:00:00.000Z",
     "excerpt": "Exploring how agentic AI systems are reshaping automation and creating new opportunities for human-AI collaboration.",
     "tags": [
       "AI",
@@ -48,7 +48,7 @@
   {
     "slug": "aws-reinvent-2024",
     "title": "AWS re:Invent 2024 Keynote Announcements",
-    "date": "2024-12-03",
+    "date": "2024-12-03T00:00:00.000Z",
     "excerpt": "A comprehensive overview of the major announcements and new services revealed at AWS re:Invent 2024.",
     "tags": [
       "AWS",
@@ -63,7 +63,7 @@
   {
     "slug": "assortment-planning-optimization",
     "title": "Assortment Planning and Optimization with AI",
-    "date": "2024-11-06",
+    "date": "2024-11-06T00:00:00.000Z",
     "excerpt": "How artificial intelligence is transforming retail assortment planning and enabling data-driven inventory decisions.",
     "tags": [
       "AI",
@@ -78,7 +78,7 @@
   {
     "slug": "decision-making-digital-age",
     "title": "Decision Making in the Digital Age: Navigating Complexity with Data and AI",
-    "date": "2024-06-05",
+    "date": "2024-06-05T00:00:00.000Z",
     "excerpt": "How data analytics and artificial intelligence are transforming decision-making processes in modern organizations.",
     "tags": [
       "Decision Making",
@@ -93,7 +93,7 @@
   {
     "slug": "ai-for-decarbonization",
     "title": "Harnessing AI for Decarbonization: A Pathway to Sustainability and Environmental Stewardship",
-    "date": "2024-05-30",
+    "date": "2024-05-30T00:00:00.000Z",
     "excerpt": "Exploring how artificial intelligence technologies are accelerating decarbonization efforts across industries.",
     "tags": [
       "AI",
@@ -108,7 +108,7 @@
   {
     "slug": "trust-digital-age",
     "title": "Trust in the Digital Age: Navigating AI and Information Integrity in Democracies",
-    "date": "2024-05-27",
+    "date": "2024-05-27T00:00:00.000Z",
     "excerpt": "How artificial intelligence is challenging traditional notions of trust in information and what it means for democratic societies.",
     "tags": [
       "AI Ethics",
@@ -123,7 +123,7 @@
   {
     "slug": "decoding-ai-math-theorems",
     "title": "Decoding AI with Mathematical Theorems: From Predictions to Neural Networks",
-    "date": "2024-05-21",
+    "date": "2024-05-21T00:00:00.000Z",
     "excerpt": "An exploration of the fundamental mathematical principles that power modern AI systems and neural networks.",
     "tags": [
       "AI",
@@ -132,13 +132,13 @@
     ],
     "author": "Fatih Nayebi",
     "featured": false,
-    "content": "<h1>Decoding AI with Mathematical Theorems: From Predictions to Neural Networks</h1>\n<p>Behind the remarkable capabilities of modern AI systems lies a foundation of mathematical principles that enable machines to learn, reason, and make predictions. This article explores the key mathematical concepts powering today's artificial intelligence.</p>\n<h2>The Universal Approximation Theorem</h2>\n<p>This fundamental theorem explains why neural networks are so effective at modeling complex relationships. It states that a feed-forward network with a single hidden layer containing a finite number of neurons can approximate any continuous function, providing the theoretical basis for deep learning's success.</p>\n<p>Formally, the theorem states that:\nFor any continuous function $f$ on a compact subset of $\\mathbb{R}^n$ and any $\\epsilon &gt; 0$, there exists a feed-forward neural network with a single hidden layer that approximates $f$ with an error less than $\\epsilon$.</p>\n<p>This seemingly simple result has profound implications:</p>\n<ul>\n<li>It guarantees that neural networks have the representational capacity to model virtually any continuous mapping</li>\n<li>It explains why neural networks can effectively learn complex patterns from data</li>\n<li>It provides the theoretical foundation for why deep learning works in practice</li>\n</ul>\n<p>However, the theorem only guarantees the existence of such a network—it doesn't specify how to find it or how many neurons would be required. This is where practical training algorithms and architectural innovations become crucial.</p>\n<h2>Backpropagation and Gradient Descent</h2>\n<p>The mathematics of optimization underlies how neural networks learn. Backpropagation algorithms leverage calculus principles to compute gradients efficiently, while stochastic gradient descent provides a practical method for finding minimum error values in high-dimensional spaces.</p>\n<p>The backpropagation algorithm relies on:</p>\n<ol>\n<li><strong>Chain rule of calculus</strong>: Computing derivatives across multiple layers</li>\n<li><strong>Jacobian matrices</strong>: Tracking how changes propagate through the network</li>\n<li><strong>Efficient gradient computation</strong>: Using dynamic programming to avoid redundant calculations</li>\n</ol>\n<p>These mathematical tools enable neural networks to learn from data by iteratively adjusting weights to minimize error.</p>\n<h2>Information Theory and Loss Functions</h2>\n<p>Concepts from information theory, particularly entropy and cross-entropy, form the basis for many loss functions used to train AI models. These mathematical tools help quantify the difference between predicted and actual outcomes during training.</p>\n<h2>Probabilistic Foundations</h2>\n<p>Bayesian probability theory provides a framework for understanding uncertainty in AI systems. Many modern approaches to machine learning incorporate Bayesian principles to express confidence levels in predictions and handle incomplete information.</p>\n<h2>Linear Algebra in Neural Networks</h2>\n<p>Matrix operations form the computational backbone of neural networks. Concepts like vector spaces, transformations, and eigendecomposition enable the efficient processing of high-dimensional data and feature extraction.</p>\n<hr>\n<p><em>This article was written by Fatih Nayebi, PhD, a specialist in the mathematics of machine learning systems.</em> </p>\n",
+    "content": "<h1>Decoding AI with Mathematical Theorems: From Predictions to Neural Networks</h1>\n<p>Behind the remarkable capabilities of modern AI systems lies a foundation of mathematical principles that enable machines to learn, reason, and make predictions. This article explores the key mathematical concepts powering today's artificial intelligence.</p>\n<h2>The Universal Approximation Theorem</h2>\n<p>This fundamental theorem explains why neural networks are so effective at modeling complex relationships. It states that a feed-forward network with a single hidden layer containing a finite number of neurons can approximate any continuous function, providing the theoretical basis for deep learning's success.</p>\n<p>Formally, the theorem states that:<br>For any continuous function $f$ on a compact subset of $\\mathbb{R}^n$ and any $\\epsilon &gt; 0$, there exists a feed-forward neural network with a single hidden layer that approximates $f$ with an error less than $\\epsilon$.</p>\n<p>This seemingly simple result has profound implications:</p>\n<ul>\n<li>It guarantees that neural networks have the representational capacity to model virtually any continuous mapping</li>\n<li>It explains why neural networks can effectively learn complex patterns from data</li>\n<li>It provides the theoretical foundation for why deep learning works in practice</li>\n</ul>\n<p>However, the theorem only guarantees the existence of such a network—it doesn't specify how to find it or how many neurons would be required. This is where practical training algorithms and architectural innovations become crucial.</p>\n<h2>Backpropagation and Gradient Descent</h2>\n<p>The mathematics of optimization underlies how neural networks learn. Backpropagation algorithms leverage calculus principles to compute gradients efficiently, while stochastic gradient descent provides a practical method for finding minimum error values in high-dimensional spaces.</p>\n<p>The backpropagation algorithm relies on:</p>\n<ol>\n<li><strong>Chain rule of calculus</strong>: Computing derivatives across multiple layers</li>\n<li><strong>Jacobian matrices</strong>: Tracking how changes propagate through the network</li>\n<li><strong>Efficient gradient computation</strong>: Using dynamic programming to avoid redundant calculations</li>\n</ol>\n<p>These mathematical tools enable neural networks to learn from data by iteratively adjusting weights to minimize error.</p>\n<h2>Information Theory and Loss Functions</h2>\n<p>Concepts from information theory, particularly entropy and cross-entropy, form the basis for many loss functions used to train AI models. These mathematical tools help quantify the difference between predicted and actual outcomes during training.</p>\n<h2>Probabilistic Foundations</h2>\n<p>Bayesian probability theory provides a framework for understanding uncertainty in AI systems. Many modern approaches to machine learning incorporate Bayesian principles to express confidence levels in predictions and handle incomplete information.</p>\n<h2>Linear Algebra in Neural Networks</h2>\n<p>Matrix operations form the computational backbone of neural networks. Concepts like vector spaces, transformations, and eigendecomposition enable the efficient processing of high-dimensional data and feature extraction.</p>\n<hr>\n<p><em>This article was written by Fatih Nayebi, PhD, a specialist in the mathematics of machine learning systems.</em> </p>\n",
     "rawContent": "\n# Decoding AI with Mathematical Theorems: From Predictions to Neural Networks\n\nBehind the remarkable capabilities of modern AI systems lies a foundation of mathematical principles that enable machines to learn, reason, and make predictions. This article explores the key mathematical concepts powering today's artificial intelligence.\n\n## The Universal Approximation Theorem\n\nThis fundamental theorem explains why neural networks are so effective at modeling complex relationships. It states that a feed-forward network with a single hidden layer containing a finite number of neurons can approximate any continuous function, providing the theoretical basis for deep learning's success.\n\nFormally, the theorem states that:\nFor any continuous function $f$ on a compact subset of $\\mathbb{R}^n$ and any $\\epsilon > 0$, there exists a feed-forward neural network with a single hidden layer that approximates $f$ with an error less than $\\epsilon$.\n\nThis seemingly simple result has profound implications:\n\n- It guarantees that neural networks have the representational capacity to model virtually any continuous mapping\n- It explains why neural networks can effectively learn complex patterns from data\n- It provides the theoretical foundation for why deep learning works in practice\n\nHowever, the theorem only guarantees the existence of such a network—it doesn't specify how to find it or how many neurons would be required. This is where practical training algorithms and architectural innovations become crucial.\n\n## Backpropagation and Gradient Descent\n\nThe mathematics of optimization underlies how neural networks learn. Backpropagation algorithms leverage calculus principles to compute gradients efficiently, while stochastic gradient descent provides a practical method for finding minimum error values in high-dimensional spaces.\n\nThe backpropagation algorithm relies on:\n\n1. **Chain rule of calculus**: Computing derivatives across multiple layers\n2. **Jacobian matrices**: Tracking how changes propagate through the network\n3. **Efficient gradient computation**: Using dynamic programming to avoid redundant calculations\n\nThese mathematical tools enable neural networks to learn from data by iteratively adjusting weights to minimize error.\n\n## Information Theory and Loss Functions\n\nConcepts from information theory, particularly entropy and cross-entropy, form the basis for many loss functions used to train AI models. These mathematical tools help quantify the difference between predicted and actual outcomes during training.\n\n## Probabilistic Foundations\n\nBayesian probability theory provides a framework for understanding uncertainty in AI systems. Many modern approaches to machine learning incorporate Bayesian principles to express confidence levels in predictions and handle incomplete information.\n\n## Linear Algebra in Neural Networks\n\nMatrix operations form the computational backbone of neural networks. Concepts like vector spaces, transformations, and eigendecomposition enable the efficient processing of high-dimensional data and feature extraction.\n\n---\n\n*This article was written by Fatih Nayebi, PhD, a specialist in the mathematics of machine learning systems.* "
   },
   {
     "slug": "statistical-experimentation-soccer-analytics",
     "title": "A Guide to Statistical Experimentation and Testing in Soccer (real football) Analytics",
-    "date": "2024-05-15",
+    "date": "2024-05-15T00:00:00.000Z",
     "excerpt": "How statistical experimentation and rigorous testing methodologies are revolutionizing soccer analytics and performance measurement.",
     "tags": [
       "Sports Analytics",
@@ -153,7 +153,7 @@
   {
     "slug": "exploring-large-language-models",
     "title": "Exploring Large Language Models: Capabilities and Limitations",
-    "date": "2023-08-15",
+    "date": "2023-08-15T00:00:00.000Z",
     "excerpt": "An in-depth exploration of modern large language models, their capabilities, and the challenges they face.",
     "tags": [
       "AI",
@@ -169,7 +169,7 @@
   {
     "slug": "ai-healthcare",
     "title": "AI in Healthcare: Current Applications and Future Possibilities",
-    "date": "2023-06-15",
+    "date": "2023-06-15T00:00:00.000Z",
     "excerpt": "Exploring how artificial intelligence is transforming healthcare diagnosis, treatment, and patient care.",
     "tags": [
       "AI",
@@ -184,7 +184,7 @@
   {
     "slug": "getting-started-with-svelte",
     "title": "Getting Started with Svelte: A Beginner's Guide",
-    "date": "2023-06-15",
+    "date": "2023-06-15T00:00:00.000Z",
     "excerpt": "Learn the basics of Svelte, a radical new approach to building user interfaces that offers a refreshing alternative to React and Vue.",
     "tags": [
       "Svelte",
@@ -200,7 +200,7 @@
   {
     "slug": "ethical-ai",
     "title": "Ethical Considerations in AI Development",
-    "date": "2023-05-15",
+    "date": "2023-05-15T00:00:00.000Z",
     "excerpt": "Exploring the ethical challenges and responsibilities in artificial intelligence research and implementation.",
     "tags": [
       "AI ethics",

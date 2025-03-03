@@ -1,7 +1,7 @@
-import { getPublicationBySlug, getAllPublications } from '$lib/utils/markdown';
 import { error } from '@sveltejs/kit';
+import { getAllPublications, getPublicationBySlug } from '$lib/utils/publications';
 
-// Enable prerendering for publications
+// Enable prerendering
 export const prerender = true;
 
 // Generate entries for all publications
@@ -14,18 +14,14 @@ export function entries() {
 
 /** @type {import('./$types').PageLoad} */
 export function load({ params }) {
-  const publication = getPublicationBySlug(params.slug);
+  const { slug } = params;
+  const publication = getPublicationBySlug(slug);
   
   if (!publication) {
-    throw error(404, {
-      message: 'Publication not found'
-    });
+    throw error(404, 'Publication not found');
   }
-
+  
   return {
-    publication: {
-      ...publication,
-      date: publication.date.toString() // Ensure date is serializable
-    }
+    publication
   };
 } 

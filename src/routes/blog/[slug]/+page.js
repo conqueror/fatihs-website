@@ -1,5 +1,5 @@
-import { getBlogPostBySlug, getAllBlogPosts } from '$lib/utils/markdown';
 import { error } from '@sveltejs/kit';
+import { getAllBlogPosts, getBlogPostBySlug } from '$lib/utils/markdown';
 
 // Enable prerendering for blog posts
 export const prerender = true;
@@ -13,20 +13,14 @@ export function entries() {
 }
 
 /** @type {import('./$types').PageLoad} */
-export function load({ params }) {
+export async function load({ params }) {
   const post = getBlogPostBySlug(params.slug);
   
   if (!post) {
-    throw error(404, {
-      message: 'Blog post not found'
-    });
+    throw error(404, 'Blog post not found');
   }
 
-  // Return serializable data
   return {
-    post: {
-      ...post,
-      date: post.date.toString() // Ensure date is serializable
-    }
+    post
   };
 } 

@@ -4,8 +4,8 @@
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
     import { browser } from '$app/environment';
-    // Import the search function directly
-    import { searchContent } from '$lib/utils/markdown';
+    import { getAllBlogPosts } from '$lib/utils/markdown';
+    import { getAllPublications } from '$lib/utils/publications';
     
     export let data;
     export let form;
@@ -24,16 +24,45 @@
     function performSearch(searchQuery, searchType) {
         if (!browser) return;
         
-        const searchOptions = {
-            searchBlog: searchType === 'all' || searchType === 'blog',
-            searchPublications: searchType === 'all' || searchType === 'publication'
-        };
+        const lowerQuery = searchQuery.toLowerCase();
         
-        const searchResults = searchContent(searchQuery, searchOptions);
+        // Search in blog posts
+        const blogPosts = getAllBlogPosts().filter(post => {
+            return (
+                post.title.toLowerCase().includes(lowerQuery) ||
+                post.excerpt.toLowerCase().includes(lowerQuery) ||
+                post.rawContent.toLowerCase().includes(lowerQuery) ||
+                post.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+            );
+        }).map(post => ({
+            ...post,
+            type: 'blog'
+        }));
         
-        results = searchResults.allResults;
-        blogResults = searchResults.blogPosts;
-        publicationResults = searchResults.publications;
+        // Search in publications
+        const publications = getAllPublications().filter(pub => {
+            return (
+                pub.title.toLowerCase().includes(lowerQuery) ||
+                pub.excerpt.toLowerCase().includes(lowerQuery) ||
+                pub.rawContent.toLowerCase().includes(lowerQuery) ||
+                pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+            );
+        }).map(pub => ({
+            ...pub,
+            type: 'publication'
+        }));
+        
+        // Filter by type and combine results
+        if (searchType === 'blog') {
+            results = blogPosts;
+        } else if (searchType === 'publication') {
+            results = publications;
+        } else {
+            results = [...blogPosts, ...publications].sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        
+        blogResults = blogPosts;
+        publicationResults = publications;
         
         // Update URL without reloading the page
         goto(`/search?query=${encodeURIComponent(searchQuery)}&type=${searchType}`, { 
