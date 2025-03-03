@@ -17,6 +17,7 @@
 /blog/*               /index.html                   200
 /publications/*       /index.html                   200
 /posts/*              /index.html                   200
+/research/*           /index.html                   200
 
 # Explicit asset redirects
 /apple-touch-icon.png             /apple-touch-icon.png              200

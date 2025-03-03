@@ -1,5 +1,9 @@
-// Pre-loaded publications data
-const PUBLICATIONS = [
+// Import the generated publications list
+import { browser } from '$app/environment';
+import publicationsList from '$lib/generated/publications-list.json';
+
+// Fallback data in case the JSON import fails
+const FALLBACK_PUBLICATIONS = [
   {
     slug: 'neural-networks-paper',
     title: 'Neural Network Architectures for Computer Vision',
@@ -41,10 +45,18 @@ const PUBLICATIONS = [
  * @returns {Object[]} Array of publications
  */
 export function getAllPublications(featured = false) {
-  if (featured) {
-    return PUBLICATIONS.filter(pub => pub.featured);
+  try {
+    if (featured) {
+      return publicationsList.filter(pub => pub.featured);
+    }
+    return publicationsList;
+  } catch (error) {
+    console.warn('Falling back to hardcoded publications data');
+    if (featured) {
+      return FALLBACK_PUBLICATIONS.filter(pub => pub.featured);
+    }
+    return FALLBACK_PUBLICATIONS;
   }
-  return PUBLICATIONS;
 }
 
 /**
@@ -53,7 +65,12 @@ export function getAllPublications(featured = false) {
  * @returns {Object|null} The publication or null if not found
  */
 export function getPublicationBySlug(slug) {
-  return PUBLICATIONS.find(pub => pub.slug === slug) || null;
+  try {
+    return publicationsList.find(pub => pub.slug === slug) || null;
+  } catch (error) {
+    console.warn('Falling back to hardcoded publications data');
+    return FALLBACK_PUBLICATIONS.find(pub => pub.slug === slug) || null;
+  }
 }
 
 /**
@@ -68,12 +85,60 @@ export function searchPublications(query) {
   
   const lowerQuery = query.toLowerCase();
   
-  return PUBLICATIONS.filter(pub => {
-    return (
-      pub.title.toLowerCase().includes(lowerQuery) ||
-      pub.excerpt.toLowerCase().includes(lowerQuery) ||
-      pub.rawContent.toLowerCase().includes(lowerQuery) ||
-      pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
-    );
-  });
+  try {
+    return publicationsList.filter(pub => {
+      return (
+        pub.title.toLowerCase().includes(lowerQuery) ||
+        pub.excerpt.toLowerCase().includes(lowerQuery) ||
+        pub.rawContent.toLowerCase().includes(lowerQuery) ||
+        pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+      );
+    });
+  } catch (error) {
+    console.warn('Falling back to hardcoded publications data');
+    return FALLBACK_PUBLICATIONS.filter(pub => {
+      return (
+        pub.title.toLowerCase().includes(lowerQuery) ||
+        pub.excerpt.toLowerCase().includes(lowerQuery) ||
+        pub.rawContent.toLowerCase().includes(lowerQuery) ||
+        pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+      );
+    });
+  }
+}
+
+/**
+ * Get filtered publications
+ * @param {Object} options - Filter options
+ * @param {string|null} options.tag - Filter by tag
+ * @param {boolean} options.featured - Filter by featured status
+ * @returns {Object[]} Array of filtered publications
+ */
+export function getFilteredPublications({ tag = null, featured = false } = {}) {
+  try {
+    let filteredPublications = publicationsList;
+
+    if (tag) {
+      filteredPublications = filteredPublications.filter(pub => pub.tags.includes(tag));
+    }
+
+    if (featured) {
+      filteredPublications = filteredPublications.filter(pub => pub.featured);
+    }
+
+    return filteredPublications;
+  } catch (error) {
+    console.warn('Falling back to hardcoded publications data');
+    let filteredPublications = FALLBACK_PUBLICATIONS;
+
+    if (tag) {
+      filteredPublications = filteredPublications.filter(pub => pub.tags.includes(tag));
+    }
+
+    if (featured) {
+      filteredPublications = filteredPublications.filter(pub => pub.featured);
+    }
+
+    return filteredPublications;
+  }
 } 
