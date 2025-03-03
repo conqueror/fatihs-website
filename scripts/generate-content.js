@@ -8,20 +8,29 @@ import { marked } from 'marked';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Set up a custom renderer for marked
+// Create a custom renderer for marked
 const renderer = new marked.Renderer();
 
-// Override the code block renderer to properly format code with language classes
-renderer.code = function(code, language = '', isEscaped) {
-  // Ensure we have a language specified (default to 'text' if none)
-  const lang = language || 'text';
+// We don't need to customize the heading renderer for now
+// Let's use the default one instead
+
+// Store original code renderer method
+const originalCodeRenderer = renderer.code;
+
+// Override the code block renderer to add syntax highlighting classes
+renderer.code = function (code, lang, isEscaped) {
+  // If no language is specified, use 'text'
+  const language = lang || 'text';
   
-  // Clean the code by ensuring it's a string and properly escaped
-  const codeStr = String(code);
+  // Ensure code is a string
+  const codeStr = String(code || '');
   const escapedCode = !isEscaped ? escapeHtml(codeStr) : codeStr;
   
+  // Apply syntax highlighting at build time
+  const highlightedCode = syntaxHighlight(escapedCode, language);
+  
   // Return HTML with proper language classes for syntax highlighting
-  return `<pre class="language-${lang}"><code class="language-${lang}">${escapedCode}</code></pre>`;
+  return `<pre class="language-${language}"><code class="language-${language}">${highlightedCode}</code></pre>`;
 };
 
 // Helper function to escape HTML
@@ -32,6 +41,143 @@ function escapeHtml(text) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+// Function to apply syntax highlighting
+function syntaxHighlight(code, language) {
+  // Return escaped code if no language or unsupported language
+  if (!code || code === '[object Object]') {
+    console.warn(`Found [object Object] in code block with language ${language}. This indicates a potential issue with the markdown source.`);
+    return escapeHtml(String(code));
+  }
+  
+  let html = code;
+  
+  // Basic syntax highlighting implementation
+  if (language === 'javascript' || language === 'js') {
+    // Keywords
+    html = html.replace(
+      /\b(const|let|var|function|if|else|return|for|while|class|new|import|export|from|async|await|try|catch)\b/g, 
+      '<span class="token keyword">$1</span>'
+    );
+    // Strings
+    html = html.replace(
+      /(['"`])((?:\\.|(?!\1)[^\\])*)\1/g, 
+      '<span class="token string">$1$2$1</span>'
+    );
+    // Comments
+    html = html.replace(
+      /\/\/(.*)/g, 
+      '<span class="token comment">//$1</span>'
+    );
+    // Numbers
+    html = html.replace(
+      /\b(\d+(\.\d+)?)\b/g,
+      '<span class="token number">$1</span>'
+    );
+  } 
+  else if (language === 'python') {
+    // Keywords
+    html = html.replace(
+      /\b(def|class|import|from|as|if|elif|else|while|for|in|return|try|except|finally|with|pass|lambda)\b/g, 
+      '<span class="token keyword">$1</span>'
+    );
+    // Strings
+    html = html.replace(
+      /(['"])((?:\\.|(?!\1)[^\\])*)\1/g, 
+      '<span class="token string">$1$2$1</span>'
+    );
+    // Comments
+    html = html.replace(
+      /#(.*)/g, 
+      '<span class="token comment">#$1</span>'
+    );
+    // Numbers
+    html = html.replace(
+      /\b(\d+(\.\d+)?)\b/g,
+      '<span class="token number">$1</span>'
+    );
+  } 
+  else if (language === 'html' || language === 'markup' || language === 'xml') {
+    // Tags
+    html = html.replace(
+      /(&lt;\/?)(\w+)([^&]*?)(\/?&gt;)/g, 
+      '$1<span class="token tag">$2</span>$3$4'
+    );
+    // Attributes
+    html = html.replace(
+      /(\s+)(\w+)(=)(".*?")/g, 
+      '$1<span class="token attr-name">$2</span>$3<span class="token attr-value">$4</span>'
+    );
+  } 
+  else if (language === 'css') {
+    // Selectors
+    html = html.replace(
+      /([.#]\w+|\w+)(\s*){/g, 
+      '<span class="token selector">$1</span>$2{'
+    );
+    // Properties
+    html = html.replace(
+      /(\s+)([\w-]+)(\s*:)/g, 
+      '$1<span class="token property">$2</span>$3'
+    );
+    // Values
+    html = html.replace(
+      /(:)(\s*)(#[a-fA-F0-9]+|\d+\.?\d*|\d*\.?\d+\w+|"[^"]*"|'[^']*')/g, 
+      '$1$2<span class="token value">$3</span>'
+    );
+  }
+  else if (language === 'bash' || language === 'sh') {
+    // Comments
+    html = html.replace(
+      /#(.*)/g, 
+      '<span class="token comment">#$1</span>'
+    );
+    // Commands
+    html = html.replace(
+      /^(\s*)([\w./-]+)/gm, 
+      '$1<span class="token command">$2</span>'
+    );
+    // Options/flags
+    html = html.replace(
+      /(\s)(-{1,2}[\w-]+)/g, 
+      '$1<span class="token parameter">$2</span>'
+    );
+    // Strings
+    html = html.replace(
+      /(['"])((?:\\.|(?!\1)[^\\])*)\1/g, 
+      '<span class="token string">$1$2$1</span>'
+    );
+  }
+  else if (language === 'svelte') {
+    // Script and style tags
+    html = html.replace(
+      /(&lt;\/?)(\w+)([^&]*?)(\/?&gt;)/g, 
+      '$1<span class="token tag">$2</span>$3$4'
+    );
+    // Attributes
+    html = html.replace(
+      /(\s+)([\w:]+)(=)(".*?")/g, 
+      '$1<span class="token attr-name">$2</span>$3<span class="token attr-value">$4</span>'
+    );
+    // Svelte directives
+    html = html.replace(
+      /(\s+)(\{[#:/][\w\s]+\})/g,
+      '$1<span class="token keyword">$2</span>'
+    );
+    // JS in curly braces
+    html = html.replace(
+      /(\{)([^{}]+)(\})/g,
+      '$1<span class="token expression">$2</span>$3'
+    );
+    // Keywords in script
+    html = html.replace(
+      /(&lt;script&gt;[\s\S]*?)(\b(const|let|var|function|if|else|return|for|while|class|new|import|export|from)\b)([\s\S]*?&lt;\/script&gt;)/g,
+      '$1<span class="token keyword">$2</span>$4'
+    );
+  }
+  
+  return html;
 }
 
 // Configure marked with our custom renderer and options
