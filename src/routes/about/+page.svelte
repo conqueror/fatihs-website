@@ -39,7 +39,7 @@
 	
 	<h1 class="text-5xl font-bold mb-8 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>About Me</h1>
 
-	<div class="flex flex-col-reverse md:flex-row gap-8 mb-16 relative">
+	<div class="flex flex-col-reverse md:flex-row gap-8 mb-16 relative z-0">
 		<div class="md:w-3/5 relative z-0">
 			<AnimateInView type="fade" delay={200}>
 				<div class="p-6 bg-white bg-opacity-80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-100">
@@ -206,7 +206,7 @@
 					<div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-full opacity-50 blur-xl"></div>
 					<div class="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-600 rounded-full opacity-50 blur-xl"></div>
 					
-					<div class="p-2 bg-white rounded-xl shadow-lg relative z-10">
+					<div class="p-2 bg-white rounded-xl shadow-lg relative z-0">
 						<div class="bg-gradient-to-r from-gray-50 to-gray-100 p-4 rounded-lg">
 							<div class="overflow-hidden rounded-lg border-[3px] border-white shadow-inner">
 								<img 
@@ -220,7 +220,7 @@
 					</div>
 				</div>
 			
-				<div class="text-center mt-6 bg-white p-6 rounded-xl shadow-sm border border-gray-100 relative z-10">
+				<div class="text-center mt-6 bg-white p-6 rounded-xl shadow-sm border border-gray-100 relative z-0">
 					<h2 class="text-2xl font-bold mb-1 text-gray-800">Fatih Nayebi, Ph.D.</h2>
 					<p class="text-lg font-medium text-primary mb-1">VP, Data & AI at ALDO Group</p>
 					<p class="text-lg text-gray-700 mb-6">Faculty Lecturer, McGill University</p>
