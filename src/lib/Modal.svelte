@@ -29,19 +29,20 @@
 <svelte:window on:keydown={handleKeydown} />
 
 {#if showModal}
-  <div 
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+  <button 
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 w-full h-full border-0 cursor-default"
     transition:fade={{ duration: 200 }}
     on:click={handleClick}
     on:keydown={handleKeydown}
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-title"
+    aria-label="Close modal overlay"
   >
     <div 
       class="relative w-full max-w-lg bg-white rounded-xl shadow-xl overflow-hidden max-h-[90vh]"
       bind:this={modalContent}
       transition:scale={{ duration: 300, easing: quintOut, start: 0.95 }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
     >
       <button
         class="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 transition-colors z-10"
@@ -59,5 +60,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </button>
 {/if} 
