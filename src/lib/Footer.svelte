@@ -34,11 +34,11 @@
 				<div class="w-full md:w-1/3 mb-8">
 					<h4 class="text-gray-800 font-semibold mb-4">Connect</h4>
 					<div class="flex space-x-4">
-						<a href="https://linkedin.com/in/fatihnayebi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" 
+						<a href="https://linkedin.com/in/thefatih" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" 
 							class="text-gray-600 hover:text-primary transition-colors">LinkedIn</a>
-						<a href="https://twitter.com/fatihnayebi" target="_blank" rel="noopener noreferrer" aria-label="Twitter" 
-							class="text-gray-600 hover:text-primary transition-colors">Twitter</a>
-						<a href="https://github.com/fatihnayebi" target="_blank" rel="noopener noreferrer" aria-label="GitHub" 
+						<a href="https://scholar.google.com/citations?user=s6lWpdEAAAAJ" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar" 
+							class="text-gray-600 hover:text-primary transition-colors">Google Scholar</a>
+						<a href="https://github.com/conqueror" target="_blank" rel="noopener noreferrer" aria-label="GitHub" 
 							class="text-gray-600 hover:text-primary transition-colors">GitHub</a>
 					</div>
 				</div>
