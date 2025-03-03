@@ -6,6 +6,7 @@
 		"dev": "node scripts/generate-content.js && vite dev",
 		"build": "node scripts/generate-content.js && vite build",
 		"preview": "vite preview",
+		"preview-spa": "node preview-server.js",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
