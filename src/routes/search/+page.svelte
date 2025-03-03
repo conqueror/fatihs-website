@@ -3,29 +3,58 @@
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
+    import { browser } from '$app/environment';
+    // Import the search function directly
+    import { searchContent } from '$lib/utils/markdown';
     
     export let data;
     export let form;
     
     // Use form data if available, otherwise use data from URL
-    const query = form?.query ?? data.query;
-    const type = form?.type ?? data.type;
-    const results = form?.results ?? data.results;
-    const blogResults = form?.blogResults ?? data.blogResults;
-    const publicationResults = form?.publicationResults ?? data.publicationResults;
+    let query = form?.query ?? data.query ?? '';
+    let type = form?.type ?? data.type ?? 'all';
+    let results = form?.results ?? data.results ?? [];
+    let blogResults = form?.blogResults ?? data.blogResults ?? [];
+    let publicationResults = form?.publicationResults ?? data.publicationResults ?? [];
     
     // Total count for display
-    const totalResults = results.length;
+    $: totalResults = results.length;
     
-    // Handle search submission and update URL
+    // Client-side search function
+    function performSearch(searchQuery, searchType) {
+        if (!browser) return;
+        
+        const searchOptions = {
+            searchBlog: searchType === 'all' || searchType === 'blog',
+            searchPublications: searchType === 'all' || searchType === 'publication'
+        };
+        
+        const searchResults = searchContent(searchQuery, searchOptions);
+        
+        results = searchResults.allResults;
+        blogResults = searchResults.blogPosts;
+        publicationResults = searchResults.publications;
+        
+        // Update URL without reloading the page
+        goto(`/search?query=${encodeURIComponent(searchQuery)}&type=${searchType}`, { 
+            replaceState: true,
+            noScroll: true
+        });
+    }
+    
+    // Handle search submission using client-side processing
     function handleSearchSubmit(event) {
+        event.preventDefault();
+        
         // Get form data
         const formData = new FormData(event.target);
-        const searchQuery = formData.get('query');
-        const searchType = formData.get('type');
+        const searchQuery = formData.get('query') || '';
+        const searchType = formData.get('type') || 'all';
         
-        // Update URL with search parameters
-        goto(`/search?query=${encodeURIComponent(searchQuery)}&type=${searchType}`, { replaceState: true });
+        query = searchQuery;
+        type = searchType;
+        
+        performSearch(searchQuery, searchType);
     }
 
     // Reference to search input for autofocus
@@ -36,13 +65,18 @@
         if (!query && searchInput) {
             searchInput.focus();
         }
+        
+        // If there's a query in the URL when the page loads, perform search
+        if (query) {
+            performSearch(query, type);
+        }
     });
 </script>
 
 <div class="search-container">
     <h1>Search</h1>
     
-    <form method="POST" action="/search" use:enhance class="search-form" on:submit|preventDefault={handleSearchSubmit}>
+    <form on:submit={handleSearchSubmit} class="search-form">
         <div class="search-input-wrapper">
             <input 
                 type="text" 

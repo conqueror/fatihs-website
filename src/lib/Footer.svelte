@@ -1,137 +1,52 @@
-<footer class="footer">
-	<div class="footer-content">
-		<div class="footer-info">
-			<h3>Fatih Nayebi</h3>
-			<p>AI Researcher & Consultant</p>
-		</div>
-		
-		<div class="footer-links">
-			<div class="footer-section">
-				<h4>Navigation</h4>
-				<ul>
-					<li><a href="/">Home</a></li>
-					<li><a href="/about">About</a></li>
-					<li><a href="/research">Research</a></li>
-					<li><a href="/publications">Publications</a></li>
-				</ul>
+<script>
+	const year = new Date().getFullYear();
+</script>
+
+<footer class="bg-gray-100 pt-16 pb-6 mt-20">
+	<div class="container mx-auto px-4">
+		<div class="flex flex-col md:flex-row justify-between mb-12">
+			<div class="mb-8 md:mb-0 md:w-1/3 pr-4">
+				<h3 class="text-xl font-bold text-gray-800 mb-4">Fatih Nayebi</h3>
+				<p class="text-gray-600 mb-4">
+					Research Scientist focused on machine learning, AI, and human-computer interaction.
+				</p>
 			</div>
 			
-			<div class="footer-section">
-				<h4>Resources</h4>
-				<ul>
-					<li><a href="/blog">Blog</a></li>
-					<li><a href="/news">News</a></li>
-					<li><a href="/consulting">Consulting</a></li>
-					<li><a href="/contact">Contact</a></li>
-				</ul>
-			</div>
-			
-			<div class="footer-section">
-				<h4>Connect</h4>
-				<div class="social-links">
-					<a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
-					<a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">Twitter</a>
-					<a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+			<div class="flex flex-wrap md:w-2/3">
+				<div class="w-1/2 md:w-1/3 mb-8">
+					<h4 class="text-gray-800 font-semibold mb-4">Navigation</h4>
+					<ul class="space-y-2">
+						<li><a href="/" class="text-gray-600 hover:text-primary transition-colors">Home</a></li>
+						<li><a href="/about" class="text-gray-600 hover:text-primary transition-colors">About</a></li>
+						<li><a href="/research" class="text-gray-600 hover:text-primary transition-colors">Research</a></li>
+						<li><a href="/publications" class="text-gray-600 hover:text-primary transition-colors">Publications</a></li>
+					</ul>
+				</div>
+				
+				<div class="w-1/2 md:w-1/3 mb-8">
+					<h4 class="text-gray-800 font-semibold mb-4">Resources</h4>
+					<ul class="space-y-2">
+						<li><a href="/blog" class="text-gray-600 hover:text-primary transition-colors">Blog</a></li>
+						<li><a href="/contact" class="text-gray-600 hover:text-primary transition-colors">Contact</a></li>
+					</ul>
+				</div>
+				
+				<div class="w-full md:w-1/3 mb-8">
+					<h4 class="text-gray-800 font-semibold mb-4">Connect</h4>
+					<div class="flex space-x-4">
+						<a href="https://linkedin.com/in/fatihnayebi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" 
+							class="text-gray-600 hover:text-primary transition-colors">LinkedIn</a>
+						<a href="https://twitter.com/fatihnayebi" target="_blank" rel="noopener noreferrer" aria-label="Twitter" 
+							class="text-gray-600 hover:text-primary transition-colors">Twitter</a>
+						<a href="https://github.com/fatihnayebi" target="_blank" rel="noopener noreferrer" aria-label="GitHub" 
+							class="text-gray-600 hover:text-primary transition-colors">GitHub</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div class="footer-bottom">
-		<p>&copy; {new Date().getFullYear()} Fatih Nayebi. All rights reserved.</p>
+		
+		<div class="border-t border-gray-200 pt-6 text-center text-gray-500 text-sm">
+			<p>© {year} Fatih Nayebi. All rights reserved. | Built with SvelteKit and Tailwind CSS</p>
+		</div>
 	</div>
 </footer>
-
-<style>
-	.footer {
-		padding: 3rem 0 1rem;
-		background-color: #f9f9f9;
-		margin-top: 4rem;
-	}
-	
-	.footer-content {
-		max-width: 1200px;
-		margin: 0 auto;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		padding: 0 1rem;
-	}
-	
-	.footer-info {
-		flex-basis: 300px;
-		margin-bottom: 2rem;
-	}
-	
-	.footer-info h3 {
-		font-size: 1.5rem;
-		margin-bottom: 0.5rem;
-		color: #333;
-	}
-	
-	.footer-info p {
-		color: #666;
-	}
-	
-	.footer-links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 3rem;
-	}
-	
-	.footer-section {
-		margin-bottom: 2rem;
-	}
-	
-	.footer-section h4 {
-		font-size: 1.1rem;
-		margin-bottom: 1rem;
-		color: #333;
-	}
-	
-	.footer-section ul {
-		list-style-type: none;
-		padding: 0;
-		margin: 0;
-	}
-	
-	.footer-section ul li {
-		margin-bottom: 0.5rem;
-	}
-	
-	.footer-section a, .social-links a {
-		color: #666;
-		text-decoration: none;
-		transition: color 0.3s ease;
-	}
-	
-	.footer-section a:hover, .social-links a:hover {
-		color: #5333ed;
-	}
-	
-	.social-links {
-		display: flex;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-	
-	.footer-bottom {
-		text-align: center;
-		border-top: 1px solid #eee;
-		padding-top: 1.5rem;
-		margin-top: 1rem;
-		font-size: 0.9rem;
-		color: #666;
-	}
-	
-	@media (max-width: 768px) {
-		.footer-content {
-			flex-direction: column;
-		}
-		
-		.footer-links {
-			justify-content: space-between;
-			width: 100%;
-		}
-	}
-</style>

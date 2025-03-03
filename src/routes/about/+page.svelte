@@ -1,123 +1,48 @@
-<div class="about_cont">
-	<h2>About Me</h2>
-	<div class="about_info">
-		<div class="about_text">
-			<p>
-				Hi, I'm Fatih Nayebi. I'm a researcher and technology enthusiast specializing in Artificial Intelligence, Machine Learning, and their applications across various domains.
+<script>
+	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+
+	let visible = false;
+
+	onMount(() => {
+		visible = true;
+	});
+</script>
+
+{#if visible}
+<div in:fade={{ duration: 800 }} class="py-12">
+	<h1 class="text-4xl font-bold mb-8 text-center text-primary">About Me</h1>
+
+	<div class="flex flex-col-reverse md:flex-row gap-8 mb-10">
+		<div class="md:w-3/5">
+			<p class="text-lg mb-5 leading-relaxed">
+				I'm Fatih Nayebi, a researcher focused on the intersection of machine learning, human-computer interaction, and software engineering. I'm particularly interested in how AI can enhance developer productivity and software quality.
 			</p>
-			<p>
-				I received my Ph.D. in Computer Science with a focus on Machine Learning from [Your University]. My research has been centered on developing novel algorithms and approaches for solving complex problems in healthcare, finance, and natural language processing.
+			<p class="text-lg mb-5 leading-relaxed">
+				Currently, I'm a Research Scientist at Anthropic, where I work on developing AI systems that are helpful, harmless, and honest. Previously, I was a Research Scientist at GitHub Next, where I worked on AI-powered developer tools.
 			</p>
-			<p>
-				Currently, I work as a [Your Position] at [Your Organization/Company], where I lead research initiatives in [specific area]. I'm passionate about pushing the boundaries of what's possible with AI and translating cutting-edge research into practical applications that can make a positive impact on society.
+			<p class="text-lg mb-5 leading-relaxed">
+				When I'm not researching or coding, I enjoy hiking, photography, and exploring new coffee shops.
 			</p>
-			<p>
-				When I'm not coding or researching, you can find me exploring new hiking trails, reading science fiction novels, or experimenting with cooking recipes from around the world.
-			</p>
-			<div class="about_links">
-				<h3>Connect with me:</h3>
-				<ul>
-					<li><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-					<li><a href="#" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-					<li><a href="#" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-					<li><a href="#" target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
+
+			<div class="mt-8">
+				<h3 class="text-xl font-semibold mb-3">Connect with me</h3>
+				<ul class="flex flex-col md:flex-row gap-3 md:gap-5">
+					<li><a href="https://linkedin.com/in/fatihnayebi" class="text-primary hover:underline font-medium">LinkedIn</a></li>
+					<li><a href="https://twitter.com/fatihnayebi" class="text-primary hover:underline font-medium">Twitter</a></li>
+					<li><a href="https://github.com/fatihnayebi" class="text-primary hover:underline font-medium">GitHub</a></li>
+					<li><a href="https://scholar.google.com/citations?user=fatihnayebi" class="text-primary hover:underline font-medium">Google Scholar</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="about_image_container">
-			<img src="/profile-image.jpg" alt="Fatih Nayebi" class="about_img" />
-			<div class="about_credentials">
-				<p><strong>Fatih Nayebi, Ph.D.</strong></p>
-				<p>AI Researcher & Consultant</p>
+
+		<div class="md:w-2/5 flex flex-col items-center">
+			<img src="/images/profile.jpeg" alt="Fatih Nayebi" class="w-full max-w-xs rounded-lg shadow-md mb-4">
+			<div class="text-center">
+				<p class="mb-1">Fatih Nayebi, Ph.D.</p>
+				<p class="text-gray-600">Research Scientist @ Anthropic</p>
 			</div>
 		</div>
 	</div>
 </div>
-
-<style>
-	.about_cont h2 {
-		font-size: 40px;
-		margin-bottom: 20px;
-	}
-
-	.about_info {
-		display: flex;
-		width: 100%;
-		justify-content: space-between;
-		gap: 40px;
-	}
-
-	.about_text {
-		flex-basis: 60%;
-	}
-
-	.about_text p {
-		margin-bottom: 20px;
-		font-size: 18px;
-		line-height: 1.6;
-	}
-
-	.about_image_container {
-		flex-basis: 40%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.about_img {
-		width: 100%;
-		max-width: 300px;
-		border-radius: 10px;
-		margin-bottom: 15px;
-	}
-
-	.about_credentials {
-		text-align: center;
-		font-size: 16px;
-		margin-top: 10px;
-	}
-
-	.about_credentials p {
-		margin: 5px 0;
-	}
-
-	.about_links {
-		margin-top: 30px;
-	}
-
-	.about_links h3 {
-		font-size: 20px;
-		margin-bottom: 10px;
-	}
-
-	.about_links ul {
-		list-style-type: none;
-		padding: 0;
-		display: flex;
-		gap: 20px;
-	}
-
-	.about_links a {
-		color: #5333ed;
-		font-weight: 500;
-	}
-
-	.about_links a:hover {
-		text-decoration: underline;
-	}
-
-	@media (max-width: 768px) {
-		.about_info {
-			flex-direction: column-reverse;
-		}
-
-		.about_img {
-			max-width: 250px;
-		}
-
-		.about_links ul {
-			flex-direction: column;
-			gap: 10px;
-		}
-	}
-</style>
+{/if}

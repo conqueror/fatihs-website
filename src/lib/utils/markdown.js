@@ -1,5 +1,3 @@
-import matter from 'gray-matter';
-import { marked } from 'marked';
 import { browser } from '$app/environment';
 
 // Pre-loaded blog posts data for client-side and static builds

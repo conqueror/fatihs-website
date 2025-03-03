@@ -1,117 +1,55 @@
-<div class="container">
-    <h1>Research</h1>
-    <p>An overview of my current and past research projects and interests.</p>
-    
-    <div class="research-interests">
-        <h2>Research Interests</h2>
-        <ul>
-            <li>Artificial Intelligence</li>
-            <li>Machine Learning</li>
-            <li>Natural Language Processing</li>
-            <li>Computer Vision</li>
-            <li>Healthcare Applications of AI</li>
-        </ul>
-    </div>
-    
-    <div class="research-projects">
-        <h2>Current Projects</h2>
-        
-        <div class="project">
-            <h3>AI-Assisted Healthcare Diagnostics</h3>
-            <p>Developing machine learning models to assist healthcare professionals in diagnosing diseases from medical images and patient data.</p>
-            <div class="project-details">
-                <span class="project-period">2022 - Present</span>
-                <span class="project-collaborators">Collaborators: Stanford Medical School, MIT CSAIL</span>
-            </div>
-        </div>
-        
-        <div class="project">
-            <h3>Large Language Models for Scientific Literature Analysis</h3>
-            <p>Exploring how large language models can be used to analyze and synthesize insights from scientific literature across multiple domains.</p>
-            <div class="project-details">
-                <span class="project-period">2021 - Present</span>
-                <span class="project-collaborators">Collaborators: OpenAI Research, Berkeley AI Research Lab</span>
-            </div>
-        </div>
-        
-        <h2>Past Projects</h2>
-        
-        <div class="project">
-            <h3>Neural Networks for Time Series Prediction</h3>
-            <p>Developed novel neural network architectures optimized for predicting complex time series data in financial markets.</p>
-            <div class="project-details">
-                <span class="project-period">2019 - 2021</span>
-                <span class="project-collaborators">Collaborators: Quantitative Research Group at JPMorgan</span>
-            </div>
-            <div class="project-outcomes">
-                <a href="#" target="_blank" rel="noopener noreferrer">Published Paper</a> | 
-                <a href="#" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    import { fade } from 'svelte/transition';
+</script>
 
-<style>
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem 0;
-    }
+<div in:fade={{ duration: 800 }} class="max-w-4xl mx-auto py-12 px-4">
+    <h1 class="text-4xl font-bold mb-6 text-center text-primary">Research</h1>
+    <p class="text-lg text-center mb-12">My research focuses on machine learning, AI, and their applications in various domains.</p>
     
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    h2 {
-        font-size: 1.75rem;
-        margin: 2.5rem 0 1.5rem;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 0.5rem;
-    }
-    
-    h3 {
-        font-size: 1.25rem;
-        margin-bottom: 0.75rem;
-        color: #333;
-    }
-    
-    .research-interests ul {
-        padding-left: 1.5rem;
-        margin: 1rem 0;
-    }
-    
-    .research-interests li {
-        margin-bottom: 0.5rem;
-    }
-    
-    .project {
-        margin-bottom: 3rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px dashed #eee;
-    }
-    
-    .project:last-child {
-        border-bottom: none;
-    }
-    
-    .project-details {
-        margin: 1rem 0;
-        font-size: 0.9rem;
-        color: #666;
-    }
-    
-    .project-period {
-        margin-right: 1.5rem;
-        font-weight: bold;
-    }
-    
-    .project-outcomes {
-        margin-top: 0.75rem;
-        font-size: 0.9rem;
-    }
-    
-    .project-outcomes a {
-        color: #5333ed;
-    }
-</style> 
+    <div class="space-y-12">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-semibold mb-3 text-primary">AI for Developer Productivity</h3>
+            <p class="text-lg mb-4">Investigating how AI can enhance software development workflows and improve developer productivity through intelligent code assistance.</p>
+            <div class="flex flex-col md:flex-row justify-between text-sm text-gray-600 mb-4">
+                <span class="mb-2 md:mb-0">2021 - Present</span>
+                <span>Collaborators: Research Team at Anthropic</span>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://arxiv.org/abs/example-paper-1" target="_blank" rel="noopener noreferrer" 
+                   class="text-primary hover:underline">Published Paper</a>
+                <a href="https://github.com/fatihnayebi/ai-dev-tools" target="_blank" rel="noopener noreferrer" 
+                   class="text-primary hover:underline">GitHub Repository</a>
+            </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-semibold mb-3 text-primary">Natural Language Processing for Code</h3>
+            <p class="text-lg mb-4">Exploring how large language models can understand and generate code, with applications in automated code review and documentation.</p>
+            <div class="flex flex-col md:flex-row justify-between text-sm text-gray-600 mb-4">
+                <span class="mb-2 md:mb-0">2020 - 2022</span>
+                <span>Collaborators: GitHub Next Research Team</span>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://arxiv.org/abs/example-paper-2" target="_blank" rel="noopener noreferrer" 
+                   class="text-primary hover:underline">Published Paper</a>
+                <a href="https://github.com/fatihnayebi/nlp-code-analysis" target="_blank" rel="noopener noreferrer" 
+                   class="text-primary hover:underline">GitHub Repository</a>
+            </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-semibold mb-3 text-primary">Neural Networks for Time Series Prediction</h3>
+            <p class="text-lg mb-4">Developed novel neural network architectures optimized for predicting complex time series data in financial markets.</p>
+            <div class="flex flex-col md:flex-row justify-between text-sm text-gray-600 mb-4">
+                <span class="mb-2 md:mb-0">2019 - 2021</span>
+                <span>Collaborators: Quantitative Research Group at JPMorgan</span>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://arxiv.org/abs/example-paper-3" target="_blank" rel="noopener noreferrer" 
+                   class="text-primary hover:underline">Published Paper</a>
+                <a href="https://github.com/fatihnayebi/time-series-nn" target="_blank" rel="noopener noreferrer" 
+                   class="text-primary hover:underline">GitHub Repository</a>
+            </div>
+        </div>
+    </div>
+</div> 
