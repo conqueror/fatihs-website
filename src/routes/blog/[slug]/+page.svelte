@@ -3,6 +3,8 @@
     import DOMPurify from 'dompurify';
     import { storage } from '$lib/utils/storage';
     import { browser } from '$app/environment';
+    import { highlightAll } from '$lib/utils/prism';
+    import '$lib/utils/prism-theme.css';
     
     export let data;
     // Ensure post is always at least an empty object to prevent undefined errors
@@ -52,6 +54,23 @@
                         console.debug('Storage error ignored:', storageError);
                     }
                 }
+                
+                // Apply syntax highlighting after the content is rendered
+                setTimeout(() => {
+                    if (browser) {
+                        highlightAll();
+                        
+                        // Add data-language attribute to code blocks based on their class
+                        const preBlocks = document.querySelectorAll('pre[class*="language-"]');
+                        preBlocks.forEach(pre => {
+                            const className = pre.className;
+                            const match = className.match(/language-(\w+)/);
+                            if (match && match[1]) {
+                                pre.setAttribute('data-language', match[1]);
+                            }
+                        });
+                    }
+                }, 0);
             }
         } catch (error) {
             console.error('Error processing content:', error);
@@ -208,14 +227,16 @@
         margin: 1.5rem 0;
     }
     
-    .blog-content :global(code) {
+    /* Non-highlighted code (inline code) */
+    .blog-content :global(code:not([class*="language-"])) {
         background-color: #f5f5f5;
         padding: 0.1rem 0.3rem;
         border-radius: 3px;
         font-family: monospace;
     }
     
-    .blog-content :global(pre) {
+    /* These styles will be overridden for syntax highlighted code blocks by prism-theme.css */
+    .blog-content :global(pre:not([class*="language-"])) {
         background-color: #f5f5f5;
         padding: 1rem;
         border-radius: 5px;
@@ -223,7 +244,7 @@
         margin: 1.5rem 0;
     }
     
-    .blog-content :global(pre code) {
+    .blog-content :global(pre:not([class*="language-"]) code) {
         background-color: transparent;
         padding: 0;
     }
@@ -251,49 +272,39 @@
     }
     
     .back-link {
-        color: #3273dc;
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #f8f8f8;
+        color: #333;
         text-decoration: none;
-        font-weight: 500;
+        border-radius: 4px;
+        transition: background-color 0.2s;
     }
     
     .back-link:hover {
-        text-decoration: underline;
+        background-color: #efefef;
+        text-decoration: none;
     }
     
-    @media (max-width: 768px) {
-        .container {
-            padding: 1.5rem 1rem;
-        }
-        
-        h1 {
-            font-size: 2rem;
-        }
-        
-        .post-meta {
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-    }
-
     .loading-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 400px;
+        height: 200px;
         text-align: center;
     }
-
+    
     .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3273dc;
+        border-radius: 50%;
         width: 40px;
         height: 40px;
-        margin-bottom: 1rem;
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #3273dc;
-        border-radius: 50%;
         animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
     }
-
+    
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
