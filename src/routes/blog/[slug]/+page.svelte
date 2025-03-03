@@ -8,11 +8,16 @@
     let sanitizedContent = '';
 
     onMount(() => {
-        if (post?.content) {
-            // Sanitize content on the client side
-            sanitizedContent = DOMPurify.sanitize(post.content);
+        try {
+            if (post?.content) {
+                sanitizedContent = DOMPurify.sanitize(post.content);
+            }
+        } catch (error) {
+            console.error('Error sanitizing content:', error);
+            hasError = true;
+        } finally {
+            isLoading = false;
         }
-        isLoading = false;
     });
 </script>
 
@@ -20,6 +25,12 @@
     <div class="loading-container">
         <div class="loading-spinner"></div>
         <p>Loading post...</p>
+    </div>
+{:else if hasError}
+    <div class="error-container">
+        <h1>Error Loading Content</h1>
+        <p>Sorry, there was an error loading this blog post.</p>
+        <a href="/blog" class="back-link">← Back to all posts</a>
     </div>
 {:else if post}
     <div class="container">

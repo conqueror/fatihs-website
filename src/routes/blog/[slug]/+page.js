@@ -1,23 +1,24 @@
 import { error } from '@sveltejs/kit';
-import { getAllBlogPosts, getBlogPostBySlug } from '$lib/utils/markdown';
+import blogPosts from '$lib/generated/blog-posts.json';
 
 // Enable prerendering for blog posts
 export const prerender = true;
 
 // Generate entries for all blog posts
 export function entries() {
-  const posts = getAllBlogPosts();
-  return posts.map(post => ({
+  return blogPosts.map(post => ({
     slug: post.slug
   }));
 }
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params }) {
-  const post = getBlogPostBySlug(params.slug);
+export function load({ params }) {
+  const post = blogPosts.find(post => post.slug === params.slug);
   
   if (!post) {
-    throw error(404, 'Blog post not found');
+    throw error(404, {
+      message: 'Post not found'
+    });
   }
 
   return {

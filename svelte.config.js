@@ -21,9 +21,25 @@ const config = {
 			strict: true
 		}),
 		prerender: {
-			handleHttpError: 'warn',
+			handleHttpError: ({ path, referrer, message }) => {
+				// Ignore missing apple icon errors
+				if (path.includes('apple-touch-icon') || path.includes('favicon')) {
+					return;
+				}
+				
+				// Otherwise, throw an error
+				throw new Error(message);
+			},
 			handleMissingId: 'warn',
-			entries: ['*']
+			entries: ['*'],
+			origin: 'https://fatihnayebi.com'
+		},
+		paths: {
+			base: ''
+		},
+		appDir: 'app',
+		files: {
+			assets: 'static'
 		}
 	}
 };
