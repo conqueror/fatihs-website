@@ -32,7 +32,7 @@
 </svelte:head>
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative">
+<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
 	<!-- Background decorative elements -->
 	<div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
 	<div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
@@ -40,7 +40,7 @@
 	<h1 class="text-5xl font-bold mb-8 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>About Me</h1>
 
 	<div class="flex flex-col-reverse md:flex-row gap-8 mb-16 relative">
-		<div class="md:w-3/5 relative z-10">
+		<div class="md:w-3/5 relative z-0">
 			<AnimateInView type="fade" delay={200}>
 				<div class="p-6 bg-white bg-opacity-80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-100">
 					<p class="text-lg mb-5 leading-relaxed">
@@ -199,7 +199,7 @@
 			</AnimateInView>
 		</div>
 
-		<div class="md:w-2/5 flex flex-col items-center sticky top-20 self-start">
+		<div class="md:w-2/5 flex flex-col items-center sticky top-24 self-start z-0">
 			<AnimateInView type="scale" delay={300}>
 				<div class="relative w-full max-w-xs">
 					<!-- Decorative elements -->
