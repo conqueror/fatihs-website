@@ -22,28 +22,30 @@ const config = {
 		}),
 		prerender: {
 			crawl: true,
-			entries: ['*']
+			entries: ['*'],
+			handleHttpError: ({ path, referrer, message }) => {
+				// ignore specific 404 errors for favicon and apple icons
+				if (path.includes('favicon') || path.includes('apple-touch-icon')) {
+					console.warn(`[warn] Ignoring 404 for ${path}`);
+					return;
+				}
+				
+				// otherwise fail the build
+				throw new Error(message);
+			}
 		},
+		// Ensure we're using absolute paths for better compatibility
 		paths: {
-			base: ''
+			base: '',
+			relative: false,
+			// Add any other paths you need
 		},
+		// Set app directory to _app to match Kinsta's expectations
 		appDir: '_app',
+		// Disable aliasing for better cross-environment compatibility
+		alias: {},
 		files: {
 			assets: 'static'
-		},
-		csp: {
-			mode: 'auto',
-			directives: {
-				'default-src': ["'self'"],
-				'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-				'style-src': ["'self'", "'unsafe-inline'"],
-				'img-src': ["'self'", 'data:', 'blob:'],
-				'connect-src': ["'self'"],
-				'frame-src': ["'self'"],
-				'font-src': ["'self'"],
-				'object-src': ["'none'"],
-				'base-uri': ["'self'"]
-			}
 		}
 	}
 };

@@ -1,11 +1,16 @@
 /*    /index.html   200
 
-# Preserve redirects for dynamic routes
-/blog/*      /index.html   200
-/publications/*    /index.html   200
+# SPA fallback to handle client-side routing
+/*    /index.html    200
 
-# Fallback for SPA navigation
-/*    /index.html   200
+# Explicitly handle dynamic routes
+/blog/*             /index.html    200
+/publications/*     /index.html    200
+/posts/*            /index.html    200
+
+# Handle the apple touch icon requests
+/apple-touch-icon.png            /apple-touch-icon.png              200
+/apple-touch-icon-precomposed.png /apple-touch-icon-precomposed.png  200
 
 # Explicit redirect for /blog
 /blog    /blog.html   200 

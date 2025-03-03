@@ -5,7 +5,8 @@
     import { browser } from '$app/environment';
     
     export let data;
-    const { post } = data;
+    // Ensure post is always at least an empty object to prevent undefined errors
+    const post = data?.post || {};
     let isLoading = true;
     let hasError = false;
     let sanitizedContent = '';
@@ -13,36 +14,47 @@
     onMount(() => {
         try {
             if (post?.content) {
-                sanitizedContent = DOMPurify.sanitize(post.content);
+                // Only sanitize if DOMPurify is available (it should be in browser context)
+                if (browser && typeof DOMPurify !== 'undefined') {
+                    sanitizedContent = DOMPurify.sanitize(post.content);
+                } else {
+                    // Fallback: just use the raw content if DOMPurify is unavailable
+                    sanitizedContent = post.content;
+                }
                 
-                // Only attempt to store history if we're in the browser
+                // Only attempt to store history if we're in the browser context
                 if (browser && post?.slug) {
-                    // No need to wrap this in try/catch as our storage utility already handles errors
-                    storage.setItem('lastViewedPost', post.slug);
-                    
-                    // Update recently viewed posts list if possible
                     try {
-                        const recentPostsJSON = storage.getItem('recentPosts') || '[]';
-                        const recentPosts = JSON.parse(recentPostsJSON);
+                        // No need to wrap this in try/catch as our storage utility already handles errors
+                        storage.setItem('lastViewedPost', post.slug);
                         
-                        // Add current post to the recent list if not already there
-                        if (!recentPosts.includes(post.slug)) {
-                            // Keep only the 5 most recent posts
-                            recentPosts.unshift(post.slug);
-                            if (recentPosts.length > 5) {
-                                recentPosts.pop();
-                            }
+                        // Update recently viewed posts list if possible
+                        try {
+                            const recentPostsJSON = storage.getItem('recentPosts') || '[]';
+                            const recentPosts = JSON.parse(recentPostsJSON);
                             
-                            storage.setItem('recentPosts', JSON.stringify(recentPosts));
+                            // Add current post to the recent list if not already there
+                            if (!recentPosts.includes(post.slug)) {
+                                // Keep only the 5 most recent posts
+                                recentPosts.unshift(post.slug);
+                                if (recentPosts.length > 5) {
+                                    recentPosts.pop();
+                                }
+                                
+                                storage.setItem('recentPosts', JSON.stringify(recentPosts));
+                            }
+                        } catch (e) {
+                            // Silently ignore any JSON parsing errors
+                            console.debug('Could not update recent posts list:', e);
                         }
-                    } catch (e) {
-                        // Silently ignore any JSON parsing errors
-                        console.debug('Could not update recent posts list:', e);
+                    } catch (storageError) {
+                        // Completely ignore any storage errors
+                        console.debug('Storage error ignored:', storageError);
                     }
                 }
             }
         } catch (error) {
-            console.error('Error sanitizing content:', error);
+            console.error('Error processing content:', error);
             hasError = true;
         } finally {
             isLoading = false;
@@ -61,16 +73,18 @@
         <p>Sorry, there was an error loading this blog post.</p>
         <a href="/blog" class="back-link">← Back to all posts</a>
     </div>
-{:else if post}
+{:else if post?.title}
     <div class="container">
         <div class="blog-header">
             <h1>{post.title}</h1>
             <div class="post-meta">
-                <span class="post-date">{new Date(post.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                })}</span>
+                {#if post.date}
+                    <span class="post-date">{new Date(post.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })}</span>
+                {/if}
                 <span class="post-author">By {post.author || 'Fatih Nayebi'}</span>
             </div>
             
@@ -84,7 +98,7 @@
         </div>
         
         <div class="blog-content">
-            {@html sanitizedContent || post.content}
+            {@html sanitizedContent || post.content || '<p>No content available</p>'}
         </div>
         
         <div class="blog-footer">

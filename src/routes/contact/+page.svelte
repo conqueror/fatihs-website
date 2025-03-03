@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { fade, fly, scale } from 'svelte/transition';
     import AnimateInView from '$lib/AnimateInView.svelte';
+    import { browser } from '$app/environment';
     
     let visible = false;
     let name = '';
@@ -9,14 +10,39 @@
     let message = '';
     let isSubmitting = false;
     let isSubmitted = false;
+    let storageError = false;
     
     onMount(() => {
         visible = true;
+        
+        // Check if we can access storage safely
+        if (browser) {
+            try {
+                // Try to access localStorage to test if it's available
+                const testKey = 'storage-test';
+                localStorage.setItem(testKey, 'test');
+                localStorage.removeItem(testKey);
+            } catch (err) {
+                // If localStorage access fails, set the storage error flag
+                console.warn('Storage access is restricted:', err);
+                storageError = true;
+            }
+        }
     });
     
     function handleSubmit() {
         // In a real app, this would handle the form submission to a server
         isSubmitting = true;
+        
+        // If we have storage access and browser environment, try to save the email
+        // to prefill next time (but wrapped in try/catch for safety)
+        if (browser && !storageError && email) {
+            try {
+                sessionStorage.setItem('contact_email', email);
+            } catch (err) {
+                console.warn('Could not save email to sessionStorage:', err);
+            }
+        }
         
         // Simulate form submission
         setTimeout(() => {
@@ -26,6 +52,18 @@
             email = '';
             message = '';
         }, 1500);
+    }
+    
+    // Try to load saved email from sessionStorage if available
+    if (browser && !storageError) {
+        try {
+            const savedEmail = sessionStorage.getItem('contact_email');
+            if (savedEmail) {
+                email = savedEmail;
+            }
+        } catch (err) {
+            console.warn('Could not retrieve email from sessionStorage:', err);
+        }
     }
 </script>
 
