@@ -45,7 +45,7 @@
   on:mouseleave={onMouseLeave}
   style="transform: scale({$scale});"
   data-sveltekit-preload-data
-  data-sveltekit-noscroll
+  data-sveltekit-prefetch
 >
   <slot />
   {#if hovered}

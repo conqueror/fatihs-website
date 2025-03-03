@@ -68,7 +68,9 @@
           <div class="bg-blue-50 p-4 rounded-lg h-40 flex items-center justify-center" 
                in:fade={{ duration: 500 }}
                on:mouseenter={() => hovered = !hovered}
-               on:mouseleave={() => hovered = !hovered}>
+               on:mouseleave={() => hovered = !hovered}
+               role="button"
+               tabindex="0">
             <p class="text-center text-gray-700">Hover me to see fade transition</p>
           </div>
         {/key}
@@ -80,7 +82,9 @@
           <div class="bg-indigo-50 p-4 rounded-lg h-40 flex items-center justify-center" 
                in:fly={{ y: 20, duration: 500 }}
                on:mouseenter={() => hovered = !hovered}
-               on:mouseleave={() => hovered = !hovered}>
+               on:mouseleave={() => hovered = !hovered}
+               role="button"
+               tabindex="0">
             <p class="text-center text-gray-700">Hover me to see fly transition</p>
           </div>
         {/key}
@@ -92,7 +96,9 @@
           <div class="bg-purple-50 p-4 rounded-lg h-40 flex items-center justify-center" 
                in:scale={{ start: 0.8, duration: 500 }}
                on:mouseenter={() => hovered = !hovered}
-               on:mouseleave={() => hovered = !hovered}>
+               on:mouseleave={() => hovered = !hovered}
+               role="button"
+               tabindex="0">
             <p class="text-center text-gray-700">Hover me to see scale transition</p>
           </div>
         {/key}

@@ -33,6 +33,10 @@
     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
     transition:fade={{ duration: 200 }}
     on:click={handleClick}
+    on:keydown={handleKeydown}
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
   >
     <div 
       class="relative w-full max-w-lg bg-white rounded-xl shadow-xl overflow-hidden max-h-[90vh]"
@@ -50,7 +54,9 @@
       </button>
       
       <div class="overflow-auto p-6 max-h-[90vh]">
-        <slot />
+        <div id="modal-title">
+          <slot />
+        </div>
       </div>
     </div>
   </div>
