@@ -1,0 +1,59 @@
+[
+  {
+    "slug": "ml-interpretability",
+    "title": "Towards Interpretable Machine Learning: A Framework for Clinical Decision Support",
+    "date": "2023-01-10",
+    "journal": "Artificial Intelligence in Medicine",
+    "authors": [
+      "Fatih Nayebi",
+      "Robert Johnson",
+      "Maria Garcia"
+    ],
+    "doi": "10.1234/aim.2023.123",
+    "tags": [
+      "machine learning",
+      "interpretability",
+      "healthcare",
+      "clinical decision support"
+    ],
+    "featured": true,
+    "content": "<h2>Abstract</h2>\n<p>The black-box nature of many state-of-the-art machine learning models poses significant challenges for their adoption in clinical settings, where interpretability is essential for trust and actionable insights. In this paper, we present a novel framework for developing inherently interpretable machine learning models specifically designed for clinical decision support. Our approach balances predictive performance with interpretability through a combination of sparse feature selection, hierarchical attention mechanisms, and case-based reasoning. We evaluate our framework on three real-world clinical datasets and demonstrate that our interpretable models achieve comparable performance to black-box models while providing clinically meaningful explanations.</p>\n<h2>Key Contributions</h2>\n<ol>\n<li>Development of a hybrid interpretability framework that combines model-intrinsic and post-hoc explanation methods</li>\n<li>Introduction of a novel clinical relevance scoring mechanism that aligns model explanations with domain knowledge</li>\n<li>Comprehensive evaluation across multiple clinical domains including cardiology, oncology, and emergency medicine</li>\n<li>User studies with 42 healthcare professionals demonstrating increased trust and actionability of the system&#39;s recommendations</li>\n</ol>\n<h2>Impact</h2>\n<p>This work addresses a critical gap in clinical AI applications by providing a systematic approach to interpretable machine learning that meets the unique requirements of healthcare environments. By enabling clinicians to understand model predictions, our framework facilitates responsible deployment of AI in clinical workflows, potentially improving diagnostic accuracy and treatment planning while maintaining appropriate human oversight.</p>\n<h2>Citation</h2>\n<pre class=\"language-bibtex\"><code class=\"language-bibtex\">@article{nayebi2023interpretable,\n  title={Towards Interpretable Machine Learning: A Framework for Clinical Decision Support},\n  author={Nayebi, Fatih and Johnson, Robert and Garcia, Maria},\n  journal={Artificial Intelligence in Medicine},\n  volume={86},\n  pages={102--118},\n  year={2023},\n  publisher={Elsevier}\n}</code></pre><p><a href=\"https://example.com/papers/nayebi2023interpretable.pdf\">Download PDF</a> </p>\n"
+  },
+  {
+    "slug": "neural-networks-paper",
+    "title": "Advances in Neural Network Architectures for Visual Recognition Tasks",
+    "date": "2022-09-15",
+    "journal": "Journal of Computer Vision and Pattern Recognition",
+    "authors": [
+      "Fatih Nayebi",
+      "Jane Smith",
+      "John Doe"
+    ],
+    "doi": "10.1234/jcvpr.2022.789",
+    "tags": [
+      "neural networks",
+      "computer vision",
+      "deep learning"
+    ],
+    "featured": true,
+    "content": "<h2>Abstract</h2>\n<p>This paper presents novel neural network architectures that significantly improve performance on complex visual recognition tasks. By incorporating attention mechanisms and hierarchical feature integration, our approach achieves state-of-the-art results on multiple benchmark datasets while requiring fewer parameters than previous methods. We demonstrate that our architecture is particularly effective for fine-grained classification tasks where subtle visual differences are critical for accurate predictions.</p>\n<h2>Key Contributions</h2>\n<ol>\n<li>Introduction of a hybrid attention mechanism that dynamically weights spatial and channel information</li>\n<li>Development of a hierarchical feature integration approach that preserves both low-level and high-level visual details</li>\n<li>Extensive evaluation demonstrating 5-8% improvement over state-of-the-art methods on CIFAR-100, ImageNet, and specialized medical imaging datasets</li>\n<li>Analysis of computational efficiency showing 30% reduction in model parameters without sacrificing accuracy</li>\n</ol>\n<h2>Citation</h2>\n<pre class=\"language-bibtex\"><code class=\"language-bibtex\">@article{nayebi2022advances,\n  title={Advances in Neural Network Architectures for Visual Recognition Tasks},\n  author={Nayebi, Fatih and Smith, Jane and Doe, John},\n  journal={Journal of Computer Vision and Pattern Recognition},\n  volume={45},\n  number={3},\n  pages={287--301},\n  year={2022},\n  publisher={Computer Vision Society}\n}</code></pre><p><a href=\"https://example.com/papers/nayebi2022advances.pdf\">Download PDF</a> </p>\n"
+  },
+  {
+    "slug": "transformer-optimization-techniques",
+    "title": "Advanced Optimization Techniques for Transformer-Based Language Models",
+    "date": "2023-06-12",
+    "excerpt": "This paper introduces novel optimization strategies that significantly improve the training efficiency and performance of transformer-based language models.",
+    "tags": [
+      "Deep Learning",
+      "Transformers",
+      "Optimization",
+      "NLP"
+    ],
+    "author": "Fatih Nayebi, Alex Johnson, Sarah Chen",
+    "venue": "International Conference on Machine Learning (ICML)",
+    "paperUrl": "https://example.com/papers/transformer-optimization.pdf",
+    "codeUrl": "https://github.com/username/transformer-optimization",
+    "featured": true,
+    "content": "<h1>Advanced Optimization Techniques for Transformer-Based Language Models</h1>\n<h2>Abstract</h2>\n<p>Transformer-based language models have revolutionized natural language processing, but their training remains computationally expensive and time-consuming. In this paper, we introduce a set of novel optimization techniques specifically designed for transformer architectures. Our methods include an adaptive gradient accumulation strategy, a specialized layer-wise learning rate schedule, and a new attention pattern sparsification approach. We demonstrate that these techniques, when applied together, reduce training time by up to 47% while maintaining or improving model performance across multiple benchmark tasks. Our approaches are architecture-agnostic and can be readily applied to various transformer variants.</p>\n<h2>Introduction</h2>\n<p>As transformer-based language models continue to grow in size and complexity, the computational resources required for their training have become increasingly prohibitive. This not only creates barriers to entry for researchers with limited computing resources but also contributes significantly to the carbon footprint of AI research.</p>\n<p>Our work addresses this challenge by introducing optimization techniques that substantially improve training efficiency without compromising model quality. We focus on three complementary approaches:</p>\n<ol>\n<li><strong>Adaptive Gradient Accumulation (AGA)</strong>: A dynamic method that adjusts the gradient accumulation steps based on gradient variance.</li>\n<li><strong>Layer-wise Cosine Learning Rate (LCLR)</strong>: A specialized learning rate schedule that applies different optimization parameters to different layers based on their position in the network.</li>\n<li><strong>Structured Attention Sparsification (SAS)</strong>: A technique to identify and prune unnecessary attention patterns during training.</li>\n</ol>\n<h2>Methodology</h2>\n<h3>Adaptive Gradient Accumulation</h3>\n<p>Traditional gradient accumulation uses a fixed number of steps before updating model parameters. Our AGA method dynamically adjusts the accumulation steps based on the estimated variance of gradients:</p>\n<p>[ N_{steps} = \\max\\left(\\left\\lceil\\frac{\\alpha \\cdot \\sigma^2_{g}}{\\epsilon^2}\\right\\rceil, 1\\right) ]</p>\n<p>Where (\\sigma^2_{g}) is the estimated gradient variance, (\\epsilon) is the desired precision, and (\\alpha) is a confidence parameter.</p>\n<h3>Layer-wise Cosine Learning Rate</h3>\n<p>LCLR assigns different learning rate schedules to each layer in the transformer:</p>\n<p>[ \\eta_{\\ell}(t) = \\eta_{base} \\cdot \\gamma^{\\ell/L} \\cdot \\frac{1 + \\cos\\left(\\pi \\cdot \\frac{t}{T}\\right)}{2} ]</p>\n<p>Where (\\ell) is the layer index, (L) is the total number of layers, (\\gamma) is a decay factor, and (t) is the current training step.</p>\n<h3>Structured Attention Sparsification</h3>\n<p>SAS identifies redundant attention patterns using a novel importance scoring mechanism:</p>\n<p>[ S_{ij} = |A_{ij}| \\cdot \\left|\\frac{\\partial \\mathcal{L}}{\\partial A_{ij}}\\right| ]</p>\n<p>Where (A_{ij}) is the attention weight and (\\frac{\\partial \\mathcal{L}}{\\partial A_{ij}}) is its gradient.</p>\n<h2>Results</h2>\n<p>We evaluated our techniques on several benchmark tasks including GLUE, SQuAD, and WMT translation. Key findings include:</p>\n<ul>\n<li>47% reduction in training time to reach the same performance level</li>\n<li>12% improvement in compute efficiency (FLOPs per token)</li>\n<li>8% improvement on GLUE scores with the same compute budget</li>\n<li>Consistently better optimization trajectories across model sizes ranging from 125M to 1.5B parameters</li>\n</ul>\n<h2>Conclusion</h2>\n<p>Our proposed optimization techniques significantly improve the training efficiency of transformer-based language models without sacrificing performance. These methods are complementary to existing optimization approaches and can be easily integrated into standard training pipelines. We believe these contributions will help democratize access to state-of-the-art language models by reducing the resources required to train them.</p>\n<p>In future work, we plan to explore the application of these techniques to multimodal transformers and investigate their effectiveness in transfer learning scenarios. </p>\n"
+  }
+]

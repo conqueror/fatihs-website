@@ -50,7 +50,7 @@
         formData.append('message', message);
         
         // Send the data to Formspree
-        fetch('https://formspree.io/f/xzbnezbo', {
+        fetch('https://formspree.io/f/xanqrakb', {
             method: 'POST',
             body: formData,
             headers: {
