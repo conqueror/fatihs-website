@@ -22,8 +22,18 @@ renderer.code = function (code, lang, isEscaped) {
   // If no language is specified, use 'text'
   const language = lang || 'text';
   
-  // Ensure we have a proper string for code content
-  const codeContent = typeof code === 'string' ? code : String(code || '');
+  // Handle all code blocks consistently
+  let codeContent;
+  
+  // Special handling for BibTeX citations which might be showing as [object Object]
+  if (code === '[object Object]' && language === 'text') {
+    if (this.options && this.options.bibTexContent) {
+      return `<pre class="language-bibtex"><code class="language-bibtex">${escapeHtml(this.options.bibTexContent)}</code></pre>`;
+    }
+  }
+  
+  // Use the original code content, don't replace it
+  codeContent = typeof code === 'string' ? code : String(code || '');
   
   // Trim any trailing special characters that might be causing issues
   const trimmedCode = codeContent.replace(/[%\s]+$/, '');
@@ -178,6 +188,23 @@ function syntaxHighlight(code, language) {
       '$1<span class="token keyword">$2</span>$4'
     );
   }
+  else if (language === 'bibtex') {
+    // BibTeX specific highlighting
+    html = html.replace(
+      /@(\w+)/g, 
+      '@<span class="token keyword">$1</span>'
+    );
+    // Field names
+    html = html.replace(
+      /(\s+)(\w+)(\s*=)/g, 
+      '$1<span class="token property">$2</span>$3'
+    );
+    // Field values
+    html = html.replace(
+      /(=\s*)({[^}]*})/g, 
+      '$1<span class="token string">$2</span>'
+    );
+  }
   
   return html;
 }
@@ -202,6 +229,37 @@ function processContent(contentType) {
     const filePath = path.join(contentDir, filename);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
+    
+    // Extract all code blocks from content
+    let codeBlocks = {};
+    const codeBlockRegex = /```(?:\s*(\w+))?\n([\s\S]*?)\n```/g;
+    let match;
+    let blockIndex = 0;
+    
+    while ((match = codeBlockRegex.exec(content)) !== null) {
+      const language = match[1] || 'text';
+      const code = match[2];
+      const blockId = `code-block-${blockIndex++}`;
+      codeBlocks[blockId] = { language, code };
+    }
+    
+    // Extract BibTeX content if it exists
+    let bibTexContent = '';
+    const bibTexMatch = content.match(/```(?:\s*|bibtex)\n(@[\s\S]*?)\n```/);
+    if (bibTexMatch && bibTexMatch[1]) {
+      bibTexContent = bibTexMatch[1];
+    }
+    
+    // Set options for the renderer
+    marked.setOptions({
+      renderer: renderer,
+      gfm: true,
+      breaks: true,
+      headerIds: true,
+      langPrefix: 'language-',
+      bibTexContent: bibTexContent,
+      codeBlocks: codeBlocks
+    });
     
     // Convert markdown to HTML with our custom renderer
     const htmlContent = marked.parse(content);

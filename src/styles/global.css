@@ -15,6 +15,67 @@
   body {
     @apply font-sans text-gray-800 bg-gray-50;
   }
+  
+  /* Prism.js code block styles */
+  pre[class*="language-"] {
+    position: relative;
+    margin: 1.5em 0;
+    overflow: auto;
+    border-radius: 0.3em;
+  }
+  
+  code[class*="language-"] {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+  
+  /* Ensure .token classes aren't affected by Tailwind's reset */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    @apply text-gray-500;
+  }
+  
+  .token.punctuation {
+    @apply text-gray-600;
+  }
+  
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    @apply text-blue-500;
+  }
+  
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    @apply text-green-600;
+  }
+  
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .token.variable {
+    @apply text-orange-500;
+  }
+  
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    @apply text-purple-600;
+  }
+  
+  .token.function,
+  .token.class-name {
+    @apply text-yellow-600;
+  }
 }
 
 /* Custom component styles */

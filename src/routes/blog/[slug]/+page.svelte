@@ -3,8 +3,8 @@
     import DOMPurify from 'dompurify';
     import { storage } from '$lib/utils/storage';
     import { browser } from '$app/environment';
+    // Import highlightAll function from our Prism utility
     import { highlightAll } from '$lib/utils/prism';
-    import '$lib/utils/prism-theme.css';
     
     export let data;
     // Ensure post is always at least an empty object to prevent undefined errors
@@ -66,20 +66,17 @@
                         console.debug('Storage error ignored:', storageError);
                     }
                 }
+                
+                // Apply Prism.js syntax highlighting after content is loaded
+                setTimeout(() => {
+                    highlightAll();
+                }, 0);
             }
         } catch (error) {
             console.error('Error processing content:', error);
             hasError = true;
         } finally {
             isLoading = false;
-            
-            // Apply syntax highlighting after the DOM has been updated with the content
-            setTimeout(() => {
-                if (browser && contentContainer) {
-                    console.log('Applying syntax highlighting');
-                    highlightAll();
-                }
-            }, 100);
         }
     });
 </script>

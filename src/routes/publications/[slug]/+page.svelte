@@ -1,6 +1,14 @@
 <script>
+    import { onMount } from 'svelte';
+    import { highlightAll } from '$lib/utils/prism';
+    
     export let data;
     const { publication } = data;
+    
+    onMount(() => {
+        // Apply syntax highlighting to all code blocks
+        highlightAll();
+    });
 </script>
 
 <div class="container">
