@@ -79,12 +79,6 @@
 {/if}
 
 <style>
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem 0;
-    }
-    
     h1 {
         font-size: 2.5rem;
         margin-bottom: 0.5rem;
@@ -103,10 +97,6 @@
     }
     
     @media (max-width: 768px) {
-        .container {
-            padding: 1.5rem 1rem;
-        }
-        
         h1 {
             font-size: 2rem;
         }
