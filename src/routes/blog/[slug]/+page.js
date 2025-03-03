@@ -1,8 +1,19 @@
-import { getBlogPostBySlug } from '$lib/utils/markdown';
+import { getAllBlogPosts } from '$lib/utils/markdown';
 
-// Use load to ensure the client knows how to handle the route
-export function load({ params }) {
+// Enable prerendering for blog posts
+export const prerender = true;
+
+// Generate entries for all blog posts
+export function entries() {
+  const posts = getAllBlogPosts();
+  return posts.map(post => ({
+    slug: post.slug
+  }));
+}
+
+// Forward server data
+export function load({ data }) {
   return {
-    post: getBlogPostBySlug(params.slug)
+    ...data
   };
 } 

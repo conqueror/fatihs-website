@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <script>
+    // Get the current path excluding the domain
+    const path = window.location.pathname;
+    
+    // Special handling for blog asset paths - strip the /blog/ prefix from asset paths
+    if (path.startsWith('/blog/_app/')) {
+      window.location.href = path.replace('/blog/_app/', '/_app/') + window.location.search + window.location.hash;
+    } 
+    // For blog post routes with the exact slug
+    else if (path.match(/^\/blog\/[^\/]+$/)) {
+      window.location.href = '/' + window.location.search + window.location.hash + '?path=' + encodeURIComponent(path);
+    }
+    // For other routes
+    else {
+      window.location.href = '/' + window.location.search + window.location.hash;
+    }
+    
+    // Fallback if the redirects don't work
+    setTimeout(function() {
+      window.location.href = '/';
+    }, 2000);
+  </script>
+</head>
+<body>
+  <p>Redirecting to homepage...</p>
+</body>
+</html> 

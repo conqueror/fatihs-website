@@ -5,7 +5,7 @@
 	import AnimatedButton from '$lib/AnimatedButton.svelte';
 	
 	export let data;
-	const { featuredPosts, featuredPublications } = data;
+	const { featuredPosts, featuredPublications, redirectedBlogPost } = data;
 	
 	// Animated count for a small stats section
 	let count = spring(0, {
@@ -239,36 +239,54 @@
 							<h2 class="text-2xl font-bold">Featured Blog Posts</h2>
 						</div>
 						<div class="space-y-8">
-							{#if featuredPosts && featuredPosts.length > 0}
-								{#each featuredPosts as post, i}
-									<div class="border-b border-gray-200 pb-6 group" in:fly={{ x: -20, delay: i * 150, duration: 500 }}>
-										<div class="text-sm text-gray-500 mb-2">{new Date(post.date).toLocaleDateString('en-US', {
-											year: 'numeric',
-											month: 'long',
-											day: 'numeric'
-										})}</div>
-										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{post.title}</h3>
-										<p class="text-gray-600 mb-3">{post.excerpt}</p>
-										<a href={`/blog/${post.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary border border-primary hover:bg-primary hover:bg-opacity-10">
-											Read post
-											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-											</svg>
-										</a>
-									</div>
-								{/each}
-							{:else}
+							{#if redirectedBlogPost}
 								<div class="border-b border-gray-200 pb-6 group" in:fly={{ x: -20, duration: 500 }}>
-									<div class="text-sm text-gray-500 mb-2">June 15, 2023</div>
-									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">AI in Healthcare: Current Applications and Future Possibilities</h3>
-									<p class="text-gray-600 mb-3">Exploring how artificial intelligence is transforming healthcare diagnosis, treatment, and patient care.</p>
-									<a href="/blog" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary border border-primary hover:bg-primary hover:bg-opacity-10">
+									<div class="text-sm text-gray-500 mb-2">{new Date(redirectedBlogPost.date).toLocaleDateString('en-US', {
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric'
+									})}</div>
+									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{redirectedBlogPost.title}</h3>
+									<p class="text-gray-600 mb-3">{redirectedBlogPost.excerpt}</p>
+									<a href={`/blog/${redirectedBlogPost.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary border border-primary hover:bg-primary hover:bg-opacity-10">
 										Read post
 										<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
 										</svg>
 									</a>
 								</div>
+							{:else}
+								{#if featuredPosts && featuredPosts.length > 0}
+									{#each featuredPosts as post, i}
+										<div class="border-b border-gray-200 pb-6 group" in:fly={{ x: -20, delay: i * 150, duration: 500 }}>
+											<div class="text-sm text-gray-500 mb-2">{new Date(post.date).toLocaleDateString('en-US', {
+												year: 'numeric',
+												month: 'long',
+												day: 'numeric'
+											})}</div>
+											<h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{post.title}</h3>
+											<p class="text-gray-600 mb-3">{post.excerpt}</p>
+											<a href={`/blog/${post.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary border border-primary hover:bg-primary hover:bg-opacity-10">
+												Read post
+												<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+												</svg>
+											</a>
+										</div>
+									{/each}
+								{:else}
+									<div class="border-b border-gray-200 pb-6 group" in:fly={{ x: -20, duration: 500 }}>
+										<div class="text-sm text-gray-500 mb-2">June 15, 2023</div>
+										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">AI in Healthcare: Current Applications and Future Possibilities</h3>
+										<p class="text-gray-600 mb-3">Exploring how artificial intelligence is transforming healthcare diagnosis, treatment, and patient care.</p>
+										<a href="/blog" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary border border-primary hover:bg-primary hover:bg-opacity-10">
+											Read post
+											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+											</svg>
+										</a>
+									</div>
+								{/if}
 							{/if}
 						</div>
 						<div class="mt-8 text-center">

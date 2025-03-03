@@ -1,43 +1,86 @@
 <script>
+    import { onMount } from 'svelte';
+    import DOMPurify from 'dompurify';
     export let data;
     const { post } = data;
+    let isLoading = true;
+    let hasError = false;
+    let sanitizedContent = '';
+
+    onMount(() => {
+        if (post?.content) {
+            // Sanitize content on the client side
+            sanitizedContent = DOMPurify.sanitize(post.content);
+        }
+        isLoading = false;
+    });
 </script>
 
-<div class="container">
-    <div class="blog-header">
-        <h1>{post.title}</h1>
-        <div class="post-meta">
-            <span class="post-date">{new Date(post.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            })}</span>
-            <span class="post-author">By {post.author || 'Fatih Nayebi'}</span>
+{#if isLoading}
+    <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading post...</p>
+    </div>
+{:else if post}
+    <div class="container">
+        <div class="blog-header">
+            <h1>{post.title}</h1>
+            <div class="post-meta">
+                <span class="post-date">{new Date(post.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })}</span>
+                <span class="post-author">By {post.author || 'Fatih Nayebi'}</span>
+            </div>
+            
+            {#if post.tags && post.tags.length > 0}
+                <div class="post-tags">
+                    {#each post.tags as tag}
+                        <span class="tag">{tag}</span>
+                    {/each}
+                </div>
+            {/if}
         </div>
         
-        {#if post.tags && post.tags.length > 0}
-            <div class="post-tags">
-                {#each post.tags as tag}
-                    <span class="tag">{tag}</span>
-                {/each}
-            </div>
-        {/if}
+        <div class="blog-content">
+            {@html sanitizedContent || post.content}
+        </div>
+        
+        <div class="blog-footer">
+            <a href="/blog" class="back-link">← Back to all posts</a>
+        </div>
     </div>
-    
-    <div class="blog-content">
-        {@html post.content}
-    </div>
-    
-    <div class="blog-footer">
+{:else}
+    <div class="error-container">
+        <h1>Post Not Found</h1>
+        <p>Sorry, we couldn't find the blog post you're looking for.</p>
         <a href="/blog" class="back-link">← Back to all posts</a>
     </div>
-</div>
+{/if}
 
 <style>
     .container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 2rem 0;
+        padding: 2rem 1rem;
+    }
+    
+    .error-container {
+        max-width: 600px;
+        margin: 4rem auto;
+        text-align: center;
+        padding: 2rem 1rem;
+    }
+    
+    .error-container h1 {
+        color: #e74c3c;
+        margin-bottom: 1rem;
+    }
+    
+    .error-container p {
+        color: #666;
+        margin-bottom: 2rem;
     }
     
     .blog-header {
@@ -176,5 +219,29 @@
             flex-direction: column;
             gap: 0.5rem;
         }
+    }
+
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        text-align: center;
+    }
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 1rem;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3273dc;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 </style> 

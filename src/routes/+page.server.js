@@ -5,7 +5,7 @@ import { getAllBlogPosts, getAllPublications } from '$lib/utils/markdown';
  */
 export function load() {
   // Get featured blog posts - increased to show more posts on homepage
-  const featuredPosts = getAllBlogPosts(true).slice(0, 6);
+  const featuredPosts = getAllBlogPosts(true).slice(0, 8);
   
   // Get featured publications
   const featuredPublications = getAllPublications(true).slice(0, 2);
