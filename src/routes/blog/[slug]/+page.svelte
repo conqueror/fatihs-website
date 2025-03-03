@@ -37,6 +37,7 @@
                         }
                     } catch (e) {
                         // Silently ignore any JSON parsing errors
+                        console.debug('Could not update recent posts list:', e);
                     }
                 }
             }

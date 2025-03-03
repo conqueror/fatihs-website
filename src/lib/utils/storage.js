@@ -1,149 +1,133 @@
 import { browser } from '$app/environment';
 
-// Feature detection function for storage availability
+/**
+ * Tests if a specific type of storage is available in the current environment
+ * @param {string} type - 'localStorage' or 'sessionStorage'
+ * @returns {boolean} - Whether the storage is available
+ */
 function isStorageAvailable(type) {
-  if (!browser) return false;
-  
-  try {
-    const storage = window[type];
-    const x = '__storage_test__';
-    storage.setItem(x, x);
-    storage.removeItem(x);
-    return true;
-  } catch (e) {
-    return false;
-  }
+    if (!browser) return false;
+    
+    try {
+        const storage = window[type];
+        const testKey = '__storage_test__';
+        storage.setItem(testKey, testKey);
+        storage.removeItem(testKey);
+        return true;
+    } catch (e) {
+        return false;
+    }
 }
 
-// Create an in-memory fallback storage
-const memoryStorage = new Map();
+// Check storage availability only in browser context
+const localStorageAvailable = isStorageAvailable('localStorage');
+const sessionStorageAvailable = isStorageAvailable('sessionStorage');
 
-// Check if localStorage and sessionStorage are available
-const hasLocalStorage = isStorageAvailable('localStorage');
-const hasSessionStorage = isStorageAvailable('sessionStorage');
+// In-memory fallback storage
+const fallbackStorage = new Map();
 
-// Safe localStorage wrapper
+/**
+ * Safe localStorage wrapper that handles errors and fallback
+ */
 const safeLocalStorage = {
-  getItem(key) {
-    try {
-      if (!browser || !hasLocalStorage) return null;
-      return localStorage.getItem(key);
-    } catch (e) {
-      console.warn('localStorage access error:', e);
-      return null;
+    getItem(key) {
+        if (localStorageAvailable) {
+            try {
+                return localStorage.getItem(key);
+            } catch (e) {
+                console.warn('Error accessing localStorage:', e);
+            }
+        }
+        return fallbackStorage.get(key) || null;
+    },
+    
+    setItem(key, value) {
+        if (localStorageAvailable) {
+            try {
+                localStorage.setItem(key, value);
+                return true;
+            } catch (e) {
+                console.warn('Error writing to localStorage:', e);
+            }
+        }
+        fallbackStorage.set(key, value);
+        return true;
+    },
+    
+    removeItem(key) {
+        if (localStorageAvailable) {
+            try {
+                localStorage.removeItem(key);
+                return true;
+            } catch (e) {
+                console.warn('Error removing from localStorage:', e);
+            }
+        }
+        fallbackStorage.delete(key);
+        return true;
     }
-  },
-  
-  setItem(key, value) {
-    try {
-      if (!browser || !hasLocalStorage) return false;
-      localStorage.setItem(key, value);
-      return true;
-    } catch (e) {
-      console.warn('localStorage write error:', e);
-      return false;
-    }
-  },
-  
-  removeItem(key) {
-    try {
-      if (!browser || !hasLocalStorage) return false;
-      localStorage.removeItem(key);
-      return true;
-    } catch (e) {
-      console.warn('localStorage remove error:', e);
-      return false;
-    }
-  }
 };
 
-// Safe sessionStorage wrapper
+/**
+ * Safe sessionStorage wrapper that handles errors and fallback
+ */
 const safeSessionStorage = {
-  getItem(key) {
-    try {
-      if (!browser || !hasSessionStorage) return null;
-      return sessionStorage.getItem(key);
-    } catch (e) {
-      console.warn('sessionStorage access error:', e);
-      return null;
+    getItem(key) {
+        if (sessionStorageAvailable) {
+            try {
+                return sessionStorage.getItem(key);
+            } catch (e) {
+                console.warn('Error accessing sessionStorage:', e);
+            }
+        }
+        return null;
+    },
+    
+    setItem(key, value) {
+        if (sessionStorageAvailable) {
+            try {
+                sessionStorage.setItem(key, value);
+                return true;
+            } catch (e) {
+                console.warn('Error writing to sessionStorage:', e);
+            }
+        }
+        return false;
+    },
+    
+    removeItem(key) {
+        if (sessionStorageAvailable) {
+            try {
+                sessionStorage.removeItem(key);
+                return true;
+            } catch (e) {
+                console.warn('Error removing from sessionStorage:', e);
+            }
+        }
+        return false;
     }
-  },
-  
-  setItem(key, value) {
-    try {
-      if (!browser || !hasSessionStorage) return false;
-      sessionStorage.setItem(key, value);
-      return true;
-    } catch (e) {
-      console.warn('sessionStorage write error:', e);
-      return false;
-    }
-  },
-  
-  removeItem(key) {
-    try {
-      if (!browser || !hasSessionStorage) return false;
-      sessionStorage.removeItem(key);
-      return true;
-    } catch (e) {
-      console.warn('sessionStorage remove error:', e);
-      return false;
-    }
-  }
 };
 
-// Memory storage fallback
-const fallbackStorage = {
-  getItem(key) {
-    return memoryStorage.get(key) || null;
-  },
-  
-  setItem(key, value) {
-    memoryStorage.set(key, value);
-    return true;
-  },
-  
-  removeItem(key) {
-    memoryStorage.delete(key);
-    return true;
-  }
+/**
+ * Primary storage utility that handles both localStorage and sessionStorage
+ * with appropriate fallbacks and error handling
+ */
+export const storage = browser ? safeLocalStorage : {
+    getItem: () => null,
+    setItem: () => false,
+    removeItem: () => false
 };
 
-// Unified storage interface with automatic fallback
-export const storage = {
-  getItem(key) {
-    // Try localStorage first, then fallback
-    const value = safeLocalStorage.getItem(key);
-    return value !== null ? value : fallbackStorage.getItem(key);
-  },
-  
-  setItem(key, value) {
-    // Always save to fallback in case localStorage fails
-    fallbackStorage.setItem(key, value);
-    // Attempt to save to localStorage too
-    return safeLocalStorage.setItem(key, value);
-  },
-  
-  removeItem(key) {
-    // Clean up both storages
-    fallbackStorage.removeItem(key);
-    return safeLocalStorage.removeItem(key);
-  }
+/**
+ * Session storage utility - separate interface for session-specific storage
+ */
+export const sessionStorage = browser ? safeSessionStorage : {
+    getItem: () => null,
+    setItem: () => false,
+    removeItem: () => false
 };
 
-// Also export session storage for when session-specific storage is needed
-export const sessionStorage = {
-  getItem(key) {
-    const value = safeSessionStorage.getItem(key);
-    // Don't fall back to memory for session storage
-    return value;
-  },
-  
-  setItem(key, value) {
-    return safeSessionStorage.setItem(key, value);
-  },
-  
-  removeItem(key) {
-    return safeSessionStorage.removeItem(key);
-  }
-}; 
+/**
+ * Default export for convenience
+ */
+export default storage; 

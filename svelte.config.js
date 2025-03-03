@@ -9,7 +9,7 @@ const config = {
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
+		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter({
 			// default options are shown. On some platforms
@@ -21,23 +21,11 @@ const config = {
 			strict: false
 		}),
 		prerender: {
-			handleHttpError: ({ path, referrer, message }) => {
-				// Ignore missing apple icon errors
-				if (path.includes('apple-touch-icon') || path.includes('favicon')) {
-					return;
-				}
-				
-				// Otherwise, throw an error
-				throw new Error(message);
-			},
-			handleMissingId: 'warn',
-			entries: ['*'],
 			crawl: true,
-			origin: 'https://fatihnayebi.com'
+			entries: ['*']
 		},
 		paths: {
-			base: '',
-			relative: false
+			base: ''
 		},
 		appDir: '_app',
 		files: {

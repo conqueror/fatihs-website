@@ -1,6 +1,8 @@
-/* /index.html 200
-/blog/* /index.html 200
-/publications/* /index.html 200
+/*    /index.html   200
+
+# Preserve redirects for dynamic routes
+/blog/*      /index.html   200
+/publications/*    /index.html   200
 
 # Fallback for SPA navigation
 /*    /index.html   200
