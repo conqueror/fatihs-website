@@ -63,7 +63,7 @@
                         
                         <div class="px-6 pb-6 mt-auto">
                             <a href={`/blog/${post.slug}`} 
-                                class="read-more inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-300 w-full justify-center">
+                                class="read-more inline-flex items-center px-4 py-2 bg-primary/75 text-white font-bold rounded-lg hover:bg-primary/65 transition-colors duration-300 w-full justify-center">
                                 <span>Read article</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -92,11 +92,6 @@
     h1 {
         font-size: 2.5rem;
         margin-bottom: 0.5rem;
-    }
-    
-    .subtitle {
-        color: #666;
-        margin-bottom: 2rem;
     }
     
     .blog-posts {

@@ -130,12 +130,6 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
-    .publication-title {
-        font-size: 1.5rem;
-        margin: 0 0 1rem;
-        color: #333;
-    }
-    
     .publication-meta {
         margin-bottom: 1rem;
         border-bottom: 1px solid #eee;
@@ -170,14 +164,6 @@
         margin-bottom: 1rem;
     }
     
-    .tag {
-        background-color: #f0f0f0;
-        color: #555;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.8rem;
-    }
-    
     .publication-content {
         margin: 1rem 0;
         position: relative;
@@ -206,18 +192,6 @@
     .publication-content :global(p) {
         margin-bottom: 0.75rem;
         line-height: 1.6;
-    }
-    
-    .publication-link {
-        display: inline-block;
-        color: #3273dc;
-        text-decoration: none;
-        font-weight: 500;
-        margin-top: 0.5rem;
-    }
-    
-    .publication-link:hover {
-        text-decoration: underline;
     }
     
     @media (max-width: 768px) {
