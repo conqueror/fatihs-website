@@ -29,11 +29,11 @@
         A collection of my published academic papers, articles, and books.
     </p>
     
-    <div class="publications-list space-y-8 md:space-y-12">
+    <div class="space-y-12">
         {#if publications && publications.length > 0}
             {#each publications as publication, i}
                 <AnimateInView type="fly" x={-20} delay={300 + (i * 200)}>
-                    <div class="publication-item bg-white p-8 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-500 hover:shadow-md">
+                    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-500 hover:shadow-md">
                         <h2 class="text-2xl font-semibold mb-4 text-primary">{publication.title}</h2>
                         
                         <div class="publication-meta mb-6 pb-4 border-b border-gray-100">
@@ -109,88 +109,29 @@
     
     h1 {
         font-size: 2.5rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .publications-list {
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 2.5rem;
-    }
-    
-    .publication-item {
-        padding: 1.5rem;
-        border: 1px solid #eee;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-    }
-    
-    .publication-item:hover {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 0.5rem;
     }
     
     .publication-meta {
-        margin-bottom: 1rem;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
     
     .publication-authors {
         font-weight: 500;
-        margin-bottom: 0.5rem;
     }
     
     .publication-journal {
         font-style: italic;
-        color: #555;
-        margin-bottom: 0.5rem;
+        color: #666;
     }
     
     .publication-date {
-        font-weight: bold;
-        margin-left: 0.5rem;
-    }
-    
-    .publication-doi {
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
-    }
-    
-    .publication-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
+        font-weight: 600;
     }
     
     .publication-content {
-        margin: 1rem 0;
-        position: relative;
-        max-height: 200px;
-        overflow: hidden;
-    }
-    
-    .publication-content::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
-    }
-    
-    .publication-content :global(h2),
-    .publication-content :global(h3) {
-        font-size: 1.25rem;
-        margin: 1rem 0 0.5rem;
-        border: none;
-        padding: 0;
-    }
-    
-    .publication-content :global(p) {
-        margin-bottom: 0.75rem;
         line-height: 1.6;
     }
     
