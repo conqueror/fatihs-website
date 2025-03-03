@@ -11,15 +11,23 @@
 	// Close menu when clicking outside
 	onMount(() => {
 		const handleClickOutside = (event) => {
-			if (isMenuOpen && !event.target.closest('.mobile-menu') && !event.target.closest('.mobile-menu-toggle')) {
+			// Don't close if clicking on the toggle button itself
+			if (event.target.closest('.hamburger-button')) {
+				return;
+			}
+			
+			// Close if menu is open and click is outside the menu
+			if (isMenuOpen && !event.target.closest('.mobile-menu')) {
 				isMenuOpen = false;
 			}
 		};
 		
 		document.addEventListener('click', handleClickOutside);
+		document.addEventListener('touchend', handleClickOutside); // Add touch support for iOS
 		
 		return () => {
 			document.removeEventListener('click', handleClickOutside);
+			document.removeEventListener('touchend', handleClickOutside);
 		};
 	});
 </script>
@@ -90,7 +98,7 @@
 				</a>
 				
 				<button 
-					class="md:hidden ml-4 flex flex-col justify-center items-center w-10 h-10 border-none bg-transparent cursor-pointer"
+					class="hamburger-button md:hidden ml-4 flex flex-col justify-center items-center w-10 h-10 border-none bg-transparent cursor-pointer p-2 rounded-md touch-manipulation"
 					on:click={toggleMenu}
 					aria-label="Toggle menu"
 					aria-expanded={isMenuOpen}>
@@ -103,16 +111,16 @@
 	</div>
 	
 	<!-- Mobile menu -->
-	<div class="md:hidden {isMenuOpen ? 'block' : 'hidden'} absolute top-20 left-0 w-full bg-white shadow-md z-20 py-4">
+	<div class="mobile-menu md:hidden {isMenuOpen ? 'block' : 'hidden'} fixed top-20 left-0 w-full bg-white shadow-md z-20 py-4 max-h-[calc(100vh-5rem)] overflow-y-auto">
 		<div class="container mx-auto px-4">
 			<div class="flex flex-col space-y-4">
-				<a href="/" class="{$page.url.pathname === '/' ? 'text-primary' : 'text-gray-700'} font-medium py-2 hover:text-primary transition-colors">Home</a>
-				<a href="/about" class="{$page.url.pathname === '/about' ? 'text-primary' : 'text-gray-700'} font-medium py-2 hover:text-primary transition-colors">About</a>
-				<a href="/research" class="{$page.url.pathname === '/research' ? 'text-primary' : 'text-gray-700'} font-medium py-2 hover:text-primary transition-colors">Research</a>
-				<a href="/publications" class="{$page.url.pathname === '/publications' ? 'text-primary' : 'text-gray-700'} font-medium py-2 hover:text-primary transition-colors">Publications</a>
-				<a href="/blog" class="{$page.url.pathname.startsWith('/blog') ? 'text-primary' : 'text-gray-700'} font-medium py-2 hover:text-primary transition-colors">Blog</a>
-				<a href="/contact" class="{$page.url.pathname === '/contact' ? 'text-primary' : 'text-gray-700'} font-medium py-2 hover:text-primary transition-colors">Contact</a>
-				<a href="/search" class="{$page.url.pathname === '/search' ? 'text-primary' : 'text-gray-700'} font-medium py-2 hover:text-primary transition-colors">Search</a>
+				<a href="/" on:click={() => isMenuOpen = false} class="{$page.url.pathname === '/' ? 'text-primary' : 'text-gray-700'} font-medium py-3 px-2 hover:text-primary transition-colors active:bg-gray-50">Home</a>
+				<a href="/about" on:click={() => isMenuOpen = false} class="{$page.url.pathname === '/about' ? 'text-primary' : 'text-gray-700'} font-medium py-3 px-2 hover:text-primary transition-colors active:bg-gray-50">About</a>
+				<a href="/research" on:click={() => isMenuOpen = false} class="{$page.url.pathname === '/research' ? 'text-primary' : 'text-gray-700'} font-medium py-3 px-2 hover:text-primary transition-colors active:bg-gray-50">Research</a>
+				<a href="/publications" on:click={() => isMenuOpen = false} class="{$page.url.pathname === '/publications' ? 'text-primary' : 'text-gray-700'} font-medium py-3 px-2 hover:text-primary transition-colors active:bg-gray-50">Publications</a>
+				<a href="/blog" on:click={() => isMenuOpen = false} class="{$page.url.pathname.startsWith('/blog') ? 'text-primary' : 'text-gray-700'} font-medium py-3 px-2 hover:text-primary transition-colors active:bg-gray-50">Blog</a>
+				<a href="/contact" on:click={() => isMenuOpen = false} class="{$page.url.pathname === '/contact' ? 'text-primary' : 'text-gray-700'} font-medium py-3 px-2 hover:text-primary transition-colors active:bg-gray-50">Contact</a>
+				<a href="/search" on:click={() => isMenuOpen = false} class="{$page.url.pathname === '/search' ? 'text-primary' : 'text-gray-700'} font-medium py-3 px-2 hover:text-primary transition-colors active:bg-gray-50">Search</a>
 			</div>
 		</div>
 	</div>

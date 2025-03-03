@@ -32,7 +32,7 @@
 </svelte:head>
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0 overflow-x-hidden about-page">
 	
 	<h1 class="text-5xl font-bold mb-8 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>About Me</h1>
 
@@ -212,7 +212,7 @@
 			</AnimateInView>
 		</div>
 
-		<div class="md:w-2/5 flex flex-col items-center sticky top-24 self-start z-0">
+		<div class="md:w-2/5 flex flex-col items-center md:sticky md:top-24 self-start z-0 mb-10 md:mb-0">
 			<AnimateInView type="scale" delay={300}>
 				<div class="relative w-full">
 					
@@ -293,3 +293,21 @@
 	</AnimateInView>
 </div>
 {/if}
+
+<style>
+/* Add responsive styles for mobile */
+@media (max-width: 768px) {
+  :global(.about-page .sticky) {
+    position: static !important;
+  }
+  
+  /* Improve touch targets for mobile */
+  :global(.transform.hover\:scale-110) {
+    transition: transform 0.3s ease;
+  }
+  
+  :global(.transform.hover\:scale-110:active) {
+    transform: scale(1.05);
+  }
+}
+</style>
