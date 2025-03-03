@@ -31,76 +31,28 @@ function processContent(contentType) {
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContent);
     
-    // First extract all code blocks from the original markdown
+    // Extract all code blocks from original markdown
     const codeBlocks = [];
     const codeRegex = /```(\w*)\n([\s\S]*?)\n```/g;
     let match;
-    
     while ((match = codeRegex.exec(content)) !== null) {
-      const language = match[1] || 'text';
-      const code = match[2];
-      // Generate a unique ID for this code block
-      const id = `CODE_BLOCK_${codeBlocks.length}`;
       codeBlocks.push({
-        id,
-        language,
-        code
+        language: match[1] || 'text',
+        code: match[2]
       });
     }
     
-    // Create custom renderer for marked
+    // Custom renderer for code blocks
     const renderer = new marked.Renderer();
     
-    // Override code renderer to handle code blocks
-    renderer.code = function(code, language) {
-      // If this is a [object Object] which is a placeholder for a code block
-      if (code === '[object Object]') {
-        // Try to find the corresponding original code block
-        if (codeBlocks.length > 0) {
-          // Just use the first code block we haven't used yet
-          // This is a simplification, but should work for most cases
-          const blockIndex = codeBlocks.findIndex(block => !block.used);
-          if (blockIndex !== -1) {
-            codeBlocks[blockIndex].used = true;
-            const block = codeBlocks[blockIndex];
-            return `<pre class="language-${block.language}"><code class="language-${block.language}">${escapeHtml(block.code)}</code></pre>`;
-          }
-        }
-        
-        // If we can't find a matching code block, use a default language
-        const lang = language || 'text';
-        return `<pre class="language-${lang}"><code class="language-${lang}">// Original code not found</code></pre>`;
-      }
-      
-      // Make sure code is a string
-      const codeStr = typeof code === 'string' ? code : String(code || '');
-      
-      // Determine the language
-      let lang = language || 'text';
-      
-      // Improved language detection
-      if (lang === 'svelte' || (lang === 'text' && codeStr.includes('<script>') && codeStr.includes('</script>'))) {
-        lang = 'svelte';
-      } else if (lang === 'js' || lang === 'javascript' || 
-                 (lang === 'text' && (codeStr.includes('function') || codeStr.includes('const') || codeStr.includes('import')))) {
-        lang = 'javascript';
-      } else if (lang === 'html' || lang === 'markup' || 
-                 (lang === 'text' && codeStr.includes('<') && codeStr.includes('</') && codeStr.includes('>'))) {
-        lang = 'html';
-      } else if (lang === 'css' || 
-                 (lang === 'text' && codeStr.includes('{') && codeStr.includes('}') && 
-                  (codeStr.includes('px') || codeStr.includes('margin') || codeStr.includes('padding')))) {
-        lang = 'css';
-      } else if (lang === 'bash' || lang === 'sh' || 
-                 (lang === 'text' && (codeStr.includes('npm ') || codeStr.includes('npx ') || codeStr.includes('cd ')))) {
-        lang = 'bash';
-      }
-      
-      // Format the code block
-      return `<pre class="language-${lang}"><code class="language-${lang}">${escapeHtml(codeStr)}</code></pre>`;
+    // Override the code renderer to handle code properly
+    renderer.code = function(code, lang) {
+      // Use the original code content
+      const language = lang || 'text';
+      return `<pre class="language-${language}"><code class="language-${language}">${escapeHtml(code)}</code></pre>`;
     };
     
-    // Configure marked with minimal settings
+    // Configure marked with our renderer
     marked.setOptions({
       renderer: renderer,
       gfm: true,
@@ -109,8 +61,20 @@ function processContent(contentType) {
       langPrefix: 'language-'
     });
     
-    // Process the markdown to HTML
-    const html = marked.parse(content);
+    // Process markdown to HTML
+    let html = marked.parse(content);
+    
+    // Direct replacement of [object Object] with actual code
+    let objectObjectCount = 0;
+    html = html.replace(/<pre class="language-(\w+)"><code class="language-\w+">\[object Object\]<\/code><\/pre>/g, 
+      (match, language) => {
+        if (objectObjectCount < codeBlocks.length) {
+          const codeBlock = codeBlocks[objectObjectCount++];
+          return `<pre class="language-${codeBlock.language}"><code class="language-${codeBlock.language}">${escapeHtml(codeBlock.code)}</code></pre>`;
+        }
+        return match;
+      }
+    );
     
     const slug = path.basename(file, '.md');
     items.push({
