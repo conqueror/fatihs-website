@@ -1,8 +1,7 @@
-import { browser } from '$app/environment';
-import { dev } from '$app/environment';
 import matter from 'gray-matter';
 import { marked } from 'marked';
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
+import blogPosts from 'virtual:blog-posts';
 
 // Configure marked options
 marked.setOptions({
@@ -12,23 +11,29 @@ marked.setOptions({
   mangle: false
 });
 
-// Import all markdown files at build time using Vite's glob import
-const blogFiles = import.meta.glob('/src/content/blog/*.md', { eager: true, as: 'raw' });
+// Import all markdown files from the blog directory
+const blogFiles = import.meta.glob('../../content/blog/*.md', { 
+  eager: true,
+  as: 'raw'
+});
 
 // Process blog posts at build time
 const BLOG_POSTS = Object.entries(blogFiles).map(([filepath, content]) => {
   try {
+    // Parse frontmatter and content
     const { data, content: markdownContent } = matter(content);
+    
+    // Extract slug from filepath
     const slug = filepath.split('/').pop().replace('.md', '');
     
-    // Parse markdown to HTML
-    const html = marked(markdownContent);
+    // Parse markdown to HTML and sanitize
+    const html = DOMPurify.sanitize(marked(markdownContent));
     
     return {
       slug,
-      title: data.title || 'Untitled Post',
-      date: data.date || new Date().toISOString(),
-      excerpt: data.excerpt || '',
+      title: data.title,
+      date: data.date,
+      excerpt: data.excerpt,
       tags: data.tags || [],
       author: data.author || 'Fatih Nayebi',
       featured: data.featured || false,
@@ -39,9 +44,9 @@ const BLOG_POSTS = Object.entries(blogFiles).map(([filepath, content]) => {
     console.error(`Error processing markdown file ${filepath}:`, error);
     return null;
   }
-}).filter(Boolean);
+}).filter(Boolean).sort((a, b) => new Date(b.date) - new Date(a.date));
 
-// Pre-loaded publications data for client-side and static builds
+// Pre-loaded publications data
 const PUBLICATIONS = [
   {
     slug: 'neural-networks-paper',
@@ -84,14 +89,10 @@ const PUBLICATIONS = [
  * @returns {Array} Array of blog posts
  */
 export function getAllBlogPosts(featured = false) {
-  const posts = [...BLOG_POSTS];
-  posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
   if (featured) {
-    return posts.filter(post => post.featured);
+    return blogPosts.filter(post => post.featured);
   }
-  
-  return posts;
+  return blogPosts;
 }
 
 /**
@@ -100,15 +101,7 @@ export function getAllBlogPosts(featured = false) {
  * @returns {Object|null} The blog post or null if not found
  */
 export function getBlogPostBySlug(slug) {
-  const post = BLOG_POSTS.find(post => post.slug === slug);
-  if (!post) return null;
-  
-  // Sanitize HTML content only when retrieving a specific post
-  if (browser) {
-    post.content = DOMPurify.sanitize(post.content);
-  }
-  
-  return post;
+  return blogPosts.find(post => post.slug === slug);
 }
 
 /**
@@ -117,14 +110,10 @@ export function getBlogPostBySlug(slug) {
  * @returns {Object[]} Array of publications
  */
 export function getAllPublications(featured = false) {
-  const publications = [...PUBLICATIONS];
-  publications.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
   if (featured) {
-    return publications.filter(pub => pub.featured);
+    return PUBLICATIONS.filter(pub => pub.featured);
   }
-  
-  return publications;
+  return PUBLICATIONS;
 }
 
 /**
@@ -151,7 +140,7 @@ export function searchContent(query) {
   
   const lowerQuery = query.toLowerCase();
   
-  const blogPosts = BLOG_POSTS.filter(post => {
+  const filteredBlogPosts = blogPosts.filter(post => {
     return (
       post.title.toLowerCase().includes(lowerQuery) ||
       post.excerpt.toLowerCase().includes(lowerQuery) ||
@@ -170,7 +159,7 @@ export function searchContent(query) {
   });
   
   return {
-    blogPosts,
+    blogPosts: filteredBlogPosts,
     publications
   };
 } 

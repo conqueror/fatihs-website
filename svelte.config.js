@@ -12,26 +12,18 @@ const config = {
 		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter({
-			// default options are shown
+			// default options are shown. On some platforms
+			// these options are set automatically — see below
 			pages: 'build',
 			assets: 'build',
-			fallback: '404.html',
+			fallback: 'index.html',
 			precompress: false,
 			strict: true
 		}),
 		prerender: {
-			entries: ['*'],
-			handleHttpError: ({ path, referrer, message }) => {
-				// ignore all 404s from paths starting with /search
-				if (path.startsWith('/search')) {
-					return;
-				}
-
-				// otherwise fail the build
-				throw new Error(
-					`${message}\n\n${path}${referrer ? ` (referred to from ${referrer})` : ''}`
-				);
-			}
+			handleHttpError: 'warn',
+			handleMissingId: 'warn',
+			entries: ['*']
 		}
 	}
 };

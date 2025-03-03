@@ -1,4 +1,5 @@
-import { getAllBlogPosts } from '$lib/utils/markdown';
+import { getBlogPostBySlug, getAllBlogPosts } from '$lib/utils/markdown';
+import { error } from '@sveltejs/kit';
 
 // Enable prerendering for blog posts
 export const prerender = true;
@@ -11,9 +12,21 @@ export function entries() {
   }));
 }
 
-// Forward server data
-export function load({ data }) {
+/** @type {import('./$types').PageLoad} */
+export function load({ params }) {
+  const post = getBlogPostBySlug(params.slug);
+  
+  if (!post) {
+    throw error(404, {
+      message: 'Blog post not found'
+    });
+  }
+
+  // Return serializable data
   return {
-    ...data
+    post: {
+      ...post,
+      date: post.date.toString() // Ensure date is serializable
+    }
   };
 } 

@@ -3,7 +3,7 @@
     import { fade, fly, scale } from 'svelte/transition';
     import AnimateInView from '$lib/AnimateInView.svelte';
     
-    // Access the data loaded in +page.server.js
+    // Access the data loaded in +page.js
     export let data;
     const { blogPosts } = data;
     
