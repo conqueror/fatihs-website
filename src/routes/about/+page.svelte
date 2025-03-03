@@ -237,7 +237,7 @@
 					
 					<h4 class="font-semibold mb-3 text-gray-700">Languages</h4>
 					<div class="flex flex-wrap justify-center gap-2">
-						{#each [{name: 'English', level: 'Native'}, {name: 'French', level: 'Professional'}, {name: 'Turkish', level: 'Native'}, {name: 'Persian', level: 'Limited'}, {name: 'Azerbaijani', level: 'Limited'}] as lang, i}
+						{#each [{name: 'English', level: 'Native'}, {name: 'French', level: 'Professional'}, {name: 'Turkish', level: 'Native'}, {name: 'Azerbaijani', level: 'Limited'}] as lang, i}
 							<div class="group relative">
 								<div class="bg-gray-100 px-3 py-1 rounded-full text-sm transform transition-all duration-300 group-hover:bg-primary group-hover:text-white" style="transition-delay: {i * 50}ms">
 									{lang.name}

@@ -31,11 +31,10 @@
     });
     
     function handleSubmit() {
-        // In a real app, this would handle the form submission to a server
+        // Set the submitting state
         isSubmitting = true;
         
         // If we have storage access and browser environment, try to save the email
-        // to prefill next time (but wrapped in try/catch for safety)
         if (browser && !storageError && email) {
             try {
                 sessionStorage.setItem('contact_email', email);
@@ -44,14 +43,39 @@
             }
         }
         
-        // Simulate form submission
-        setTimeout(() => {
+        // Create form data to submit
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('message', message);
+        
+        // Send the data to Formspree
+        fetch('https://formspree.io/f/xzbnezbo', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok');
+        })
+        .then(data => {
+            // Handle success
             isSubmitting = false;
             isSubmitted = true;
             name = '';
             email = '';
             message = '';
-        }, 1500);
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
+            isSubmitting = false;
+            alert('Sorry, there was a problem sending your message. Please try again or contact me directly at contact@fatihnayebi.com');
+        });
     }
     
     // Try to load saved email from sessionStorage if available
