@@ -33,7 +33,7 @@
         {#if publications && publications.length > 0}
             {#each publications as publication, i}
                 <AnimateInView type="fly" x={-20} delay={300 + (i * 200)}>
-                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-300 hover:shadow-md hover:-translate-y-1" style="transition-delay: {i * 150}ms">
                         <h2 class="text-2xl font-semibold mb-4 text-primary dark:text-blue-400">{publication.title}</h2>
                         
                         <div class="publication-meta mb-6 pb-4 border-b border-gray-100 dark:border-gray-700">

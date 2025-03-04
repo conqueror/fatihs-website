@@ -34,8 +34,8 @@
     <div class="space-y-12">
         {#if blogPosts && blogPosts.length > 0}
             {#each blogPosts as post, i}
-                <AnimateInView type="scale" delay={300 + (i * 150)}>
-                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+                <AnimateInView type="fly" x={-20} delay={300 + (i * 150)}>
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-300 hover:shadow-md hover:-translate-y-1" style="transition-delay: {i * 150}ms">
                         <div class="post-meta flex justify-between items-center mb-4">
                             <span class="post-date text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
                                 {new Date(post.date).toLocaleDateString('en-US', {
