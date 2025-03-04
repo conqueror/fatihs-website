@@ -3,6 +3,9 @@
     import DOMPurify from 'dompurify';
     import { storage } from '$lib/utils/storage';
     import { browser } from '$app/environment';
+    import SEO from '$lib/components/SEO.svelte';
+    import { generateBlogPostSchema } from '$lib/utils/structured-data';
+    import { page } from '$app/stores';
     
     export let data;
     // Ensure post is always at least an empty object to prevent undefined errors
@@ -11,6 +14,27 @@
     let hasError = false;
     let sanitizedContent = '';
     let contentContainer;
+
+    // Generate structured data for the blog post
+    $: siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://fatihnayebi.com';
+    $: blogPostSchema = generateBlogPostSchema(post, siteUrl);
+    
+    // Prepare SEO metadata
+    $: title = post?.title ? `${post.title} | Fatih Nayebi Blog` : 'Blog Post | Fatih Nayebi';
+    $: description = post?.excerpt || post?.description || 'Read this insightful blog post by Fatih Nayebi on AI, machine learning, and software development.';
+    $: keywords = post?.tags?.join(', ') || 'AI, machine learning, research, blog';
+    $: canonical = post?.slug ? `${siteUrl}/blog/${post.slug}` : '';
+    $: publishedDate = post?.date || '';
+    $: modifiedDate = post?.updatedAt || post?.date || '';
+    $: author = post?.author || 'Fatih Nayebi';
+    $: ogImage = post?.image ? `${siteUrl}${post.image}` : `${siteUrl}/images/og-image.jpg`;
+    $: articleProps = {
+        publishedTime: publishedDate,
+        modifiedTime: modifiedDate,
+        author: author,
+        section: 'Technology',
+        tags: post?.tags || []
+    };
 
     onMount(() => {
         try {
@@ -109,6 +133,27 @@
         }
     });
 </script>
+
+<!-- Add SEO component with blog post specific metadata -->
+<SEO
+    title={title}
+    description={description}
+    keywords={keywords}
+    canonical={canonical}
+    type="article"
+    structuredData={blogPostSchema}
+    article={articleProps}
+    openGraph={{
+        title: post?.title,
+        description: description,
+        image: ogImage
+    }}
+    twitter={{
+        title: post?.title,
+        description: description,
+        image: ogImage
+    }}
+/>
 
 {#if isLoading}
     <div class="loading-container">

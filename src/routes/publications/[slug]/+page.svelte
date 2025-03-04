@@ -3,6 +3,9 @@
     import DOMPurify from 'isomorphic-dompurify';
     import { browser } from '$app/environment';
     import { marked } from 'marked';
+    import SEO from '$lib/components/SEO.svelte';
+    import { generatePublicationSchema } from '$lib/utils/structured-data';
+    import { page } from '$app/stores';
     
     export let data;
     
@@ -10,6 +13,17 @@
     let isLoading = true;
     let hasError = false;
     let sanitizedContent = '';
+    
+    // Generate structured data for the publication
+    $: siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://fatihnayebi.com';
+    $: publicationSchema = generatePublicationSchema(publication, siteUrl);
+    
+    // Prepare SEO metadata
+    $: title = publication?.title ? `${publication.title} | Fatih Nayebi Publications` : 'Research Publication | Fatih Nayebi';
+    $: description = publication?.abstract || 'Research publication by Fatih Nayebi on topics in AI, machine learning, and computational research.';
+    $: keywords = `publication, research, ${publication?.journal || ''}, ${publication?.authors || 'Fatih Nayebi'}, academic paper`;
+    $: canonical = publication?.slug ? `${siteUrl}/publications/${publication.slug}` : '';
+    $: ogImage = publication?.image ? `${siteUrl}${publication.image}` : `${siteUrl}/images/publication-og.jpg`;
     
     onMount(() => {
         try {
@@ -123,10 +137,31 @@
     });
 </script>
 
-<svelte:head>
-    <title>{publication.title || 'Publication'} | Dr. Fatih Nayebi</title>
-    <meta name="description" content={publication.abstract || 'Publication details'} />
-</svelte:head>
+<!-- Use SEO component instead of svelte:head -->
+<SEO
+    title={title}
+    description={description}
+    keywords={keywords}
+    canonical={canonical}
+    type="article"
+    structuredData={publicationSchema}
+    article={{
+        publishedTime: publication?.date || '',
+        author: publication?.authors || 'Fatih Nayebi',
+        section: 'Research',
+    }}
+    openGraph={{
+        title: publication?.title,
+        description: description,
+        type: 'article',
+        image: ogImage
+    }}
+    twitter={{
+        title: publication?.title,
+        description: description,
+        image: ogImage
+    }}
+/>
 
 <div class="container mx-auto px-4 py-12">
     <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
