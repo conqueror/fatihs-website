@@ -14,8 +14,27 @@
 
     onMount(() => {
         try {
-            if (post?.content) {
-                console.log('Processing blog post content');
+            if (post?.html) {
+                console.log('Processing pre-rendered HTML from blog post');
+                
+                // Only sanitize if DOMPurify is available (it should be in browser context)
+                if (browser && typeof DOMPurify !== 'undefined') {
+                    // Set sanitize options to allow classes for code blocks and tables
+                    const sanitizeOptions = {
+                        ADD_TAGS: ['pre', 'code', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+                        ADD_ATTR: ['class', 'language-*'],
+                        ALLOW_DATA_ATTR: true
+                    };
+                    
+                    sanitizedContent = DOMPurify.sanitize(post.html, sanitizeOptions);
+                    console.log('HTML content sanitized');
+                } else {
+                    // Fallback: just use the HTML if DOMPurify is unavailable
+                    sanitizedContent = post.html;
+                    console.warn('Using unsanitized HTML content (no DOMPurify available)');
+                }
+            } else if (post?.content) {
+                console.log('No pre-rendered HTML found, processing raw content');
                 
                 // Ensure content is properly stringified if it contains objects
                 let processedContent = post.content;
@@ -38,9 +57,9 @@
                 if (browser && typeof DOMPurify !== 'undefined') {
                     // Set sanitize options to allow classes for code blocks
                     const sanitizeOptions = {
-                        ADD_TAGS: ['pre', 'code'],
-                        ADD_ATTR: ['class'],
-                        ALLOW_DATA_ATTR: false
+                        ADD_TAGS: ['pre', 'code', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+                        ADD_ATTR: ['class', 'language-*'],
+                        ALLOW_DATA_ATTR: true
                     };
                     
                     sanitizedContent = DOMPurify.sanitize(processedContent, sanitizeOptions);

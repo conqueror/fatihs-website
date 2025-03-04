@@ -40,15 +40,66 @@ const FALLBACK_RESEARCH_AREAS = [
 ];
 
 /**
+ * Process research areas to ensure collaborators is always properly formatted
+ * @param {Array} areas - Array of research area objects
+ * @returns {Array} Processed research areas
+ */
+function processResearchAreas(areas) {
+  return areas.map(area => {
+    const processedArea = { ...area };
+    
+    // Process collaborators field
+    if (processedArea.collaborators) {
+      if (typeof processedArea.collaborators === 'string') {
+        // Check if it's a string that looks like an array
+        if (processedArea.collaborators.startsWith('[') && processedArea.collaborators.endsWith(']')) {
+          try {
+            // Try to parse it as JSON
+            processedArea.collaborators = JSON.parse(processedArea.collaborators);
+          } catch (error) {
+            // If parsing fails, treat it as a comma-separated string
+            processedArea.collaborators = processedArea.collaborators
+              .replace(/[\[\]"']/g, '') // Remove brackets and quotes
+              .split(',')
+              .map(item => item.trim())
+              .filter(Boolean);
+          }
+        } else {
+          // Regular string - assume it's a single collaborator or comma-separated list
+          processedArea.collaborators = processedArea.collaborators
+            .split(',')
+            .map(item => item.trim())
+            .filter(Boolean);
+        }
+      }
+      
+      // Ensure it's always a string for display (join with commas if it's an array)
+      if (Array.isArray(processedArea.collaborators)) {
+        processedArea.collaboratorsDisplay = processedArea.collaborators.join(', ');
+      } else {
+        processedArea.collaboratorsDisplay = String(processedArea.collaborators);
+        processedArea.collaborators = [processedArea.collaboratorsDisplay];
+      }
+    } else {
+      // Default value if missing
+      processedArea.collaborators = ['Fatih Nayebi'];
+      processedArea.collaboratorsDisplay = 'Fatih Nayebi';
+    }
+    
+    return processedArea;
+  });
+}
+
+/**
  * Get all research areas
  * @returns {Object[]} Array of research areas
  */
 export function getAllResearchAreas() {
   try {
-    return researchAreas;
+    return processResearchAreas(researchAreas);
   } catch (error) {
     console.warn('Falling back to hardcoded research areas data');
-    return FALLBACK_RESEARCH_AREAS;
+    return processResearchAreas(FALLBACK_RESEARCH_AREAS);
   }
 }
 
@@ -59,10 +110,12 @@ export function getAllResearchAreas() {
  */
 export function getResearchAreaBySlug(slug) {
   try {
-    return researchAreas.find(area => area.slug === slug) || null;
+    const area = researchAreas.find(area => area.slug === slug);
+    return area ? processResearchAreas([area])[0] : null;
   } catch (error) {
     console.warn('Falling back to hardcoded research areas data');
-    return FALLBACK_RESEARCH_AREAS.find(area => area.slug === slug) || null;
+    const area = FALLBACK_RESEARCH_AREAS.find(area => area.slug === slug);
+    return area ? processResearchAreas([area])[0] : null;
   }
 }
 
@@ -72,9 +125,9 @@ export function getResearchAreaBySlug(slug) {
  */
 export function getOrderedResearchAreas() {
   try {
-    return [...researchAreas].sort((a, b) => a.order - b.order);
+    return processResearchAreas([...researchAreas]).sort((a, b) => a.order - b.order);
   } catch (error) {
     console.warn('Falling back to hardcoded research areas data');
-    return [...FALLBACK_RESEARCH_AREAS].sort((a, b) => a.order - b.order);
+    return processResearchAreas([...FALLBACK_RESEARCH_AREAS]).sort((a, b) => a.order - b.order);
   }
 } 

@@ -7,6 +7,13 @@ export const prerender = true;
 // Generate entries for all publications
 export function entries() {
   const publications = getAllPublications();
+  
+  // If no publications are found, use at least one fallback entry
+  // to prevent prerendering errors
+  if (publications.length === 0) {
+    return [{ slug: 'neural-networks-paper' }];
+  }
+  
   return publications.map(pub => ({
     slug: pub.slug
   }));

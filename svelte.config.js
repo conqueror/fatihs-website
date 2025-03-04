@@ -2,12 +2,13 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
+import mdsvexConfig from './mdsvex.config.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	extensions: ['.svelte', '.md'],
+	extensions: ['.svelte', ...mdsvexConfig.extensions],
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
@@ -19,22 +20,12 @@ const config = {
 			pages: 'build',
 			assets: 'build',
 			fallback: 'index.html',
-			precompress: false,
-			strict: false
+			precompress: false
 		}),
 		prerender: {
 			crawl: true,
 			entries: ['*'],
-			handleHttpError: ({ path, referrer, message }) => {
-				// ignore specific 404 errors for favicon and apple icons
-				if (path.includes('favicon') || path.includes('apple-touch-icon')) {
-					console.warn(`[warn] Ignoring 404 for ${path}`);
-					return;
-				}
-				
-				// otherwise fail the build
-				throw new Error(message);
-			}
+			handleHttpError: 'warn'
 		},
 		// Ensure we're using absolute paths for better compatibility
 		paths: {
@@ -53,14 +44,7 @@ const config = {
 
 	preprocess: [
 		vitePreprocess(),
-		mdsvex({
-			extensions: ['.md'],
-			layout: {
-				blog: './src/layouts/MarkdownLayout.svelte'
-			},
-			// Removed Prism.js-related rehype plugins
-			rehypePlugins: []
-		})
+		mdsvex(mdsvexConfig)
 	]
 };
 

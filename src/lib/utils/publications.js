@@ -40,22 +40,57 @@ const FALLBACK_PUBLICATIONS = [
 ];
 
 /**
+ * Process publications data to ensure proper formatting
+ * @param {Object[]} publications - Raw publications data
+ * @returns {Object[]} Processed publications data
+ */
+function processPublications(publications) {
+  return publications.map(pub => {
+    // Create a new object to avoid modifying the original
+    const processedPub = { ...pub };
+    
+    // Process authors field if it's a string that looks like an array
+    if (typeof processedPub.authors === 'string' && processedPub.authors.startsWith('[')) {
+      try {
+        processedPub.authors = JSON.parse(processedPub.authors);
+      } catch (error) {
+        console.warn(`Failed to parse authors for publication ${processedPub.slug}:`, error);
+        // Fallback to an array with the string value
+        processedPub.authors = [processedPub.authors];
+      }
+    } else if (processedPub.author && !processedPub.authors) {
+      // If there's an author field but no authors, use it
+      processedPub.authors = processedPub.author.split(',').map(a => a.trim());
+    } else if (!processedPub.authors) {
+      // Default if no authors field exists
+      processedPub.authors = ['Fatih Nayebi'];
+    }
+    
+    return processedPub;
+  });
+}
+
+/**
  * Get all publications
  * @param {boolean} featured - Filter by featured status
  * @returns {Object[]} Array of publications
  */
 export function getAllPublications(featured = false) {
   try {
+    let pubs = processPublications(publicationsList);
+    
     if (featured) {
-      return publicationsList.filter(pub => pub.featured);
+      return pubs.filter(pub => pub.featured);
     }
-    return publicationsList;
+    return pubs;
   } catch (error) {
     console.warn('Falling back to hardcoded publications data');
+    let pubs = processPublications(FALLBACK_PUBLICATIONS);
+    
     if (featured) {
-      return FALLBACK_PUBLICATIONS.filter(pub => pub.featured);
+      return pubs.filter(pub => pub.featured);
     }
-    return FALLBACK_PUBLICATIONS;
+    return pubs;
   }
 }
 
@@ -66,10 +101,12 @@ export function getAllPublications(featured = false) {
  */
 export function getPublicationBySlug(slug) {
   try {
-    return publicationsList.find(pub => pub.slug === slug) || null;
+    const pub = publicationsList.find(pub => pub.slug === slug) || null;
+    return pub ? processPublications([pub])[0] : null;
   } catch (error) {
     console.warn('Falling back to hardcoded publications data');
-    return FALLBACK_PUBLICATIONS.find(pub => pub.slug === slug) || null;
+    const pub = FALLBACK_PUBLICATIONS.find(pub => pub.slug === slug) || null;
+    return pub ? processPublications([pub])[0] : null;
   }
 }
 

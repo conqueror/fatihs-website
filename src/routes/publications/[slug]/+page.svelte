@@ -14,14 +14,41 @@
     onMount(() => {
         try {
             console.log('Processing publication content');
-            if (publication?.content) {
+            if (publication?.html) {
+                // Using pre-rendered HTML from the JSON file
+                console.log('Using pre-rendered HTML from JSON file');
+                
+                // Sanitize the HTML
+                if (typeof DOMPurify !== 'undefined') {
+                    // Set sanitize options to allow required HTML elements and attributes for code
+                    const sanitizeOptions = {
+                        ADD_TAGS: ['pre', 'code', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+                        ADD_ATTR: ['class', 'language-*'],
+                        ALLOW_DATA_ATTR: true
+                    };
+                    
+                    sanitizedContent = DOMPurify.sanitize(publication.html, sanitizeOptions);
+                    console.log('HTML content sanitized successfully');
+                } else {
+                    // Fallback
+                    sanitizedContent = publication.html;
+                    console.warn('Using unsanitized content (no DOMPurify available)');
+                }
+            } else if (publication?.content) {
+                // If for some reason we don't have pre-rendered HTML, 
+                // fall back to rendering the markdown
+                console.log('No pre-rendered HTML found, rendering markdown');
+                
                 // Configure marked with simpler renderer for code blocks
                 const renderer = new marked.Renderer();
                 
                 // Override code rendering to use simple preformatted blocks without Prism.js
                 renderer.code = function(code, language) {
-                    // Simple rendering without syntax highlighting
-                    return `<pre class="code-block"><code>${escapeHtml(code)}</code></pre>`;
+                    // Use language-specific class for better styling
+                    const languageClass = language ? ` language-${language}` : '';
+                    
+                    // Simple rendering with language class for better CSS targeting
+                    return `<pre class="code-block${languageClass}"><code class="${languageClass}">${escapeHtml(code)}</code></pre>`;
                 };
                 
                 // Helper function to escape HTML in code blocks
@@ -63,27 +90,17 @@
                     processedContent = '' + processedContent; // Force string conversion
                 }
                 
-                // First determine if this is already HTML or markdown
-                const isHtml = /<[a-z][\s\S]*>/i.test(processedContent);
-                
-                let htmlContent;
-                if (isHtml) {
-                    // Content is already HTML
-                    console.log('Content appears to be HTML, skipping markdown parsing');
-                    htmlContent = processedContent;
-                } else {
-                    // Parse markdown to HTML
-                    console.log('Parsing markdown content');
-                    htmlContent = marked.parse(processedContent);
-                }
+                // Parse markdown to HTML
+                console.log('Parsing markdown content');
+                const htmlContent = marked.parse(processedContent);
                 
                 // Sanitize the HTML
                 if (typeof DOMPurify !== 'undefined') {
                     // Set sanitize options to allow required HTML elements and attributes for code
                     const sanitizeOptions = {
-                        ADD_TAGS: ['pre', 'code'],
-                        ADD_ATTR: ['class'],
-                        ALLOW_DATA_ATTR: false
+                        ADD_TAGS: ['pre', 'code', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+                        ADD_ATTR: ['class', 'language-*'],
+                        ALLOW_DATA_ATTR: true
                     };
                     
                     sanitizedContent = DOMPurify.sanitize(htmlContent, sanitizeOptions);
@@ -257,19 +274,58 @@
         border-radius: 5px;
         overflow-x: auto;
         margin: 1rem 0;
-        font-family: monospace;
+        font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        border: 1px solid #e0e0e0;
     }
     
     .markdown-content :global(code) {
         background-color: #f5f5f5;
         padding: 0.2rem 0.4rem;
         border-radius: 3px;
-        font-family: monospace;
+        font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+        font-size: 0.9rem;
+        color: #e83e8c; /* Inline code color */
     }
     
     .markdown-content :global(pre code) {
         background-color: transparent;
         padding: 0;
+        color: #333; /* Reset color for code inside pre blocks */
+    }
+    
+    /* Syntax highlighting classes */
+    .markdown-content :global(.language-javascript .keyword),
+    .markdown-content :global(.language-typescript .keyword),
+    .markdown-content :global(.language-python .keyword) {
+        color: #0033b3; /* Keywords */
+    }
+    
+    .markdown-content :global(.language-javascript .string),
+    .markdown-content :global(.language-typescript .string),
+    .markdown-content :global(.language-python .string) {
+        color: #067d17; /* Strings */
+    }
+    
+    .markdown-content :global(.language-javascript .comment),
+    .markdown-content :global(.language-typescript .comment),
+    .markdown-content :global(.language-python .comment) {
+        color: #8c8c8c; /* Comments */
+        font-style: italic;
+    }
+    
+    /* Add support for Shiki highlighting */
+    .markdown-content :global(.shiki) {
+        background-color: #f5f5f5 !important;
+        border-radius: 5px;
+        padding: 1rem !important;
+        margin: 1rem 0;
+        overflow-x: auto;
+        font-family: 'Menlo', 'Monaco', 'Courier New', monospace !important;
+        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
+        border: 1px solid #e0e0e0;
     }
     
     .markdown-content :global(blockquote) {
