@@ -230,7 +230,7 @@
         font-size: 1rem;
         border: 2px solid #eee;
         border-radius: 4px;
-        transition: border-color 0.3s ease;
+        transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     }
     
     .search-input:focus {
@@ -289,7 +289,7 @@
         padding: 1.25rem;
         border: 1px solid #eee;
         border-radius: 8px;
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
     }
     
     .search-result-item:hover {
@@ -312,11 +312,13 @@
         font-size: 0.8rem;
         font-weight: 500;
         color: #555;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     .result-date {
         font-size: 0.85rem;
         color: #666;
+        transition: color 0.3s ease;
     }
     
     .result-title {
@@ -338,6 +340,7 @@
         margin-bottom: 0.75rem;
         color: #555;
         line-height: 1.6;
+        transition: color 0.3s ease;
     }
     
     .result-tags {
@@ -352,6 +355,7 @@
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.8rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     .search-instructions, .no-results {
@@ -360,6 +364,80 @@
         color: #666;
         background-color: #f9f9f9;
         border-radius: 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    /* Dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        .search-container {
+            color: #f0f0f0;
+        }
+        
+        .search-input {
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+            border-color: #444;
+        }
+        
+        .search-input:focus {
+            border-color: #6b4dff;
+        }
+        
+        .search-button {
+            background-color: #6b4dff;
+        }
+        
+        .search-button:hover {
+            background-color: #7d61ff;
+        }
+        
+        .search-results-header {
+            border-bottom-color: #444;
+        }
+        
+        .search-results-header h2 {
+            color: #d0d0d0;
+        }
+        
+        .search-result-item {
+            background-color: #2a2a2a;
+            border-color: #444;
+        }
+        
+        .search-result-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .result-type {
+            background-color: #333;
+            color: #d0d0d0;
+        }
+        
+        .result-date {
+            color: #aaa;
+        }
+        
+        .result-title a {
+            color: #f0f0f0;
+        }
+        
+        .result-title a:hover {
+            color: #7d61ff;
+        }
+        
+        .result-excerpt {
+            color: #c0c0c0;
+        }
+        
+        .tag {
+            background-color: #333;
+            color: #d0d0d0;
+        }
+        
+        .search-instructions, .no-results {
+            background-color: #222;
+            color: #aaa;
+        }
     }
     
     @media (max-width: 768px) {
