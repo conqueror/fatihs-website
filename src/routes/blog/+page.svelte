@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import AnimateInView from '$lib/AnimateInView.svelte';
     import { browser } from '$app/environment';
+    import { fade, fly } from 'svelte/transition';
     
     // Access the data loaded in +page.js
     export let data;
@@ -19,17 +20,16 @@
     <meta name="description" content="Thoughts and insights on AI, machine learning, and technology by Fatih Nayebi.">
 </svelte:head>
 
-<div class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+{#if visible}
+<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
     <!-- Background decorative elements -->
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
     
-    <div class="animate-header" class:visible>
-        <h1 class="text-5xl font-bold mb-4 text-center text-primary">Blog</h1>
-        <p class="text-lg text-center mb-12 max-w-3xl mx-auto">
-            Thoughts and insights on AI, machine learning, and technology.
-        </p>
-    </div>
+    <h1 class="text-5xl font-bold mb-4 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Blog</h1>
+    <p class="text-lg text-center mb-12 max-w-3xl mx-auto" in:fly={{ y: 30, duration: 800, delay: 500 }}>
+        Thoughts and insights on AI, machine learning, and technology.
+    </p>
     
     <div class="space-y-12">
         {#if blogPosts && blogPosts.length > 0}
@@ -77,6 +77,7 @@
         {/if}
     </div>
 </div>
+{/if}
 
 <style>
     h1 {
@@ -94,17 +95,6 @@
     .post-date {
         color: #666;
         font-size: 0.9rem;
-    }
-    
-    .animate-header {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    
-    .animate-header.visible {
-        opacity: 1;
-        transform: translateY(0);
     }
     
     @media (max-width: 768px) {
