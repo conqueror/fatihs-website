@@ -16,6 +16,7 @@
     let results = form?.results ?? data.results ?? [];
     let blogResults = form?.blogResults ?? data.blogResults ?? [];
     let publicationResults = form?.publicationResults ?? data.publicationResults ?? [];
+    let isSearchReady = false;
     
     // Total count for display
     $: totalResults = results.length;
@@ -92,6 +93,9 @@
     let searchInput;
 
     onMount(() => {
+        // Set search as ready for rendering
+        isSearchReady = true;
+        
         // Auto-focus the search input when no query is present
         if (!query && searchInput) {
             searchInput.focus();
@@ -101,9 +105,21 @@
         if (query) {
             performSearch(query, type);
         }
+        
+        // Ensure search works when loaded directly (for static sites)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlQuery = urlParams.get('query');
+        const urlType = urlParams.get('type') || 'all';
+        
+        if (urlQuery && urlQuery !== query) {
+            query = urlQuery;
+            type = urlType;
+            performSearch(urlQuery, urlType);
+        }
     });
 </script>
 
+{#if browser && isSearchReady}
 <div class="search-container">
     <h1>Search</h1>
     
@@ -201,12 +217,24 @@
         </div>
     {/if}
 </div>
+{:else}
+<div class="search-loading">
+    <p>Loading search functionality...</p>
+</div>
+{/if}
 
 <style>
     .search-container {
         max-width: 800px;
         margin: 0 auto;
         padding: 2rem 0;
+    }
+    
+    .search-loading {
+        max-width: 800px;
+        margin: 4rem auto;
+        text-align: center;
+        color: #666;
     }
     
     h1 {
@@ -371,6 +399,10 @@
     @media (prefers-color-scheme: dark) {
         .search-container {
             color: #f0f0f0;
+        }
+        
+        .search-loading {
+            color: #aaa;
         }
         
         .search-input {
