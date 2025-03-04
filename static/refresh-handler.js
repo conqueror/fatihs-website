@@ -1,21 +1,42 @@
-// This script helps fix refresh issues on iOS devices
+/**
+ * This script helps handle page refreshes by:
+ * 1. Checking if we're on a 404 page
+ * 2. Attempting to clean the URL and redirect to the base application
+ * 3. Preserving the current path so the client-side routing can take over
+ */
+
 (function() {
-  // Check if this is an iOS device
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  // Check if we might be on a 404 page (detected by checking for specific elements)
+  const is404Page = window.location.pathname.includes('/404.html') || 
+                    document.title.includes('404') || 
+                    document.title.includes('Not Found');
   
-  if (isIOS) {
-    // Store the current path in sessionStorage
-    if (window.location.pathname !== '/') {
-      sessionStorage.setItem('lastPath', window.location.pathname + window.location.search);
-    }
+  // If we're on a 404 page or want to ensure clean navigation
+  if (is404Page || window.__HANDLE_REFRESH__) {
+    // Extract the path from the URL and clean it
+    const originalPath = window.location.pathname.replace('/404.html', '');
+    const cleanPath = originalPath.replace(/\/+$/, '');
     
-    // If we were redirected to the root due to a refresh, navigate back to the stored path
-    if (window.location.pathname === '/' && sessionStorage.getItem('lastPath')) {
-      const lastPath = sessionStorage.getItem('lastPath');
-      // Use history.replaceState to avoid creating a new history entry
-      window.history.replaceState(null, '', lastPath);
-      // Clear the stored path to avoid issues with normal navigation
-      sessionStorage.removeItem('lastPath');
+    // Get the base path from SvelteKit's configuration
+    const baseUrl = window.__SVELTEKIT_BASE__ || '';
+    
+    // Construct new URL, preserving query parameters and hash
+    const newUrl = baseUrl + cleanPath + window.location.search + window.location.hash;
+    
+    // Set a cache buster flag to prevent infinite redirects
+    if (!sessionStorage.getItem('refreshAttempted_' + cleanPath)) {
+      sessionStorage.setItem('refreshAttempted_' + cleanPath, 'true');
+      
+      // Only redirect if we're not already at the right URL
+      if (window.location.href !== newUrl && cleanPath) {
+        window.history.replaceState(null, '', newUrl);
+        window.location.reload();
+      }
+    } else {
+      // Clear the flag after a delay
+      setTimeout(() => {
+        sessionStorage.removeItem('refreshAttempted_' + cleanPath);
+      }, 30000);
     }
   }
 })(); 
