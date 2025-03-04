@@ -29,6 +29,7 @@
 						<li><a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Blog</a></li>
 						<li><a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Contact</a></li>
 						<li><a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Search</a></li>
+						<li><a href="/privacy" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Privacy Policy</a></li>
 					</ul>
 				</div>
 				

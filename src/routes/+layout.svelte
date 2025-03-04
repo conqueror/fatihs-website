@@ -9,6 +9,11 @@
 	import ScrollToTop from '$lib/ScrollToTop.svelte';
 	import '../styles/global.css';
 	
+	// Import analytics and cookie consent components
+	import CookieConsent from '$lib/components/CookieConsent.svelte';
+	import { initAnalytics, trackPageView, isDoNotTrackEnabled } from '$lib/services/analytics';
+	import { browser } from '$app/environment';
+	
 	// Initialize theme based on localStorage or system preference
 	import { onMount } from 'svelte';
 	import { theme } from '$lib/stores';
@@ -37,6 +42,11 @@
 				document.documentElement.setAttribute('data-theme', newTheme);
 			}
 		});
+		
+		// Initialize analytics based on consent
+		if (browser && !isDoNotTrackEnabled()) {
+			initAnalytics();
+		}
 	});
 
 	// Register service worker for better routing
@@ -61,6 +71,11 @@
 	
 	// Use website schema only on the homepage
 	$: structuredData = currentUrl === '/' ? websiteSchema : null;
+	
+	// Track page views when the URL changes (with privacy protection)
+	$: if (browser && !isDoNotTrackEnabled()) {
+		trackPageView(currentUrl);
+	}
 </script>
 
 <!-- Base SEO component that will be present on all pages -->
@@ -75,15 +90,6 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<!-- iOS refresh handler script -->
 	<script src="/refresh-handler.js"></script>
-	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YOURTRACKINID"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-YOURTRACKINID');
-	</script>
 </svelte:head>
 
 <div class="min-h-screen flex flex-col">
@@ -97,3 +103,6 @@
 	<Footer />
 	<ScrollToTop />
 </div>
+
+<!-- Cookie consent banner -->
+<CookieConsent />
