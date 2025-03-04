@@ -8,7 +8,7 @@
     export let data;
     const { blogPosts } = data;
     
-    let visible = browser;
+    let visible = false;
     
     onMount(() => {
         visible = true;
