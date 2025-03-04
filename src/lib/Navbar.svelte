@@ -23,12 +23,13 @@
 			}
 		};
 		
-		document.addEventListener('click', handleClickOutside);
-		document.addEventListener('touchend', handleClickOutside); // Add touch support for iOS
+		// Use capture phase to ensure the event is caught before it reaches the menu
+		document.addEventListener('click', handleClickOutside, true);
+		document.addEventListener('touchend', handleClickOutside, true); // Add touch support for iOS
 		
 		return () => {
-			document.removeEventListener('click', handleClickOutside);
-			document.removeEventListener('touchend', handleClickOutside);
+			document.removeEventListener('click', handleClickOutside, true);
+			document.removeEventListener('touchend', handleClickOutside, true);
 		};
 	});
 </script>
@@ -36,22 +37,34 @@
 <header class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800 border-b border-gray-200 dark:border-gray-800">
 	<div class="container mx-auto px-4">
 		<nav class="flex items-center justify-between py-4">
-			<a href="/" class="text-xl font-bold text-gray-900 dark:text-white">Fatih Nayebi</a>
+			<a href="/" class="text-xl font-bold text-gray-900 dark:text-white">Dr. Fatih Nayebi</a>
 			
 			<div class="hidden md:flex items-center space-x-6">
-				<a href="/" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Home</a>
-				<a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">About</a>
-				<a href="/research" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Research</a>
-				<a href="/publications" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Publications</a>
-				<a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Blog</a>
-				<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
+				<a href="/" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<span class="relative">Home</span>
+				</a>
+				<a href="/about" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<span class="relative">About</span>
+				</a>
+				<a href="/research" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<span class="relative">Research</span>
+				</a>
+				<a href="/publications" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<span class="relative">Publications</span>
+				</a>
+				<a href="/blog" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<span class="relative">Blog</span>
+				</a>
+				<a href="/contact" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<span class="relative">Contact</span>
+				</a>
 				
 				<ThemeToggle />
 			</div>
 			
 			<button 
 				on:click={toggleMenu} 
-				class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 focus:outline-none" 
+				class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 focus:outline-none hamburger-button" 
 				aria-label="Toggle menu"
 			>
 				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +85,7 @@
 		></div>
 		
 		<div 
-			class="fixed top-0 right-0 w-64 h-full bg-white dark:bg-gray-900 z-50 shadow-lg transform transition-transform ease-in-out duration-300"
+			class="mobile-menu fixed top-0 right-0 w-64 h-full bg-white dark:bg-gray-900 z-50 shadow-lg transform transition-transform ease-in-out duration-300 translate-x-0"
 		>
 			<div class="p-5">
 				<div class="flex justify-between items-center mb-6">
@@ -89,12 +102,12 @@
 				</div>
 				
 				<div class="flex flex-col space-y-4">
-					<a href="/" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors py-2 {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Home</a>
-					<a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors py-2 {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">About</a>
-					<a href="/research" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors py-2 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Research</a>
-					<a href="/publications" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors py-2 {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Publications</a>
-					<a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors py-2 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Blog</a>
-					<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors py-2 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
+					<a href="/" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Home</a>
+					<a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">About</a>
+					<a href="/research" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Research</a>
+					<a href="/publications" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Publications</a>
+					<a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Blog</a>
+					<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
 					
 					<div class="pt-4 border-t border-gray-200 dark:border-gray-700">
 						<ThemeToggle />
@@ -102,5 +115,10 @@
 				</div>
 			</div>
 		</div>
+	{:else}
+		<!-- Hidden menu element for smooth exit animation -->
+		<div 
+			class="mobile-menu fixed top-0 right-0 w-64 h-full bg-white dark:bg-gray-900 z-50 shadow-lg transform transition-transform ease-in-out duration-300 translate-x-full pointer-events-none"
+		></div>
 	{/if}
 </header>
