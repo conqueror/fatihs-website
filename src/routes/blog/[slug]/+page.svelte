@@ -150,14 +150,14 @@
         </div>
         
         <div class="blog-footer">
-            <a href="/blog" class="back-link">← Back to all posts</a>
+            <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
         </div>
     </div>
 {:else}
     <div class="error-container">
-        <h1>Post Not Found</h1>
-        <p>Sorry, we couldn't find the blog post you're looking for.</p>
-        <a href="/blog" class="back-link">← Back to all posts</a>
+        <h1 class="dark:text-white">Post Not Found</h1>
+        <p class="dark:text-white">Sorry, we couldn't find the blog post you're looking for.</p>
+        <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
     </div>
 {/if}
 
@@ -337,5 +337,41 @@
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+    }
+
+    /* Add dark mode styles at the end of the style section */
+    :global(.dark) .blog-content {
+        color: white;
+    }
+
+    :global(.dark) .blog-content :global(h2),
+    :global(.dark) .blog-content :global(h3),
+    :global(.dark) .blog-content :global(p),
+    :global(.dark) .blog-content :global(li),
+    :global(.dark) .blog-content :global(ul),
+    :global(.dark) .blog-content :global(ol) {
+        color: white;
+    }
+
+    :global(.dark) .blog-content :global(blockquote) {
+        color: #e0e0e0;
+        border-left-color: #4f83e3;
+    }
+
+    :global(.dark) .blog-content :global(code) {
+        background-color: #2d3748;
+        color: #e2e8f0;
+    }
+
+    :global(.dark) .blog-content :global(pre) {
+        background-color: #2d3748;
+    }
+
+    :global(.dark) .blog-content :global(a) {
+        color: #63b3ed;
+    }
+
+    :global(.dark) .blog-content :global(a:hover) {
+        color: #90cdf4;
     }
 </style> 
