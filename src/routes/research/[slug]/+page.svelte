@@ -107,12 +107,12 @@
 </style>
 
 <svelte:head>
-    <title>{researchArea.title} | Research | Fatih Nayebi</title>
-    <meta name="description" content={researchArea.excerpt || `Details about ${researchArea.title} research by Fatih Nayebi`}>
+    <title>{researchArea.title} | Research | Dr. Fatih Nayebi</title>
+    <meta name="description" content={researchArea.excerpt || `Details about ${researchArea.title} research by Dr. Fatih Nayebi`}>
 </svelte:head>
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 relative z-0">
+<div in:fade={{ duration: 800 }} class="container mx-auto px-4 py-12 relative z-0">
     <!-- Background decorative elements -->
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>

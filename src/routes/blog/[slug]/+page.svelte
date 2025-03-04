@@ -122,35 +122,37 @@
         <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
     </div>
 {:else if post?.title}
-    <div class="container">
-        <div class="blog-header">
-            <h1 class="dark:text-white">{post.title}</h1>
-            <div class="post-meta">
-                {#if post.date}
-                    <span class="post-date dark:text-gray-300">{new Date(post.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    })}</span>
+    <div class="container mx-auto px-4 py-12">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="blog-header">
+                <h1 class="dark:text-white">{post.title}</h1>
+                <div class="post-meta">
+                    {#if post.date}
+                        <span class="post-date dark:text-gray-300">{new Date(post.date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}</span>
+                    {/if}
+                    <span class="post-author dark:text-gray-300">By {post.author || 'Dr. Fatih Nayebi'}</span>
+                </div>
+                
+                {#if post.tags && post.tags.length > 0}
+                    <div class="post-tags">
+                        {#each post.tags as tag}
+                            <span class="tag dark:bg-blue-900 dark:text-blue-200">{tag}</span>
+                        {/each}
+                    </div>
                 {/if}
-                <span class="post-author dark:text-gray-300">By {post.author || 'Fatih Nayebi'}</span>
             </div>
             
-            {#if post.tags && post.tags.length > 0}
-                <div class="post-tags">
-                    {#each post.tags as tag}
-                        <span class="tag dark:bg-blue-900 dark:text-blue-200">{tag}</span>
-                    {/each}
-                </div>
-            {/if}
-        </div>
-        
-        <div class="blog-content dark:text-white" bind:this={contentContainer}>
-            {@html sanitizedContent || post.content || '<p>No content available</p>'}
-        </div>
-        
-        <div class="blog-footer">
-            <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
+            <div class="blog-content dark:text-white" bind:this={contentContainer}>
+                {@html sanitizedContent || post.content || '<p>No content available</p>'}
+            </div>
+            
+            <div class="blog-footer">
+                <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
+            </div>
         </div>
     </div>
 {:else}
@@ -162,12 +164,6 @@
 {/if}
 
 <style>
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-    }
-    
     .error-container {
         max-width: 600px;
         margin: 4rem auto;

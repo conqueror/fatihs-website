@@ -124,12 +124,12 @@
 </script>
 
 <svelte:head>
-    <title>{publication.title || 'Publication'} | Fatih Nayebi</title>
+    <title>{publication.title || 'Publication'} | Dr. Fatih Nayebi</title>
     <meta name="description" content={publication.abstract || 'Publication details'} />
 </svelte:head>
 
-<div class="container mx-auto px-4 py-8">
-    <div class="publication-container svelte-1kqzfjj">
+<div class="container mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
         {#if isLoading}
             <div class="loading-container">
                 <div class="loading-spinner"></div>
@@ -193,12 +193,18 @@
         font-size: 2.5rem;
         margin-bottom: 1rem;
         line-height: 1.2;
+        color: #222;
     }
     
     h2 {
         font-size: 1.8rem;
         margin: 2rem 0 1rem;
         color: #222;
+    }
+
+    :global(.dark) h1,
+    :global(.dark) h2 {
+        color: #fff;
     }
     
     .publication-meta {
@@ -212,6 +218,11 @@
         font-style: italic;
         color: #555;
     }
+
+    :global(.dark) .publication-meta,
+    :global(.dark) .publication-authors {
+        color: #fff;
+    }
     
     .publication-abstract {
         margin-bottom: 2rem;
@@ -219,10 +230,23 @@
         background-color: #f9f9f9;
         border-left: 4px solid #3273dc;
     }
+
+    :global(.dark) .publication-abstract {
+        background-color: #1e293b;
+        border-left: 4px solid #4b76c5;
+    }
+
+    :global(.dark) .publication-abstract p {
+        color: #fff;
+    }
     
     .publication-content {
         line-height: 1.8;
         color: #333;
+    }
+
+    :global(.dark) .publication-content {
+        color: #fff;
     }
     
     /* Markdown styling */
@@ -249,6 +273,14 @@
     
     .markdown-content :global(p) {
         margin-bottom: 1rem;
+    }
+
+    :global(.dark) .markdown-content :global(h1),
+    :global(.dark) .markdown-content :global(h2),
+    :global(.dark) .markdown-content :global(h3),
+    :global(.dark) .markdown-content :global(p),
+    :global(.dark) .markdown-content :global(li) {
+        color: #fff;
     }
     
     .markdown-content :global(ul), .markdown-content :global(ol) {
@@ -279,6 +311,11 @@
         line-height: 1.5;
         border: 1px solid #e0e0e0;
     }
+
+    :global(.dark) .markdown-content :global(pre) {
+        background-color: #111827;
+        border-color: #374151;
+    }
     
     .markdown-content :global(code) {
         background-color: #f5f5f5;
@@ -288,11 +325,20 @@
         font-size: 0.9rem;
         color: #e83e8c; /* Inline code color */
     }
+
+    :global(.dark) .markdown-content :global(code) {
+        background-color: #1e293b;
+        color: #f472b6;
+    }
     
     .markdown-content :global(pre code) {
         background-color: transparent;
         padding: 0;
         color: #333; /* Reset color for code inside pre blocks */
+    }
+
+    :global(.dark) .markdown-content :global(pre code) {
+        color: #e2e8f0;
     }
     
     /* Syntax highlighting classes */
@@ -315,6 +361,24 @@
         font-style: italic;
     }
     
+    :global(.dark) .markdown-content :global(.language-javascript .keyword),
+    :global(.dark) .markdown-content :global(.language-typescript .keyword),
+    :global(.dark) .markdown-content :global(.language-python .keyword) {
+        color: #79b8ff; /* Keywords in dark mode */
+    }
+    
+    :global(.dark) .markdown-content :global(.language-javascript .string),
+    :global(.dark) .markdown-content :global(.language-typescript .string),
+    :global(.dark) .markdown-content :global(.language-python .string) {
+        color: #9ecbff; /* Strings in dark mode */
+    }
+    
+    :global(.dark) .markdown-content :global(.language-javascript .comment),
+    :global(.dark) .markdown-content :global(.language-typescript .comment),
+    :global(.dark) .markdown-content :global(.language-python .comment) {
+        color: #959da5; /* Comments in dark mode */
+    }
+    
     /* Add support for Shiki highlighting */
     .markdown-content :global(.shiki) {
         background-color: #f5f5f5 !important;
@@ -327,6 +391,11 @@
         line-height: 1.5 !important;
         border: 1px solid #e0e0e0;
     }
+
+    :global(.dark) .markdown-content :global(.shiki) {
+        background-color: #111827 !important;
+        border-color: #374151;
+    }
     
     .markdown-content :global(blockquote) {
         border-left: 4px solid #3273dc;
@@ -334,16 +403,29 @@
         font-style: italic;
         margin: 1rem 0;
     }
+
+    :global(.dark) .markdown-content :global(blockquote) {
+        border-left-color: #4b76c5;
+        color: #fff;
+    }
     
     .markdown-content :global(a) {
         color: #3273dc;
         text-decoration: underline;
+    }
+
+    :global(.dark) .markdown-content :global(a) {
+        color: #60a5fa;
     }
     
     .publication-footer {
         margin-top: 3rem;
         padding-top: 1.5rem;
         border-top: 1px solid #eee;
+    }
+
+    :global(.dark) .publication-footer {
+        border-top-color: #374151;
     }
     
     .back-link {
@@ -355,12 +437,21 @@
         border-radius: 4px;
         transition: background-color 0.2s;
     }
+
+    :global(.dark) .back-link {
+        background-color: #1e293b;
+        color: #fff;
+    }
     
     .back-link:hover {
         background-color: #efefef;
         text-decoration: none;
     }
-    
+
+    :global(.dark) .back-link:hover {
+        background-color: #2d3748;
+    }
+
     .loading-container {
         display: flex;
         flex-direction: column;
@@ -368,6 +459,10 @@
         justify-content: center;
         height: 200px;
         text-align: center;
+    }
+
+    :global(.dark) .loading-container p {
+        color: #fff;
     }
     
     .loading-spinner {
@@ -379,10 +474,20 @@
         animation: spin 1s linear infinite;
         margin-bottom: 1rem;
     }
+
+    :global(.dark) .loading-spinner {
+        border-color: #1e293b;
+        border-top-color: #4b76c5;
+    }
     
     .error-container {
         text-align: center;
         padding: 2rem;
+    }
+
+    :global(.dark) .error-container h1,
+    :global(.dark) .error-container p {
+        color: #fff;
     }
     
     @keyframes spin {
