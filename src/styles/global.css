@@ -16,65 +16,24 @@
     @apply font-sans text-gray-800 bg-gray-50;
   }
   
-  /* Prism.js code block styles */
-  pre[class*="language-"] {
+  /* Simple code block styles */
+  pre {
     position: relative;
-    margin: 1.5em 0;
+    margin: 1.5em 0 1em;
     overflow: auto;
     border-radius: 0.3em;
+    @apply bg-gray-100 p-4 pb-3;
   }
   
-  code[class*="language-"] {
+  code {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    @apply text-gray-800 bg-gray-100 px-1 py-0.5 rounded;
   }
   
-  /* Ensure .token classes aren't affected by Tailwind's reset */
-  .token.comment,
-  .token.prolog,
-  .token.doctype,
-  .token.cdata {
-    @apply text-gray-500;
-  }
-  
-  .token.punctuation {
-    @apply text-gray-600;
-  }
-  
-  .token.property,
-  .token.tag,
-  .token.boolean,
-  .token.number,
-  .token.constant,
-  .token.symbol,
-  .token.deleted {
-    @apply text-blue-500;
-  }
-  
-  .token.selector,
-  .token.attr-name,
-  .token.string,
-  .token.char,
-  .token.builtin,
-  .token.inserted {
-    @apply text-green-600;
-  }
-  
-  .token.operator,
-  .token.entity,
-  .token.url,
-  .token.variable {
-    @apply text-orange-500;
-  }
-  
-  .token.atrule,
-  .token.attr-value,
-  .token.keyword {
-    @apply text-purple-600;
-  }
-  
-  .token.function,
-  .token.class-name {
-    @apply text-yellow-600;
+  pre code {
+    @apply bg-transparent p-0 block;
+    line-height: 1.5;
+    margin-bottom: 0;
   }
 }
 

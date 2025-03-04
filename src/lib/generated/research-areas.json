@@ -31,5 +31,16 @@
     "paperUrl": "https://arxiv.org/abs/example-paper-2",
     "codeUrl": "https://github.com/fatihnayebi/nlp-code-analysis",
     "content": "<h1>Natural Language Processing for Code</h1>\n<p>Exploring how large language models can understand and generate code, with applications in automated code review and documentation.</p>\n<h2>Overview</h2>\n<p>This research focuses on applying natural language processing techniques to programming languages, treating code as a form of structured natural language. By understanding the unique characteristics of programming languages, we can develop models that effectively bridge the gap between human language and code.</p>\n<h2>Key Areas</h2>\n<h3>Code Understanding</h3>\n<p>Our work on code understanding involves training models to comprehend the semantics and structure of code across multiple programming languages. These models can identify patterns, detect bugs, and understand the intent behind code snippets.</p>\n<h3>Code Generation</h3>\n<p>We&#39;re developing models that can generate code from natural language descriptions, making programming more accessible to non-experts and speeding up development for experienced programmers.</p>\n<h3>Cross-Language Translation</h3>\n<p>Our research includes systems that can translate code between different programming languages while preserving functionality and idiomatic patterns specific to each language.</p>\n<h2>Impact</h2>\n<p>The tools developed through this research have been integrated into popular development environments and have shown to significantly reduce the time required for common programming tasks, particularly for developers working with unfamiliar codebases or languages.</p>\n<h2>Future Directions</h2>\n<p>Future work will focus on improving the robustness and reliability of code generation, enhancing the model&#39;s understanding of complex programming concepts, and developing techniques to ensure generated code is secure, efficient, and maintainable. </p>\n"
+  },
+  {
+    "slug": "sample-research",
+    "title": "Sample Research Area",
+    "date": "2024-06-15",
+    "excerpt": "This is a sample research area to test content generation",
+    "tags": [
+      "research",
+      "test"
+    ],
+    "content": "<h1>Sample Research Area</h1>\n<p>This is a sample research area with a code block:</p>\n<pre class=\"code-block\"><code># Analysis in R\ndata &lt;- read.csv(&quot;data.csv&quot;)\nmodel &lt;- lm(y ~ x, data=data)\nsummary(model)</code></pre>\n<p>The code above shows a simple linear regression in R. </p>\n"
   }
 ]

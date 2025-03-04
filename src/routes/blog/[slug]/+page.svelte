@@ -3,8 +3,6 @@
     import DOMPurify from 'dompurify';
     import { storage } from '$lib/utils/storage';
     import { browser } from '$app/environment';
-    // Import highlightAll function from our Prism utility
-    import { highlightAll } from '$lib/utils/prism';
     
     export let data;
     // Ensure post is always at least an empty object to prevent undefined errors
@@ -19,20 +17,37 @@
             if (post?.content) {
                 console.log('Processing blog post content');
                 
+                // Ensure content is properly stringified if it contains objects
+                let processedContent = post.content;
+                if (typeof processedContent === 'object') {
+                    try {
+                        // Try to stringify any objects properly
+                        if (processedContent.toString !== Object.prototype.toString) {
+                            processedContent = processedContent.toString();
+                        } else {
+                            processedContent = JSON.stringify(processedContent, null, 2);
+                        }
+                        console.log('Content was an object, converted to string');
+                    } catch (e) {
+                        console.error('Failed to stringify content object:', e);
+                        processedContent = String(processedContent);
+                    }
+                }
+                
                 // Only sanitize if DOMPurify is available (it should be in browser context)
                 if (browser && typeof DOMPurify !== 'undefined') {
-                    // Set sanitize options to allow classes and data attributes for syntax highlighting
+                    // Set sanitize options to allow classes for code blocks
                     const sanitizeOptions = {
                         ADD_TAGS: ['pre', 'code'],
-                        ADD_ATTR: ['class', 'data-language'],
-                        ALLOW_DATA_ATTR: true
+                        ADD_ATTR: ['class'],
+                        ALLOW_DATA_ATTR: false
                     };
                     
-                    sanitizedContent = DOMPurify.sanitize(post.content, sanitizeOptions);
+                    sanitizedContent = DOMPurify.sanitize(processedContent, sanitizeOptions);
                     console.log('Content sanitized');
                 } else {
-                    // Fallback: just use the raw content if DOMPurify is unavailable
-                    sanitizedContent = post.content;
+                    // Fallback: just use the processed content if DOMPurify is unavailable
+                    sanitizedContent = processedContent;
                     console.log('Using unsanitized content (no DOMPurify)');
                 }
                 
@@ -66,11 +81,6 @@
                         console.debug('Storage error ignored:', storageError);
                     }
                 }
-                
-                // Apply Prism.js syntax highlighting after content is loaded
-                setTimeout(() => {
-                    highlightAll();
-                }, 0);
             }
         } catch (error) {
             console.error('Error processing content:', error);
@@ -227,16 +237,16 @@
         margin: 1.5rem 0;
     }
     
-    /* Non-highlighted code (inline code) */
-    .blog-content :global(code:not([class*="language-"])) {
+    /* Code (inline code) */
+    .blog-content :global(code) {
         background-color: #f5f5f5;
         padding: 0.1rem 0.3rem;
         border-radius: 3px;
         font-family: monospace;
     }
     
-    /* These styles will be overridden for syntax highlighted code blocks by prism-theme.css */
-    .blog-content :global(pre:not([class*="language-"])) {
+    /* Code blocks */
+    .blog-content :global(pre) {
         background-color: #f5f5f5;
         padding: 1rem;
         border-radius: 5px;
@@ -244,7 +254,7 @@
         margin: 1.5rem 0;
     }
     
-    .blog-content :global(pre:not([class*="language-"]) code) {
+    .blog-content :global(pre code) {
         background-color: transparent;
         padding: 0;
     }

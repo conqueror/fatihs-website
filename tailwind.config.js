@@ -19,11 +19,8 @@ export default {
     },
   },
   plugins: [],
-  // Ensure Tailwind doesn't purge Prism.js classes
+  // Simplified safelist - only keeping essential elements
   safelist: [
-    { pattern: /language-\w+/ },
-    { pattern: /token/ },
-    { pattern: /pre/ },
-    { pattern: /code/ }
+    { pattern: /pre/ }
   ]
 } 
