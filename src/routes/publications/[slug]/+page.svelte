@@ -213,11 +213,6 @@
 </div>
 
 <style>
-    .publication-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    
     .publication-header {
         margin-bottom: 2rem;
         padding-bottom: 1.5rem;

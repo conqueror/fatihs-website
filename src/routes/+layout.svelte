@@ -1,5 +1,5 @@
 <script>
-	import '../app.css';
+	import '../styles/global.css';
 	import { page } from '$app/stores';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
@@ -7,7 +7,6 @@
 	import { generateWebsiteSchema } from '$lib/utils/structured-data';
 	import Navbar from '$lib/Navbar.svelte';
 	import ScrollToTop from '$lib/ScrollToTop.svelte';
-	import '../styles/global.css';
 	
 	// Import analytics and cookie consent components
 	import CookieConsent from '$lib/components/CookieConsent.svelte';
