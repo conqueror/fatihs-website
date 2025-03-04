@@ -185,7 +185,7 @@
 									})}</div>
 									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">{redirectedBlogPost.title}</h3>
 									<p class="text-gray-600 dark:text-gray-300 mb-3">{redirectedBlogPost.excerpt}</p>
-									<a href={`/blog/${redirectedBlogPost.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-blue-300 transform hover:scale-105">
+									<a href={`/blog/${redirectedBlogPost.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 										Read post
 										<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -203,7 +203,7 @@
 											})}</div>
 											<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">{post.title}</h3>
 											<p class="text-gray-600 dark:text-gray-300 mb-3">{post.excerpt}</p>
-											<a href={`/blog/${post.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-blue-300 transform hover:scale-105">
+											<a href={`/blog/${post.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 												Read post
 												<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -216,7 +216,7 @@
 										<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">June 15, 2023</div>
 										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">AI in Healthcare: Current Applications and Future Possibilities</h3>
 										<p class="text-gray-600 dark:text-gray-300 mb-3">Exploring how artificial intelligence is transforming healthcare diagnosis, treatment, and patient care.</p>
-										<a href="/blog" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-blue-300 transform hover:scale-105">
+										<a href="/blog" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 											Read post
 											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -255,7 +255,7 @@
 										<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">{new Date(publication.date).getFullYear()}</div>
 										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">{publication.title}</h3>
 										<p class="text-sm text-gray-600 dark:text-gray-300 italic mb-3">{publication.journal || 'Journal of AI Research'}</p>
-										<a href={`/publications/${publication.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-blue-300 transform hover:scale-105">
+										<a href={`/publications/${publication.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 											View details
 											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -268,7 +268,7 @@
 									<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">2023</div>
 									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">Neural Network Architectures for Computer Vision</h3>
 									<p class="text-sm text-gray-600 dark:text-gray-300 italic mb-3">Journal of AI Research</p>
-									<a href="/publications" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-blue-300 transform hover:scale-105">
+									<a href="/publications" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 										View details
 										<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
