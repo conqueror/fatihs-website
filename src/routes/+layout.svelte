@@ -75,6 +75,15 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<!-- iOS refresh handler script -->
 	<script src="/refresh-handler.js"></script>
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YOURTRACKINID"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-YOURTRACKINID');
+	</script>
 </svelte:head>
 
 <div class="min-h-screen flex flex-col">
@@ -88,14 +97,3 @@
 	<Footer />
 	<ScrollToTop />
 </div>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<svelte:head>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YOURTRACKINID"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-YOURTRACKINID');
-	</script>
-</svelte:head>
