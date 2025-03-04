@@ -6,7 +6,7 @@
 	<div class="container mx-auto px-4">
 		<div class="flex flex-col md:flex-row justify-between mb-12">
 			<div class="mb-8 md:mb-0 md:w-1/3 pr-4">
-				<h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Fatih Nayebi</h3>
+				<h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Dr. Fatih Nayebi</h3>
 				<p class="text-gray-600 dark:text-gray-300 mb-4">
 					Research Scientist focused on machine learning, AI, and human-computer interaction.
 				</p>
@@ -46,7 +46,7 @@
 		</div>
 		
 		<div class="border-t border-gray-200 dark:border-gray-700 pt-6 text-center text-gray-500 dark:text-gray-400 text-sm">
-			<p>© {year} Fatih Nayebi. All rights reserved. | Built with SvelteKit and Tailwind CSS</p>
+			<p>© {year} Dr. Fatih Nayebi. All rights reserved. | Built with SvelteKit and Tailwind CSS</p>
 		</div>
 	</div>
 </footer>

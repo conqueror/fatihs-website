@@ -296,7 +296,46 @@
 		</div>
 	</div>
 
-	<!-- Skills and Connect sections for mobile - showing after main content -->
+	<AnimateInView type="fade" delay={1400}>
+		<div class="mt-10 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 relative">
+			
+			<h2 class="text-3xl font-bold mb-8 text-primary dark:text-blue-400 flex items-center">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path d="M12 14l9-5-9-5-9 5 9 5z" />
+					<path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998a12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+				</svg>
+				Education
+			</h2>
+			<div class="space-y-6">
+				{#each [
+					{degree: 'Ph.D., Software Engineering', school: 'École de technologie supérieure', years: '2012 - 2015'},
+					{degree: 'Ph.D., Computer Engineering', school: 'Boğaziçi Üniversitesi', years: '2009 - 2012'},
+					{degree: 'Master of Science (M.Sc.), Software Engineering', school: 'Boğaziçi Üniversitesi', years: '2007 - 2009'},
+					{degree: 'Bachelor of Science (B.Sc.), Computer Engineering', school: 'Lahijan University', years: '1998 - 2002'}
+				] as edu, i}
+					<div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" style="transition-delay: {i * 150}ms">
+						<div class="flex items-start md:items-center">
+							<div class="bg-primary/10 dark:bg-blue-900/30 p-2 rounded-full mr-4 hidden md:block">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+								</svg>
+							</div>
+							<div>
+								<h3 class="font-semibold text-lg dark:text-gray-100">{edu.degree}</h3>
+								<p class="text-gray-700 dark:text-gray-300">{edu.school}</p>
+							</div>
+						</div>
+						<div class="md:text-right mt-2 md:mt-0">
+							<p class="text-primary dark:text-blue-400 font-medium inline-block bg-primary/5 dark:bg-blue-900/20 px-3 py-1 rounded-full">{edu.years}</p>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</AnimateInView>
+
+	<!-- Skills and Connect sections for mobile - showing after Education section -->
 	<div class="md:hidden">
 		<AnimateInView type="fly" x={20} delay={600}>
 			<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
@@ -354,50 +393,42 @@
 							GitHub
 						</a>
 					</li>
-					<!-- Additional connect with me links ... -->
+					<li class="transform transition-all duration-300 hover:scale-110">
+						<a href="https://scholar.google.com/citations?user=s6lWpdEAAAAJ" class="flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-800 rounded-lg hover:bg-indigo-200">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+							</svg>
+							Google Scholar
+						</a>
+					</li>
+					<li class="transform transition-all duration-300 hover:scale-110">
+						<a href="mailto:f.nayebi@gmail.com" class="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+							</svg>
+							Email
+						</a>
+					</li>
+					<li class="transform transition-all duration-300 hover:scale-110">
+						<a href="https://gradientdivergence.com/" class="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-lg hover:bg-green-200">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+							</svg>
+							Company
+						</a>
+					</li>
+					<li class="transform transition-all duration-300 hover:scale-110">
+						<a href="https://gradientdivergence.com/fatih-nayebi/" class="flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-800 rounded-lg hover:bg-purple-200">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+							</svg>
+							Personal Site
+						</a>
+					</li>
 				</ul>
 			</div>
 		</AnimateInView>
 	</div>
-
-	<AnimateInView type="fade" delay={1400}>
-		<div class="mt-10 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 relative">
-			
-			<h2 class="text-3xl font-bold mb-8 text-primary dark:text-blue-400 flex items-center">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path d="M12 14l9-5-9-5-9 5 9 5z" />
-					<path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998a12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-				</svg>
-				Education
-			</h2>
-			<div class="space-y-6">
-				{#each [
-					{degree: 'Ph.D., Software Engineering', school: 'École de technologie supérieure', years: '2012 - 2015'},
-					{degree: 'Ph.D., Computer Engineering', school: 'Boğaziçi Üniversitesi', years: '2009 - 2012'},
-					{degree: 'Master of Science (M.Sc.), Software Engineering', school: 'Boğaziçi Üniversitesi', years: '2007 - 2009'},
-					{degree: 'Bachelor of Science (B.Sc.), Computer Engineering', school: 'Lahijan University', years: '1998 - 2002'}
-				] as edu, i}
-					<div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" style="transition-delay: {i * 150}ms">
-						<div class="flex items-start md:items-center">
-							<div class="bg-primary/10 dark:bg-blue-900/30 p-2 rounded-full mr-4 hidden md:block">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-								</svg>
-							</div>
-							<div>
-								<h3 class="font-semibold text-lg dark:text-gray-100">{edu.degree}</h3>
-								<p class="text-gray-700 dark:text-gray-300">{edu.school}</p>
-							</div>
-						</div>
-						<div class="md:text-right mt-2 md:mt-0">
-							<p class="text-primary dark:text-blue-400 font-medium inline-block bg-primary/5 dark:bg-blue-900/20 px-3 py-1 rounded-full">{edu.years}</p>
-						</div>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</AnimateInView>
 </div>
 {/if}
 

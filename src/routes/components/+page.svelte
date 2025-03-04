@@ -51,7 +51,7 @@
 </script>
 
 <svelte:head>
-  <title>Component Showcase | Fatih Nayebi</title>
+  <title>Component Showcase | Dr. Fatih Nayebi</title>
 </svelte:head>
 
 <div in:fade={{ duration: 500 }}>

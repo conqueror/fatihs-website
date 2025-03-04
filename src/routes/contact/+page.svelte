@@ -92,8 +92,8 @@
 </script>
 
 <svelte:head>
-    <title>Contact | Fatih Nayebi</title>
-    <meta name="description" content="Get in touch with Fatih Nayebi for collaborations, speaking engagements, or inquiries.">
+    <title>Contact | Dr. Fatih Nayebi</title>
+    <meta name="description" content="Get in touch with Dr. Fatih Nayebi for collaborations, speaking engagements, or inquiries.">
 </svelte:head>
 
 {#if visible}

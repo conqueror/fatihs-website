@@ -9,12 +9,11 @@
 
 ## Top Skills
 - Supply Chain Optimization  
-- Supply Chain Management  
+- Agentic AI in Retail  
 - Omni-Channel Marketing  
 
 ## Languages
 - English (Native or Bilingual)  
-- Persian (Limited Working)  
 - Azerbaijani (Limited Working)  
 - French (Professional Working)  
 - Turkish (Native or Bilingual)  

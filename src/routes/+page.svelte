@@ -74,16 +74,16 @@
 		<div class="container mx-auto">
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
 				<div class="p-4">
-					<div class="text-4xl font-bold text-primary mb-2">{Math.round($count)}+</div>
+					<div class="text-4xl font-bold text-primary mb-2">7+</div>
 					<p class="text-gray-600">Publications & Books</p>
 				</div>
 				<div class="p-4">
-					<div class="text-4xl font-bold text-primary mb-2">19+</div>
-					<p class="text-gray-600">AI Products Deployed</p>
+					<div class="text-4xl font-bold text-primary mb-2">21+</div>
+					<p class="text-gray-600">AI Products Released</p>
 				</div>
 				<div class="p-4">
 					<div class="text-4xl font-bold text-primary mb-2">72+</div>
-					<p class="text-gray-600">Mobile Apps Developed</p>
+					<p class="text-gray-600">Apps Developed</p>
 				</div>
 			</div>
 		</div>
@@ -166,7 +166,7 @@
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 				<!-- Featured Blog Posts -->
 				<AnimateInView type="fly" x={-20} y={0}>
-					<div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+					<div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
 						<div class="flex items-center mb-6">
 							<div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-3">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -239,7 +239,7 @@
 
 				<!-- Featured Publications -->
 				<AnimateInView type="fly" x={20} y={0}>
-					<div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+					<div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
 						<div class="flex items-center mb-6">
 							<div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mr-3">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600 dark:text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -252,9 +252,9 @@
 							{#if featuredPublications && featuredPublications.length > 0}
 								{#each featuredPublications as publication, i}
 									<div class="border-b border-gray-200 dark:border-gray-700 pb-6 group" in:fly={{ x: 20, delay: i * 150, duration: 500 }}>
-										<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">{new Date(publication.date).getFullYear()}</div>
-										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">{publication.title}</h3>
-										<p class="text-sm text-gray-600 dark:text-gray-300 italic mb-3">{publication.journal || 'Journal of AI Research'}</p>
+										<div class="text-sm text-gray-500 dark:text-white mb-2">{new Date(publication.date).getFullYear()}</div>
+										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-white dark:group-hover:text-primary transition-colors">{publication.title}</h3>
+										<p class="text-sm text-gray-600 dark:text-white italic mb-3">{publication.journal || 'Journal of AI Research'}</p>
 										<a href={`/publications/${publication.slug}`} class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 											View details
 											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -265,9 +265,9 @@
 								{/each}
 							{:else}
 								<div class="border-b border-gray-200 dark:border-gray-700 pb-6 group" in:fly={{ x: 20, duration: 500 }}>
-									<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">2023</div>
-									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">Neural Network Architectures for Computer Vision</h3>
-									<p class="text-sm text-gray-600 dark:text-gray-300 italic mb-3">Journal of AI Research</p>
+									<div class="text-sm text-gray-500 dark:text-white mb-2">2023</div>
+									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-white dark:group-hover:text-primary transition-colors">Neural Network Architectures for Computer Vision</h3>
+									<p class="text-sm text-gray-600 dark:text-white italic mb-3">Journal of AI Research</p>
 									<a href="/publications" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 										View details
 										<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -294,7 +294,7 @@
 
 <!-- Call to Action -->
 <AnimateInView type="fade" delay={400}>
-	<section class="py-16 bg-gradient-to-r from-primary/10 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl mb-12">
+	<section class="py-16 bg-gradient-to-r from-primary/10 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl mb-12 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
 		<div class="container mx-auto px-4 text-center">
 			<h2 class="text-3xl font-bold mb-6 text-primary dark:text-blue-400">Let's Connect</h2>
 			<p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">

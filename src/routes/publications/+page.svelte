@@ -14,8 +14,8 @@
 </script>
 
 <svelte:head>
-    <title>Publications | Fatih Nayebi</title>
-    <meta name="description" content="Explore Fatih Nayebi's published academic papers, articles, and books on AI, machine learning, and technology.">
+    <title>Publications | Dr. Fatih Nayebi</title>
+    <meta name="description" content="Explore Dr. Fatih Nayebi's published academic papers, articles, and books on AI, machine learning, and technology.">
 </svelte:head>
 
 {#if visible}
@@ -41,7 +41,7 @@
                                 {#if publication.authors}
                                     {publication.authors.join(', ')}
                                 {:else}
-                                    Fatih Nayebi
+                                    Dr. Fatih Nayebi
                                 {/if}
                             </div>
                             

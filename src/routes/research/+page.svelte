@@ -30,16 +30,16 @@
 </script>
 
 <svelte:head>
-    <title>Research | Fatih Nayebi</title>
-    <meta name="description" content="Explore Fatih Nayebi's research in machine learning, AI, and their applications in various domains.">
+    <title>Research | Dr. Fatih Nayebi</title>
+    <meta name="description" content="Explore Dr. Fatih Nayebi's research in machine learning, AI, and their applications in various domains.">
 </svelte:head>
 
 {#if visible}
 <div in:fade={{ duration: 800 }} class="container mx-auto px-4 py-12">
-    <div class="max-w-4xl mx-auto">
+    <div class="mx-auto">
         <!-- Page title -->
         <div class="mb-12 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-gray-50" in:fly={{ y: -30, duration: 800, delay: 300 }}>Research</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-primary dark:text-blue-400" in:fly={{ y: -30, duration: 800, delay: 300 }}>Research</h1>
             <p class="text-xl text-gray-600 dark:text-gray-300" in:fly={{ y: 30, duration: 800, delay: 500 }}>My academic contributions and research interests</p>
         </div>
         

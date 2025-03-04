@@ -16,8 +16,8 @@
 </script>
 
 <svelte:head>
-    <title>Blog | Fatih Nayebi</title>
-    <meta name="description" content="Thoughts and insights on AI, machine learning, and technology by Fatih Nayebi.">
+    <title>Blog | Dr. Fatih Nayebi</title>
+    <meta name="description" content="Thoughts and insights on AI, machine learning, and technology by Dr. Fatih Nayebi.">
 </svelte:head>
 
 {#if visible}
