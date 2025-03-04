@@ -22,6 +22,10 @@
         </svg>`,
         chart: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+        </svg>`,
+        eye: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
         </svg>`
     };
 </script>
@@ -108,7 +112,7 @@
 </svelte:head>
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+<div in:fade={{ duration: 800 }} class="py-12 relative z-0">
     <!-- Background decorative elements -->
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
@@ -132,11 +136,11 @@
         
         <div class="flex flex-col md:flex-row justify-between text-sm text-gray-600 mb-6 p-4 bg-gray-50 rounded-lg">
             <span class="mb-2 md:mb-0 font-medium">{researchArea.timeframe}</span>
-            <span>Collaborators: {researchArea.collaborators}</span>
+            <span>Collaborators: {researchArea.collaboratorsDisplay || (Array.isArray(researchArea.collaborators) ? researchArea.collaborators.join(', ') : researchArea.collaborators)}</span>
         </div>
         
         <div class="markdown-content max-w-none mb-8">
-            {@html researchArea.content}
+            {@html researchArea.html || researchArea.content}
         </div>
         
         <div class="flex flex-wrap gap-3 mt-8">
