@@ -35,76 +35,124 @@
 </svelte:head>
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 relative z-0">
-    <!-- Background decorative elements -->
-    <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
-    <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
-    
-    <h1 class="text-5xl font-bold mb-8 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Research</h1>
-    <p class="text-lg text-center mb-12 max-w-3xl mx-auto" in:fly={{ y: 30, duration: 800, delay: 500 }}>
-        My research focuses on machine learning, AI, and their applications in various domains.
-    </p>
-    
-    <div class="space-y-12">
-        {#each researchAreas as area, index}
-            <AnimateInView type={index === 0 ? "fade" : "fly"} x={index === 0 ? 0 : -20} delay={300 + (index * 300)}>
-                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-500 hover:shadow-md">
-                    <h3 class="text-2xl font-semibold mb-4 text-primary flex items-center">
-                        {#if area.icon && icons[area.icon]}
-                            {@html icons[area.icon]}
-                        {/if}
-                        {area.title}
-                    </h3>
-                    
-                    <!-- Truncated content with gradient fade-out -->
-                    <div class="relative max-h-28 overflow-hidden mb-6">
-                        <div class="prose prose-primary max-w-none">
-                            {@html area.content}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto">
+        <!-- Page title -->
+        <div class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-gray-50">Research</h1>
+            <p class="text-xl text-gray-600 dark:text-gray-300">My academic contributions and research interests</p>
+        </div>
+        
+        <!-- Research sections -->
+        <div class="space-y-16">
+            <!-- Research interests -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6 text-primary dark:text-blue-400 border-b pb-2 border-primary/20 dark:border-blue-500/30">Research Interests</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {#each [
+                        {
+                            title: "Artificial Intelligence & Machine Learning",
+                            desc: "Deep learning, neural networks, and advanced prediction models for business decision-making.",
+                            icon: "brain"
+                        },
+                        {
+                            title: "Data Science & Analytics",
+                            desc: "Advanced analytics workflows, statistical methods, and data-driven strategy development.",
+                            icon: "chart"
+                        },
+                        {
+                            title: "Big Data Architecture",
+                            desc: "Designing scalable data pipelines and analytics infrastructure for enterprise applications.",
+                            icon: "server"
+                        },
+                        {
+                            title: "Software Engineering",
+                            desc: "Software metrics, development methodologies, and effort estimation models.",
+                            icon: "code"
+                        }
+                    ] as interest}
+                        <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-100">{interest.title}</h3>
+                            <p class="text-gray-600 dark:text-gray-300">{interest.desc}</p>
                         </div>
-                        <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"></div>
-                    </div>
-                    
-                    <div class="flex flex-col md:flex-row justify-between text-sm text-gray-600 mb-6 p-4 bg-gray-50 rounded-lg">
-                        <span class="mb-2 md:mb-0 font-medium">{area.timeframe}</span>
-                        <span>Collaborators: {area.collaboratorsDisplay || (Array.isArray(area.collaborators) ? area.collaborators.join(', ') : area.collaborators)}</span>
-                    </div>
-                    
-                    <div class="flex flex-wrap gap-3">
-                        <a href={`/research/${area.slug}`} 
-                           class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-300 transform hover:scale-105">
-                            <span>View details</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </a>
-                        
-                        {#if area.paperUrl}
-                            <a href={area.paperUrl} target="_blank" rel="noopener noreferrer" 
-                               class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-colors duration-300">
-                               <span class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v10m2 2v-6a2 2 0 00-2-2h-6" />
-                                    </svg>
-                                    Published Paper
-                               </span>
-                            </a>
-                        {/if}
-                        
-                        {#if area.codeUrl}
-                            <a href={area.codeUrl} target="_blank" rel="noopener noreferrer" 
-                               class="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition-colors duration-300">
-                               <span class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                                    </svg>
-                                    GitHub Repository
-                               </span>
-                            </a>
-                        {/if}
-                    </div>
+                    {/each}
                 </div>
-            </AnimateInView>
-        {/each}
+            </section>
+            
+            <!-- Current research -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6 text-primary dark:text-blue-400 border-b pb-2 border-primary/20 dark:border-blue-500/30">Current Research</h2>
+                <div class="space-y-6">
+                    {#each [
+                        {
+                            title: "AI-Driven Decision Support Systems",
+                            desc: "Developing frameworks for integrating AI capabilities into business decision-making processes, with a focus on interpretability and actionable insights.",
+                            tags: ["AI", "Decision Support", "Business Intelligence"]
+                        },
+                        {
+                            title: "Multi-Modal Deep Learning for Retail Applications",
+                            desc: "Exploring how deep learning models can integrate visual, textual, and behavioral data to enhance customer experience and operational efficiency in retail environments.",
+                            tags: ["Deep Learning", "Computer Vision", "NLP", "Retail"]
+                        },
+                        {
+                            title: "Responsible AI Governance Frameworks",
+                            desc: "Researching and developing governance models that ensure ethical implementation of AI in enterprise contexts, with particular emphasis on transparency, fairness, and accountability.",
+                            tags: ["AI Ethics", "Governance", "Enterprise AI"]
+                        }
+                    ] as project}
+                        <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
+                            <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">{project.title}</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">{project.desc}</p>
+                            <div class="flex flex-wrap gap-2">
+                                {#each project.tags as tag}
+                                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300 text-sm rounded-full">{tag}</span>
+                                {/each}
+                            </div>
+                        </div>
+                    {/each}
+                </div>
+            </section>
+            
+            <!-- Past research projects -->
+            <section>
+                <h2 class="text-3xl font-bold mb-6 text-primary dark:text-blue-400 border-b pb-2 border-primary/20 dark:border-blue-500/30">Past Research Projects</h2>
+                <div class="space-y-6">
+                    {#each [
+                        {
+                            title: "Mobile Application Usability Evaluation",
+                            desc: "Developed and validated a comprehensive framework for evaluating iOS application usability, incorporating both expert-based heuristics and user-centered metrics.",
+                            year: "2014-2015",
+                            outcome: "Published in international journals and contributed to industry standards for mobile UX evaluation."
+                        },
+                        {
+                            title: "Software Effort Estimation Models",
+                            desc: "Researched and created algorithms for automated selection of software effort estimation models based on project characteristics, accuracy requirements, and uncertainty tolerance.",
+                            year: "2012-2014",
+                            outcome: "Implemented in enterprise project management systems, resulting in 28% improvement in estimation accuracy."
+                        },
+                        {
+                            title: "Functional Programming Paradigms in Mobile Development",
+                            desc: "Investigated the application of functional programming concepts in Swift for iOS development, focusing on code quality, maintainability, and developer productivity.",
+                            year: "2015-2016",
+                            outcome: "Published two books on Swift Functional Programming that have been adopted in university curricula and professional training programs."
+                        }
+                    ] as project}
+                        <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
+                            <div class="flex flex-col md:flex-row md:items-start justify-between">
+                                <div class="md:w-3/4">
+                                    <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">{project.title}</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3">{project.desc}</p>
+                                    <p class="text-gray-700 dark:text-gray-200 font-medium">Outcome: <span class="font-normal text-gray-600 dark:text-gray-300">{project.outcome}</span></p>
+                                </div>
+                                <div class="md:w-1/4 md:text-right mt-4 md:mt-0">
+                                    <span class="inline-block bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm font-medium">{project.year}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {/each}
+                </div>
+            </section>
+        </div>
     </div>
 </div>
 {/if} 

@@ -126,27 +126,27 @@
         </a>
     </div>
     
-    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100" in:fly={{ y: 30, duration: 800, delay: 400 }}>
-        <h1 class="text-4xl font-bold mb-6 text-primary flex items-center">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700" in:fly={{ y: 30, duration: 800, delay: 400 }}>
+        <h1 class="text-4xl font-bold mb-6 text-primary dark:text-blue-400 flex items-center">
             {#if researchArea.icon && icons[researchArea.icon]}
                 {@html icons[researchArea.icon]}
             {/if}
             {researchArea.title}
         </h1>
         
-        <div class="flex flex-col md:flex-row justify-between text-sm text-gray-600 mb-6 p-4 bg-gray-50 rounded-lg">
+        <div class="flex flex-col md:flex-row justify-between text-sm text-gray-600 dark:text-gray-300 mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
             <span class="mb-2 md:mb-0 font-medium">{researchArea.timeframe}</span>
             <span>Collaborators: {researchArea.collaboratorsDisplay || (Array.isArray(researchArea.collaborators) ? researchArea.collaborators.join(', ') : researchArea.collaborators)}</span>
         </div>
         
-        <div class="markdown-content max-w-none mb-8">
+        <div class="markdown-content max-w-none mb-8 prose dark:prose-invert">
             {@html researchArea.html || researchArea.content}
         </div>
         
         <div class="flex flex-wrap gap-3 mt-8">
             {#if researchArea.paperUrl}
                 <a href={researchArea.paperUrl} target="_blank" rel="noopener noreferrer" 
-                   class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-colors duration-300">
+                   class="px-4 py-2 bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300 rounded-full hover:bg-primary hover:text-white dark:hover:bg-blue-700 transition-colors duration-300">
                    <span class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v10m2 2v-6a2 2 0 00-2-2h-6" />
@@ -158,7 +158,7 @@
             
             {#if researchArea.codeUrl}
                 <a href={researchArea.codeUrl} target="_blank" rel="noopener noreferrer" 
-                   class="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-800 hover:text-white transition-colors duration-300">
+                   class="px-4 py-2 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-full hover:bg-gray-800 hover:text-white dark:hover:bg-gray-600 transition-colors duration-300">
                    <span class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />

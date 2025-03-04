@@ -33,11 +33,11 @@
         {#if publications && publications.length > 0}
             {#each publications as publication, i}
                 <AnimateInView type="fly" x={-20} delay={300 + (i * 200)}>
-                    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-500 hover:shadow-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-primary">{publication.title}</h2>
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+                        <h2 class="text-2xl font-semibold mb-4 text-primary dark:text-blue-400">{publication.title}</h2>
                         
-                        <div class="publication-meta mb-6 pb-4 border-b border-gray-100">
-                            <div class="publication-authors text-gray-800 font-medium mb-2">
+                        <div class="publication-meta mb-6 pb-4 border-b border-gray-100 dark:border-gray-700">
+                            <div class="publication-authors text-gray-800 dark:text-gray-200 font-medium mb-2">
                                 {#if publication.authors}
                                     {publication.authors.join(', ')}
                                 {:else}
@@ -46,7 +46,7 @@
                             </div>
                             
                             <div class="flex flex-wrap justify-between items-center">
-                                <div class="publication-journal text-gray-600 italic">
+                                <div class="publication-journal text-gray-600 dark:text-gray-300 italic">
                                     {publication.journal || ''}
                                     {#if publication.date}
                                         <span class="publication-date ml-2 font-semibold">{new Date(publication.date).getFullYear()}</span>
@@ -56,7 +56,7 @@
                                 {#if publication.doi}
                                     <div class="publication-doi mt-2 text-sm">
                                         DOI: <a href={`https://doi.org/${publication.doi}`} 
-                                               class="text-primary hover:underline"
+                                               class="text-primary dark:text-blue-400 hover:underline"
                                                target="_blank" rel="noopener noreferrer">{publication.doi}</a>
                                     </div>
                                 {/if}
@@ -66,7 +66,7 @@
                         <div class="publication-tags flex flex-wrap gap-2 mb-6">
                             {#if publication.tags && publication.tags.length > 0}
                                 {#each publication.tags as tag, j}
-                                    <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm" 
+                                    <span class="bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300 px-3 py-1 rounded-full text-sm" 
                                           style="transition-delay: {j * 50}ms">
                                         {tag}
                                     </span>
@@ -75,10 +75,10 @@
                         </div>
                         
                         <div class="publication-content relative max-h-28 overflow-hidden mb-6">
-                            <div class="prose prose-sm max-w-none">
+                            <div class="prose prose-sm max-w-none dark:prose-invert">
                                 {@html publication.content}
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white dark:from-gray-800 to-transparent"></div>
                         </div>
                         
                         <a href={`/publications/${publication.slug}`} 
@@ -92,8 +92,8 @@
                 </AnimateInView>
             {/each}
         {:else}
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-                <p class="text-lg text-gray-600">No publications available yet. Check back soon!</p>
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                <p class="text-lg text-gray-600 dark:text-gray-300">No publications available yet. Check back soon!</p>
             </div>
         {/if}
     </div>

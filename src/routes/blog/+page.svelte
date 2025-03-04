@@ -35,9 +35,9 @@
         {#if blogPosts && blogPosts.length > 0}
             {#each blogPosts as post, i}
                 <AnimateInView type="scale" delay={300 + (i * 150)}>
-                    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-500 hover:shadow-md">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
                         <div class="post-meta flex justify-between items-center mb-4">
-                            <span class="post-date text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
+                            <span class="post-date text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
                                 {new Date(post.date).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
@@ -46,13 +46,13 @@
                             </span>
                         </div>
                         
-                        <h2 class="text-2xl font-semibold mb-3 text-gray-800">{post.title}</h2>
-                        <p class="text-lg mb-6 text-gray-600">{post.excerpt}</p>
+                        <h2 class="text-2xl font-semibold mb-3 text-gray-800 dark:text-gray-100">{post.title}</h2>
+                        <p class="text-lg mb-6 text-gray-600 dark:text-gray-300">{post.excerpt}</p>
                         
                         {#if post.tags && post.tags.length > 0}
                             <div class="flex flex-wrap gap-2 mb-6">
                                 {#each post.tags as tag, j}
-                                    <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm" 
+                                    <span class="bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300 px-3 py-1 rounded-full text-sm" 
                                           style="transition-delay: {j * 50}ms">
                                         {tag}
                                     </span>
@@ -71,8 +71,8 @@
                 </AnimateInView>
             {/each}
         {:else}
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-                <p class="text-lg text-gray-600">No blog posts available yet. Check back soon!</p>
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                <p class="text-lg text-gray-600 dark:text-gray-300">No blog posts available yet. Check back soon!</p>
             </div>
         {/if}
     </div>
