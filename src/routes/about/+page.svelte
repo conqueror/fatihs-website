@@ -40,17 +40,13 @@
 	<div class="md:hidden mb-10">
 		<AnimateInView type="scale" delay={300}>
 			<div class="relative w-full">
-				<div class="p-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg relative z-0">
-					<div class="bg-gradient-to-r from-gray-50 to-gray-100 p-4 rounded-lg">
-						<div class="overflow-hidden rounded-lg border-[3px] border-white shadow-inner">
-							<img 
-								src="/images/profile.jpeg" 
-								alt="Dr. Fatih Nayebi" 
-								class="w-full object-cover transition-all duration-700 hover:scale-105"
-								style="transform: scale({$profileScale})"
-							>
-						</div>
-					</div>
+				<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
+					<img 
+						src="/images/profile.jpeg" 
+						alt="Dr. Fatih Nayebi" 
+						class="w-full object-cover transition-all duration-700 hover:scale-105"
+						style="transform: scale({$profileScale})"
+					>
 				</div>
 			</div>
 		
@@ -165,17 +161,13 @@
 		<div class="hidden md:flex md:w-2/5 flex-col z-0">
 			<AnimateInView type="scale" delay={300}>
 				<div class="relative w-full">
-					<div class="p-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg relative z-0">
-						<div class="bg-gradient-to-r from-gray-50 to-gray-100 p-4 rounded-lg">
-							<div class="overflow-hidden rounded-lg border-[3px] border-white shadow-inner">
-								<img 
-									src="/images/profile.jpeg" 
-									alt="Dr. Fatih Nayebi" 
-									class="w-full object-cover transition-all duration-700 hover:scale-105"
-									style="transform: scale({$profileScale})"
-								>
-							</div>
-						</div>
+					<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
+						<img 
+							src="/images/profile.jpeg" 
+							alt="Dr. Fatih Nayebi" 
+							class="w-full object-cover transition-all duration-700 hover:scale-105"
+							style="transform: scale({$profileScale})"
+						>
 					</div>
 				</div>
 			
