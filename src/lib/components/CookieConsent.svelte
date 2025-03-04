@@ -1,13 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
   import { browser } from '$app/environment';
-  
-  export const cookieConsent = writable({
-    analytics: false,
-    preferences: false,
-    marketing: false
-  });
+  import { consentStore } from '$lib/stores';
   
   let visible = false;
   
@@ -18,7 +12,7 @@
     const savedConsent = localStorage.getItem('cookie-consent');
     if (savedConsent) {
       try {
-        cookieConsent.set(JSON.parse(savedConsent));
+        consentStore.set(JSON.parse(savedConsent));
       } catch (e) {
         console.error('Error parsing saved consent:', e);
         visible = true;
@@ -41,7 +35,7 @@
   });
   
   function acceptAll() {
-    cookieConsent.set({
+    consentStore.set({
       analytics: true,
       preferences: true,
       marketing: false
@@ -50,7 +44,7 @@
   }
   
   function acceptNecessaryOnly() {
-    cookieConsent.set({
+    consentStore.set({
       analytics: false,
       preferences: false,
       marketing: false
@@ -68,7 +62,7 @@
     if (!browser) return;
     
     let currentConsent;
-    const unsubscribe = cookieConsent.subscribe(value => {
+    const unsubscribe = consentStore.subscribe(value => {
       currentConsent = value;
     });
     unsubscribe();

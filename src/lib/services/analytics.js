@@ -1,12 +1,12 @@
 import { browser } from '$app/environment';
 import { page } from '$app/stores';
-import { cookieConsent } from '$lib/components/CookieConsent.svelte';
+import { consentStore } from '$lib/stores';
 import { derived, get } from 'svelte/store';
 
 // Only enable analytics when consent is given
 export const analyticsEnabled = derived(
-  cookieConsent,
-  ($cookieConsent) => $cookieConsent.analytics
+  consentStore,
+  ($consentStore) => $consentStore.analytics
 );
 
 // Store whether analytics has been initialized
