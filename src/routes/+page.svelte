@@ -29,7 +29,7 @@
 
 {#if visible}
 <!-- Hero Section -->
-<section class="relative py-16 md:py-24 overflow-hidden">
+<section in:fade={{ duration: 800 }} class="relative py-16 md:py-24 overflow-hidden">
 	<div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 z-0"></div>
 	
 	<!-- Decorative elements -->
@@ -39,13 +39,13 @@
 	<div class="container mx-auto px-4 relative z-10">
 		<div class="flex flex-col md:flex-row items-center justify-between">
 			<div class="md:w-1/2 mb-12 md:mb-0">
-				<h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 text-gray-800 dark:text-gray-100">
+				<h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 text-gray-800 dark:text-gray-100" in:fly={{ y: -30, duration: 800, delay: 300 }}>
 					Data & AI Leader, <span class="text-primary dark:text-blue-400">Innovator</span>, and Educator
 				</h1>
-				<p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+				<p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8" in:fly={{ y: 30, duration: 800, delay: 500 }}>
 					Transforming business through data-driven technology and artificial intelligence
 				</p>
-				<div class="flex flex-wrap gap-4">
+				<div class="flex flex-wrap gap-4" in:fly={{ y: 30, duration: 800, delay: 700 }}>
 					<a href="/contact" class="px-8 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary-dark transition duration-300 transform hover:scale-105">
 						Get in Touch
 					</a>
@@ -54,7 +54,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="md:w-1/2">
+			<div class="md:w-1/2" in:scale={{ duration: 800, delay: 400, start: 0.8 }}>
 				<div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
 					<img src="/images/profile.jpg" alt="Fatih Nayebi" class="w-full rounded-2xl">
 					<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
