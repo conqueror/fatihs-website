@@ -113,39 +113,39 @@
 {#if isLoading}
     <div class="loading-container">
         <div class="loading-spinner"></div>
-        <p>Loading post...</p>
+        <p class="dark:text-white">Loading post...</p>
     </div>
 {:else if hasError}
     <div class="error-container">
-        <h1>Error Loading Content</h1>
-        <p>Sorry, there was an error loading this blog post.</p>
-        <a href="/blog" class="back-link">← Back to all posts</a>
+        <h1 class="dark:text-white">Error Loading Content</h1>
+        <p class="dark:text-white">Sorry, there was an error loading this blog post.</p>
+        <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
     </div>
 {:else if post?.title}
     <div class="container">
         <div class="blog-header">
-            <h1>{post.title}</h1>
+            <h1 class="dark:text-white">{post.title}</h1>
             <div class="post-meta">
                 {#if post.date}
-                    <span class="post-date">{new Date(post.date).toLocaleDateString('en-US', {
+                    <span class="post-date dark:text-gray-300">{new Date(post.date).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
                     })}</span>
                 {/if}
-                <span class="post-author">By {post.author || 'Fatih Nayebi'}</span>
+                <span class="post-author dark:text-gray-300">By {post.author || 'Fatih Nayebi'}</span>
             </div>
             
             {#if post.tags && post.tags.length > 0}
                 <div class="post-tags">
                     {#each post.tags as tag}
-                        <span class="tag">{tag}</span>
+                        <span class="tag dark:bg-blue-900 dark:text-blue-200">{tag}</span>
                     {/each}
                 </div>
             {/if}
         </div>
         
-        <div class="blog-content" bind:this={contentContainer}>
+        <div class="blog-content dark:text-white" bind:this={contentContainer}>
             {@html sanitizedContent || post.content || '<p>No content available</p>'}
         </div>
         

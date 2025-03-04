@@ -27,7 +27,7 @@
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
     
     <h1 class="text-5xl font-bold mb-4 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Blog</h1>
-    <p class="text-lg text-center mb-12 max-w-3xl mx-auto" in:fly={{ y: 30, duration: 800, delay: 500 }}>
+    <p class="text-lg text-center mb-12 max-w-3xl mx-auto text-gray-700 dark:text-white" in:fly={{ y: 30, duration: 800, delay: 500 }}>
         Thoughts and insights on AI, machine learning, and technology.
     </p>
     
@@ -46,8 +46,8 @@
                             </span>
                         </div>
                         
-                        <h2 class="text-2xl font-semibold mb-3 text-gray-800 dark:text-gray-100">{post.title}</h2>
-                        <p class="text-lg mb-6 text-gray-600 dark:text-gray-300">{post.excerpt}</p>
+                        <h2 class="text-2xl font-semibold mb-3 text-gray-800 dark:text-white">{post.title}</h2>
+                        <p class="text-lg mb-6 text-gray-600 dark:text-white">{post.excerpt}</p>
                         
                         {#if post.tags && post.tags.length > 0}
                             <div class="flex flex-wrap gap-2 mb-6">
@@ -72,7 +72,7 @@
             {/each}
         {:else}
             <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
-                <p class="text-lg text-gray-600 dark:text-gray-300">No blog posts available yet. Check back soon!</p>
+                <p class="text-lg text-gray-600 dark:text-white">No blog posts available yet. Check back soon!</p>
             </div>
         {/if}
     </div>
