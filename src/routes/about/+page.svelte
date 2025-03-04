@@ -36,7 +36,8 @@
 	
 	<h1 class="text-5xl font-bold mb-8 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>About Me</h1>
 
-	<div class="flex flex-col-reverse md:flex-row gap-8 mb-16 relative z-0">
+	<div class="flex flex-col md:flex-row gap-8 mb-16 relative z-0">
+		<!-- Left column: Bio, Professional Experience, Certifications, Publications -->
 		<div class="md:w-3/5 relative z-0">
 			<AnimateInView type="fade" delay={200}>
 				<div class="p-6 bg-white dark:bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
@@ -80,37 +81,6 @@
 				</div>
 			</AnimateInView>
 
-			<AnimateInView type="fly" x={-20} delay={600}>
-				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
-					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-						</svg>
-						Skills & Expertise
-					</h3>
-					<div class="flex flex-wrap gap-3">
-						{#each ['Supply Chain Optimization', 'Supply Chain Management', 'Omni-Channel Marketing', 'Artificial Intelligence', 'Machine Learning', 'Deep Learning', 'Data Science'] as skill, i}
-							<div 
-								role="button"
-								tabindex="0"
-								class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-md hover:bg-primary hover:text-white"
-								style="transition-delay: {i * 50}ms"
-								on:mouseenter={() => hoveredSkill = skill}
-								on:mouseleave={() => hoveredSkill = null}
-								on:keydown={(e) => e.key === 'Enter' && (hoveredSkill = hoveredSkill === skill ? null : skill)}
-							>
-								{skill}
-							</div>
-						{/each}
-					</div>
-					{#if hoveredSkill}
-						<div class="mt-4 text-gray-600 text-sm italic animate-pulse">
-							{hoveredSkill}: Expert level proficiency with practical implementation experience
-						</div>
-					{/if}
-				</div>
-			</AnimateInView>
-
 			<AnimateInView type="fly" x={-20} delay={800}>
 				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
 					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
@@ -149,9 +119,82 @@
 					</div>
 				</div>
 			</AnimateInView>
+		</div>
 
-			<AnimateInView type="fade" delay={1200}>
-				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+		<!-- Right column: Profile image, Skills & Expertise, Connect with me -->
+		<div class="md:w-2/5 flex flex-col z-0">
+			<AnimateInView type="scale" delay={300}>
+				<div class="relative w-full">
+					<div class="p-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg relative z-0">
+						<div class="bg-gradient-to-r from-gray-50 to-gray-100 p-4 rounded-lg">
+							<div class="overflow-hidden rounded-lg border-[3px] border-white shadow-inner">
+								<img 
+									src="/images/profile.jpeg" 
+									alt="Fatih Nayebi" 
+									class="w-full object-cover transition-all duration-700 hover:scale-105"
+									style="transform: scale({$profileScale})"
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+				<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0">
+					<h2 class="text-2xl font-bold mb-1 text-gray-800 dark:text-gray-100">Fatih Nayebi, Ph.D.</h2>
+					<p class="text-lg font-medium text-primary dark:text-blue-400 mb-1">VP, Data & AI at ALDO Group</p>
+					<p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Faculty Lecturer, McGill University</p>
+					
+					<h4 class="font-semibold mb-3 text-gray-700 dark:text-gray-300">Languages</h4>
+					<div class="flex flex-wrap justify-center gap-2">
+						{#each [{name: 'English', level: 'Native'}, {name: 'French', level: 'Professional'}, {name: 'Turkish', level: 'Native'}, {name: 'Azerbaijani', level: 'Limited'}] as lang, i}
+							<div class="group relative">
+								<div class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm dark:text-gray-300 transform transition-all duration-300 group-hover:bg-primary group-hover:text-white" style="transition-delay: {i * 50}ms">
+									{lang.name}
+								</div>
+								<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-max bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+									{lang.level}
+								</div>
+							</div>
+						{/each}
+					</div>
+				</div>
+			</AnimateInView>
+			
+			<!-- Skills & Expertise moved to right column -->
+			<AnimateInView type="fly" x={20} delay={600}>
+				<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+						</svg>
+						Skills & Expertise
+					</h3>
+					<div class="flex flex-wrap gap-3">
+						{#each ['Supply Chain Optimization', 'Supply Chain Management', 'Omni-Channel Marketing', 'Artificial Intelligence', 'Machine Learning', 'Deep Learning', 'Data Science'] as skill, i}
+							<div 
+								role="button"
+								tabindex="0"
+								class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-md hover:bg-primary hover:text-white"
+								style="transition-delay: {i * 50}ms"
+								on:mouseenter={() => hoveredSkill = skill}
+								on:mouseleave={() => hoveredSkill = null}
+								on:keydown={(e) => e.key === 'Enter' && (hoveredSkill = hoveredSkill === skill ? null : skill)}
+							>
+								{skill}
+							</div>
+						{/each}
+					</div>
+					{#if hoveredSkill}
+						<div class="mt-4 text-gray-600 text-sm italic animate-pulse">
+							{hoveredSkill}: Expert level proficiency with practical implementation experience
+						</div>
+					{/if}
+				</div>
+			</AnimateInView>
+			
+			<!-- Connect with me moved to right column -->
+			<AnimateInView type="fade" delay={700}>
+				<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
 					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -211,46 +254,6 @@
 				</div>
 			</AnimateInView>
 		</div>
-
-		<div class="md:w-2/5 flex flex-col items-center md:sticky md:top-24 self-start z-0 mb-10 md:mb-0">
-			<AnimateInView type="scale" delay={300}>
-				<div class="relative w-full">
-					
-					<div class="p-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg relative z-0">
-						<div class="bg-gradient-to-r from-gray-50 to-gray-100 p-4 rounded-lg">
-							<div class="overflow-hidden rounded-lg border-[3px] border-white shadow-inner">
-								<img 
-									src="/images/profile.jpeg" 
-									alt="Fatih Nayebi" 
-									class="w-full object-cover transition-all duration-700 hover:scale-105"
-									style="transform: scale({$profileScale})"
-								>
-							</div>
-						</div>
-					</div>
-				</div>
-			
-				<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0">
-					<h2 class="text-2xl font-bold mb-1 text-gray-800 dark:text-gray-100">Fatih Nayebi, Ph.D.</h2>
-					<p class="text-lg font-medium text-primary dark:text-blue-400 mb-1">VP, Data & AI at ALDO Group</p>
-					<p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Faculty Lecturer, McGill University</p>
-					
-					<h4 class="font-semibold mb-3 text-gray-700 dark:text-gray-300">Languages</h4>
-					<div class="flex flex-wrap justify-center gap-2">
-						{#each [{name: 'English', level: 'Native'}, {name: 'French', level: 'Professional'}, {name: 'Turkish', level: 'Native'}, {name: 'Azerbaijani', level: 'Limited'}] as lang, i}
-							<div class="group relative">
-								<div class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm dark:text-gray-300 transform transition-all duration-300 group-hover:bg-primary group-hover:text-white" style="transition-delay: {i * 50}ms">
-									{lang.name}
-								</div>
-								<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-max bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-									{lang.level}
-								</div>
-							</div>
-						{/each}
-					</div>
-				</div>
-			</AnimateInView>
-		</div>
 	</div>
 	
 	<AnimateInView type="fade" delay={1400}>
@@ -260,7 +263,7 @@
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path d="M12 14l9-5-9-5-9 5 9 5z" />
 					<path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998a12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
 				</svg>
 				Education
 			</h2>
