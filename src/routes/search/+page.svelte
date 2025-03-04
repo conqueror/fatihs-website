@@ -31,7 +31,7 @@
             return (
                 post.title.toLowerCase().includes(lowerQuery) ||
                 post.excerpt.toLowerCase().includes(lowerQuery) ||
-                post.rawContent.toLowerCase().includes(lowerQuery) ||
+                (post.rawContent && post.rawContent.toLowerCase().includes(lowerQuery)) ||
                 post.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
             );
         }).map(post => ({
@@ -43,9 +43,11 @@
         const publications = getAllPublications().filter(pub => {
             return (
                 pub.title.toLowerCase().includes(lowerQuery) ||
-                pub.excerpt.toLowerCase().includes(lowerQuery) ||
-                pub.rawContent.toLowerCase().includes(lowerQuery) ||
-                pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+                (pub.excerpt && pub.excerpt.toLowerCase().includes(lowerQuery)) ||
+                (pub.abstract && pub.abstract.toLowerCase().includes(lowerQuery)) ||
+                (pub.rawContent && pub.rawContent.toLowerCase().includes(lowerQuery)) ||
+                (pub.content && pub.content.toLowerCase().includes(lowerQuery)) ||
+                (pub.tags && pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery)))
             );
         }).map(pub => ({
             ...pub,
@@ -174,8 +176,12 @@
                             </a>
                         </h3>
                         
-                        {#if result.excerpt}
+                        {#if result.type === 'blog' && result.excerpt}
                             <p class="result-excerpt">{result.excerpt}</p>
+                        {/if}
+                        
+                        {#if result.type === 'publication' && (result.abstract || result.excerpt)}
+                            <p class="result-excerpt">{result.abstract || result.excerpt}</p>
                         {/if}
                         
                         {#if result.tags && result.tags.length > 0}

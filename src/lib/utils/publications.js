@@ -8,34 +8,34 @@ const FALLBACK_PUBLICATIONS = [
     slug: 'neural-networks-paper',
     title: 'Neural Network Architectures for Computer Vision',
     date: '2022-03-18',
-    excerpt: 'A comprehensive review of neural network architectures for computer vision tasks.',
+    abstract: 'A comprehensive review of neural network architectures for computer vision tasks.',
     tags: ['Neural Networks', 'Computer Vision', 'Deep Learning'],
-    author: 'Fatih Nayebi',
+    authors: ['Fatih Nayebi'],
     featured: true,
     content: '<h1>Neural Network Architectures for Computer Vision</h1><p>Sample content.</p>',
-    rawContent: 'Sample content.'
+    html: '<h1>Neural Network Architectures for Computer Vision</h1><p>Sample content.</p>'
   },
   {
     slug: 'ml-interpretability',
     title: 'Advances in Machine Learning Interpretability',
     date: '2023-01-05',
-    excerpt: 'Investigating methods to make machine learning models more interpretable and transparent.',
+    abstract: 'Investigating methods to make machine learning models more interpretable and transparent.',
     tags: ['Machine Learning', 'Interpretability', 'XAI'],
-    author: 'Fatih Nayebi',
+    authors: ['Fatih Nayebi'],
     featured: false,
     content: '<h1>Advances in Machine Learning Interpretability</h1><p>Sample content.</p>',
-    rawContent: 'Sample content.'
+    html: '<h1>Advances in Machine Learning Interpretability</h1><p>Sample content.</p>'
   },
   {
     slug: 'transformer-optimization-techniques',
     title: 'Optimization Techniques for Transformer Models',
     date: '2023-04-12',
-    excerpt: 'A detailed analysis of techniques to optimize transformer-based models for improved performance and efficiency.',
+    abstract: 'A detailed analysis of techniques to optimize transformer-based models for improved performance and efficiency.',
     tags: ['Transformers', 'Optimization', 'Deep Learning'],
-    author: 'Fatih Nayebi',
+    authors: ['Fatih Nayebi'],
     featured: true,
     content: '<h1>Optimization Techniques for Transformer Models</h1><p>Sample content.</p>',
-    rawContent: 'Sample content.'
+    html: '<h1>Optimization Techniques for Transformer Models</h1><p>Sample content.</p>'
   }
 ];
 
@@ -126,9 +126,9 @@ export function searchPublications(query) {
     return publicationsList.filter(pub => {
       return (
         pub.title.toLowerCase().includes(lowerQuery) ||
-        pub.excerpt.toLowerCase().includes(lowerQuery) ||
-        pub.rawContent.toLowerCase().includes(lowerQuery) ||
-        pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+        (pub.abstract && pub.abstract.toLowerCase().includes(lowerQuery)) ||
+        (pub.content && pub.content.toLowerCase().includes(lowerQuery)) ||
+        (pub.tags && pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery)))
       );
     });
   } catch (error) {
@@ -136,9 +136,9 @@ export function searchPublications(query) {
     return FALLBACK_PUBLICATIONS.filter(pub => {
       return (
         pub.title.toLowerCase().includes(lowerQuery) ||
-        pub.excerpt.toLowerCase().includes(lowerQuery) ||
-        pub.rawContent.toLowerCase().includes(lowerQuery) ||
-        pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+        (pub.abstract && pub.abstract.toLowerCase().includes(lowerQuery)) ||
+        (pub.content && pub.content.toLowerCase().includes(lowerQuery)) ||
+        (pub.tags && pub.tags.some(tag => tag.toLowerCase().includes(lowerQuery)))
       );
     });
   }
