@@ -4,7 +4,7 @@ date: "2023-06-15"
 excerpt: "Exploring how artificial intelligence is transforming healthcare diagnosis, treatment, and patient care."
 tags: ["AI", "Healthcare", "Machine Learning"]
 author: "Fatih Nayebi"
-featured: true
+featured: false
 ---
 
 # AI in Healthcare: Current Applications and Future Possibilities

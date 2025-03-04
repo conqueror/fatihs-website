@@ -1,5 +1,5 @@
-# Kinsta SPA Routing - redirect all paths to index.html to enable client-side routing
-/*                    /index.html                   200
+# SPA Routing - redirect all paths to index.html to enable client-side routing
+/*    /index.html    200
 
 # More specific routes to ensure proper handling 
 /blog                 /index.html                   200

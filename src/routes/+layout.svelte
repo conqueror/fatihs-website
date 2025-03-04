@@ -5,6 +5,11 @@
 	import '../styles/global.css';
 </script>
 
+<svelte:head>
+	<!-- iOS refresh handler script -->
+	<script src="/refresh-handler.js"></script>
+</svelte:head>
+
 <div class="min-h-screen flex flex-col">
 	<Navbar />
 	<main class="flex-grow pt-24">

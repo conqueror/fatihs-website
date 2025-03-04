@@ -53,7 +53,7 @@
                         {#each [
                             {
                                 title: "Artificial Intelligence & Machine Learning",
-                                desc: "Deep learning, neural networks, and advanced prediction models for business decision-making.",
+                                desc: "Deep learning, gradient boosting, and reinforcement learning for advanced predictive and prescriptive modelling that can be used for business decision-making.",
                                 icon: "brain"
                             },
                             {
@@ -62,13 +62,13 @@
                                 icon: "chart"
                             },
                             {
-                                title: "Big Data Architecture",
-                                desc: "Designing scalable data pipelines and analytics infrastructure for enterprise applications.",
+                                title: "Agentic AI",
+                                desc: "Designing and deploying agentic AI systems for decision-making and problem-solving.",
                                 icon: "server"
                             },
                             {
                                 title: "Software Engineering",
-                                desc: "Software metrics, development methodologies, and effort estimation models.",
+                                desc: "Software metrics, development methodologies, mining software repositories, defect prediction, and effort estimation models.",
                                 icon: "code"
                             }
                         ] as interest, i}
@@ -98,7 +98,7 @@
                                 tags: ["Deep Learning", "Computer Vision", "NLP", "Retail"]
                             },
                             {
-                                title: "Responsible AI Governance Frameworks",
+                                title: "Responsible & Ethical AI Governance Frameworks",
                                 desc: "Researching and developing governance models that ensure ethical implementation of AI in enterprise contexts, with particular emphasis on transparency, fairness, and accountability.",
                                 tags: ["AI Ethics", "Governance", "Enterprise AI"]
                             }
@@ -124,19 +124,19 @@
                     <div class="space-y-6">
                         {#each [
                             {
-                                title: "Mobile Application Usability Evaluation",
-                                desc: "Developed and validated a comprehensive framework for evaluating iOS application usability, incorporating both expert-based heuristics and user-centered metrics.",
+                                title: "Human-Computer Interaction & Machine Learning",
+                                desc: "Researched and created a bayesian machine learning model to predict success of mobile apps based on a developed and validated comprehensive framework for evaluating iOS application usability, incorporating both expert-based heuristics and user-centered metrics.",
                                 year: "2014-2015",
                                 outcome: "Published in international journals and contributed to industry standards for mobile UX evaluation."
                             },
                             {
-                                title: "Software Effort Estimation Models",
+                                title: "Machine Learning for Software Effort Estimation",
                                 desc: "Researched and created algorithms for automated selection of software effort estimation models based on project characteristics, accuracy requirements, and uncertainty tolerance.",
                                 year: "2012-2014",
-                                outcome: "Implemented in enterprise project management systems, resulting in 28% improvement in estimation accuracy."
+                                outcome: "Published in Artificial Intelligence Journal"
                             },
                             {
-                                title: "Functional Programming Paradigms in Mobile Development",
+                                title: "Functional Programming Paradigms",
                                 desc: "Investigated the application of functional programming concepts in Swift for iOS development, focusing on code quality, maintainability, and developer productivity.",
                                 year: "2015-2016",
                                 outcome: "Published two books on Swift Functional Programming that have been adopted in university curricula and professional training programs."
