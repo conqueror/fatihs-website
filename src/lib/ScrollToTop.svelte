@@ -32,7 +32,7 @@
 {#if visible}
   <button 
     on:click={scrollToTop}
-    class="fixed bottom-6 right-6 p-3 bg-primary text-white rounded-full shadow-lg hover:bg-primary-hover transition-colors z-50"
+    class="fixed bottom-6 right-6 p-3 bg-primary text-white rounded-full shadow-lg dark:shadow-blue-900/30 hover:bg-primary-hover dark:hover:bg-blue-700 transition-colors z-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-blue-400 dark:focus:ring-offset-gray-900"
     in:fly={{ y: 50, duration: 300 }}
     out:fade={{ duration: 200 }}
     aria-label="Scroll to top"
