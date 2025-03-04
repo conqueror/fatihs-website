@@ -1,8 +1,8 @@
 <script>
 	import '../styles/global.css';
 	import { page } from '$app/stores';
-	import Header from '$lib/components/Header.svelte';
-	import Footer from '$lib/components/Footer.svelte';
+	import Header from '$lib/Header.svelte';
+	import Footer from '$lib/Footer.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import { generateWebsiteSchema } from '$lib/utils/structured-data';
 	import Navbar from '$lib/Navbar.svelte';

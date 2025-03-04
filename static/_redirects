@@ -1,5 +1,9 @@
-# Redirect all routes to index.html for SPA routing
-/*    /index.html   200
+# Redirects for SPA routing on Kinsta static site
+# This ensures that when users refresh the page or directly access a route,
+# they are properly directed to the index.html file which will handle the routing
+
+# Handle all routes by redirecting to index.html and preserving query params
+/*  /index.html  200
 
 # More specific routes to ensure proper handling 
 /blog                 /index.html                   200
