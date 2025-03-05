@@ -17,6 +17,33 @@
 	import { onMount } from 'svelte';
 	import { theme } from '$lib/stores';
 	
+	// Search Engine Verification Codes
+	// Replace these with your actual verification codes when received
+	const GOOGLE_VERIFICATION = ''; // Google Search Console verification code
+	const BING_VERIFICATION = '';   // Bing Webmaster Tools verification code
+	const YANDEX_VERIFICATION = ''; // Optional: Yandex verification code
+	
+	// URL and site information
+	let currentUrl = '';
+	$: siteUrl = browser ? window.location.origin : 'https://fatihnayebi.com';
+	
+	// Generate website schema for the homepage
+	$: websiteSchema = generateWebsiteSchema(siteUrl);
+	
+	// Use website schema on homepage, null elsewhere (pages define their own)
+	$: structuredData = $page.url.pathname === '/' ? websiteSchema : null;
+	
+	// When the page changes, update current URL and track the page view
+	$: {
+		const newUrl = $page.url.href;
+		if (currentUrl !== newUrl) {
+			currentUrl = newUrl;
+			if (browser && !isDoNotTrackEnabled()) {
+				trackPageView(currentUrl);
+			}
+		}
+	}
+	
 	onMount(() => {
 		// Check for saved theme preference or use system preference
 		const savedTheme = localStorage.getItem('theme');
@@ -60,27 +87,15 @@
 				});
 		});
 	}
-
-	// Determine the current URL for canonical and metadata purposes
-	$: currentUrl = $page.url.pathname;
-	$: siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://fatihnayebi.com';
-	
-	// Generate website schema for the homepage
-	$: websiteSchema = generateWebsiteSchema(siteUrl);
-	
-	// Use website schema only on the homepage
-	$: structuredData = currentUrl === '/' ? websiteSchema : null;
-	
-	// Track page views when the URL changes (with privacy protection)
-	$: if (browser && !isDoNotTrackEnabled()) {
-		trackPageView(currentUrl);
-	}
 </script>
 
 <!-- Base SEO component that will be present on all pages -->
 <SEO 
 	canonical="{currentUrl}"
 	structuredData="{structuredData}"
+	googleVerification="{GOOGLE_VERIFICATION}"
+	bingVerification="{BING_VERIFICATION}"
+	yandexVerification="{YANDEX_VERIFICATION}"
 />
 
 <svelte:head>

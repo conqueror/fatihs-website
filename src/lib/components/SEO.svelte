@@ -63,7 +63,7 @@
   // Build canonical URL if not provided
   let canonicalUrl = canonical;
   if (!canonicalUrl && $page) {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://fatihnayebi.com';
+    const origin = 'https://fatihnayebi.com'; // Use hardcoded default for static builds
     canonicalUrl = new URL($page.url.pathname, origin).href;
   }
   
@@ -119,6 +119,11 @@
       }))
     };
   }
+  
+  // Search engine verification - update these with actual values from verification process
+  export let googleVerification = '';
+  export let bingVerification = '';
+  export let yandexVerification = '';
 </script>
 
 <svelte:head>
@@ -131,6 +136,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
   <meta name="author" content="Fatih Nayebi" />
   <meta name="language" content="{language}" />
+  
+  <!-- Search Engine Verification Meta Tags -->
+  {#if googleVerification}
+    <meta name="google-site-verification" content="{googleVerification}" />
+  {/if}
+  {#if bingVerification}
+    <meta name="msvalidate.01" content="{bingVerification}" />
+  {/if}
+  {#if yandexVerification}
+    <meta name="yandex-verification" content="{yandexVerification}" />
+  {/if}
   
   <!-- Canonical URL -->
   {#if canonicalUrl}

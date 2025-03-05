@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+  Bing Webmaster Tools verification file
+  
+  INSTRUCTIONS:
+  1. Replace this file with the actual verification file from Bing Webmaster Tools
+  2. The filename should remain as "BingSiteAuth.xml"
+  3. The content should be exactly what Bing provides in their verification file
+  4. After uploading and verifying, this file can remain on your server permanently
+-->
+<users>
+  <user>REPLACE_WITH_YOUR_BING_VERIFICATION_CODE</user>
+</users> 
