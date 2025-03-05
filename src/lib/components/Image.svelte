@@ -5,6 +5,7 @@
   - Lazy loading
   - Proper width/height to prevent layout shifts
   - Blur-up loading effect for better UX
+  - Square option for consistent proportions
 -->
 <script>
   // Core image properties
@@ -21,6 +22,7 @@
   export let objectPosition = 'center';
   export let blurhash = null;
   export let style = '';
+  export let square = false; // New option to force square aspect ratio
   
   // Generate srcset based on the original image
   // This assumes your build process creates responsive versions
@@ -80,7 +82,10 @@
   let imgHeight = height;
   let aspectRatio = '';
   
-  if (width && height) {
+  // If square option is enabled, force 1:1 aspect ratio
+  if (square) {
+    aspectRatio = '1/1';
+  } else if (width && height) {
     aspectRatio = `${width}/${height}`;
   }
   
@@ -113,7 +118,7 @@
   const fileExt = src.split('.').pop().toLowerCase();
 </script>
 
-<div class="image-container {className}" style="{aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''} {style}">
+<div class="image-container {className}" style="{aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''} {square ? 'padding-bottom: 100%;' : ''} {style}">
   {#if placeholder || blurhash}
     <div 
       class="blur-placeholder" 
@@ -171,15 +176,18 @@
   }
   
   .image-picture {
-    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    display: block;
   }
   
   img {
     display: block;
     width: 100%;
-    height: 100%; /* Change to 100% to fill container properly */
+    height: 100%;
     max-width: 100%;
     transition: opacity 0.3s ease;
     object-fit: var(--object-fit, cover);

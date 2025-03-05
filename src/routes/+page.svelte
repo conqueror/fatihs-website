@@ -61,10 +61,11 @@
 						src="/images/profile.jpg" 
 						alt="Fatih Nayebi" 
 						width={600}
-						height={800}
+						height={600}
 						lazy={false}
 						className="w-full rounded-2xl"
 						objectFit="cover"
+						square={true}
 					/>
 					<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 					<div class="absolute bottom-4 left-6 text-white">
