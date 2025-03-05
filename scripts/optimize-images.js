@@ -121,6 +121,18 @@ async function optimizeImages() {
           } catch (error) {
             console.error(`❌ Error creating WebP variant for ${filename} at width ${width}: ${error.message}`);
           }
+          
+          try {
+            // Create AVIF version (better compression than WebP)
+            await image
+              .clone()
+              .resize(width)
+              .toFormat('avif', { quality: WEBP_QUALITY - 10 }) // AVIF can use lower quality while maintaining visual quality
+              .toFile(path.join(OUTPUT_DIR, `${basename}-${width}.avif`));
+          } catch (error) {
+            console.error(`❌ Error creating AVIF variant for ${filename} at width ${width}: ${error.message}`);
+            // Continue with other formats even if AVIF fails
+          }
             
           try {
             // Create original format version with optimization

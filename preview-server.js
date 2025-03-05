@@ -60,7 +60,33 @@ const server = createServer((req, res) => {
 function serveFile(res, filePath, contentType) {
   try {
     const content = fs.readFileSync(filePath);
-    res.writeHead(200, { 'Content-Type': contentType });
+    
+    // Create headers with content type
+    const headers = { 'Content-Type': contentType };
+    
+    // Add cache headers based on file type/path
+    const relativePath = path.relative(BUILD_DIR, filePath);
+    
+    if (relativePath === 'index.html' || relativePath.endsWith('.html')) {
+      // HTML files - no caching to ensure fresh content
+      headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+      headers['Pragma'] = 'no-cache';
+      headers['Expires'] = '0';
+    } else if (relativePath.includes('_app/immutable/')) {
+      // SvelteKit immutable assets (fingerprinted) - cache for 1 year
+      headers['Cache-Control'] = 'public, max-age=31536000, immutable';
+    } else if (relativePath.match(/\.(js|css|woff2?|ttf|eot|otf)$/)) {
+      // JS, CSS, fonts - cache for 1 week
+      headers['Cache-Control'] = 'public, max-age=604800';
+    } else if (relativePath.match(/\.(png|jpe?g|gif|webp|avif|svg|ico)$/)) {
+      // Images - cache for 2 weeks
+      headers['Cache-Control'] = 'public, max-age=1209600';
+    } else {
+      // Other static assets - cache for 1 day
+      headers['Cache-Control'] = 'public, max-age=86400';
+    }
+    
+    res.writeHead(200, headers);
     res.end(content);
   } catch (error) {
     console.error(`Error serving file ${filePath}:`, error);

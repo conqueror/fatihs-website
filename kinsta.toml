@@ -10,19 +10,48 @@
 [build.environment]
   NODE_VERSION = "18"
 
-[http]
-  headers = []
+# Cache settings
+[headers]
+  # For SvelteKit immutable assets (hashed filenames) - cache for 1 year
+  [[headers.values]]
+    for = "/_app/immutable/*"
+    [headers.values.value]
+      Cache-Control = "public, max-age=31536000, immutable"
 
-[[http.headers]]
-  for = "/*"
-  [http.headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';"
+  # For JS and CSS files - cache for 1 week
+  [[headers.values]]
+    for = "/*.js"
+    [headers.values.value]
+      Cache-Control = "public, max-age=604800"
 
-[[http.redirects]]
+  [[headers.values]]
+    for = "/*.css"
+    [headers.values.value]
+      Cache-Control = "public, max-age=604800"
+
+  # For images - cache for 2 weeks
+  [[headers.values]]
+    for = "/*.{png,jpg,jpeg,gif,webp,avif,svg,ico}"
+    [headers.values.value]
+      Cache-Control = "public, max-age=1209600"
+
+  # For fonts - cache for 1 week
+  [[headers.values]]
+    for = "/*.{woff,woff2,ttf,otf,eot}"
+    [headers.values.value]
+      Cache-Control = "public, max-age=604800"
+
+  # Security headers for all pages
+  [[headers.values]]
+    for = "/*"
+    [headers.values.value]
+      X-Frame-Options = "DENY"
+      X-XSS-Protection = "1; mode=block"
+      X-Content-Type-Options = "nosniff"
+      Referrer-Policy = "strict-origin-when-cross-origin"
+      Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';"
+
+[[redirects]]
   from = "/index.html"
   to = "/"
   status = 301
@@ -34,4 +63,5 @@
 
 # Enable compression
 [compression]
-  enable = true 
+  enable = true
+  include = ["text/html", "text/css", "text/javascript", "application/javascript", "application/json", "image/svg+xml", "font/woff", "font/woff2"] 

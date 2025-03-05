@@ -1,6 +1,6 @@
 <!-- 
   Image.svelte - An optimized image component that supports:
-  - WebP format with fallbacks
+  - AVIF and WebP formats with appropriate fallbacks
   - Responsive sizing with srcset
   - Lazy loading
   - Proper width/height to prevent layout shifts
@@ -32,7 +32,12 @@
     // Different size variations
     const widths = [320, 640, 960, 1280, 1920];
     
-    // Generate WebP srcset
+    // Generate AVIF srcset (best compression)
+    const avifSrcset = widths
+      .map(w => `${basePath}-${w}.avif ${w}w`)
+      .join(', ');
+    
+    // Generate WebP srcset (good compatibility)
     const webpSrcset = widths
       .map(w => `${basePath}-${w}.webp ${w}w`)
       .join(', ');
@@ -43,13 +48,23 @@
       .join(', ');
     
     return {
+      avif: avifSrcset,
       webp: webpSrcset,
       original: originalSrcset
     };
   }
   
   // Generate srcsets if width and height are provided
-  const srcsets = width && height ? generateSrcset(src) : null;
+  const srcsets = generateSrcset(src);
+  
+  // Set default dimensions if not provided to prevent layout shifts
+  let imgWidth = width;
+  let imgHeight = height;
+  let aspectRatio = '';
+  
+  if (width && height) {
+    aspectRatio = `${width}/${height}`;
+  }
   
   // Low quality placeholder image (if no blurhash provided)
   let loadingComplete = false;
@@ -58,52 +73,49 @@
   function handleLoad() {
     loadingComplete = true;
   }
+  
+  // Extract file extension for fallback type
+  const fileExt = src.split('.').pop();
 </script>
 
-<div class="image-container {className}" style="aspect-ratio: {width}/{height}; background-color: #f0f0f0;">
+<div class="image-container {className}" style={aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''}>
   {#if blurhash}
     <div class="blur-placeholder" 
          style="background-image: url({blurhash}); opacity: {loadingComplete ? 0 : 1};"
          aria-hidden="true"></div>
   {/if}
   
-  {#if srcsets}
-    <picture>
-      <!-- WebP format for modern browsers -->
-      <source 
-        type="image/webp" 
-        srcset={srcsets.webp} 
-        sizes={sizes} />
+  <picture>
+    <!-- AVIF format for modern browsers with best compression -->
+    <source 
+      type="image/avif" 
+      srcset={srcsets.avif} 
+      sizes={sizes} />
       
-      <!-- Original format as fallback -->
-      <source 
-        type="image/{fileExt}" 
-        srcset={srcsets.original} 
-        sizes={sizes} />
-      
-      <!-- Fallback img tag -->
-      <img 
-        {src} 
-        {alt} 
-        {width} 
-        {height}
-        loading={lazy ? "lazy" : "eager"} 
-        decoding="async"
-        style="object-fit: {objectFit}; object-position: {objectPosition};"
-        on:load={handleLoad} />
-    </picture>
-  {:else}
-    <!-- Simple img tag when no srcset available -->
+    <!-- WebP format for broader browser support -->
+    <source 
+      type="image/webp" 
+      srcset={srcsets.webp} 
+      sizes={sizes} />
+    
+    <!-- Original format as fallback -->
+    <source 
+      type="image/{fileExt}" 
+      srcset={srcsets.original} 
+      sizes={sizes} />
+    
+    <!-- Fallback img tag with explicit dimensions -->
     <img 
       {src} 
       {alt} 
-      {width} 
-      {height}
+      width={imgWidth}
+      height={imgHeight}
       loading={lazy ? "lazy" : "eager"} 
       decoding="async"
+      fetchpriority={lazy ? "auto" : "high"}
       style="object-fit: {objectFit}; object-position: {objectPosition};"
       on:load={handleLoad} />
-  {/if}
+  </picture>
 </div>
 
 <style>
@@ -118,7 +130,8 @@
   img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto; /* Allow height to adjust automatically if no explicit dimensions */
+    max-width: 100%;
     transition: opacity 0.3s ease;
   }
   
