@@ -53,12 +53,27 @@
 					/>
 				</div>
 			</div>
+	
+			<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0">
+				<h2 class="text-2xl font-bold mb-1 text-gray-800 dark:text-gray-100">Fatih Nayebi, Ph.D.</h2>
+				<p class="text-lg font-medium text-primary dark:text-blue-400 mb-1">VP, Data & AI at ALDO Group</p>
+				<p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Faculty Lecturer, McGill University</p>
+				
+				<h4 class="font-semibold mb-3 text-gray-700 dark:text-gray-300">Languages</h4>
+				<div class="flex flex-wrap justify-center gap-2">
+					{#each [{name: 'English', level: 'Native'}, {name: 'French', level: 'Professional'}, {name: 'Turkish', level: 'Native'}, {name: 'Azerbaijani', level: 'Limited'}] as lang, i}
+						<div class="group relative">
+							<div class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm dark:text-gray-300 transform transition-all duration-300 group-hover:bg-primary group-hover:text-white" style="transition-delay: {i * 50}ms">
+								{lang.name}
+							</div>
+							<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-max bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+								{lang.level}
+							</div>
+						</div>
+					{/each}
+				</div>
+			</div>
 		</AnimateInView>
-		<div class="text-center mt-4">
-			<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Dr. Fatih Nayebi</h2>
-			<p class="text-gray-600 dark:text-gray-300">VP, Data & AI at ALDO Group</p>
-			<p class="text-gray-600 dark:text-gray-300">Faculty Lecturer at McGill University</p>
-		</div>
 	</div>
 
 	<div class="flex flex-col md:flex-row gap-8 mb-16 relative z-0">
@@ -161,10 +176,25 @@
 							square={true}
 						/>
 					</div>
-					<div class="text-center mt-4">
-						<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Dr. Fatih Nayebi</h2>
-						<p class="text-gray-600 dark:text-gray-300">VP, Data & AI at ALDO Group</p>
-						<p class="text-gray-600 dark:text-gray-300">Faculty Lecturer at McGill University</p>
+				
+					<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0">
+						<h2 class="text-2xl font-bold mb-1 text-gray-800 dark:text-gray-100">Fatih Nayebi, Ph.D.</h2>
+						<p class="text-lg font-medium text-primary dark:text-blue-400 mb-1">VP, Data & AI at ALDO Group</p>
+						<p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Faculty Lecturer, McGill University</p>
+						
+						<h4 class="font-semibold mb-3 text-gray-700 dark:text-gray-300">Languages</h4>
+						<div class="flex flex-wrap justify-center gap-2">
+							{#each [{name: 'English', level: 'Native'}, {name: 'French', level: 'Professional'}, {name: 'Turkish', level: 'Native'}, {name: 'Azerbaijani', level: 'Limited'}] as lang, i}
+								<div class="group relative">
+									<div class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm dark:text-gray-300 transform transition-all duration-300 group-hover:bg-primary group-hover:text-white" style="transition-delay: {i * 50}ms">
+										{lang.name}
+									</div>
+									<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-max bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+										{lang.level}
+									</div>
+								</div>
+							{/each}
+						</div>
 					</div>
 				</div>
 			</AnimateInView>
