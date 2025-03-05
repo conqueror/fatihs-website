@@ -57,20 +57,17 @@
 			</div>
 			<div class="md:w-1/2" in:scale={{ duration: 800, delay: 400, start: 0.8 }}>
 				<div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
-					<Image 
+					<img 
 						src="/images/profile.jpg" 
-						alt="Fatih Nayebi" 
-						width={600}
-						height={600}
-						lazy={false}
-						className="w-full rounded-2xl"
-						objectFit="cover"
-						square={true}
+						alt="Fatih Nayebi"
+						class="w-full h-full object-cover rounded-2xl"
 					/>
-					<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-					<div class="absolute bottom-4 left-6 text-white">
-						<p class="font-medium">Fatih Nayebi, Ph.D.</p>
-						<p class="text-sm opacity-90">VP, Data & AI</p>
+					
+					<!-- Text placed directly on image with text shadow for readability -->
+					<div class="absolute bottom-5 left-5 text-left text-white">
+						<h2 class="text-xl md:text-2xl font-bold leading-none mb-1 text-shadow">Fatih Nayebi, Ph.D.</h2>
+						<p class="text-sm md:text-base leading-tight text-shadow">VP, Data & AI at ALDO Group</p>
+						<p class="text-xs md:text-sm leading-tight text-shadow">Faculty Lecturer, McGill University</p>
 					</div>
 				</div>
 			</div>
