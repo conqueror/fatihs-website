@@ -43,7 +43,7 @@
 			<div class="relative w-full">
 				<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
 					<Image 
-						src="/images/profile.jpeg" 
+						src="/images/profile-600.avif" 
 						alt="Dr. Fatih Nayebi" 
 						className="w-full object-cover transition-all duration-700 hover:scale-105"
 						style="transform: scale({$profileScale})"
@@ -167,7 +167,7 @@
 				<div class="sticky top-24">
 					<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
 						<Image 
-							src="/images/profile.jpeg" 
+							src="/images/profile-600.avif" 
 							alt="Dr. Fatih Nayebi" 
 							className="w-full object-cover transition-all duration-700 hover:scale-105"
 							style="transform: scale({$profileScale})"
