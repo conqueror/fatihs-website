@@ -92,7 +92,7 @@
 				<div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
 					<div class="profile-image-container">
 						<Image 
-							src="/images/profile-600.avif" 
+							src="/images/profile.avif" 
 							alt="Fatih Nayebi"
 							className="profile-image"
 							width={600}

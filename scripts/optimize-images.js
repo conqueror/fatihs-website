@@ -57,7 +57,7 @@ async function optimizeImages() {
     const PNG_COMPRESSION = 9;
     
     // Find all image files
-    const imageFiles = glob.sync(path.join(IMAGES_DIR, '*.{jpg,jpeg,png,gif}'));
+    const imageFiles = glob.sync(path.join(IMAGES_DIR, '*.{jpg,jpeg,png,gif,avif}'));
     
     console.log(`Found ${imageFiles.length} images to optimize`);
     
@@ -148,6 +148,13 @@ async function optimizeImages() {
                 .resize(width)
                 .png({ compressionLevel: PNG_COMPRESSION, progressive: true })
                 .toFile(path.join(OUTPUT_DIR, `${basename}-${width}${extname}`));
+            } else if (extname.toLowerCase() === '.avif') {
+              // For AVIF source files, create JPG and WebP versions for better browser compatibility
+              await image
+                .clone()
+                .resize(width)
+                .jpeg({ quality: JPEG_QUALITY, progressive: true })
+                .toFile(path.join(OUTPUT_DIR, `${basename}-${width}.jpg`));
             } else {
               // Other formats like GIF
               await image
