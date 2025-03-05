@@ -1,19 +1,63 @@
-# Headers for better performance and security on Kinsta static hosting
+# Headers for better performance and security on static hosting
 
-# All pages
+# All pages - security headers
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none';
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   
-# Static assets - longer cache times
-/_app/*
+# JavaScript files - long cache, immutable
+/_app/immutable/*
   Cache-Control: public, max-age=31536000, immutable
+  Content-Type: application/javascript
+  Access-Control-Allow-Origin: *
   
-/images/*
-  Cache-Control: public, max-age=604800
+# CSS files - long cache, immutable
+/_app/immutable/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: text/css
+  Access-Control-Allow-Origin: *
+  
+# Fonts - long cache, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+  
+# Images - compressed, long cache
+/*.jpg
+  Cache-Control: public, max-age=2592000
+  Content-Type: image/jpeg
+  
+/*.png
+  Cache-Control: public, max-age=2592000
+  Content-Type: image/png
+  
+/*.webp
+  Cache-Control: public, max-age=2592000
+  Content-Type: image/webp
+  
+/*.svg
+  Cache-Control: public, max-age=2592000
+  Content-Type: image/svg+xml
+  
+# HTML pages - shorter cache, must revalidate
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+  Content-Type: text/html; charset=utf-8
   
 # API routes - no caching
 /api/*
-  Cache-Control: no-store 
+  Cache-Control: no-store
+  
+# Sitemap and robots - short cache
+/sitemap.xml
+  Cache-Control: public, max-age=43200
+  Content-Type: application/xml
+  
+/robots.txt
+  Cache-Control: public, max-age=43200
+  Content-Type: text/plain 

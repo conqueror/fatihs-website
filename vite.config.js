@@ -1,9 +1,78 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import { createCriticalPlugin } from 'vite-plugin-critical';
 
 export default defineConfig({
-	plugins: [sveltekit()],
+	plugins: [
+		sveltekit(),
+		createCriticalPlugin({
+			// Critical CSS extraction for faster visible loading
+			criticalUrl: [
+				{ uri: '/', template: 'index' },
+				{ uri: '/about', template: 'about' },
+				{ uri: '/blog', template: 'blog' }
+			],
+			criticalOptions: {
+				dimensions: [
+					{ width: 375, height: 667 }, // Mobile
+					{ width: 1280, height: 800 } // Desktop
+				],
+				// Extract CSS above the fold for faster painting
+				penthouse: {
+					forceInclude: [
+						'.navigation-item',
+						'.hero-section',
+						'.image-container'
+					]
+				}
+			}
+		})
+	],
+	// Increase chunking for better code splitting
 	build: {
-		target: 'esnext'
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					'vendor': [
+						'mdsvex',
+						'marked',
+						'isomorphic-dompurify',
+						'dompurify',
+					],
+					'ui-components': [
+						'./src/lib/Header.svelte',
+						'./src/lib/Footer.svelte',
+						'./src/lib/Navbar.svelte'
+					]
+				}
+			}
+		},
+		// Improve chunk size reporting
+		reportCompressedSize: true,
+		// Target modern browsers for smaller bundles
+		target: 'es2020'
+	},
+	// Performance optimizations
+	optimizeDeps: {
+		// Pre-bundle dependencies for faster development
+		include: ['mdsvex', 'marked', 'isomorphic-dompurify']
+	},
+	// Configure CSS optimization
+	css: {
+		devSourcemap: true,
+		preprocessorOptions: {
+			// Any preprocessor options here
+		}
+	},
+	// Improve server performance
+	server: {
+		fs: {
+			// Allow serving files from one level up to the project root
+			allow: ['..']
+		},
+		// Optimize server response caching
+		headers: {
+			'Cache-Control': 'public, max-age=0'
+		}
 	}
 });

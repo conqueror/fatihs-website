@@ -102,8 +102,33 @@
 	<!-- Preconnect to important domains to improve performance -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<!-- iOS refresh handler script -->
-	<script src="/refresh-handler.js"></script>
+	
+	<!-- Preload critical fonts -->
+	<link rel="preload" as="font" href="/fonts/inter-var.woff2" type="font/woff2" crossorigin>
+	
+	<!-- Load fonts with font-display:swap to prevent render blocking -->
+	<style>
+		/* Inline font-face declaration for critical font */
+		@font-face {
+			font-family: 'Inter';
+			font-style: normal;
+			font-weight: 100 900;
+			font-display: swap;
+			src: url('/fonts/inter-var.woff2') format('woff2');
+			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+		}
+	</style>
+	
+	<!-- Load non-critical fonts asynchronously -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+	
+	<!-- Fallback for JavaScript disabled -->
+	<noscript>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+	</noscript>
+	
+	<!-- iOS refresh handler script - load with defer -->
+	<script src="/refresh-handler.js" defer></script>
 </svelte:head>
 
 <div class="min-h-screen flex flex-col">
