@@ -149,7 +149,7 @@
 					Leading data-driven transformation at ALDO Group. Building advanced analytics capabilities and AI-powered solutions that drive business value.
 				</p>
 				<a href="/research" class="text-primary dark:text-blue-400 font-medium flex items-center transition duration-300 transform hover:scale-105">
-					Learn more
+					Explore Enterprise AI Research
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
 					</svg>
