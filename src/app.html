@@ -55,11 +55,17 @@
 			/* Hide SVG icons initially */
 			svg {
 				opacity: 0 !important;
+				visibility: hidden !important;
+				color: inherit !important;
+				fill: none !important;
+				stroke: currentColor !important;
+				overflow: hidden !important;
 			}
 			
 			/* Show SVG icons when ready */
 			body[data-theme-loaded] svg {
 				opacity: 1 !important;
+				visibility: visible !important;
 				transition: opacity 0.2s ease;
 			}
 			

@@ -65,7 +65,7 @@
 					</a>
 					<a href="/search" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/search' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative flex flex-row items-center">
-							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0 search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
 							</svg>
 							<span class="inline-block">Search</span>
@@ -137,7 +137,7 @@
 					<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
 					<a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/search' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<div class="flex flex-row items-center">
-							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0 search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
 							</svg>
 							<span class="inline-block">Search</span>
@@ -169,5 +169,13 @@
 		display: inline-block;
 		min-height: 24px;
 		vertical-align: middle;
+	}
+	
+	/* Additional style for search icon to prevent large blue icon on load */
+	:global(.search-icon) {
+		color: inherit !important;
+		stroke: currentColor !important;
+		fill: none !important;
+		overflow: hidden;
 	}
 </style>
