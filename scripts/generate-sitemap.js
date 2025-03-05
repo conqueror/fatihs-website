@@ -1,12 +1,8 @@
 /**
- * Script to generate a static sitemap.xml file
- * This is run during the build process to create a sitemap that is placed in the static directory
- * This ensures proper static site generation for Kinsta hosting
- * 
- * Since we can't access SvelteKit-specific imports like $app in Node.js scripts outside of SvelteKit,
- * we create a basic sitemap with just the static pages.
+ * Simple sitemap generator for fatihnayebi.com
+ * This script creates a basic sitemap.xml file with the main pages of the site
  */
- 
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,88 +11,60 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-async function generateSitemap() {
-  console.log('Generating sitemap.xml...');
-  
-  // Set base URL for the site
-  const website = 'https://fatihnayebi.com';
-  const currentDate = new Date().toISOString();
-  
-  // Create the sitemap XML structure with static pages
-  const sitemap = `<?xml version="1.0" encoding="UTF-8" ?>
-<urlset
-  xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="https://www.w3.org/1999/xhtml"
-  xmlns:mobile="https://www.google.com/schemas/sitemap-mobile/1.0"
-  xmlns:news="https://www.google.com/schemas/sitemap-news/0.9"
-  xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
-  xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
->
-  <!-- Static pages -->
-  <url>
-    <loc>${website}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>${website}/about</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>${website}/images/profile-photo.jpg</image:loc>
-      <image:title>Dr. Fatih Nayebi</image:title>
-      <image:caption>AI Researcher and Developer</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>${website}/publications</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${website}/blog</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${website}/research</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${website}/contact</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${website}/search</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${website}/privacy</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <!-- Note: Dynamic content pages like blog posts, publications, and research areas
-       will be built by SvelteKit during static site generation -->
-</urlset>`;
+// Define the base URL for your site
+const BASE_URL = 'https://fatihnayebi.com';
 
-  // Write the sitemap to the static directory
-  const staticDir = path.join(__dirname, '../static');
-  fs.writeFileSync(path.join(staticDir, 'sitemap.xml'), sitemap);
-  
-  console.log('Successfully generated sitemap.xml');
+// Define the main pages of your site
+const PAGES = [
+  { url: '/', changefreq: 'weekly', priority: '1.0' },
+  { url: '/about', changefreq: 'monthly', priority: '0.8' },
+  { url: '/blog', changefreq: 'weekly', priority: '0.9' },
+  { url: '/publications', changefreq: 'monthly', priority: '0.8' },
+  { url: '/contact', changefreq: 'monthly', priority: '0.7' }
+];
+
+// Get current date in ISO format for lastmod
+const currentDate = new Date().toISOString();
+
+// Generate the sitemap XML content
+function generateSitemap() {
+  let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
+  sitemap += '      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n';
+  sitemap += '      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9\n';
+  sitemap += '            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">\n';
+
+  // Add each page to the sitemap
+  PAGES.forEach(page => {
+    sitemap += '  <url>\n';
+    sitemap += `    <loc>${BASE_URL}${page.url}</loc>\n`;
+    sitemap += `    <lastmod>${currentDate}</lastmod>\n`;
+    sitemap += `    <changefreq>${page.changefreq}</changefreq>\n`;
+    sitemap += `    <priority>${page.priority}</priority>\n`;
+    sitemap += '  </url>\n';
+  });
+
+  sitemap += '</urlset>';
+  return sitemap;
 }
 
-// Run the generator
-generateSitemap().catch(console.error); 
+// Write the sitemap to a file
+function writeSitemap() {
+  try {
+    // Create the static directory if it doesn't exist
+    const staticDir = path.join(__dirname, '../static');
+    if (!fs.existsSync(staticDir)) {
+      fs.mkdirSync(staticDir, { recursive: true });
+    }
+
+    // Generate and write the sitemap
+    const sitemap = generateSitemap();
+    fs.writeFileSync(path.join(staticDir, 'sitemap.xml'), sitemap);
+    console.log('✅ Sitemap generated successfully');
+  } catch (error) {
+    console.error('❌ Error generating sitemap:', error);
+  }
+}
+
+// Run the script
+writeSitemap(); 
