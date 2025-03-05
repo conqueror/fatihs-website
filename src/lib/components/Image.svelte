@@ -24,6 +24,9 @@
   export let style = '';
   export let square = false; // New option to force square aspect ratio
   
+  // For debugging
+  let srcPath = src;
+  
   // Generate srcset based on the original image
   // This assumes your build process creates responsive versions
   // or you're manually creating them
@@ -114,11 +117,24 @@
     loadingComplete = true;
   }
   
+  // Handle image error event - fallback to original
+  function handleError(e) {
+    console.error('Image failed to load:', e);
+    // If optimized image fails, fallback to original
+    if (e.target.src.includes('/optimized/')) {
+      e.target.src = src;
+    }
+  }
+  
   // Extract file extension for fallback type
   const fileExt = src.split('.').pop().toLowerCase();
 </script>
 
-<div class="image-container {className}" style="{aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''} {square ? 'padding-bottom: 100%;' : ''} {style}">
+<div class="image-container enhanced-image {className}" 
+     style="{aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''} 
+            {square ? 'padding-bottom: 100%;' : ''} 
+            {style}">
+  
   {#if placeholder || blurhash}
     <div 
       class="blur-placeholder" 
@@ -126,6 +142,11 @@
       aria-hidden="true">
     </div>
   {/if}
+  
+  <!-- Fallback text for debugging -->
+  <div class="image-debug" style="opacity: {loadingComplete ? 0 : 0.7};">
+    Loading: {src.split('/').pop()}
+  </div>
   
   <picture class="image-picture">
     <!-- AVIF format for modern browsers with best compression -->
@@ -152,6 +173,11 @@
         sizes={sizes} />
     {/if}
     
+    <!-- Direct fallback to original image -->
+    <source 
+      srcset={src}
+      sizes={sizes} />
+    
     <!-- Fallback img tag with explicit dimensions -->
     <img 
       {src} 
@@ -162,7 +188,8 @@
       decoding="async"
       fetchpriority={lazy ? "auto" : "high"}
       style="object-fit: {objectFit}; object-position: {objectPosition};"
-      on:load={handleLoad} />
+      on:load={handleLoad}
+      on:error={handleError} />
   </picture>
 </div>
 
@@ -175,6 +202,10 @@
     background-color: #f0f0f0; /* Placeholder color before image loads */
   }
   
+  .enhanced-image {
+    min-height: 20px; /* Ensure a minimum height until the image loads */
+  }
+  
   .image-picture {
     position: absolute;
     top: 0;
@@ -182,6 +213,21 @@
     width: 100%;
     height: 100%;
     display: block;
+  }
+  
+  .image-debug {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: #000;
+    background: rgba(255,255,255,0.7);
+    padding: 2px;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease;
   }
   
   img {

@@ -1,4 +1,6 @@
 <script>
+  import Image from '$lib/components/Image.svelte';
+  
   export let title = '';
   export let description = '';
   export let link = '#';
@@ -11,7 +13,13 @@
 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/30 overflow-hidden hover:shadow-xl transition-shadow duration-300">
   {#if image}
     <div class="relative overflow-hidden h-48">
-      <img src={image} alt={imageAlt || title} class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+      <Image 
+        src={image} 
+        alt={imageAlt || title} 
+        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        style="height: 100%;"
+      />
     </div>
   {/if}
   
