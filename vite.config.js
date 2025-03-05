@@ -10,11 +10,6 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					'vendor': [
-						'marked',
-						'isomorphic-dompurify',
-						'dompurify',
-					],
 					'ui-components': [
 						'./src/lib/Header.svelte',
 						'./src/lib/Footer.svelte',
@@ -31,7 +26,7 @@ export default defineConfig({
 	// Performance optimizations
 	optimizeDeps: {
 		// Pre-bundle dependencies for faster development
-		include: ['marked', 'isomorphic-dompurify']
+		include: []
 	},
 	// Configure CSS optimization
 	css: {
