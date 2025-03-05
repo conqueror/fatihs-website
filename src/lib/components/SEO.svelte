@@ -22,6 +22,7 @@
   export let type = 'website'; // website, article, etc.
   export let noindex = false;
   export let nofollow = false;
+  export let language = 'en-US';
   
   // Open Graph properties
   export let openGraph = {};
@@ -32,6 +33,7 @@
     url: canonical || $page?.url?.href,
     image: '/images/og-image.jpg',
     siteName: 'Fatih Nayebi',
+    locale: 'en_US'
   };
   const og = { ...defaultOG, ...openGraph };
   
@@ -43,6 +45,7 @@
     title: title,
     description: description,
     image: '/images/twitter-image.jpg',
+    creator: '@FatihNayebi'
   };
   const tw = { ...defaultTwitter, ...twitter };
   
@@ -82,6 +85,40 @@
     }
     return '';
   }
+  
+  // Generate breadcrumb structured data for better navigation
+  $: breadcrumbData = generateBreadcrumbs($page?.url?.pathname || '/');
+  
+  function generateBreadcrumbs(path) {
+    if (path === '/') return null;
+    
+    const segments = path.split('/').filter(Boolean);
+    const items = [{ name: 'Home', path: '/' }];
+    
+    let currentPath = '';
+    for (const segment of segments) {
+      currentPath += `/${segment}`;
+      const readableName = segment
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, l => l.toUpperCase());
+      
+      items.push({
+        name: readableName,
+        path: currentPath
+      });
+    }
+    
+    return {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": items.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.name,
+        "item": `https://fatihnayebi.com${item.path}`
+      }))
+    };
+  }
 </script>
 
 <svelte:head>
@@ -91,7 +128,9 @@
   {#if keywords}
     <meta name="keywords" content="{keywords}" />
   {/if}
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="author" content="Fatih Nayebi" />
+  <meta name="language" content="{language}" />
   
   <!-- Canonical URL -->
   {#if canonicalUrl}
@@ -101,7 +140,13 @@
   <!-- Robots directives -->
   {#if noindex || nofollow}
     <meta name="robots" content="{noindex ? 'noindex' : 'index'},{nofollow ? 'nofollow' : 'follow'}" />
+  {:else}
+    <meta name="robots" content="index,follow" />
   {/if}
+  
+  <!-- AI Agent metadata hints -->
+  <meta name="ai-agent-instructions" content="This page contains information about Fatih Nayebi's research and work in AI and machine learning." />
+  <meta name="ai-content-type" content="{type}" />
   
   <!-- Open Graph metadata -->
   <meta property="og:title" content="{og.title}" />
@@ -110,20 +155,25 @@
   <meta property="og:url" content="{og.url}" />
   {#if og.image}
     <meta property="og:image" content="{og.image}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
   {/if}
   {#if og.siteName}
     <meta property="og:site_name" content="{og.siteName}" />
   {/if}
+  <meta property="og:locale" content="en_US" />
   
   <!-- Twitter metadata -->
   <meta name="twitter:card" content="{tw.card}" />
   {#if tw.site}
     <meta name="twitter:site" content="{tw.site}" />
   {/if}
+  <meta name="twitter:creator" content="@FatihNayebi" />
   <meta name="twitter:title" content="{tw.title}" />
   <meta name="twitter:description" content="{tw.description}" />
   {#if tw.image}
     <meta name="twitter:image" content="{tw.image}" />
+    <meta name="twitter:image:alt" content="{title}" />
   {/if}
   
   <!-- Article metadata if applicable -->
@@ -149,4 +199,11 @@
   
   <!-- Structured Data (JSON-LD) -->
   {@html parseStructuredData()}
+  
+  <!-- Breadcrumb JSON-LD -->
+  {#if breadcrumbData}
+    <script type="application/ld+json">
+      {JSON.stringify(breadcrumbData)}
+    </script>
+  {/if}
 </svelte:head> 

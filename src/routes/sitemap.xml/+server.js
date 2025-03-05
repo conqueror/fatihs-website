@@ -5,6 +5,7 @@ import { getAllResearchAreas } from '$lib/utils/research';
 /**
  * Generate XML sitemap for better SEO
  * This creates a dynamic sitemap.xml endpoint that search engines can access
+ * Enhanced with image data and more detailed metadata for improved crawling
  */
 export async function GET({ url }) {
   const website = url.origin;
@@ -37,6 +38,11 @@ export async function GET({ url }) {
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>${website}/images/profile-photo.jpg</image:loc>
+      <image:title>Dr. Fatih Nayebi</image:title>
+      <image:caption>AI Researcher and Developer</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>${website}/publications</loc>
@@ -68,6 +74,12 @@ export async function GET({ url }) {
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>${website}/privacy</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
   
   <!-- Blog posts -->
   ${blogPosts
@@ -78,6 +90,12 @@ export async function GET({ url }) {
     <lastmod>${post.updatedAt || post.date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    ${post.image ? `
+    <image:image>
+      <image:loc>${website}${post.image}</image:loc>
+      <image:title>${escapeXml(post.title)}</image:title>
+      <image:caption>${escapeXml(post.excerpt || '')}</image:caption>
+    </image:image>` : ''}
   </url>`
     )
     .join('')}
@@ -91,6 +109,12 @@ export async function GET({ url }) {
     <lastmod>${pub.date}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+    ${pub.image ? `
+    <image:image>
+      <image:loc>${website}${pub.image}</image:loc>
+      <image:title>${escapeXml(pub.title)}</image:title>
+      <image:caption>${escapeXml(pub.abstract ? pub.abstract.substring(0, 150) + '...' : '')}</image:caption>
+    </image:image>` : ''}
   </url>`
     )
     .join('')}
@@ -104,6 +128,12 @@ export async function GET({ url }) {
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    ${area.image ? `
+    <image:image>
+      <image:loc>${website}${area.image}</image:loc>
+      <image:title>${escapeXml(area.title)}</image:title>
+      <image:caption>Research in ${escapeXml(area.title)}</image:caption>
+    </image:image>` : ''}
   </url>`
     )
     .join('')}
@@ -115,4 +145,18 @@ export async function GET({ url }) {
       'Cache-Control': 'max-age=3600, s-maxage=86400'
     }
   });
+}
+
+/**
+ * Helper function to escape XML special characters
+ * Ensures our XML is valid even when post titles or descriptions contain special characters
+ */
+function escapeXml(unsafe) {
+  if (!unsafe) return '';
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 } 
