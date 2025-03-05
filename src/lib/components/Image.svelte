@@ -122,7 +122,7 @@
     </div>
   {/if}
   
-  <picture>
+  <picture class="image-picture">
     <!-- AVIF format for modern browsers with best compression -->
     {#if srcsets.avif}
       <source 
@@ -166,16 +166,24 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: auto;
+    display: block;
     background-color: #f0f0f0; /* Placeholder color before image loads */
+  }
+  
+  .image-picture {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
   
   img {
     display: block;
     width: 100%;
-    height: auto; /* Allow height to adjust automatically if no explicit dimensions */
+    height: 100%; /* Change to 100% to fill container properly */
     max-width: 100%;
     transition: opacity 0.3s ease;
+    object-fit: var(--object-fit, cover);
+    object-position: var(--object-position, center);
   }
   
   .blur-placeholder {
