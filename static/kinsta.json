@@ -1,6 +1,12 @@
 {
   "name": "Fatih Nayebi Website",
   "framework": "sveltekit",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
   "buildCommand": "npm run build",
   "buildDir": "build",
   "singlePageApp": true,

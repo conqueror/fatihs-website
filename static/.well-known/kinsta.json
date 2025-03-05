@@ -1,0 +1,12 @@
+{
+  "framework": "sveltekit",
+  "spa": true,
+  "entrypoint": "index.html",
+  "routes": [
+    {
+      "pattern": ".*",
+      "dest": "index.html",
+      "type": "rewrite"
+    }
+  ]
+} 

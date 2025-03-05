@@ -1,8 +1,8 @@
-# Redirects for SPA routing on Kinsta static site
+# Redirects for SPA routing on static site
 # This ensures that when users refresh the page or directly access a route,
 # they are properly directed to the index.html file which will handle the routing
 
-# Handle all routes by redirecting to index.html and preserving query params
+# Single redirect rule that handles all paths
 /*  /index.html  200
 
 # Explicit asset paths to ensure proper handling of static assets
