@@ -20,7 +20,7 @@ const config = {
 			pages: 'build',
 			assets: 'build',
 			fallback: 'index.html',
-			precompress: false
+			precompress: true
 		}),
 		prerender: {
 			crawl: true,

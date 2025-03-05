@@ -3,6 +3,7 @@
 	import { fade, fly, scale } from 'svelte/transition';
 	import { spring } from 'svelte/motion';
 	import AnimateInView from '$lib/AnimateInView.svelte';
+	import Image from '$lib/components/Image.svelte';
 
 	let visible = false;
 	
@@ -41,12 +42,15 @@
 		<AnimateInView type="scale" delay={300}>
 			<div class="relative w-full">
 				<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
-					<img 
+					<Image 
 						src="/images/profile.jpeg" 
 						alt="Dr. Fatih Nayebi" 
-						class="w-full object-cover transition-all duration-700 hover:scale-105"
+						className="w-full object-cover transition-all duration-700 hover:scale-105"
 						style="transform: scale({$profileScale})"
-					>
+						width={600}
+						height={800}
+						lazy={false}
+					/>
 				</div>
 			</div>
 		
@@ -162,12 +166,15 @@
 			<AnimateInView type="scale" delay={300}>
 				<div class="relative w-full">
 					<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
-						<img 
+						<Image 
 							src="/images/profile.jpeg" 
 							alt="Dr. Fatih Nayebi" 
-							class="w-full object-cover transition-all duration-700 hover:scale-105"
+							className="w-full object-cover transition-all duration-700 hover:scale-105"
 							style="transform: scale({$profileScale})"
-						>
+							width={600}
+							height={800}
+							lazy={false}
+						/>
 					</div>
 				</div>
 			

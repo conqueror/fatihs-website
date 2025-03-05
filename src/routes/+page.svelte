@@ -4,6 +4,7 @@
 	import { spring } from 'svelte/motion';
 	import AnimateInView from '$lib/AnimateInView.svelte';
 	import AnimatedButton from '$lib/AnimatedButton.svelte';
+	import Image from '$lib/components/Image.svelte';
 	
 	export let data;
 	const { featuredPosts, featuredPublications, redirectedBlogPost } = data;
@@ -56,7 +57,15 @@
 			</div>
 			<div class="md:w-1/2" in:scale={{ duration: 800, delay: 400, start: 0.8 }}>
 				<div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
-					<img src="/images/profile.jpg" alt="Fatih Nayebi" class="w-full rounded-2xl">
+					<Image 
+						src="/images/profile.jpg" 
+						alt="Fatih Nayebi" 
+						width={600}
+						height={800}
+						lazy={false}
+						className="w-full rounded-2xl"
+						objectFit="cover"
+					/>
 					<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 					<div class="absolute bottom-4 left-6 text-white">
 						<p class="font-medium">Fatih Nayebi, Ph.D.</p>

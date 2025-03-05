@@ -20,31 +20,49 @@
   export let objectFit = 'cover';
   export let objectPosition = 'center';
   export let blurhash = null;
+  export let style = '';
   
   // Generate srcset based on the original image
   // This assumes your build process creates responsive versions
   // or you're manually creating them
   function generateSrcset(src) {
+    // Skip for external URLs
+    if (src.startsWith('http') || src.startsWith('data:')) {
+      return {
+        avif: '',
+        webp: '',
+        original: ''
+      };
+    }
+    
     // Extract file extension and path
-    const fileExt = src.split('.').pop();
+    const fileExt = src.split('.').pop().toLowerCase();
     const basePath = src.substring(0, src.lastIndexOf('.'));
+    
+    // Convert path to use optimized folder path if it's not already there
+    let optimizedBasePath = basePath;
+    if (!optimizedBasePath.includes('/optimized/')) {
+      const parts = optimizedBasePath.split('/');
+      const filename = parts.pop();
+      optimizedBasePath = [...parts, 'optimized', filename].join('/');
+    }
     
     // Different size variations
     const widths = [320, 640, 960, 1280, 1920];
     
     // Generate AVIF srcset (best compression)
     const avifSrcset = widths
-      .map(w => `${basePath}-${w}.avif ${w}w`)
+      .map(w => `${optimizedBasePath}-${w}.avif ${w}w`)
       .join(', ');
     
     // Generate WebP srcset (good compatibility)
     const webpSrcset = widths
-      .map(w => `${basePath}-${w}.webp ${w}w`)
+      .map(w => `${optimizedBasePath}-${w}.webp ${w}w`)
       .join(', ');
       
     // Generate original format srcset as fallback
     const originalSrcset = widths
-      .map(w => `${basePath}-${w}.${fileExt} ${w}w`)
+      .map(w => `${optimizedBasePath}-${w}.${fileExt} ${w}w`)
       .join(', ');
     
     return {
@@ -66,7 +84,24 @@
     aspectRatio = `${width}/${height}`;
   }
   
-  // Low quality placeholder image (if no blurhash provided)
+  // Placeholder image path
+  let placeholder = null;
+  if (!blurhash && src && !src.startsWith('http') && !src.startsWith('data:')) {
+    const fileExt = src.split('.').pop().toLowerCase();
+    const basePath = src.substring(0, src.lastIndexOf('.'));
+    
+    // Convert path to use optimized folder path if it's not already there
+    let optimizedBasePath = basePath;
+    if (!optimizedBasePath.includes('/optimized/')) {
+      const parts = optimizedBasePath.split('/');
+      const filename = parts.pop();
+      optimizedBasePath = [...parts, 'optimized', filename].join('/');
+    }
+    
+    placeholder = `${optimizedBasePath}-placeholder.webp`;
+  }
+  
+  // Loading state tracking
   let loadingComplete = false;
   
   // Handle image load event
@@ -75,34 +110,42 @@
   }
   
   // Extract file extension for fallback type
-  const fileExt = src.split('.').pop();
+  const fileExt = src.split('.').pop().toLowerCase();
 </script>
 
-<div class="image-container {className}" style={aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''}>
-  {#if blurhash}
-    <div class="blur-placeholder" 
-         style="background-image: url({blurhash}); opacity: {loadingComplete ? 0 : 1};"
-         aria-hidden="true"></div>
+<div class="image-container {className}" style="{aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''} {style}">
+  {#if placeholder || blurhash}
+    <div 
+      class="blur-placeholder" 
+      style="background-image: url({blurhash || placeholder}); opacity: {loadingComplete ? 0 : 1};"
+      aria-hidden="true">
+    </div>
   {/if}
   
   <picture>
     <!-- AVIF format for modern browsers with best compression -->
-    <source 
-      type="image/avif" 
-      srcset={srcsets.avif} 
-      sizes={sizes} />
+    {#if srcsets.avif}
+      <source 
+        type="image/avif" 
+        srcset={srcsets.avif} 
+        sizes={sizes} />
+    {/if}
       
     <!-- WebP format for broader browser support -->
-    <source 
-      type="image/webp" 
-      srcset={srcsets.webp} 
-      sizes={sizes} />
+    {#if srcsets.webp}
+      <source 
+        type="image/webp" 
+        srcset={srcsets.webp} 
+        sizes={sizes} />
+    {/if}
     
     <!-- Original format as fallback -->
-    <source 
-      type="image/{fileExt}" 
-      srcset={srcsets.original} 
-      sizes={sizes} />
+    {#if srcsets.original}
+      <source 
+        type={`image/${fileExt === 'jpg' ? 'jpeg' : fileExt}`} 
+        srcset={srcsets.original} 
+        sizes={sizes} />
+    {/if}
     
     <!-- Fallback img tag with explicit dimensions -->
     <img 

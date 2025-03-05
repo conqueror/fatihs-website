@@ -26,7 +26,7 @@ This is a personal website built with SvelteKit and hosted on Kinsta Static Site
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/fatihs-website.git
+git clone https://github.com/conqueror/fatihs-website.git
 cd fatihs-website
 ```
 
