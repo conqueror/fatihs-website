@@ -11,7 +11,6 @@ export default defineConfig({
 			output: {
 				manualChunks: {
 					'vendor': [
-						'mdsvex',
 						'marked',
 						'isomorphic-dompurify',
 						'dompurify',
@@ -32,7 +31,7 @@ export default defineConfig({
 	// Performance optimizations
 	optimizeDeps: {
 		// Pre-bundle dependencies for faster development
-		include: ['mdsvex', 'marked', 'isomorphic-dompurify']
+		include: ['marked', 'isomorphic-dompurify']
 	},
 	// Configure CSS optimization
 	css: {

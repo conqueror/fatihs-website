@@ -70,48 +70,81 @@ async function optimizeImages() {
         
         console.log(`Processing: ${filename}`);
         
-        // Load the image
-        const image = sharp(filePath);
+        // Check if the file exists and is readable
+        if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+          console.error(`❌ Error: ${filePath} does not exist or is not a file`);
+          continue;
+        }
+        
+        // Load the image with additional error handling
+        let image;
+        try {
+          image = sharp(filePath);
+          // Try to get metadata to validate the image is processable
+          const metadata = await image.metadata();
+          if (!metadata || !metadata.format) {
+            console.error(`❌ Error: ${filePath} appears to be an invalid or unsupported image format`);
+            continue;
+          }
+        } catch (sharpError) {
+          console.error(`❌ Error loading image ${filePath}: ${sharpError.message}`);
+          continue;
+        }
+        
         const metadata = await image.metadata();
         
         // Create a blur hash placeholder (tiny image for loading)
-        await image
-          .resize(20)
-          .blur(5)
-          .toFormat('webp', { quality: 20 })
-          .toFile(path.join(OUTPUT_DIR, `${basename}-placeholder.webp`));
-          
+        try {
+          await image
+            .clone()
+            .resize(20)
+            .blur(5)
+            .toFormat('webp', { quality: 20 })
+            .toFile(path.join(OUTPUT_DIR, `${basename}-placeholder.webp`));
+        } catch (error) {
+          console.error(`❌ Error creating placeholder for ${filename}: ${error.message}`);
+          // Continue with other processing even if placeholder fails
+        }
+        
         // Generate various sizes
         for (const width of WIDTHS) {
           // Skip if the requested width is larger than the original
           if (width > metadata.width) continue;
           
-          // Create WebP version
-          await image
-            .clone()
-            .resize(width)
-            .toFormat('webp', { quality: WEBP_QUALITY })
-            .toFile(path.join(OUTPUT_DIR, `${basename}-${width}.webp`));
+          try {
+            // Create WebP version
+            await image
+              .clone()
+              .resize(width)
+              .toFormat('webp', { quality: WEBP_QUALITY })
+              .toFile(path.join(OUTPUT_DIR, `${basename}-${width}.webp`));
+          } catch (error) {
+            console.error(`❌ Error creating WebP variant for ${filename} at width ${width}: ${error.message}`);
+          }
             
-          // Create original format version with optimization
-          if (extname.toLowerCase() === '.jpg' || extname.toLowerCase() === '.jpeg') {
-            await image
-              .clone()
-              .resize(width)
-              .jpeg({ quality: JPEG_QUALITY, progressive: true })
-              .toFile(path.join(OUTPUT_DIR, `${basename}-${width}${extname}`));
-          } else if (extname.toLowerCase() === '.png') {
-            await image
-              .clone()
-              .resize(width)
-              .png({ compressionLevel: PNG_COMPRESSION, progressive: true })
-              .toFile(path.join(OUTPUT_DIR, `${basename}-${width}${extname}`));
-          } else {
-            // Other formats like GIF
-            await image
-              .clone()
-              .resize(width)
-              .toFile(path.join(OUTPUT_DIR, `${basename}-${width}${extname}`));
+          try {
+            // Create original format version with optimization
+            if (extname.toLowerCase() === '.jpg' || extname.toLowerCase() === '.jpeg') {
+              await image
+                .clone()
+                .resize(width)
+                .jpeg({ quality: JPEG_QUALITY, progressive: true })
+                .toFile(path.join(OUTPUT_DIR, `${basename}-${width}${extname}`));
+            } else if (extname.toLowerCase() === '.png') {
+              await image
+                .clone()
+                .resize(width)
+                .png({ compressionLevel: PNG_COMPRESSION, progressive: true })
+                .toFile(path.join(OUTPUT_DIR, `${basename}-${width}${extname}`));
+            } else {
+              // Other formats like GIF
+              await image
+                .clone()
+                .resize(width)
+                .toFile(path.join(OUTPUT_DIR, `${basename}-${width}${extname}`));
+            }
+          } catch (error) {
+            console.error(`❌ Error creating ${extname} variant for ${filename} at width ${width}: ${error.message}`);
           }
         }
         
@@ -134,4 +167,4 @@ optimizeImages().catch(error => {
   console.error('Error during image optimization, but continuing build:', error);
   // We don't want to fail the build process, so we exit with 0
   process.exit(0);
-}); 
+});
