@@ -4,6 +4,7 @@
   import { consentStore } from '$lib/stores';
   
   let visible = false;
+  let mounted = false;
   
   // Check for existing consent
   onMount(() => {
@@ -20,6 +21,9 @@
     } else {
       visible = true;
     }
+    
+    // Mark component as mounted
+    mounted = true;
     
     // Listen for the custom event from the privacy policy page
     window.addEventListener('open-cookie-preferences', () => {
@@ -72,45 +76,73 @@
   }
 </script>
 
-{#if visible}
-  <div class="cookie-banner dark:bg-gray-800 dark:text-white">
-    <div class="cookie-content">
-      <h3 class="dark:text-white">Privacy Choices</h3>
-      <p class="dark:text-gray-200">
-        This website uses cookies to enhance your browsing experience, serve personalized content, 
-        and analyze our traffic. You can choose whether to accept analytics cookies that help us 
-        understand how you interact with our website.
-      </p>
-      <div class="cookie-buttons">
-        <button on:click={acceptNecessaryOnly} class="secondary dark:bg-gray-700 dark:text-gray-100">
-          Necessary Only
-        </button>
-        <button on:click={acceptAll} class="primary">
-          Accept All
-        </button>
-      </div>
-      <div class="cookie-footer">
-        <a href="/privacy" class="text-sm text-gray-600 dark:text-gray-300 hover:underline">
-          View our full Privacy Policy
-        </a>
+<!-- Only render once mounted to avoid SSR hydration mismatch -->
+{#if mounted}
+  <div class="cookie-banner-container" aria-hidden={!visible}>
+    <div class="cookie-banner dark:bg-gray-800 dark:text-white" class:visible>
+      <div class="cookie-content">
+        <h3 class="dark:text-white">Privacy Choices</h3>
+        <p class="dark:text-gray-200">
+          This website uses cookies to enhance your browsing experience, serve personalized content, 
+          and analyze our traffic. You can choose whether to accept analytics cookies that help us 
+          understand how you interact with our website.
+        </p>
+        <div class="cookie-buttons">
+          <button on:click={acceptNecessaryOnly} class="secondary dark:bg-gray-700 dark:text-gray-100">
+            Necessary Only
+          </button>
+          <button on:click={acceptAll} class="primary">
+            Accept All
+          </button>
+        </div>
+        <div class="cookie-footer">
+          <a href="/privacy" class="text-sm text-gray-600 dark:text-gray-300 hover:underline">
+            View our full Privacy Policy
+          </a>
+        </div>
       </div>
     </div>
   </div>
 {/if}
 
 <style>
-  .cookie-banner {
+  .cookie-banner-container {
     position: fixed;
     bottom: 1rem;
-    left: 1rem;
-    right: 1rem;
-    max-width: 500px;
-    margin: 0 auto;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .cookie-banner-container[aria-hidden="true"] {
+    visibility: hidden;
+  }
+
+  .cookie-banner-container[aria-hidden="false"] {
+    visibility: visible;
+  }
+  
+  .cookie-banner {
     background-color: #fff;  /* Light mode background */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 9999;
     padding: 1.25rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    max-width: 500px;
+    width: calc(100% - 2rem);
+    margin: 0 1rem;
+  }
+  
+  .cookie-banner.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
   
   /* Add dark mode style for the cookie banner */

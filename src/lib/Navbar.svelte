@@ -4,6 +4,7 @@
 	import ThemeToggle from '$lib/ThemeToggle.svelte';
 	
 	let isMenuOpen = false;
+	let mounted = false;
 	
 	function toggleMenu() {
 		isMenuOpen = !isMenuOpen;
@@ -27,6 +28,8 @@
 		document.addEventListener('click', handleClickOutside, true);
 		document.addEventListener('touchend', handleClickOutside, true); // Add touch support for iOS
 		
+		mounted = true;
+		
 		return () => {
 			document.removeEventListener('click', handleClickOutside, true);
 			document.removeEventListener('touchend', handleClickOutside, true);
@@ -39,35 +42,51 @@
 		<nav class="flex items-center justify-between py-4">
 			<a href="/" class="text-xl font-bold text-gray-900 dark:text-white">Dr. Fatih Nayebi</a>
 			
-			<div class="hidden md:flex items-center space-x-6">
-				<a href="/" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-					<span class="relative">Home</span>
-				</a>
-				<a href="/about" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-					<span class="relative">About</span>
-				</a>
-				<a href="/research" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-					<span class="relative">Research</span>
-				</a>
-				<a href="/publications" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-					<span class="relative">Publications</span>
-				</a>
-				<a href="/blog" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-					<span class="relative">Blog</span>
-				</a>
-				<a href="/contact" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-					<span class="relative">Contact</span>
-				</a>
-				<a href="/search" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/search' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-					<span class="relative flex items-center">
-						<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-						</svg>
-						Search
+			<!-- Desktop navigation with fixed dimensions to prevent layout shifts -->
+			<div class="hidden md:flex items-center space-x-6 nav-container">
+				{#if mounted}
+					<a href="/" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">Home</span>
+					</a>
+					<a href="/about" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">About</span>
+					</a>
+					<a href="/research" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">Research</span>
+					</a>
+					<a href="/publications" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">Publications</span>
+					</a>
+					<a href="/blog" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">Blog</span>
+					</a>
+					<a href="/contact" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">Contact</span>
+					</a>
+					<a href="/search" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/search' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative flex flex-row items-center">
+							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+							</svg>
+							<span class="inline-block">Search</span>
+						</span>
+					</a>
+					
+					<ThemeToggle />
+				{:else}
+					<!-- Placeholders with exact same dimensions to prevent layout shifts while loading -->
+					<span class="relative text-transparent px-2 py-1 w-[55px]">Home</span>
+					<span class="relative text-transparent px-2 py-1 w-[58px]">About</span>
+					<span class="relative text-transparent px-2 py-1 w-[85px]">Research</span>
+					<span class="relative text-transparent px-2 py-1 w-[106px]">Publications</span>
+					<span class="relative text-transparent px-2 py-1 w-[48px]">Blog</span>
+					<span class="relative text-transparent px-2 py-1 w-[76px]">Contact</span>
+					<span class="relative text-transparent px-2 py-1 w-[75px] flex flex-row items-center">
+						<span class="w-4 h-4 mr-1 inline-block flex-shrink-0"></span>
+						<span class="inline-block">Search</span>
 					</span>
-				</a>
-				
-				<ThemeToggle />
+					<span class="relative text-transparent px-2 py-1 w-[35px]">Toggle</span>
+				{/if}
 			</div>
 			
 			<button 
@@ -117,11 +136,11 @@
 					<a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Blog</a>
 					<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
 					<a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/search' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-						<div class="flex items-center">
-							<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<div class="flex flex-row items-center">
+							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
 							</svg>
-							Search
+							<span class="inline-block">Search</span>
 						</div>
 					</a>
 					
@@ -138,3 +157,17 @@
 		></div>
 	{/if}
 </header>
+
+<style>
+	/* Add styles to ensure consistent dimensions */
+	.nav-container {
+		min-height: 40px;
+	}
+	
+	/* Ensure links have consistent sizes */
+	a, span {
+		display: inline-block;
+		min-height: 24px;
+		vertical-align: middle;
+	}
+</style>
