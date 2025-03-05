@@ -37,12 +37,11 @@
 		height: 600px;
 		margin: 0 auto;
 		position: relative;
+		border-radius: 1rem;
+		overflow: hidden;
 	}
 	
 	.profile-image {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
 		border-radius: 1rem;
 	}
 	
@@ -92,14 +91,17 @@
 			<div class="md:w-1/2" in:scale={{ duration: 800, delay: 400, start: 0.8 }}>
 				<div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
 					<div class="profile-image-container">
-						<img 
-							src="/images/profile.jpg" 
+						<Image 
+							src="/images/profile.jpeg" 
 							alt="Fatih Nayebi"
-							class="profile-image"
+							className="profile-image"
+							width={600}
+							height={600}
+							square={true}
 						/>
 						
 						<!-- Text placed directly on image with text shadow for readability -->
-						<div class="absolute bottom-5 left-5 text-left text-white">
+						<div class="absolute bottom-5 left-5 text-left text-white z-10">
 							<h2 class="text-xl md:text-2xl font-bold leading-none mb-1 text-shadow">Fatih Nayebi, Ph.D.</h2>
 							<p class="text-sm md:text-base leading-tight text-shadow">VP, Data & AI at ALDO Group</p>
 							<p class="text-xs md:text-sm leading-tight text-shadow">Faculty Lecturer, McGill University</p>
