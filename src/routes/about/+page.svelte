@@ -54,7 +54,7 @@
 				</div>
 			</div>
 	
-			<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0">
+			<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 				<h2 class="text-2xl font-bold mb-1 text-gray-800 dark:text-gray-100">Fatih Nayebi, Ph.D.</h2>
 				<p class="text-lg font-medium text-primary dark:text-blue-400 mb-1">VP, Data & AI at ALDO Group</p>
 				<p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Faculty Lecturer, McGill University</p>
@@ -80,7 +80,7 @@
 		<!-- Left column: Bio, Professional Experience, Certifications, Publications -->
 		<div class="md:w-3/5 relative z-0">
 			<AnimateInView type="fade" delay={200}>
-				<div class="p-6 bg-white dark:bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+				<div class="p-6 bg-white dark:bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 					<p class="text-lg mb-5 leading-relaxed dark:text-gray-300">
 						I'm Fatih Nayebi, Ph.D., a Data & AI Leader who bridges academic excellence and enterprise innovation to transform data into strategic business value. With a robust foundation in advanced research and a proven track record in delivering real-world AI solutions, I empower organizations to harness the full potential of data-driven technology.
 					</p>
@@ -94,7 +94,7 @@
 			</AnimateInView>
 
 			<AnimateInView type="fly" x={-20} delay={400}>
-				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -122,7 +122,7 @@
 			</AnimateInView>
 
 			<AnimateInView type="fly" x={-20} delay={800}>
-				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -131,7 +131,7 @@
 					</h3>
 					<ul class="space-y-2">
 						{#each ['Project Management Professional (PMP)', 'Excelling in the New World of Retail', 'Certified Secure Software Lifecycle Professional (CSSLP)', 'SEI Certified Personal Software Process Developer (SEI-PSP)', 'ITIL V3 Foundation Certificate'] as cert, i}
-							<li class="flex items-start p-2 transition-colors duration-300 hover:bg-gray-50 rounded-lg" style="transition-delay: {i * 100}ms">
+							<li class="flex items-start p-2 transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transform transition-all duration-300 hover:-translate-x-1" style="transition-delay: {i * 100}ms">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
 								</svg>
@@ -143,7 +143,7 @@
 			</AnimateInView>
 
 			<AnimateInView type="fly" x={-20} delay={1000}>
-				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+				<div class="mt-8 mb-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v10m2 2v-6a2 2 0 00-2-2h-6" />
@@ -177,7 +177,7 @@
 						/>
 					</div>
 				
-					<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0">
+					<div class="text-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 relative z-0 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 						<h2 class="text-2xl font-bold mb-1 text-gray-800 dark:text-gray-100">Fatih Nayebi, Ph.D.</h2>
 						<p class="text-lg font-medium text-primary dark:text-blue-400 mb-1">VP, Data & AI at ALDO Group</p>
 						<p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Faculty Lecturer, McGill University</p>
@@ -201,7 +201,7 @@
 			
 			<!-- Skills & Expertise moved to right column -->
 			<AnimateInView type="fly" x={20} delay={600}>
-				<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+				<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -233,7 +233,7 @@
 			
 			<!-- Connect with me moved to right column -->
 			<AnimateInView type="fade" delay={700}>
-				<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+				<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 					<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -296,7 +296,7 @@
 	</div>
 
 	<AnimateInView type="fade" delay={1400}>
-		<div class="mt-10 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 relative">
+		<div class="mt-10 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 relative transform transition-all duration-500 hover:shadow-md">
 			
 			<h2 class="text-3xl font-bold mb-8 text-primary dark:text-blue-400 flex items-center">
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -337,7 +337,7 @@
 	<!-- Skills and Connect sections for mobile - showing after Education section -->
 	<div class="md:hidden">
 		<AnimateInView type="fly" x={20} delay={600}>
-			<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md">
+			<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 				<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -368,7 +368,7 @@
 		</AnimateInView>
 		
 		<AnimateInView type="fade" delay={700}>
-			<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+			<div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
 				<h3 class="text-2xl font-semibold mb-4 flex items-center dark:text-gray-100">
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
