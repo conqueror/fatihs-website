@@ -41,10 +41,6 @@
 		overflow: hidden;
 	}
 	
-	.profile-image {
-		border-radius: 1rem;
-	}
-	
 	/* Text overlay styling */
 	.text-shadow {
 		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
