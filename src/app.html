@@ -37,6 +37,11 @@
 				transition: opacity 0.2s ease;
 			}
 			
+			/* Hide any loading spinners or indicators */
+			.loader, .loading-spinner, .loading-container {
+				display: none !important;
+			}
+			
 			/* Font declarations */
 			@font-face {
 				font-family: 'Inter';
@@ -156,7 +161,7 @@
 				// Make all SVGs visible after a short delay
 				setTimeout(function() {
 					document.body.setAttribute('data-theme-loaded', 'true');
-				}, 200);
+				}, 10); // Reduced from 200 to 10ms for faster display
 			})();
 		</script>
 		%sveltekit.head%
