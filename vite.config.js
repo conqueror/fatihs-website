@@ -1,32 +1,9 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import { createCriticalPlugin } from 'vite-plugin-critical';
 
 export default defineConfig({
 	plugins: [
-		sveltekit(),
-		createCriticalPlugin({
-			// Critical CSS extraction for faster visible loading
-			criticalUrl: [
-				{ uri: '/', template: 'index' },
-				{ uri: '/about', template: 'about' },
-				{ uri: '/blog', template: 'blog' }
-			],
-			criticalOptions: {
-				dimensions: [
-					{ width: 375, height: 667 }, // Mobile
-					{ width: 1280, height: 800 } // Desktop
-				],
-				// Extract CSS above the fold for faster painting
-				penthouse: {
-					forceInclude: [
-						'.navigation-item',
-						'.hero-section',
-						'.image-container'
-					]
-				}
-			}
-		})
+		sveltekit()
 	],
 	// Increase chunking for better code splitting
 	build: {
