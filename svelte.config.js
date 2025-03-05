@@ -19,12 +19,12 @@ const config = {
 			// these options are set automatically — see below
 			pages: 'build',
 			assets: 'build',
-			fallback: 'index.html',
+			fallback: '404.html',
 			precompress: false
 		}),
 		prerender: {
 			crawl: true,
-			entries: ['*'],
+			entries: ['*', '/sitemap.xml', '/robots.txt'],
 			handleHttpError: 'warn'
 		},
 		// Ensure we're using absolute paths for better compatibility

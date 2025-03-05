@@ -1,0 +1,27 @@
+# www.robotstxt.org
+
+# Allow crawling of all content
+User-agent: *
+Allow: /
+
+# Disallow utility and internal paths
+Disallow: /api/
+Disallow: /_app/
+Disallow: /admin/
+Disallow: /dashboard/
+
+# Sitemap location
+Sitemap: https://fatihnayebi.com/sitemap.xml
+
+# Additional instructions for specific bots
+User-agent: GPTBot
+Allow: /blog/
+Allow: /publications/
+Allow: /research/
+Allow: /about/
+
+User-agent: Bingbot
+Crawl-delay: 5
+
+User-agent: Googlebot-Image
+Allow: /images/ 
