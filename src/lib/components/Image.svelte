@@ -23,6 +23,7 @@
   export let blurhash = null;
   export let style = '';
   export let square = false; // New option to force square aspect ratio
+  export let debug = false; // Debug flag, default to false
   
   // For debugging
   let srcPath = src;
@@ -92,6 +93,15 @@
     aspectRatio = `${width}/${height}`;
   }
   
+  // Calculate padding-bottom for the aspect ratio placeholder
+  // This ensures space is reserved before the image loads
+  let paddingBottom = '';
+  if (square) {
+    paddingBottom = '100%';
+  } else if (width && height) {
+    paddingBottom = `${(height / width) * 100}%`;
+  }
+  
   // Placeholder image path
   let placeholder = null;
   if (!blurhash && src && !src.startsWith('http') && !src.startsWith('data:')) {
@@ -132,8 +142,10 @@
 
 <div class="image-container enhanced-image {className}" 
      style="{aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''} 
-            {square ? 'padding-bottom: 100%;' : ''} 
-            {style}">
+            {paddingBottom ? `padding-bottom: ${paddingBottom};` : ''} 
+            {style}"
+     data-width={width}
+     data-height={height}>
   
   {#if placeholder || blurhash}
     <div 
@@ -143,10 +155,12 @@
     </div>
   {/if}
   
-  <!-- Fallback text for debugging -->
-  <div class="image-debug" style="opacity: {loadingComplete ? 0 : 0.7};">
-    Loading: {src.split('/').pop()}
-  </div>
+  <!-- Fallback text for debugging - only visible when debug mode is enabled -->
+  {#if debug}
+    <div class="image-debug" style="opacity: {loadingComplete ? 0 : 0.7};">
+      Loading: {src.split('/').pop()}
+    </div>
+  {/if}
   
   <picture class="image-picture">
     <!-- AVIF format for modern browsers with best compression -->
@@ -200,10 +214,19 @@
     width: 100%;
     display: block;
     background-color: #f0f0f0; /* Placeholder color before image loads */
+    min-height: 0; /* Remove minimum height to prevent layout shifts */
+  }
+  
+  /* Dark mode support for placeholder background */
+  @media (prefers-color-scheme: dark) {
+    .image-container {
+      background-color: #2a2a2a;
+    }
   }
   
   .enhanced-image {
-    min-height: 20px; /* Ensure a minimum height until the image loads */
+    /* Remove the min-height to prevent layout shifts */
+    /* This container now uses padding-bottom instead */
   }
   
   .image-picture {
@@ -238,6 +261,8 @@
     transition: opacity 0.3s ease;
     object-fit: var(--object-fit, cover);
     object-position: var(--object-position, center);
+    position: relative;
+    z-index: 2;
   }
   
   .blur-placeholder {
@@ -251,10 +276,5 @@
     filter: blur(20px);
     transition: opacity 0.3s ease;
     z-index: 1;
-  }
-  
-  img {
-    position: relative;
-    z-index: 2;
   }
 </style> 
