@@ -28,6 +28,40 @@
 	});
 </script>
 
+<style>
+	/* Responsive image styling */
+	.profile-image-container {
+		aspect-ratio: 1/1;
+		width: 600px;
+		max-width: 600px;
+		height: 600px;
+		margin: 0 auto;
+		position: relative;
+	}
+	
+	.profile-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 1rem;
+	}
+	
+	/* Text overlay styling */
+	.text-shadow {
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+	}
+	
+	/* Mobile-specific adjustments */
+	@media (max-width: 768px) {
+		.profile-image-container {
+			width: 100%;
+			max-width: 100%;
+			height: auto;
+			aspect-ratio: 1/1;
+		}
+	}
+</style>
+
 {#if visible}
 <!-- Hero Section -->
 <section in:fade={{ duration: 800 }} class="relative py-16 md:py-24 overflow-hidden">
@@ -57,17 +91,19 @@
 			</div>
 			<div class="md:w-1/2" in:scale={{ duration: 800, delay: 400, start: 0.8 }}>
 				<div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
-					<img 
-						src="/images/profile.jpg" 
-						alt="Fatih Nayebi"
-						class="w-full h-full object-cover rounded-2xl"
-					/>
-					
-					<!-- Text placed directly on image with text shadow for readability -->
-					<div class="absolute bottom-5 left-5 text-left text-white">
-						<h2 class="text-xl md:text-2xl font-bold leading-none mb-1 text-shadow">Fatih Nayebi, Ph.D.</h2>
-						<p class="text-sm md:text-base leading-tight text-shadow">VP, Data & AI at ALDO Group</p>
-						<p class="text-xs md:text-sm leading-tight text-shadow">Faculty Lecturer, McGill University</p>
+					<div class="profile-image-container">
+						<img 
+							src="/images/profile.jpg" 
+							alt="Fatih Nayebi"
+							class="profile-image"
+						/>
+						
+						<!-- Text placed directly on image with text shadow for readability -->
+						<div class="absolute bottom-5 left-5 text-left text-white">
+							<h2 class="text-xl md:text-2xl font-bold leading-none mb-1 text-shadow">Fatih Nayebi, Ph.D.</h2>
+							<p class="text-sm md:text-base leading-tight text-shadow">VP, Data & AI at ALDO Group</p>
+							<p class="text-xs md:text-sm leading-tight text-shadow">Faculty Lecturer, McGill University</p>
+						</div>
 					</div>
 				</div>
 			</div>
