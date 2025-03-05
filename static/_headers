@@ -1,0 +1,19 @@
+# Headers for better performance and security on Kinsta static hosting
+
+# All pages
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  
+# Static assets - longer cache times
+/_app/*
+  Cache-Control: public, max-age=31536000, immutable
+  
+/images/*
+  Cache-Control: public, max-age=604800
+  
+# API routes - no caching
+/api/*
+  Cache-Control: no-store 

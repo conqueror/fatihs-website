@@ -5,6 +5,14 @@
 # Handle all routes by redirecting to index.html and preserving query params
 /*  /index.html  200
 
+# Explicit asset paths to ensure proper handling of static assets
+/images/*  /images/:splat  200
+/fonts/*   /fonts/:splat   200
+/_app/*    /_app/:splat    200
+
+# API routes should return 404 if they don't exist
+/api/*     /api/:splat     404
+
 # More specific routes to ensure proper handling 
 /blog                 /index.html                   200
 /contact              /index.html                   200

@@ -1,4 +1,29 @@
+# Kinsta static site hosting configuration
+# Many static hosts (including Kinsta) respect this configuration format
+
+[build]
+  publish = "build"
+  command = "npm run build"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200 
+  status = 200
+  force = false
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true 
