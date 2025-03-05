@@ -75,8 +75,8 @@
 {#if visible}
   <div class="cookie-banner dark:bg-gray-800 dark:text-white">
     <div class="cookie-content">
-      <h3>Privacy Choices</h3>
-      <p>
+      <h3 class="dark:text-white">Privacy Choices</h3>
+      <p class="dark:text-gray-200">
         This website uses cookies to enhance your browsing experience, serve personalized content, 
         and analyze our traffic. You can choose whether to accept analytics cookies that help us 
         understand how you interact with our website.
@@ -106,11 +106,17 @@
     right: 1rem;
     max-width: 500px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: #fff;  /* Light mode background */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 9999;
     padding: 1.25rem;
+  }
+  
+  /* Add dark mode style for the cookie banner */
+  :global(html.dark) .cookie-banner {
+    background-color: #1f2937; /* Dark gray background for dark mode (matches bg-gray-800) */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
   .cookie-content h3 {
