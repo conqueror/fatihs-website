@@ -31,7 +31,7 @@
     description: description,
     url: canonical || '',
     type: 'website',
-    image: '/images/profile.jpg',
+    image: '/images/profile.avif',
     site_name: 'Fatih Nayebi'
   };
   const og = { ...defaultOpenGraph, ...openGraph };
@@ -43,7 +43,7 @@
     site: '@FatihNayebi',
     title: title,
     description: description,
-    image: '/images/profile.jpg',
+    image: '/images/profile.avif',
     creator: '@FatihNayebi'
   };
   const tw = { ...defaultTwitter, ...twitter };

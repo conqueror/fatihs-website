@@ -78,7 +78,7 @@ export function generatePersonSchema(person = {}, siteUrl = 'https://fatihnayebi
     jobTitle: 'AI Researcher and Developer',
     email: 'contact@fatihnayebi.com',
     description: 'AI researcher focusing on machine learning and natural language processing',
-    image: '/images/profile.jpg',
+    image: '/images/profile.avif',
     sameAs: [
       'https://twitter.com/FatihNayebi',
       'https://github.com/fatihnayebi',
