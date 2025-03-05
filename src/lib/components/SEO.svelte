@@ -26,16 +26,15 @@
   
   // Open Graph properties
   export let openGraph = {};
-  const defaultOG = {
+  const defaultOpenGraph = {
     title: title,
     description: description,
-    type: type,
-    url: canonical || $page?.url?.href,
-    image: '/images/og-image.jpg',
-    siteName: 'Fatih Nayebi',
-    locale: 'en_US'
+    url: canonical || '',
+    type: 'website',
+    image: '/images/profile.jpg',
+    site_name: 'Fatih Nayebi'
   };
-  const og = { ...defaultOG, ...openGraph };
+  const og = { ...defaultOpenGraph, ...openGraph };
   
   // Twitter properties
   export let twitter = {};
@@ -44,7 +43,7 @@
     site: '@FatihNayebi',
     title: title,
     description: description,
-    image: '/images/twitter-image.jpg',
+    image: '/images/profile.jpg',
     creator: '@FatihNayebi'
   };
   const tw = { ...defaultTwitter, ...twitter };
@@ -174,8 +173,8 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
   {/if}
-  {#if og.siteName}
-    <meta property="og:site_name" content="{og.siteName}" />
+  {#if og.site_name}
+    <meta property="og:site_name" content="{og.site_name}" />
   {/if}
   <meta property="og:locale" content="en_US" />
   

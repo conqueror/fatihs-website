@@ -27,7 +27,7 @@
     $: publishedDate = post?.date || '';
     $: modifiedDate = post?.updatedAt || post?.date || '';
     $: author = post?.author || 'Fatih Nayebi';
-    $: ogImage = post?.image ? `${siteUrl}${post.image}` : `${siteUrl}/images/og-image.jpg`;
+    $: ogImage = post?.image ? `${siteUrl}${post.image}` : `${siteUrl}/images/profile.jpg`;
     $: articleProps = {
         publishedTime: publishedDate,
         modifiedTime: modifiedDate,
