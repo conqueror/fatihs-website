@@ -12,8 +12,32 @@
 		<link rel="preload" href="%sveltekit.assets%/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href="%sveltekit.assets%/fonts/fira-code-var.woff2" as="font" type="font/woff2" crossorigin />
 		
+		<!-- Critical inline styles to prevent flash of unstyled content -->
 		<style>
-			/* Optimize font loading with font-display: swap */
+			/* Initial dark background to prevent flash, will be overridden if needed */
+			html {
+				background-color: #121212;
+				color: #ffffff;
+			}
+			
+			/* Light theme styles */
+			html[data-theme="light"] {
+				background-color: #ffffff;
+				color: #121212;
+			}
+			
+			/* Hide SVG icons initially */
+			svg {
+				opacity: 0 !important;
+			}
+			
+			/* Show SVG icons when ready */
+			body[data-theme-loaded] svg {
+				opacity: 1 !important;
+				transition: opacity 0.2s ease;
+			}
+			
+			/* Font declarations */
 			@font-face {
 				font-family: 'Inter';
 				font-style: normal;
@@ -34,13 +58,10 @@
 		</style>
 		
 		<script>
-			// Early initialization to handle storage access errors
-			// This runs before SvelteKit's own code and will prevent 
-			// uncaught errors when storage access is restricted
+			// Storage polyfill
 			(function() {
 				try {
 					// Create placeholders for storage APIs if they're not accessible
-					// This prevents errors when SvelteKit or other scripts try to access storage
 					if (typeof localStorage === 'undefined' || typeof sessionStorage === 'undefined') {
 						var memoryStorage = {};
 						Object.defineProperty(window, 'localStorage', {
@@ -103,9 +124,39 @@
 						}
 					}
 				} catch (e) {
-					// If anything goes wrong, log it but don't crash
-					console.warn('Storage polyfill initialization error:', e);
+					console.warn('Storage polyfill error:', e);
 				}
+			})();
+		</script>
+		
+		<!-- Theme initialization that respects user preference -->
+		<script>
+			(function() {
+				// Check for saved theme preference
+				var savedTheme = localStorage.getItem('theme');
+				
+				// If no saved preference, check system preference
+				if (!savedTheme) {
+					var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					savedTheme = prefersDark ? 'dark' : 'light';
+				}
+				
+				// Apply the appropriate theme
+				document.documentElement.setAttribute('data-theme', savedTheme);
+				if (savedTheme === 'dark') {
+					document.documentElement.classList.add('dark');
+				} else {
+					// Remove dark class if theme is light
+					document.documentElement.classList.remove('dark');
+				}
+				
+				// Store the final theme decision so components can access it
+				window.initialTheme = savedTheme;
+				
+				// Make all SVGs visible after a short delay
+				setTimeout(function() {
+					document.body.setAttribute('data-theme-loaded', 'true');
+				}, 200);
 			})();
 		</script>
 		%sveltekit.head%

@@ -1,34 +1,54 @@
 <script>
   import { onMount } from 'svelte';
+  import { theme } from './stores';
+  import { browser } from '$app/environment';
   
-  // State for theme
-  let isDarkMode = false;
+  // Keep local state in sync with the theme store
+  let isDarkMode;
   
+  // Subscribe to theme store changes
+  theme.subscribe(value => {
+    isDarkMode = value === 'dark';
+  });
+  
+  // Make sure to initialize the component with the current theme
   onMount(() => {
-    // Check if user has already selected a theme
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    // Set initial theme based on saved preference or system preference
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      document.documentElement.classList.add('dark');
-      isDarkMode = true;
+    // If we have the initialTheme from the inline script, use that
+    if (browser && window.initialTheme) {
+      theme.set(window.initialTheme);
+      isDarkMode = window.initialTheme === 'dark';
     } else {
-      document.documentElement.classList.remove('dark');
-      isDarkMode = false;
+      // Fallback to localStorage or system preference
+      const savedTheme = browser ? localStorage.getItem('theme') : null;
+      if (savedTheme) {
+        theme.set(savedTheme);
+        isDarkMode = savedTheme === 'dark';
+      } else if (browser) {
+        // Use system preference as fallback
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        theme.set(systemTheme);
+        isDarkMode = systemTheme === 'dark';
+      }
     }
   });
   
   function toggleTheme() {
-    isDarkMode = !isDarkMode;
+    const newTheme = isDarkMode ? 'light' : 'dark';
     
-    if (isDarkMode) {
+    // Update the theme store
+    theme.set(newTheme);
+    
+    // Update the DOM
+    document.documentElement.setAttribute('data-theme', newTheme);
+    
+    if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
     }
+    
+    // Save to localStorage
+    localStorage.setItem('theme', newTheme);
   }
 </script>
 

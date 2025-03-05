@@ -60,6 +60,9 @@
 			localStorage.setItem('theme', systemTheme);
 		}
 		
+		// Mark theme as loaded to show the content (synchronizes with app.html)
+		document.body.setAttribute('data-theme-loaded', 'true');
+		
 		// Add listener for system theme changes
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
 			if (!localStorage.getItem('theme')) {

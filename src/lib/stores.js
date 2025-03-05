@@ -1,7 +1,21 @@
 import { writable } from 'svelte/store';
+import { browser } from '$app/environment';
+
+// Helper function to determine initial theme
+function getInitialTheme() {
+  if (!browser) return 'dark'; // Default to dark for SSR
+  
+  // Check for saved theme in localStorage
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) return savedTheme;
+  
+  // Check system preference
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return prefersDark ? 'dark' : 'light';
+}
 
 // Theme store to manage light/dark mode
-export const theme = writable('light');
+export const theme = writable(getInitialTheme());
 
 // Store for managing the user's cookie consent preferences
 export const consentStore = writable({
