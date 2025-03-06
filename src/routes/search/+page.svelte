@@ -121,7 +121,7 @@
 
 {#if browser && isSearchReady}
 <div class="search-container">
-    <h1>Search</h1>
+    <h1 class="text-center text-primary dark:text-blue-400">Search</h1>
     
     <form on:submit={handleSearchSubmit} class="search-form">
         <div class="search-input-wrapper">
@@ -240,6 +240,7 @@
     h1 {
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
+        color: var(--primary, #1E3A8A);
     }
     
     .search-form {
@@ -256,29 +257,36 @@
         flex: 1;
         padding: 0.75rem 1rem;
         font-size: 1rem;
-        border: 2px solid #eee;
+        border: 2px solid #ccc;
         border-radius: 4px;
+        color: #111;
+        background-color: #fff;
         transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     }
     
+    .search-input::placeholder {
+        color: #555;
+    }
+    
     .search-input:focus {
-        border-color: #5333ed;
+        border-color: var(--primary, #1E3A8A);
         outline: none;
     }
     
     .search-button {
-        background-color: #5333ed;
+        background-color: var(--primary, #1E3A8A);
         color: white;
         font-weight: 500;
         padding: 0.75rem 1.5rem;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease;
     }
     
     .search-button:hover {
-        background-color: #4526c3;
+        background-color: var(--primary-hover, #1E40AF);
+        transform: translateY(-2px);
     }
     
     .search-filters {
@@ -292,7 +300,12 @@
         align-items: center;
         gap: 0.5rem;
         font-size: 0.9rem;
+        color: #333;
         cursor: pointer;
+    }
+    
+    .filter-option span {
+        font-weight: 500;
     }
     
     .search-results-header {
@@ -303,7 +316,7 @@
     
     .search-results-header h2 {
         font-size: 1.25rem;
-        color: #555;
+        color: #333;
         font-weight: 500;
     }
     
@@ -315,13 +328,14 @@
     
     .search-result-item {
         padding: 1.25rem;
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
+        background-color: #fff;
         border-radius: 8px;
         transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
     }
     
     .search-result-item:hover {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         transform: translateY(-2px);
     }
     
@@ -335,17 +349,18 @@
     .result-type {
         display: inline-block;
         padding: 0.25rem 0.5rem;
-        background-color: #f0f0f0;
+        background-color: rgba(30, 58, 138, 0.1);
         border-radius: 4px;
         font-size: 0.8rem;
         font-weight: 500;
-        color: #555;
+        color: var(--primary, #1E3A8A);
         transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     .result-date {
         font-size: 0.85rem;
-        color: #666;
+        color: #444;
+        font-style: italic;
         transition: color 0.3s ease;
     }
     
@@ -355,18 +370,18 @@
     }
     
     .result-title a {
-        color: #333;
+        color: #111;
         text-decoration: none;
         transition: color 0.3s ease;
     }
     
     .result-title a:hover {
-        color: #5333ed;
+        color: var(--primary, #1E3A8A);
     }
     
     .result-excerpt {
         margin-bottom: 0.75rem;
-        color: #555;
+        color: #333;
         line-height: 1.6;
         transition: color 0.3s ease;
     }
@@ -378,10 +393,10 @@
     }
     
     .tag {
-        background-color: #f0f0f0;
-        color: #555;
+        background-color: rgba(30, 58, 138, 0.1);
+        color: var(--primary, #1E3A8A);
         padding: 0.25rem 0.5rem;
-        border-radius: 4px;
+        border-radius: 20px;
         font-size: 0.8rem;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
@@ -389,8 +404,8 @@
     .search-instructions, .no-results {
         text-align: center;
         padding: 3rem 1rem;
-        color: #666;
-        background-color: #f9f9f9;
+        color: #444;
+        background-color: #f5f5f5;
         border-radius: 8px;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
@@ -416,11 +431,11 @@
         }
         
         .search-button {
-            background-color: #6b4dff;
+            background-color: #3b82f6;
         }
         
         .search-button:hover {
-            background-color: #7d61ff;
+            background-color: #60a5fa;
         }
         
         .search-results-header {
@@ -441,8 +456,8 @@
         }
         
         .result-type {
-            background-color: #333;
-            color: #d0d0d0;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
         }
         
         .result-date {
@@ -454,7 +469,7 @@
         }
         
         .result-title a:hover {
-            color: #7d61ff;
+            color: #60a5fa;
         }
         
         .result-excerpt {
@@ -462,12 +477,16 @@
         }
         
         .tag {
-            background-color: #333;
-            color: #d0d0d0;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
         }
         
         .search-instructions, .no-results {
             background-color: #222;
+            color: #aaa;
+        }
+        
+        .search-input::placeholder {
             color: #aaa;
         }
     }
