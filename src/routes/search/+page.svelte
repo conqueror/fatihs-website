@@ -91,7 +91,7 @@
 
     // Reference to search input for autofocus
     let searchInput;
-
+    
     onMount(() => {
         // Set search as ready for rendering
         isSearchReady = true;
@@ -120,42 +120,48 @@
 </script>
 
 {#if browser && isSearchReady}
-<div class="search-container">
-    <h1 class="text-center text-primary dark:text-blue-400">Search</h1>
+<div class="search-container py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+    <!-- Background decorative elements, set to lower z-index to avoid interaction issues -->
+    <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl -z-10 pointer-events-none"></div>
+    <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl -z-10 pointer-events-none"></div>
     
-    <form on:submit={handleSearchSubmit} class="search-form">
-        <div class="search-input-wrapper">
+    <h1 class="text-5xl font-bold mb-4 text-center text-primary dark:text-[#3b82f6]">Search</h1>
+    
+    <form on:submit={handleSearchSubmit} class="search-form relative z-10 text-black dark:text-gray-100">
+        <div class="search-input-wrapper relative z-10 text-black dark:text-gray-100">
             <input 
                 type="text" 
                 name="query" 
                 placeholder="Search for blog posts, publications..." 
                 value={query} 
-                class="search-input"
+                class="search-input w-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 relative z-10 text-black dark:text-gray-100"
                 aria-label="Search query"
                 bind:this={searchInput}
             />
-            <button type="submit" class="search-button">Search</button>
+            <button type="submit" class="search-button flex-shrink-0 relative z-10 bg-primary dark:bg-[#3b82f6] hover:bg-primary-hover dark:hover:bg-blue-600">
+                <span>Search</span>
+            </button>
         </div>
         
         <div class="search-filters">
             <label class="filter-option">
                 <input type="radio" name="type" value="all" checked={type === 'all'} />
-                <span>All Content</span>
+                <span class="filter-label text-black dark:text-gray-100">All Content</span>
             </label>
             <label class="filter-option">
                 <input type="radio" name="type" value="blog" checked={type === 'blog'} />
-                <span>Blog Posts</span>
+                <span class="filter-label text-black dark:text-gray-100">Blog Posts</span>
             </label>
             <label class="filter-option">
                 <input type="radio" name="type" value="publication" checked={type === 'publication'} />
-                <span>Publications</span>
+                <span class="filter-label text-black dark:text-gray-100">Publications</span>
             </label>
         </div>
     </form>
     
     {#if query}
         <div class="search-results-header">
-            <h2>
+            <h2 class="search-results-heading text-black dark:text-gray-100">
                 {#if totalResults === 0}
                     No results found
                 {:else if totalResults === 1}
@@ -163,47 +169,53 @@
                 {:else}
                     {totalResults} results found
                 {/if}
-                {#if query} for "{query}"{/if}
+                {#if query} for "<span class="query-text">{query}</span>"{/if}
             </h2>
         </div>
         
-        <div class="search-results">
+        <div class="search-results space-y-12">
             {#if totalResults === 0}
-                <div class="no-results">
-                    <p>No matching content found. Try adjusting your search terms or filters.</p>
+                <div class="no-results bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                    <p class="text-lg text-gray-600 dark:text-gray-300">No matching content found. Try adjusting your search terms or filters.</p>
                 </div>
             {:else}
                 {#each results as result}
-                    <div class="search-result-item">
-                        <div class="result-meta">
-                            <span class="result-type">{result.type === 'blog' ? 'Blog Post' : 'Publication'}</span>
-                            <span class="result-date">
-                                {new Date(result.date).toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                })}
-                            </span>
+                    <div class="search-result-item bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                        <div class="result-meta mb-6 pb-4 border-b border-gray-100 dark:border-gray-700">
+                            <div class="flex flex-wrap justify-between items-center">
+                                <span class="result-type bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300 px-3 py-1 rounded-full text-sm">
+                                    {result.type === 'blog' ? 'Blog Post' : 'Publication'}
+                                </span>
+                                <span class="result-date text-gray-500 dark:text-gray-400 text-sm italic">
+                                    {new Date(result.date).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                </span>
+                            </div>
                         </div>
                         
-                        <h3 class="result-title">
+                        <h3 class="result-title text-2xl font-semibold mb-4 text-gray-800 dark:text-white">
                             <a href={result.type === 'blog' ? `/blog/${result.slug}` : `/publications/${result.slug}`}>
                                 {result.title}
                             </a>
                         </h3>
                         
                         {#if result.type === 'blog' && result.excerpt}
-                            <p class="result-excerpt">{result.excerpt}</p>
+                            <p class="result-excerpt text-gray-600 dark:text-gray-300 mb-6">{result.excerpt}</p>
                         {/if}
                         
                         {#if result.type === 'publication' && (result.abstract || result.excerpt)}
-                            <p class="result-excerpt">{result.abstract || result.excerpt}</p>
+                            <p class="result-excerpt text-gray-600 dark:text-gray-300 mb-6">{result.abstract || result.excerpt}</p>
                         {/if}
                         
                         {#if result.tags && result.tags.length > 0}
-                            <div class="result-tags">
+                            <div class="result-tags flex flex-wrap gap-2 mb-6">
                                 {#each result.tags as tag}
-                                    <span class="tag">{tag}</span>
+                                    <span class="tag bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300 px-3 py-1 rounded-full text-sm">
+                                        {tag}
+                                    </span>
                                 {/each}
                             </div>
                         {/if}
@@ -212,8 +224,8 @@
             {/if}
         </div>
     {:else}
-        <div class="search-instructions">
-            <p>Enter a search term above to find blog posts and publications.</p>
+        <div class="search-instructions bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+            <p class="text-lg text-gray-600 dark:text-gray-300">Enter a search term above to find blog posts and publications.</p>
         </div>
     {/if}
 </div>
@@ -227,61 +239,77 @@
     .search-container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 2rem 0;
+        position: relative;
     }
     
     .search-loading {
         max-width: 800px;
         margin: 4rem auto;
         text-align: center;
-        color: #666;
+        color: #6b7280;
     }
     
     h1 {
         font-size: 2.5rem;
+        font-weight: bold;
         margin-bottom: 1.5rem;
-        color: var(--primary, #1E3A8A);
+        text-align: center;
     }
     
     .search-form {
         margin-bottom: 2rem;
+        width: 100%;
     }
     
     .search-input-wrapper {
         display: flex;
-        gap: 0.5rem;
+        gap: 1rem;
         margin-bottom: 1rem;
+        width: 100%;
+        align-items: stretch;
+        position: relative;
     }
     
     .search-input {
         flex: 1;
         padding: 0.75rem 1rem;
         font-size: 1rem;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        color: #111;
-        background-color: #fff;
-        transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        border: 1px solid;
+        border-radius: 8px;
+        color: #1e293b;
+        box-shadow: none;
+        width: 100%;
+        transition: all 0.3s ease;
+        min-height: 48px;
+        position: relative;
     }
     
     .search-input::placeholder {
-        color: #555;
+        color: #9ca3af;
     }
     
     .search-input:focus {
         border-color: var(--primary, #1E3A8A);
         outline: none;
+        box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
     }
     
     .search-button {
-        background-color: var(--primary, #1E3A8A);
+        /* Remove background-color since it's now handled by Tailwind classes */
         color: white;
         font-weight: 500;
         padding: 0.75rem 1.5rem;
         border: none;
-        border-radius: 4px;
+        border-radius: 8px;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100px;
+        min-height: 48px;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        position: relative;
+        margin-left: 0.5rem;
     }
     
     .search-button:hover {
@@ -289,205 +317,103 @@
         transform: translateY(-2px);
     }
     
+    .search-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.3);
+    }
+    
     .search-filters {
         display: flex;
         gap: 1.5rem;
-        margin-top: 0.5rem;
+        margin-top: 0.75rem;
     }
     
     .filter-option {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.9rem;
-        color: #333;
+        font-size: 0.95rem;
         cursor: pointer;
+        transition: color 0.2s ease;
     }
     
-    .filter-option span {
+    .filter-option:hover {
+        color: var(--primary, #1E3A8A);
+    }
+    
+    .filter-label {
         font-weight: 500;
+        /* Let the Tailwind classes handle the color */
     }
     
     .search-results-header {
         margin-bottom: 1.5rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 1px solid #eee;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e2e8f0;
     }
     
-    .search-results-header h2 {
-        font-size: 1.25rem;
-        color: #333;
-        font-weight: 500;
+    .query-text {
+        color: var(--primary, #1E3A8A);
+        font-weight: 600;
     }
     
     .search-results {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
     }
     
-    .search-result-item {
-        padding: 1.25rem;
-        border: 1px solid #ddd;
-        background-color: #fff;
-        border-radius: 8px;
-        transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+    .search-result-item, .search-instructions, .no-results {
+        transition: all 0.3s ease;
     }
     
-    .search-result-item:hover {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        transform: translateY(-2px);
-    }
-    
-    .result-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.75rem;
-    }
-    
-    .result-type {
-        display: inline-block;
-        padding: 0.25rem 0.5rem;
-        background-color: rgba(30, 58, 138, 0.1);
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: var(--primary, #1E3A8A);
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    
-    .result-date {
-        font-size: 0.85rem;
-        color: #444;
-        font-style: italic;
-        transition: color 0.3s ease;
-    }
-    
-    .result-title {
-        font-size: 1.3rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .result-title a {
-        color: #111;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-    
-    .result-title a:hover {
-        color: var(--primary, #1E3A8A);
-    }
-    
-    .result-excerpt {
-        margin-bottom: 0.75rem;
-        color: #333;
-        line-height: 1.6;
-        transition: color 0.3s ease;
-    }
-    
-    .result-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-    
-    .tag {
-        background-color: rgba(30, 58, 138, 0.1);
-        color: var(--primary, #1E3A8A);
-        padding: 0.25rem 0.5rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    
-    .search-instructions, .no-results {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: #444;
-        background-color: #f5f5f5;
-        border-radius: 8px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    
+    /* Overriding default styles with Tailwind utility classes applied directly in HTML */
+
     /* Dark mode styles */
     @media (prefers-color-scheme: dark) {
         .search-container {
-            color: #f0f0f0;
+            color: #f9fafb;
         }
         
         .search-loading {
-            color: #aaa;
+            color: #9ca3af;
         }
         
         .search-input {
-            background-color: #2a2a2a;
-            color: #f0f0f0;
-            border-color: #444;
+            color: #f9fafb;
+            border-color: #374151;
         }
         
         .search-input:focus {
-            border-color: #6b4dff;
-        }
-        
-        .search-button {
-            background-color: #3b82f6;
-        }
-        
-        .search-button:hover {
-            background-color: #60a5fa;
-        }
-        
-        .search-results-header {
-            border-bottom-color: #444;
-        }
-        
-        .search-results-header h2 {
-            color: #d0d0d0;
-        }
-        
-        .search-result-item {
-            background-color: #2a2a2a;
-            border-color: #444;
-        }
-        
-        .search-result-item:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-        }
-        
-        .result-type {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-        }
-        
-        .result-date {
-            color: #aaa;
-        }
-        
-        .result-title a {
-            color: #f0f0f0;
-        }
-        
-        .result-title a:hover {
-            color: #60a5fa;
-        }
-        
-        .result-excerpt {
-            color: #c0c0c0;
-        }
-        
-        .tag {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-        }
-        
-        .search-instructions, .no-results {
-            background-color: #222;
-            color: #aaa;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
         
         .search-input::placeholder {
-            color: #aaa;
+            color: #9ca3af;
+        }
+        
+        .search-button:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        .filter-option {
+            color: #e5e7eb;
+        }
+        
+        .filter-option:hover {
+            color: #3b82f6;
+        }
+        
+        .search-results-header {
+            border-bottom-color: #374151;
+        }
+        
+        .query-text {
+            color: #3b82f6;
+        }
+        
+        .search-results-heading {
+            /* Remove the color property */
         }
     }
     
@@ -498,10 +424,23 @@
         
         .search-input-wrapper {
             flex-direction: column;
+            gap: 0.75rem;
         }
         
         .search-button {
             width: 100%;
+            margin-top: 0.5rem;
+            min-height: 48px;
+            z-index: 10;
+            position: relative;
+            margin-left: 0;
+        }
+        
+        .search-input {
+            width: 100%;
+            min-height: 48px;
+            z-index: 10;
+            position: relative;
         }
         
         .search-filters {
@@ -513,5 +452,11 @@
         h1 {
             font-size: 2rem;
         }
+    }
+    
+    .search-results-heading {
+        font-size: 1.25rem;
+        font-weight: 500;
+        /* Remove the color property */
     }
 </style> 
