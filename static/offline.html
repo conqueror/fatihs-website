@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>You're Offline | Dr. Fatih Nayebi</title>
+  <meta name="description" content="You are currently offline. Some content has been saved for offline viewing.">
+  <link rel="icon" href="/favicon.ico">
+  <!-- Critical CSS inlined to ensure it works offline -->
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -29,7 +32,7 @@
     }
     
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.25rem;
       color: #1e40af;
       margin-bottom: 1rem;
     }
@@ -49,17 +52,135 @@
       text-decoration: none;
       font-weight: 500;
       transition: background-color 0.3s;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: none;
+      cursor: pointer;
     }
     
     .btn:hover {
       background-color: #1e3a8a;
     }
     
+    .btn.secondary {
+      background-color: #6b7280;
+      margin-left: 0.5rem;
+    }
+    
+    .btn.secondary:hover {
+      background-color: #4b5563;
+    }
+    
     .icon {
-      font-size: 4rem;
+      font-size: 3.5rem;
       margin-bottom: 1.5rem;
       color: #1e40af;
+    }
+    
+    .notification {
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0.375rem;
+      background-color: #dbeafe;
+      color: #1e3a8a;
+      display: none;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background-color: #ef4444;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+    
+    .connection-status {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    
+    .offline-links {
+      margin: 1.5rem 0;
+      text-align: left;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 1rem;
+      display: none;
+    }
+    
+    .offline-links h2 {
+      font-size: 1.25rem;
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+    }
+    
+    .offline-links ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .offline-links li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .offline-links a {
+      color: #1e40af;
+      text-decoration: none;
+      display: block;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      transition: background-color 0.2s;
+    }
+    
+    .offline-links a:hover {
+      background-color: #e5e7eb;
+    }
+    
+    /* Loading animation */
+    .loading {
+      display: none;
+      width: 2rem;
+      height: 2rem;
+      border: 3px solid rgba(30, 64, 175, 0.3);
+      border-radius: 50%;
+      border-top-color: #1e40af;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .return-home {
+      margin-top: 1rem;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 640px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+      }
+      
+      .btn.secondary {
+        margin-left: 0;
+      }
     }
     
     @media (prefers-color-scheme: dark) {
@@ -84,8 +205,29 @@
         background-color: #2563eb;
       }
       
+      .btn.secondary {
+        background-color: #4b5563;
+      }
+      
+      .btn.secondary:hover {
+        background-color: #374151;
+      }
+      
       .icon {
         color: #60a5fa;
+      }
+      
+      .notification {
+        background-color: #1e3a8a;
+        color: #dbeafe;
+      }
+      
+      .offline-links {
+        border-top-color: #374151;
+      }
+      
+      .offline-links a:hover {
+        background-color: #374151;
       }
     }
   </style>
@@ -95,29 +237,207 @@
     <div class="icon">📡</div>
     <h1>You're Offline</h1>
     <p>It looks like you've lost your internet connection. Some features of this site require a connection to work properly.</p>
-    <p>Don't worry though! You can still access previously viewed pages and some offline content.</p>
-    <a href="/" class="btn">Try Again</a>
+    
+    <div id="connectionStatus" class="connection-status">
+      <span class="status-indicator"></span>
+      <span id="statusText">Currently offline</span>
+    </div>
+    
+    <div id="notification" class="notification">
+      Internet connection restored! Refreshing...
+    </div>
+    
+    <div id="loading" class="loading"></div>
+    
+    <button id="tryReconnect" class="btn">Check Connection</button>
+    <a href="/" class="btn return-home">Return to Homepage</a>
+    
+    <div id="offlineLinks" class="offline-links">
+      <h2>Available Offline Pages</h2>
+      <ul id="cachedPagesList">
+        <!-- Will be populated with JavaScript -->
+      </ul>
+    </div>
   </div>
   
   <script>
-    // Listen for online status changes
-    window.addEventListener('online', () => {
-      // Reload the page when connection is back
-      window.location.reload();
+    // DOM elements
+    const notification = document.getElementById('notification');
+    const statusIndicator = document.querySelector('.status-indicator');
+    const statusText = document.getElementById('statusText');
+    const reconnectBtn = document.getElementById('tryReconnect');
+    const loadingIndicator = document.getElementById('loading');
+    const offlineLinks = document.getElementById('offlineLinks');
+    const cachedPagesList = document.getElementById('cachedPagesList');
+    
+    // Check connection status and update UI
+    function updateConnectionStatus() {
+      if (navigator.onLine) {
+        statusIndicator.style.backgroundColor = '#22c55e'; // green
+        statusText.textContent = 'Connection available';
+        reconnectBtn.textContent = 'Refresh Page';
+      } else {
+        statusIndicator.style.backgroundColor = '#ef4444'; // red
+        statusText.textContent = 'Currently offline';
+        reconnectBtn.textContent = 'Check Connection';
+      }
+    }
+    
+    // Show cached pages available offline
+    async function showCachedPages() {
+      try {
+        // If caches API is available
+        if ('caches' in window) {
+          // Display the offline links section
+          offlineLinks.style.display = 'block';
+          
+          // Get all caches
+          const cacheNames = ['pages-cache-v2', 'static-cache-v2', 'mobile-cache-v2'];
+          
+          let cachedUrls = new Set();
+          
+          for (const cacheName of cacheNames) {
+            try {
+              const cache = await caches.open(cacheName);
+              const requests = await cache.keys();
+              
+              // Filter for HTML pages (not CSS, JS, images)
+              for (const request of requests) {
+                const url = new URL(request.url);
+                
+                // Only include pages from our domain and not assets
+                if (url.origin === location.origin && 
+                    !url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|webp|ico)$/i) &&
+                    url.pathname !== '/offline.html') {
+                  cachedUrls.add(url);
+                }
+              }
+            } catch (err) {
+              console.error(`Error accessing cache ${cacheName}:`, err);
+            }
+          }
+          
+          // Clear existing list
+          cachedPagesList.innerHTML = '';
+          
+          // If we have cached pages
+          if (cachedUrls.size > 0) {
+            // Create list items for each page
+            for (const url of cachedUrls) {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              a.href = url.pathname;
+              
+              // Try to get a nice title from pathname
+              let title = url.pathname;
+              if (title === '/') {
+                title = 'Home Page';
+              } else {
+                // Remove leading slash and replace dashes with spaces
+                title = title.replace(/^\//, '').replace(/-/g, ' ');
+                // Capitalize first letter of each word
+                title = title.split('/').pop().replace(/\b\w/g, l => l.toUpperCase());
+              }
+              
+              a.textContent = title;
+              li.appendChild(a);
+              cachedPagesList.appendChild(li);
+            }
+          } else {
+            // No cached pages
+            const li = document.createElement('li');
+            li.textContent = 'No pages available offline';
+            cachedPagesList.appendChild(li);
+          }
+        } else {
+          console.log('Cache API not supported in this browser');
+        }
+      } catch (error) {
+        console.error('Error showing cached pages:', error);
+      }
+    }
+    
+    // Try to reconnect
+    reconnectBtn.addEventListener('click', () => {
+      if (navigator.onLine) {
+        // If we're online, just refresh
+        window.location.reload();
+      } else {
+        // If still offline, show checking animation
+        loadingIndicator.style.display = 'block';
+        reconnectBtn.disabled = true;
+        
+        // Try to fetch a small asset to test connection
+        fetch('/?ping=' + Date.now(), { 
+          method: 'HEAD',
+          cache: 'no-store'
+        })
+        .then(() => {
+          // If successful, we're online
+          notification.style.display = 'block';
+          notification.textContent = 'Internet connection restored! Refreshing...';
+          
+          // Update status
+          updateConnectionStatus();
+          
+          // Reload after a short delay
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        })
+        .catch(() => {
+          // Still offline
+          notification.style.display = 'block';
+          notification.textContent = 'Still offline. Please check your connection.';
+          
+          // Hide notification after 3 seconds
+          setTimeout(() => {
+            notification.style.display = 'none';
+          }, 3000);
+        })
+        .finally(() => {
+          // Reset UI
+          loadingIndicator.style.display = 'none';
+          reconnectBtn.disabled = false;
+        });
+      }
     });
     
-    // Check if the navigator has connection information
-    if ('connection' in navigator) {
-      const connection = navigator.connection;
+    // Listen for online status changes
+    window.addEventListener('online', () => {
+      notification.style.display = 'block';
+      notification.textContent = 'Internet connection restored! Refreshing...';
       
-      // Listen for changes to connection
-      connection.addEventListener('change', () => {
-        if (connection.rtt !== 0) {
-          // If RTT is not 0, we might have a connection
-          window.location.reload();
-        }
-      });
-    }
+      // Update status indicator
+      updateConnectionStatus();
+      
+      // Reload after a short delay
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    });
+    
+    window.addEventListener('offline', () => {
+      // Update status indicator
+      updateConnectionStatus();
+      
+      notification.style.display = 'block';
+      notification.textContent = 'You are offline. Some features may be unavailable.';
+      
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 3000);
+    });
+    
+    // On load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initial status check
+      updateConnectionStatus();
+      
+      // Show cached pages
+      showCachedPages();
+    });
   </script>
 </body>
 </html> 

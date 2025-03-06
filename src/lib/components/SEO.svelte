@@ -132,7 +132,15 @@
   {#if keywords}
     <meta name="keywords" content="{keywords}" />
   {/if}
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  
+  <!-- Enhanced mobile-friendly viewport settings -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  
   <meta name="author" content="Fatih Nayebi" />
   <meta name="language" content="{language}" />
   

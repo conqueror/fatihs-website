@@ -1,14 +1,16 @@
 /**
  * Service Worker for fatihnayebi.com
  * Implements modern caching strategies for assets and provides offline functionality
+ * with special handling for mobile devices
  */
 
 // Cache names with versioning for better updates
 const CACHE_NAMES = {
-  static: 'static-cache-v1',
-  images: 'images-cache-v1',
-  pages: 'pages-cache-v1',
-  fonts: 'fonts-cache-v1'
+  static: 'static-cache-v2', // Increment cache version
+  images: 'images-cache-v2',
+  pages: 'pages-cache-v2',
+  fonts: 'fonts-cache-v2',
+  mobile: 'mobile-cache-v2' // Specific cache for mobile devices
 };
 
 // Assets to pre-cache for offline use
@@ -18,18 +20,28 @@ const PRECACHE_ASSETS = [
   '/404.html',
   '/offline.html', // Create this page for better offline experience
   '/manifest.json',
-  // Font files are now loaded from Google Fonts
   '/images/optimized/profile-320.webp', // Small version of profile for offline
   '/images/optimized/profile-placeholder.webp'
 ];
 
 // Max age for different types of cached content
 const MAX_AGE = {
-  static: 30 * 24 * 60 * 60, // 30 days for static assets
+  static: 30 * 24 * 60 * 60, // 30 days for static assets (desktop)
   images: 7 * 24 * 60 * 60,  // 7 days for images
   pages: 24 * 60 * 60,       // 1 day for pages
-  fonts: 365 * 24 * 60 * 60  // 1 year for fonts
+  fonts: 365 * 24 * 60 * 60, // 1 year for fonts
+  mobile: {
+    static: 7 * 24 * 60 * 60,  // 7 days for static assets on mobile
+    images: 3 * 24 * 60 * 60,  // 3 days for images on mobile
+    pages: 12 * 60 * 60,       // 12 hours for pages on mobile
+    fonts: 30 * 24 * 60 * 60   // 30 days for fonts on mobile
+  }
 };
+
+// Check if client is likely a mobile device
+function isMobileClient() {
+  return self.navigator?.userAgent?.toLowerCase().includes('mobile') || false;
+}
 
 // Install event - cache critical assets
 self.addEventListener('install', event => {
@@ -55,7 +67,8 @@ self.addEventListener('activate', event => {
                   (cacheName.startsWith('static-cache') || 
                    cacheName.startsWith('images-cache') ||
                    cacheName.startsWith('pages-cache') ||
-                   cacheName.startsWith('fonts-cache'));
+                   cacheName.startsWith('fonts-cache') ||
+                   cacheName.startsWith('mobile-cache'));
           })
           .map(cacheName => {
             console.log('Deleting old cache:', cacheName);
@@ -68,11 +81,16 @@ self.addEventListener('activate', event => {
 });
 
 // Function to determine which cache to use
-function getCacheForUrl(url) {
+function getCacheForUrl(url, isMobile = false) {
   const urlObj = new URL(url);
   const pathname = urlObj.pathname;
   
-  // Logic to determine the appropriate cache
+  // For mobile devices, use mobile-specific cache
+  if (isMobile) {
+    return CACHE_NAMES.mobile;
+  }
+  
+  // Logic to determine the appropriate cache for desktop
   if (pathname.match(/\.(jpe?g|png|gif|svg|webp|avif)$/i)) {
     return CACHE_NAMES.images;
   } else if (pathname.match(/\.(woff2?|ttf|otf|eot)$/i)) {
@@ -92,6 +110,11 @@ self.addEventListener('fetch', event => {
     return;
   }
   
+  // Detect if request is from mobile
+  const isMobile = event.clientId ? 
+    clients.get(event.clientId).then(client => client?.url?.toLowerCase().includes('mobile')) : 
+    isMobileClient();
+  
   // Use different strategies based on URL patterns
   const url = new URL(event.request.url);
   
@@ -104,39 +127,60 @@ self.addEventListener('fetch', event => {
   // For asset files - Cache First with network fallback and update
   if (url.pathname.match(/\.(js|css|woff2?|jpe?g|png|gif|svg|webp|avif|ico)$/i)) {
     event.respondWith(
-      caches.open(getCacheForUrl(event.request.url))
-        .then(cache => {
-          return cache.match(event.request)
-            .then(cachedResponse => {
-              // Return cache first
-              const fetchPromise = fetch(event.request)
-                .then(networkResponse => {
-                  // Update cache with fresh response if we get it
-                  if (networkResponse.ok) {
-                    cache.put(event.request, networkResponse.clone());
-                  }
-                  return networkResponse;
-                })
-                .catch(() => {
-                  // Network failed, we already returned cached response or will fall through to offline page
-                  console.log('Network fetch failed for asset:', event.request.url);
-                });
-              
-              // Return the cached response right away if we have it
-              return cachedResponse || fetchPromise;
-            });
-        })
+      Promise.resolve(isMobile).then(mobileClient => {
+        return caches.open(getCacheForUrl(event.request.url, mobileClient))
+          .then(cache => {
+            return cache.match(event.request)
+              .then(cachedResponse => {
+                // For mobile clients, always try network first for fresher content
+                if (mobileClient) {
+                  const fetchPromise = fetch(event.request)
+                    .then(networkResponse => {
+                      // Update cache with fresh response if we get it
+                      if (networkResponse.ok) {
+                        cache.put(event.request, networkResponse.clone());
+                      }
+                      return networkResponse;
+                    })
+                    .catch(() => {
+                      // Network failed, return cached version
+                      console.log('Network fetch failed for mobile asset:', event.request.url);
+                      return cachedResponse || caches.match('/offline.html');
+                    });
+                  
+                  // For mobile, use network first but fall back to cache
+                  return fetchPromise.catch(() => cachedResponse);
+                } else {
+                  // For desktop, use cache first with background update
+                  const fetchPromise = fetch(event.request)
+                    .then(networkResponse => {
+                      if (networkResponse.ok) {
+                        cache.put(event.request, networkResponse.clone());
+                      }
+                      return networkResponse;
+                    })
+                    .catch(() => {
+                      console.log('Network fetch failed for asset:', event.request.url);
+                    });
+                  
+                  // Return the cached response right away if we have it
+                  return cachedResponse || fetchPromise;
+                }
+              });
+          });
+      })
     );
     return;
   }
   
-  // For HTML pages - Stale While Revalidate
+  // For HTML pages - Network First for mobile, Stale While Revalidate for desktop
   event.respondWith(
-    caches.open(CACHE_NAMES.pages)
-      .then(cache => {
-        return cache.match(event.request)
-          .then(cachedResponse => {
-            const fetchPromise = fetch(event.request)
+    Promise.resolve(isMobile).then(mobileClient => {
+      return caches.open(CACHE_NAMES.pages)
+        .then(cache => {
+          if (mobileClient) {
+            // Network First strategy for mobile devices
+            return fetch(event.request)
               .then(networkResponse => {
                 if (networkResponse.ok) {
                   // Update cache with the new version
@@ -145,19 +189,36 @@ self.addEventListener('fetch', event => {
                 return networkResponse;
               })
               .catch(() => {
-                // Network failed but we have a cached response
-                console.log('Network fetch failed for page:', event.request.url);
-                // If we can't get the page, show offline page
-                if (!cachedResponse) {
-                  return caches.match('/offline.html');
-                }
-                return cachedResponse;
+                // If network fails, try cache
+                return cache.match(event.request)
+                  .then(cachedResponse => {
+                    return cachedResponse || caches.match('/offline.html');
+                  });
               });
-            
-            // Return the cached response first
-            return cachedResponse || fetchPromise;
-          });
-      })
+          } else {
+            // Stale While Revalidate for desktop
+            return cache.match(event.request)
+              .then(cachedResponse => {
+                const fetchPromise = fetch(event.request)
+                  .then(networkResponse => {
+                    if (networkResponse.ok) {
+                      cache.put(event.request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                  })
+                  .catch(() => {
+                    console.log('Network fetch failed for page:', event.request.url);
+                    if (!cachedResponse) {
+                      return caches.match('/offline.html');
+                    }
+                    return cachedResponse;
+                  });
+                
+                return cachedResponse || fetchPromise;
+              });
+          }
+        });
+    })
   );
 });
 
