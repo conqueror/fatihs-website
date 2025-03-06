@@ -67,7 +67,7 @@
 {#if visible}
 <!-- Hero Section -->
 <section class="relative py-16 md:py-24 overflow-hidden">
-	<div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 z-0"></div>
+	<div class="absolute top-0 left-0 right-0 bottom-10 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 z-0"></div>
 	
 	<!-- Decorative elements -->
 	<div class="absolute top-20 right-10 w-72 h-72 bg-primary/10 dark:bg-blue-500/10 rounded-full blur-3xl z-0"></div>
