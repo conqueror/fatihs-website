@@ -47,8 +47,8 @@ export async function handle({ event, resolve }) {
         return true;
       }
       
-      // Preload homepage components for mobile
-      if (isMobile && path.includes('route-blog') || path.includes('components')) {
+      // Preload important components for all devices (not just mobile)
+      if ((path.includes('route-blog') || path.includes('components'))) {
         return true;
       }
       
@@ -62,10 +62,8 @@ export async function handle({ event, resolve }) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   
-  // Mobile optimization - enhance TTI and FID
-  if (isMobile) {
-    response.headers.set('Priority', 'high');
-  }
+  // Same priority for all devices
+  response.headers.set('Priority', 'high');
   
   // Set agressive cache headers for static assets
   if (isAsset) {
@@ -90,11 +88,14 @@ export async function handle({ event, resolve }) {
     response.headers.set('Cache-Control', 'public, max-age=600, stale-while-revalidate=30');
   }
   
-  // Set Content Security Policy for added security - including Google Fonts
+  // Set a comprehensive Content Security Policy with upgrade-insecure-requests
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none'; upgrade-insecure-requests;"
   );
+  
+  // Add Strict Transport Security header for all requests
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   
   // Return the response with all headers set
   return response;

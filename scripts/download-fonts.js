@@ -32,11 +32,8 @@ const FONTS = [
   {
     name: 'inter-var.woff2',
     url: 'https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2'
-  },
-  {
-    name: 'fira-code-var.woff2',
-    url: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKaJO.woff2'
   }
+  // Fira Code font removed due to issues with the downloaded file
 ];
 
 // Download function
