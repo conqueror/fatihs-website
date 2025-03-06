@@ -12,6 +12,9 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		
+		<!-- Preload critical font for fast heading rendering -->
+		<link rel="preload" as="font" href="https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2" crossorigin />
+		
 		<!-- Critical inline styles to prevent flash of unstyled content and layout shifts -->
 		<style>
 			/* Performance optimization - minimal critical CSS */
@@ -51,6 +54,12 @@
 				opacity: 1;
 			}
 			
+			/* Critical headline text rendering optimization */
+			h1 {
+				text-rendering: optimizeSpeed;
+				font-display: swap;
+			}
+			
 			/* Create a blocking overlay that's removed after loading */
 			#loading-overlay {
 				position: fixed;
@@ -60,7 +69,7 @@
 				height: 100%;
 				z-index: 99999;
 				background-color: #121212;
-				transition: opacity 0.3s ease;
+				transition: opacity 0.2s ease;
 			}
 			
 			html[data-theme="light"] #loading-overlay {
@@ -85,12 +94,12 @@
 					document.documentElement.classList.add('dark');
 				}
 				
-				// Mark theme as ready
+				// Mark theme as ready immediately to prevent render delays
+				document.documentElement.setAttribute('data-fully-loaded', 'true');
+				
+				// Mark theme as loaded on DOMContentLoaded for smoother appearance
 				document.addEventListener('DOMContentLoaded', function() {
 					document.body.setAttribute('data-theme-loaded', 'true');
-					setTimeout(function() {
-						document.documentElement.setAttribute('data-fully-loaded', 'true');
-					}, 100);
 				});
 			})();
 		</script>

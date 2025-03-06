@@ -10,24 +10,48 @@ export async function handle({ event, resolve }) {
   const isFont = url.pathname.match(/\.(woff2?)$/i);
   const isJs = url.pathname.match(/\.(js)$/i);
   const isCss = url.pathname.match(/\.(css)$/i);
+  const isMobile = event.request.headers.get('user-agent')?.toLowerCase().includes('mobile');
   
   // Set appropriate caching headers based on resource type
   const response = await resolve(event, {
     // Control how responses are transformed
     transformPageChunk: ({ html }) => {
       // Add HTML level optimization
-      return html
-        .replace(/<script/g, '<script defer')
-        .replace(/ type="module"/g, ' type="module" fetchpriority="high"');
+      const optimizedHtml = html
+        // Add defer to non-critical scripts
+        .replace(/<script\b(?!.*\bfetchpriority=["']high["'])/g, '<script defer')
+        // Add high priority to critical scripts
+        .replace(/ type="module"/g, ' type="module" fetchpriority="high"')
+        // Optimize images
+        .replace(/<img\b(?!.*\bfetchpriority=["']high["'])/g, '<img loading="lazy" decoding="async"')
+        // Add priority to critical headings for faster LCP
+        .replace(/<h1 class="[^"]*critical-content[^"]*"/g, '<h1 class="critical-content" fetchpriority="high"');
+        
+      return optimizedHtml;
     },
-    // Configure preloading of fonts in resource headers
+    
+    // Configure preloading of critical assets
     preload: ({ type, path }) => {
-      // Preload critical paths
-      if (type === 'font' || 
-          (type === 'css' && path.includes('global.css')) || 
-          path.includes('_app/immutable/entry/start')) {
+      // Always preload fonts
+      if (type === 'font') {
         return true;
       }
+      
+      // Preload global styles
+      if (type === 'css' && path.includes('global.css')) {
+        return true;
+      }
+      
+      // Preload main route entry point
+      if (path.includes('_app/immutable/entry/start')) {
+        return true;
+      }
+      
+      // Preload homepage components for mobile
+      if (isMobile && path.includes('route-blog') || path.includes('components')) {
+        return true;
+      }
+      
       return false;
     }
   });
@@ -37,6 +61,11 @@ export async function handle({ event, resolve }) {
   response.headers.set('X-Frame-Options', 'SAMEORIGIN');
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  
+  // Mobile optimization - enhance TTI and FID
+  if (isMobile) {
+    response.headers.set('Priority', 'high');
+  }
   
   // Set agressive cache headers for static assets
   if (isAsset) {
