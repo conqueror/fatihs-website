@@ -15,7 +15,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        mono: ['"Fira Code"', 'Consolas', 'Monaco', 'monospace'],
+        mono: ['"Fira Code"', 'monospace'],
       },
       // Custom gradients and other design tokens can be added here
     },

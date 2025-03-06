@@ -8,9 +8,8 @@ export async function handle({ event, resolve }) {
   const response = await resolve(event, {
     // Configure preloading of fonts in resource headers
     preload: ({ type, path }) => {
-      // Always preload primary font files
-      if (type === 'font' && 
-          (path.includes('inter-var.woff2') || path.includes('fira-code-var.woff2'))) {
+      // Preload Inter font file
+      if (type === 'font' && path.includes('inter-var.woff2')) {
         return true;
       }
       
@@ -29,10 +28,10 @@ export async function handle({ event, resolve }) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   
-  // Set Content Security Policy for added security
+  // Set Content Security Policy for added security - including Google Fonts
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'"
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'"
   );
   
   // Return the response with all headers set
