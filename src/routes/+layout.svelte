@@ -1,7 +1,6 @@
 <script>
 	import '../styles/global.css';
 	import { page } from '$app/stores';
-	import Header from '$lib/Header.svelte';
 	import Footer from '$lib/Footer.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import { generateWebsiteSchema } from '$lib/utils/structured-data';
@@ -137,9 +136,8 @@
 </svelte:head>
 
 <div class="min-h-screen flex flex-col">
-	<Header />
 	<Navbar />
-	<main class="flex-grow pt-24">
+	<main class="flex-grow pt-16">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 			<slot />
 		</div>

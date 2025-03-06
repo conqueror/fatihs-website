@@ -37,7 +37,7 @@
 	});
 </script>
 
-<header class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800 border-b border-gray-200 dark:border-gray-800">
+<header class="fixed top-0 z-50 bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800 border-b border-gray-200 dark:border-gray-800 w-full">
 	<div class="container mx-auto px-4">
 		<nav class="flex items-center justify-between py-4">
 			<a href="/" class="text-xl font-bold text-gray-900 dark:text-white">Dr. Fatih Nayebi</a>
