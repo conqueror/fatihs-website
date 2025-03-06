@@ -25,6 +25,11 @@ export function GET() {
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://fatihnayebi.com/conferences</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://fatihnayebi.com/publications</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -48,22 +48,25 @@
 					<a href="/" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">Home</span>
 					</a>
-					<a href="/about" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<a href="/about" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/about') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">About</span>
 					</a>
 					<a href="/research" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">Research</span>
 					</a>
-					<a href="/publications" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<a href="/publications" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/publications') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">Publications</span>
 					</a>
 					<a href="/blog" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">Blog</span>
 					</a>
-					<a href="/contact" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<a href="/conferences" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/conferences') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">Conferences</span>
+					</a>
+					<a href="/contact" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/contact') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">Contact</span>
 					</a>
-					<a href="/search" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname === '/search' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<a href="/search" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/search') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative flex flex-row items-center">
 							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0 search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -80,6 +83,7 @@
 					<span class="relative text-transparent px-2 py-1 w-[85px]">Research</span>
 					<span class="relative text-transparent px-2 py-1 w-[106px]">Publications</span>
 					<span class="relative text-transparent px-2 py-1 w-[48px]">Blog</span>
+					<span class="relative text-transparent px-2 py-1 w-[105px]">Conferences</span>
 					<span class="relative text-transparent px-2 py-1 w-[76px]">Contact</span>
 					<span class="relative text-transparent px-2 py-1 w-[75px] flex flex-row items-center">
 						<span class="w-4 h-4 mr-1 inline-block flex-shrink-0"></span>
@@ -130,12 +134,13 @@
 				
 				<div class="flex flex-col space-y-4">
 					<a href="/" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Home</a>
-					<a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/about' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">About</a>
+					<a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/about') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">About</a>
 					<a href="/research" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Research</a>
-					<a href="/publications" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/publications' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Publications</a>
+					<a href="/publications" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/publications') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Publications</a>
 					<a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Blog</a>
-					<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/contact' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
-					<a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname === '/search' ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+					<a href="/conferences" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/conferences') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Conferences</a>
+					<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/contact') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
+					<a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/search') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<div class="flex flex-row items-center">
 							<svg class="w-4 h-4 mr-1 inline-block flex-shrink-0 search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>

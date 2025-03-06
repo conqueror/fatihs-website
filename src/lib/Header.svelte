@@ -58,6 +58,12 @@
           Blog
         </a>
         <a 
+          href="/conferences" 
+          class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors {$page.url.pathname.startsWith('/conferences') ? 'text-blue-600 dark:text-blue-400' : ''}"
+        >
+          Conferences
+        </a>
+        <a 
           href="/contact" 
           class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors {$page.url.pathname === '/contact' ? 'text-blue-600 dark:text-blue-400' : ''}"
         >
@@ -122,6 +128,12 @@
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 {$page.url.pathname.startsWith('/blog') ? 'bg-gray-50 dark:bg-gray-800 text-blue-600 dark:text-blue-400' : ''}"
         >
           Blog
+        </a>
+        <a 
+          href="/conferences" 
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 {$page.url.pathname.startsWith('/conferences') ? 'bg-gray-50 dark:bg-gray-800 text-blue-600 dark:text-blue-400' : ''}"
+        >
+          Conferences
         </a>
         <a 
           href="/contact" 

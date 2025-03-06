@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import blogPosts from '$lib/generated/blog-posts.json';
+import conferencesData from '$lib/generated/conferences.json';
 
 export function getAllBlogPosts() {
   return blogPosts;
@@ -21,4 +22,27 @@ export function getFilteredBlogPosts({ tag = null, featured = false } = {}) {
   }
 
   return filteredPosts;
+}
+
+export function getAllConferences() {
+  return conferencesData;
+}
+
+export function getConferenceBySlug(slug) {
+  return conferencesData.find(conference => conference.slug === slug);
+}
+
+export function getFilteredConferences({ year = null, featured = false } = {}) {
+  let filteredConferences = conferencesData;
+
+  if (year) {
+    filteredConferences = filteredConferences.filter(conference => 
+      conference.date.includes(year));
+  }
+
+  if (featured) {
+    filteredConferences = filteredConferences.filter(conference => conference.featured);
+  }
+
+  return filteredConferences;
 } 

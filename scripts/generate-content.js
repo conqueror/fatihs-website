@@ -42,6 +42,11 @@ const contentTypes = [
     type: 'research-areas',
     source: 'src/content/research',
     output: 'src/lib/generated'
+  },
+  {
+    type: 'conferences',
+    source: 'src/content/conferences',
+    output: 'src/lib/generated'
   }
 ];
 
