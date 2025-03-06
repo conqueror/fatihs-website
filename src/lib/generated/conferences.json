@@ -40,7 +40,7 @@
     "date": "2025-05-01",
     "location": "New York, NY",
     "event": "Newsweek AI Impact Awards 2025",
-    "excerpt": "Fatih served as a judge and speaker at Newsweek's AI Impact Awards 2025, where he spoke on \\\"Measuring AI's IMPACT on business operations.\\\" He provided expert evaluation on how to quantify the operational impact of AI initiatives and shared insights into aligning AI projects with key business performance metrics.",
+    "excerpt": "Fatih serevs as a judge and speaker at Newsweek's AI Impact Awards 2025, where he speak on \"Measuring AI's IMPACT on business operations.\" He provided expert evaluation on how to quantify the operational impact of AI initiatives and shared insights into aligning AI projects with key business performance metrics.",
     "tags": [
       "AI",
       "Business",
@@ -76,7 +76,7 @@
     "date": "2025-02-27",
     "location": "Montreal, QC",
     "event": "McGill Data Network – Impact Panel",
-    "excerpt": "Fatih was a special guest panelist at McGill University's Data Network Impact Panel on \\\"Data in Retail.\\\" In this interactive session, he and fellow retail data leaders shared exclusive insights on how data analytics and AI are transforming retail.",
+    "excerpt": "Fatih was a special guest panelist at McGill University's Data Network Impact Panel on \"Data in Retail.\" In this interactive session, he and fellow retail data leaders shared exclusive insights on how data analytics and AI are transforming retail.",
     "tags": [
       "AI",
       "Retail",
@@ -93,14 +93,14 @@
     "title": "From Conversational to Agentic AI: How AI Agents are Reshaping Retail*",
     "date": "2025-02-26",
     "location": "Virtual",
-    "event": "RETHINK Retail – *AI in Retail Insiders Mixer*",
-    "excerpt": "",
+    "event": "RETHINK Retail – AI in Retail Insiders Mixer",
+    "excerpt": "In this RETHINK Retail Insiders Mixer (an online event), Fatih discussed the evolution from conversational AI (like chatbots) to Agentic AI in the retail sector",
     "tags": [
       "AI"
     ],
     "featured": "true",
-    "content": "\n# R – ETHINK Retail – *AI in Retail Insiders Mixer* (2025)\n\n## Talk: *From Conversational to Agentic AI: How AI Agents are Reshaping Retail**\n\n\n\n## Topics Covered\n\n- AI\n- Retail\n- Agentic AI\n- Supply Chain Optimization\n",
-    "html": "<h1>R – ETHINK Retail – <em>AI in Retail Insiders Mixer</em> (2025)</h1>\n<h2>Talk: <em>From Conversational to Agentic AI: How AI Agents are Reshaping Retail</em>*</h2>\n<h2>Topics Covered</h2>\n<ul>\n<li>AI</li>\n<li>Retail</li>\n<li>Agentic AI</li>\n<li>Supply Chain Optimization</li>\n</ul>\n"
+    "content": "\n# RETHINK Retail – *AI in Retail Insiders Mixer* (2025)\n\n## Talk: *From Conversational to Agentic AI: How AI Agents are Reshaping Retail**\n\nIn this **RETHINK Retail Insiders Mixer** (an online event), Fatih discussed the evolution from conversational AI (like chatbots) to **agentic AI** in the retail sector. He explained how autonomous AI agents are beginning to handle complex tasks, moving beyond simple Q&A chatbots towards agents that can make decisions and take actions in retail operations. Fatih highlighted real examples of AI agents in retail – from virtual shopping assistants to AI-driven supply chain optimizers – illustrating how they enhance customer engagement and operational efficiency. The session, *“AI in Retail: From Conversational to Agentic AI,”* revealed how **AI agents are reshaping retail** by providing more personalized customer interactions and automating decision processes, ultimately creating new competitive advantages for retailers.\n\n## Topics Covered\n\n- AI\n- Retail\n- Agentic AI\n- Supply Chain Optimization\n",
+    "html": "<h1>RETHINK Retail – <em>AI in Retail Insiders Mixer</em> (2025)</h1>\n<h2>Talk: <em>From Conversational to Agentic AI: How AI Agents are Reshaping Retail</em>*</h2>\n<p>In this <strong>RETHINK Retail Insiders Mixer</strong> (an online event), Fatih discussed the evolution from conversational AI (like chatbots) to <strong>agentic AI</strong> in the retail sector. He explained how autonomous AI agents are beginning to handle complex tasks, moving beyond simple Q&amp;A chatbots towards agents that can make decisions and take actions in retail operations. Fatih highlighted real examples of AI agents in retail – from virtual shopping assistants to AI-driven supply chain optimizers – illustrating how they enhance customer engagement and operational efficiency. The session, <em>“AI in Retail: From Conversational to Agentic AI,”</em> revealed how <strong>AI agents are reshaping retail</strong> by providing more personalized customer interactions and automating decision processes, ultimately creating new competitive advantages for retailers.</p>\n<h2>Topics Covered</h2>\n<ul>\n<li>AI</li>\n<li>Retail</li>\n<li>Agentic AI</li>\n<li>Supply Chain Optimization</li>\n</ul>\n"
   },
   {
     "slug": "leveraging-ai-for-retail-innovation-aldos-success-stories-2025-02",
@@ -108,13 +108,15 @@
     "date": "2025-02-05",
     "location": "Toronto, ON",
     "event": "Impact AI 2025 Toronto",
-    "excerpt": "",
+    "excerpt": "Fatih delivered a case study talk at Impact AI 2025 Toronto, sharing how ALDO Group harnessed AI to drive innovation in retail operations. ",
     "tags": [
-      "AI"
+      "AI in Retail",
+      "Agentic AI",
+      "Demand Forecasting"
     ],
     "featured": "true",
-    "content": "\n# I – mpact AI 2025 – Toronto, ON (2025)\n\n## Talk: *Leveraging AI for Retail Innovation: ALDO's Success Stories**\n\n\n\n## Topics Covered\n\n- AI\n",
-    "html": "<h1>I – mpact AI 2025 – Toronto, ON (2025)</h1>\n<h2>Talk: <em>Leveraging AI for Retail Innovation: ALDO&#39;s Success Stories</em>*</h2>\n<h2>Topics Covered</h2>\n<ul>\n<li>AI</li>\n</ul>\n"
+    "content": "\n# I – mpact AI 2025 – Toronto, ON (2025)\n\n## Talk: *Leveraging AI for Retail Innovation: ALDO's Success Stories**\nFatih delivered a case study talk at **Impact AI 2025 Toronto**, sharing how ALDO Group harnessed AI to drive innovation in retail operations. He recounted *“ALDO’s success stories”* in deploying AI solutions, from using machine learning for demand forecasting to implementing AI-driven personalization in ecommerce. Fatih outlined the **real-world experiences** of initiating and integrating these AI projects – the wins, the hurdles, and the lessons learned. His presentation provided the audience with actionable insights on fostering digital transformation in a retail setting, emphasizing the importance of leadership buy-in, cross-functional teams, and an iterative approach to scaling AI. This session inspired professionals to take these lessons back to their own organizations and **“suggest and implement AI projects”** with a clearer roadmap.\n\n\n## Topics Covered\n\n- Agentic AI\n- Machine Learning\n- AI in Retail\n- Demand Forecasting\n- Supply Chain Optimization\n",
+    "html": "<h1>I – mpact AI 2025 – Toronto, ON (2025)</h1>\n<h2>Talk: <em>Leveraging AI for Retail Innovation: ALDO&#39;s Success Stories</em>*</h2>\n<p>Fatih delivered a case study talk at <strong>Impact AI 2025 Toronto</strong>, sharing how ALDO Group harnessed AI to drive innovation in retail operations. He recounted <em>“ALDO’s success stories”</em> in deploying AI solutions, from using machine learning for demand forecasting to implementing AI-driven personalization in ecommerce. Fatih outlined the <strong>real-world experiences</strong> of initiating and integrating these AI projects – the wins, the hurdles, and the lessons learned. His presentation provided the audience with actionable insights on fostering digital transformation in a retail setting, emphasizing the importance of leadership buy-in, cross-functional teams, and an iterative approach to scaling AI. This session inspired professionals to take these lessons back to their own organizations and <strong>“suggest and implement AI projects”</strong> with a clearer roadmap.</p>\n<h2>Topics Covered</h2>\n<ul>\n<li>Agentic AI</li>\n<li>Machine Learning</li>\n<li>AI in Retail</li>\n<li>Demand Forecasting</li>\n<li>Supply Chain Optimization</li>\n</ul>\n"
   },
   {
     "slug": "big-data-analytics-montreal-summit-2024",
@@ -131,8 +133,8 @@
       "Retail"
     ],
     "featured": "true",
-    "content": "\n# Big Data & Analytics Montréal Summit 2024 – Montréal, QC (2024)\n\n## Talk: *Driving Real Innovation & Competitive Advantage with AI at ALDO Group and Beyond*\n\nFatih delivered a featured case study at the **Big Data & Analytics Montréal Summit 2024**, detailing how the ALDO Group leverages AI to spur innovation and gain competitive advantage in retail. In this session, he described ALDO's data and AI strategy and its impact—such as optimizing inventory through predictive analytics and enhancing customer experience with personalization. Fatih's talk provided **actionable insights and technical expertise**, coupled with a forward-looking perspective on AI's transformative potential in retail. He emphasized key factors for success, including strong data foundations, executive support, and nurturing a culture of innovation. The audience left with a deeper understanding of how a global retailer operationalizes AI initiatives from concept to deployment, and how those initiatives drive tangible business benefits.\n\n## Topics Covered\n\n- AI\n- Data\n- Analytics\n- Innovation\n- Retail ",
-    "html": "<h1>Big Data &amp; Analytics Montréal Summit 2024 – Montréal, QC (2024)</h1>\n<h2>Talk: <em>Driving Real Innovation &amp; Competitive Advantage with AI at ALDO Group and Beyond</em></h2>\n<p>Fatih delivered a featured case study at the <strong>Big Data &amp; Analytics Montréal Summit 2024</strong>, detailing how the ALDO Group leverages AI to spur innovation and gain competitive advantage in retail. In this session, he described ALDO&#39;s data and AI strategy and its impact—such as optimizing inventory through predictive analytics and enhancing customer experience with personalization. Fatih&#39;s talk provided <strong>actionable insights and technical expertise</strong>, coupled with a forward-looking perspective on AI&#39;s transformative potential in retail. He emphasized key factors for success, including strong data foundations, executive support, and nurturing a culture of innovation. The audience left with a deeper understanding of how a global retailer operationalizes AI initiatives from concept to deployment, and how those initiatives drive tangible business benefits.</p>\n<h2>Topics Covered</h2>\n<ul>\n<li>AI</li>\n<li>Data</li>\n<li>Analytics</li>\n<li>Innovation</li>\n<li>Retail</li>\n</ul>\n"
+    "content": "\n# Big Data & Analytics Montréal Summit 2024 – Montréal, QC (2024)\n\n## Talk: *Driving Real Innovation & Competitive Advantage with AI at ALDO Group and Beyond*\n\nFatih delivered a featured case study at the **Big Data & Analytics Montréal Summit 2024**, detailing how the ALDO Group leverages AI to spur innovation and gain competitive advantage in retail. In this session, he described ALDO's data and AI strategy and its impact—such as optimizing inventory through predictive analytics and enhancing customer experience with personalization. Fatih's talk provided **actionable insights and technical expertise**, coupled with a forward-looking perspective on AI's transformative potential in retail. He emphasized key factors for success, including strong data foundations, executive support, and nurturing a culture of innovation. The audience left with a deeper understanding of how a global retailer operationalizes AI initiatives from concept to deployment, and how those initiatives drive tangible business benefits.\n\n## Topics Covered\n\n- Machine Learning\n- Data Governance\n- Analytics\n- Innovation\n- AI in Retail",
+    "html": "<h1>Big Data &amp; Analytics Montréal Summit 2024 – Montréal, QC (2024)</h1>\n<h2>Talk: <em>Driving Real Innovation &amp; Competitive Advantage with AI at ALDO Group and Beyond</em></h2>\n<p>Fatih delivered a featured case study at the <strong>Big Data &amp; Analytics Montréal Summit 2024</strong>, detailing how the ALDO Group leverages AI to spur innovation and gain competitive advantage in retail. In this session, he described ALDO&#39;s data and AI strategy and its impact—such as optimizing inventory through predictive analytics and enhancing customer experience with personalization. Fatih&#39;s talk provided <strong>actionable insights and technical expertise</strong>, coupled with a forward-looking perspective on AI&#39;s transformative potential in retail. He emphasized key factors for success, including strong data foundations, executive support, and nurturing a culture of innovation. The audience left with a deeper understanding of how a global retailer operationalizes AI initiatives from concept to deployment, and how those initiatives drive tangible business benefits.</p>\n<h2>Topics Covered</h2>\n<ul>\n<li>Machine Learning</li>\n<li>Data Governance</li>\n<li>Analytics</li>\n<li>Innovation</li>\n<li>AI in Retail</li>\n</ul>\n"
   },
   {
     "slug": "all-in-2024",
@@ -156,15 +158,18 @@
     "slug": "unleashing-the-power-of-data-ai-to-drive-business-value-and-innovation-2024-04",
     "title": "Unleashing the Power of Data & AI to Drive Business Value and Innovation*",
     "date": "2024-04-24",
-    "location": "orld Summit AI Americas 2024 – Montréal, QC",
-    "event": "W",
-    "excerpt": "",
+    "location": "Montréal, QC",
+    "event": "World Summit AI Americas 2024",
+    "excerpt": "As a headliner at World Summit AI Americas 2024, Fatih presented how enterprises can unlock the full potential of data and AI to drive innovation. ",
     "tags": [
-      "AI"
+      "Data Science",
+      "ML",
+      "OR",
+      "Gen AI"
     ],
     "featured": "true",
-    "content": "\n# W – orld Summit AI Americas 2024 – Montréal, QC (2024)\n\n## Talk: *Unleashing the Power of Data & AI to Drive Business Value and Innovation**\n\n\n\n## Topics Covered\n\n- AI\n",
-    "html": "<h1>W – orld Summit AI Americas 2024 – Montréal, QC (2024)</h1>\n<h2>Talk: <em>Unleashing the Power of Data &amp; AI to Drive Business Value and Innovation</em>*</h2>\n<h2>Topics Covered</h2>\n<ul>\n<li>AI</li>\n</ul>\n"
+    "content": "\n# World Summit AI Americas 2024 – Montréal, QC (2024)\n\n## Talk: *Unleashing the Power of Data & AI to Drive Business Value and Innovation**\n\n**Abstract:** As a headliner at **World Summit AI Americas 2024**, Fatih presented how enterprises can unlock the full potential of data and AI to drive innovation. He spoke about ALDO’s journey in integrating AI into core business processes, stressing that AI is a transformative force that must be strategically embedded across operations. Fatih underscored the importance of robust data governance and ethical AI practices – noting that transparency, bias mitigation, and security are essential for building trust in AI systems. He also highlighted the need for talent development, arguing that an AI-savvy workforce is critical to sustaining competitive advantage. Through this talk, Fatih provided a roadmap for organizations to go from AI experimentation to real business impact, sharing examples of AI-driven initiatives at ALDO that led to efficiency gains and new revenue opportunities.\n\n## Topics Covered\n\n- Machine Learning\n- Data Science\n- Operations Research\n- Predictive & Prescriptive AI\n\n",
+    "html": "<h1>World Summit AI Americas 2024 – Montréal, QC (2024)</h1>\n<h2>Talk: <em>Unleashing the Power of Data &amp; AI to Drive Business Value and Innovation</em>*</h2>\n<p><strong>Abstract:</strong> As a headliner at <strong>World Summit AI Americas 2024</strong>, Fatih presented how enterprises can unlock the full potential of data and AI to drive innovation. He spoke about ALDO’s journey in integrating AI into core business processes, stressing that AI is a transformative force that must be strategically embedded across operations. Fatih underscored the importance of robust data governance and ethical AI practices – noting that transparency, bias mitigation, and security are essential for building trust in AI systems. He also highlighted the need for talent development, arguing that an AI-savvy workforce is critical to sustaining competitive advantage. Through this talk, Fatih provided a roadmap for organizations to go from AI experimentation to real business impact, sharing examples of AI-driven initiatives at ALDO that led to efficiency gains and new revenue opportunities.</p>\n<h2>Topics Covered</h2>\n<ul>\n<li>Machine Learning</li>\n<li>Data Science</li>\n<li>Operations Research</li>\n<li>Predictive &amp; Prescriptive AI</li>\n</ul>\n"
   },
   {
     "slug": "unleashing-the-power-of-generative-ai-for-tabular-data-in-machine-learning-applications-2023-10",

@@ -17,8 +17,8 @@ Fatih delivered a featured case study at the **Big Data & Analytics Montréal Su
 
 ## Topics Covered
 
-- AI
-- Data
+- Machine Learning
+- Data Governance
 - Analytics
 - Innovation
-- Retail 
+- AI in Retail

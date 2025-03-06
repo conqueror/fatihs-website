@@ -4,7 +4,7 @@ date: "2025-02-27"
 location: "Montreal, QC"
 event: "McGill Data Network – Impact Panel"
 slug: "mcgill-data-network-retail-panel-2025"
-excerpt: "Fatih was a special guest panelist at McGill University's Data Network Impact Panel on \"Data in Retail.\" In this interactive session, he and fellow retail data leaders shared exclusive insights on how data analytics and AI are transforming retail."
+excerpt: "Fatih was a special guest panelist at McGill University's Data Network Impact Panel on "Data in Retail." In this interactive session, he and fellow retail data leaders shared exclusive insights on how data analytics and AI are transforming retail."
 tags: ["AI", "Retail", "Data", "Analytics", "Education"]
 featured: true
 ---

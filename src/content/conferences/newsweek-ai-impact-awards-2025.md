@@ -4,7 +4,7 @@ date: "2025-05-01"
 location: "New York, NY"
 event: "Newsweek AI Impact Awards 2025"
 slug: "newsweek-ai-impact-awards-2025"
-excerpt: "Fatih served as a judge and speaker at Newsweek's AI Impact Awards 2025, where he spoke on \"Measuring AI's IMPACT on business operations.\" He provided expert evaluation on how to quantify the operational impact of AI initiatives and shared insights into aligning AI projects with key business performance metrics."
+excerpt: "Fatih serevs as a judge and speaker at Newsweek's AI Impact Awards 2025, where he speak on "Measuring AI's IMPACT on business operations." He provided expert evaluation on how to quantify the operational impact of AI initiatives and shared insights into aligning AI projects with key business performance metrics."
 tags: ["AI", "Business", "Metrics", "Innovation", "Ethics"]
 featured: true
 ---
