@@ -21,6 +21,10 @@ export default defineConfig({
 						if (id.includes('marked') || id.includes('dompurify')) {
 							return 'vendor-markdown';
 						}
+						// Group font and style dependencies
+						if (id.includes('fonts') || id.includes('css')) {
+							return 'vendor-styles';
+						}
 						// Everything else from node_modules goes here
 						return 'vendor';
 					}
@@ -42,6 +46,19 @@ export default defineConfig({
 					    id.includes('/src/lib/Navbar.svelte')) {
 						return 'ui-components';
 					}
+					
+					// Group route pages based on section
+					if (id.includes('/src/routes/blog/')) {
+						return 'route-blog';
+					}
+					
+					if (id.includes('/src/routes/publications/')) {
+						return 'route-publications';
+					}
+					
+					if (id.includes('/src/routes/research/')) {
+						return 'route-research';
+					}
 				}
 			}
 		},
@@ -56,14 +73,22 @@ export default defineConfig({
 				drop_console: true,
 				drop_debugger: true,
 				ecma: 2020, // Use modern syntax for better minification
-				passes: 2    // More aggressive optimization
+				passes: 3,   // More aggressive optimization
+				unsafe: true, // More aggressive minification
+				unsafe_comps: true,
+				unsafe_math: true,
+				unsafe_proto: true
 			},
 			format: {
-				comments: false // Remove all comments
-			}
+				comments: false, // Remove all comments
+				preserve_annotations: false, // Remove TypeScript annotations
+				ecma: 2020
+			},
+			module: true, // Enable module-specific optimizations
+			toplevel: true // Enable top-level variable and function name mangling
 		},
-		// Generate source maps for production (useful for monitoring)
-		sourcemap: true,
+		// Generate source maps but optimize for production
+		sourcemap: false, // Disable sourcemaps in production for smaller files
 		// Ensure all assets are properly compressed
 		assetsInlineLimit: 4096, // 4kb - inline small assets
 		chunkSizeWarningLimit: 100, // Alert on chunks larger than 100kb
@@ -80,7 +105,11 @@ export default defineConfig({
 			// List of features to support
 			supported: {
 				'top-level-await': true
-			}
+			},
+			minifyIdentifiers: true,
+			minifySyntax: true,
+			minifyWhitespace: true,
+			treeShaking: true
 		}
 	},
 	// Configure CSS optimization

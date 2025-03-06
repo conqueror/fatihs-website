@@ -50,6 +50,8 @@
 						width={600}
 						height={600}
 						square={true}
+						sizes="(max-width: 768px) 100vw, 600px"
+						disableLargestSizes={true}
 					/>
 				</div>
 			</div>
@@ -174,6 +176,8 @@
 							width={600}
 							height={600}
 							square={true}
+							sizes="(max-width: 768px) 100vw, 600px"
+							disableLargestSizes={true}
 						/>
 					</div>
 				

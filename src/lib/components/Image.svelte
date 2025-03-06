@@ -16,7 +16,7 @@
   
   // Optional properties for optimization
   export let lazy = true;
-  export let sizes = '100vw';
+  export let sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'; // Default to more conservative sizing
   export let className = '';
   export let objectFit = 'cover';
   export let objectPosition = 'center';
@@ -24,6 +24,7 @@
   export let style = '';
   export let square = false; // New option to force square aspect ratio
   export let debug = false; // Debug flag, default to false
+  export let disableLargestSizes = false; // Option to limit max size for performance
   
   // For debugging
   let srcPath = src;
@@ -53,8 +54,10 @@
       optimizedBasePath = [...parts, 'optimized', filename].join('/');
     }
     
-    // Different size variations
-    const widths = [320, 640, 960, 1280, 1920];
+    // Different size variations - exclude largest sizes if needed
+    const widths = disableLargestSizes 
+      ? [320, 640, 960] 
+      : [320, 640, 960, 1280, 1920];
     
     // Generate AVIF srcset (best compression)
     const avifSrcset = widths

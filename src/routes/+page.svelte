@@ -94,6 +94,10 @@
 							width={600}
 							height={600}
 							square={true}
+							sizes="(max-width: 768px) 100vw, 600px"
+							disableLargestSizes={true}
+							fetchpriority="high"
+							lazy={false}
 						/>
 						
 						<!-- Text placed directly on image with text shadow for readability -->
