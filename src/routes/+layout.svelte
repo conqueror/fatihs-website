@@ -44,39 +44,44 @@
 		}
 	}
 	
+	// Reactive statement to apply theme class
+	$: if (browser && $theme === 'dark') {
+		document.documentElement.classList.add('dark');
+	} else if (browser) {
+		document.documentElement.classList.remove('dark');
+	}
+	
+	// Initialize theme based on localStorage or system preference
 	onMount(() => {
-		// Check for saved theme preference or use system preference
-		const savedTheme = localStorage.getItem('theme');
-		if (savedTheme) {
-			theme.set(savedTheme);
-			document.documentElement.setAttribute('data-theme', savedTheme);
-		} else {
-			// Use system preference
-			const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-				? 'dark'
-				: 'light';
-			theme.set(systemTheme);
-			document.documentElement.setAttribute('data-theme', systemTheme);
-			localStorage.setItem('theme', systemTheme);
-		}
-		
-		// Mark theme as loaded to show the content (synchronizes with app.html)
-		document.body.setAttribute('data-theme-loaded', 'true');
-		
-		// Add listener for system theme changes
-		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-			if (!localStorage.getItem('theme')) {
-				const newTheme = e.matches ? 'dark' : 'light';
-				theme.set(newTheme);
-				document.documentElement.setAttribute('data-theme', newTheme);
+		if (browser) {
+			// Check stored preference
+			const savedTheme = localStorage.getItem('theme');
+			if (savedTheme) {
+				theme.set(savedTheme);
+			} else {
+				// Use system preference if no stored preference
+				const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				theme.set(prefersDarkMode ? 'dark' : 'light');
 			}
-		});
-		
-		// Initialize analytics based on consent
-		if (browser && !isDoNotTrackEnabled()) {
-			initAnalytics();
+			
+			// Initialize analytics only if user hasn't opted out
+			if (!isDoNotTrackEnabled()) {
+				initAnalytics();
+			}
 		}
 	});
+	
+	// Detect system theme changes
+	if (browser) {
+		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		
+		// Update theme when system preference changes (if user hasn't manually set a theme)
+		mediaQuery.addEventListener('change', (e) => {
+			if (!localStorage.getItem('theme')) {
+				theme.set(e.matches ? 'dark' : 'light');
+			}
+		});
+	}
 
 	// Register service worker for better routing
 	if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
@@ -94,41 +99,38 @@
 
 <!-- Base SEO component that will be present on all pages -->
 <SEO 
-	canonical="{currentUrl}"
-	structuredData="{structuredData}"
+	title="Fatih Nayebi | AI Researcher and Developer"
+	description="Personal website of Fatih Nayebi, featuring research in AI, machine learning, and software development."
+	structuredData={structuredData}
 	googleVerification="{GOOGLE_VERIFICATION}"
 	bingVerification="{BING_VERIFICATION}"
 	yandexVerification="{YANDEX_VERIFICATION}"
 />
 
 <svelte:head>
-	<!-- Preconnect to important domains to improve performance -->
+	<!-- Use Google Fonts for Fira Code and Inter -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	
-	<!-- Preload critical fonts -->
-	<link rel="preload" as="font" href="/fonts/inter-var.woff2" type="font/woff2" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 	
 	<!-- Load fonts with font-display:swap to prevent render blocking -->
 	<style>
-		/* Inline font-face declaration for critical font */
-		@font-face {
-			font-family: 'Inter';
+		/* Import Google Fonts */
+		@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+		
+		/* Force immediate usage of fonts */
+		body {
+			font-family: 'Inter', sans-serif;
+			font-optical-sizing: auto;
 			font-style: normal;
-			font-weight: 100 900;
-			font-display: swap;
-			src: url('/fonts/inter-var.woff2') format('woff2');
-			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+		}
+		
+		code {
+			font-family: 'Fira Code', monospace;
+			font-optical-sizing: auto;
+			font-style: normal;
 		}
 	</style>
-	
-	<!-- Load non-critical fonts asynchronously -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-	
-	<!-- Fallback for JavaScript disabled -->
-	<noscript>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-	</noscript>
 	
 	<!-- iOS refresh handler script - load with defer -->
 	<script src="/refresh-handler.js" defer></script>

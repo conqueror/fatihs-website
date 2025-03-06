@@ -8,12 +8,17 @@
 		<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
-		<!-- Preload fonts and set font-display to optional to prevent layout shifts -->
-		<link rel="preload" href="%sveltekit.assets%/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preload" href="%sveltekit.assets%/fonts/fira-code-var.woff2" as="font" type="font/woff2" crossorigin />
+		<!-- Remove local font preloading as we're using Google Fonts -->
 		
 		<!-- Critical inline styles to prevent flash of unstyled content and layout shifts -->
 		<style>
+			/* Optimized for production - no artificial delays */
+			:root {
+				--debug-loading: false; /* Disabled in production for optimal performance */
+				--loading-delay: 50; /* Minimal delay in milliseconds */
+				--enable-debug-logs: false; /* Set to true to enable console debugging */
+			}
+			
 			/* Initial dark background to prevent flash, will be overridden if needed */
 			html {
 				background-color: #121212;
@@ -52,115 +57,85 @@
 				min-height: 64px;
 			}
 			
-			/* Hide SVG icons initially */
-			svg {
-				opacity: 0 !important;
-				visibility: hidden !important;
-				color: inherit !important;
-				fill: none !important;
-				stroke: currentColor !important;
-				overflow: hidden !important;
-			}
+			/* Performance-optimized content blocking during loading */
 			
-			/* Show SVG icons when ready */
-			body[data-theme-loaded] svg {
-				opacity: 1 !important;
-				visibility: visible !important;
-				transition: opacity 0.2s ease;
-			}
-			
-			/* Hide any loading spinners or indicators */
-			.loader, .loading-spinner, .loading-container {
+			/* Hide title to prevent flash */
+			html:not([data-fully-loaded]) title,
+			body:not([data-theme-loaded]) title {
 				display: none !important;
 			}
 			
-			/* Font declarations with proper font-display to minimize layout shifts */
-			@font-face {
-				font-family: 'Inter';
-				font-style: normal;
-				font-weight: 100 900;
-				font-display: optional; /* Changed from swap to optional to prevent layout shifts */
-				src: url('%sveltekit.assets%/fonts/inter-var.woff2') format('woff2');
-				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-				size-adjust: 100%; /* Ensures consistent metrics */
+			/* Simplified hiding approach - focuses on key properties for better performance */
+			html:not([data-fully-loaded]) *,
+			body:not([data-theme-loaded]) * {
+				color: transparent !important;
+				background-color: transparent !important;
+				border-color: transparent !important;
+				opacity: 0 !important;
+				visibility: hidden !important;
 			}
 			
-			@font-face {
-				font-family: 'Fira Code';
-				font-style: normal;
-				font-weight: 300 700;
-				font-display: optional; /* Changed from swap to optional to prevent layout shifts */
-				src: url('%sveltekit.assets%/fonts/fira-code-var.woff2') format('woff2');
-				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-				size-adjust: 100%; /* Ensures consistent metrics */
+			/* SVG-specific hiding */
+			html:not([data-fully-loaded]) svg,
+			body:not([data-theme-loaded]) svg {
+				fill: transparent !important;
+				stroke: transparent !important;
+				display: none !important;
 			}
+			
+			/* Create a full-page blocking overlay with minimal properties */
+			body::before {
+				content: "";
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 99999;
+				background-color: #121212;
+				opacity: 1;
+				transition: opacity 0.2s ease; /* Faster transition */
+			}
+			
+			/* Light theme version of overlay */
+			html[data-theme="light"] body::before {
+				background-color: #ffffff;
+			}
+			
+			/* Hide the overlay once both theme is loaded and page is fully loaded */
+			html[data-fully-loaded] body[data-theme-loaded]::before {
+				opacity: 0;
+				pointer-events: none;
+			}
+			
+			/* Remove first-paint renderer */
+			html:not([data-fully-loaded]) body > div,
+			body:not([data-theme-loaded]) body > div {
+				display: none !important;
+			}
+			
+			/* Remove local font declarations as we're using Google Fonts */
+			
 		</style>
 		
+		<!-- Optimized storage polyfill -->
 		<script>
-			// Storage polyfill
+			// Storage polyfill - simplified for performance
 			(function() {
 				try {
-					// Create placeholders for storage APIs if they're not accessible
-					if (typeof localStorage === 'undefined' || typeof sessionStorage === 'undefined') {
+					var testKey = '__test_storage_' + Math.random();
+					try {
+						localStorage.setItem(testKey, 'test');
+						localStorage.removeItem(testKey);
+					} catch (e) {
+						// Minimal fallback if storage fails
 						var memoryStorage = {};
-						Object.defineProperty(window, 'localStorage', {
-							value: {
-								getItem: function(key) { return memoryStorage[key] || null; },
-								setItem: function(key, value) { memoryStorage[key] = value; },
-								removeItem: function(key) { delete memoryStorage[key]; },
-								clear: function() { memoryStorage = {}; }
-							},
-							writable: false
-						});
-						
-						var sessionMemoryStorage = {};
-						Object.defineProperty(window, 'sessionStorage', {
-							value: {
-								getItem: function(key) { return sessionMemoryStorage[key] || null; },
-								setItem: function(key, value) { sessionMemoryStorage[key] = value; },
-								removeItem: function(key) { delete sessionMemoryStorage[key]; },
-								clear: function() { sessionMemoryStorage = {}; }
-							},
-							writable: false
-						});
-					} else {
-						// Test if storage is actually accessible
-						var testKey = '__test_storage_' + Math.random();
-						try {
-							localStorage.setItem(testKey, 'test');
-							localStorage.removeItem(testKey);
-						} catch (e) {
-							// If not accessible, create a fallback
-							var memoryStorage = {};
-							window._originalLocalStorage = window.localStorage;
-							Object.defineProperty(window, 'localStorage', {
-								value: {
-									getItem: function(key) { return memoryStorage[key] || null; },
-									setItem: function(key, value) { memoryStorage[key] = value; },
-									removeItem: function(key) { delete memoryStorage[key]; },
-									clear: function() { memoryStorage = {}; }
-								},
-								writable: false
-							});
-						}
-						
-						try {
-							sessionStorage.setItem(testKey, 'test');
-							sessionStorage.removeItem(testKey);
-						} catch (e) {
-							// If not accessible, create a fallback
-							var sessionMemoryStorage = {};
-							window._originalSessionStorage = window.sessionStorage;
-							Object.defineProperty(window, 'sessionStorage', {
-								value: {
-									getItem: function(key) { return sessionMemoryStorage[key] || null; },
-									setItem: function(key, value) { sessionMemoryStorage[key] = value; },
-									removeItem: function(key) { delete sessionMemoryStorage[key]; },
-									clear: function() { sessionMemoryStorage = {}; }
-								},
-								writable: false
-							});
-						}
+						window.localStorage = {
+							getItem: function(key) { return memoryStorage[key] || null; },
+							setItem: function(key, value) { memoryStorage[key] = value; },
+							removeItem: function(key) { delete memoryStorage[key]; },
+							clear: function() { memoryStorage = {}; }
+						};
 					}
 				} catch (e) {
 					console.warn('Storage polyfill error:', e);
@@ -168,37 +143,180 @@
 			})();
 		</script>
 		
-		<!-- Theme initialization that respects user preference -->
+		<!-- Debug tools - off by default, toggled via console -->
 		<script>
+			// Setup debug utilities that are disabled by default
 			(function() {
-				// Check for saved theme preference
-				var savedTheme = localStorage.getItem('theme');
+				// Create safe console logger that only logs when debug is enabled
+				window.debugLog = function() {
+					// Check if debug is enabled via CSS variable or localStorage
+					var debugEnabled = 
+						document.documentElement.style.getPropertyValue('--enable-debug-logs') === 'true' || 
+						localStorage.getItem('enable-debug-logs') === 'true';
+					
+					if (debugEnabled && console && console.log) {
+						console.log.apply(console, ['[DEBUG]'].concat(Array.from(arguments)));
+					}
+				};
 				
-				// If no saved preference, check system preference
-				if (!savedTheme) {
-					var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-					savedTheme = prefersDark ? 'dark' : 'light';
+				// Add helper to enable/disable debug mode from console
+				window.enableDebug = function(enable) {
+					enable = (enable !== false); // Default to true if no parameter
+					localStorage.setItem('enable-debug-logs', enable ? 'true' : 'false');
+					console.log('Debug mode ' + (enable ? 'enabled' : 'disabled') + '. Refresh page to apply.');
+				};
+				
+				// Only install observer in development environments
+				var isDevelopment = window.location.hostname === 'localhost' || 
+								   window.location.hostname === '127.0.0.1' ||
+								   window.location.port === '5173';
+				
+				// Check if debug is explicitly enabled
+				var debugEnabled = 
+					document.documentElement.style.getPropertyValue('--enable-debug-logs') === 'true' || 
+					localStorage.getItem('enable-debug-logs') === 'true';
+				
+				// Only install observer if in development AND debug is explicitly enabled
+				if (isDevelopment && debugEnabled && typeof MutationObserver !== 'undefined') {
+					debugLog('Installing mutation observer');
+					
+					const observer = new MutationObserver(function(mutations) {
+						mutations.forEach(function(mutation) {
+							if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+								mutation.addedNodes.forEach(function(node) {
+									if (node.nodeType === Node.ELEMENT_NODE) {
+										debugLog('Element added to DOM: ', node);
+										
+										if (node.textContent && node.textContent.trim() !== '') {
+											debugLog('Element with text content: ', node.textContent.trim());
+										}
+									} else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') {
+										debugLog('Text node added: ', node.textContent.trim());
+									}
+								});
+							}
+						});
+					});
+					
+					observer.observe(document.documentElement, { 
+						childList: true, 
+						subtree: true,
+						characterData: true
+					});
+					
+					window._debugObserver = observer;
+					
+					// Log instructions for debugging
+					console.log('Debug mode active. Call window.enableDebug(false) to disable.');
+				} else if (isDevelopment) {
+					// Add a helpful hint about debug mode in development
+					console.log('Debug mode disabled. Call window.enableDebug() to enable debug logging.');
 				}
-				
-				// Apply the appropriate theme
-				document.documentElement.setAttribute('data-theme', savedTheme);
-				if (savedTheme === 'dark') {
-					document.documentElement.classList.add('dark');
-				} else {
-					// Remove dark class if theme is light
-					document.documentElement.classList.remove('dark');
+			})();
+		</script>
+		
+		<!-- High-performance theme initialization -->
+		<script>
+			// Immediately apply placeholder classes
+			document.documentElement.classList.add('js-loading');
+			
+			// Fast synchronous execution
+			(function() {
+				try {
+					// Store original meta content
+					var metaTags = Array.from(document.head.querySelectorAll('meta[name], meta[property]'));
+					metaTags.forEach(function(tag) {
+						tag.setAttribute('data-original-content', tag.getAttribute('content') || '');
+						tag.setAttribute('content', '');
+					});
+					
+					// Apply theme immediately
+					var savedTheme = localStorage.getItem('theme') || 
+						(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+					
+					document.documentElement.setAttribute('data-theme', savedTheme);
+					if (savedTheme === 'dark') {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+					
+					window.initialTheme = savedTheme;
+					
+					// Use requestAnimationFrame for better performance
+					var bodyObserver = new MutationObserver(function(mutations, observer) {
+						if (document.body) {
+							observer.disconnect();
+							
+							// Get loading delay - use minimal default
+							const loadingDelay = 
+								document.documentElement.style.getPropertyValue('--debug-loading') === 'true' 
+								? 1500 
+								: (parseInt(document.documentElement.style.getPropertyValue('--loading-delay')) || 50);
+							
+							window.debugLog && window.debugLog('Using loading delay of', loadingDelay, 'ms');
+							
+							// Use requestAnimationFrame for better timing
+							requestAnimationFrame(function() {
+								setTimeout(function() {
+									document.body.setAttribute('data-theme-loaded', 'true');
+									window.debugLog && window.debugLog('data-theme-loaded set to true');
+									
+									// Restore original meta content
+									metaTags.forEach(function(tag) {
+										if (tag.hasAttribute('data-original-content')) {
+											tag.setAttribute('content', tag.getAttribute('data-original-content'));
+											tag.removeAttribute('data-original-content');
+										}
+									});
+									
+									// Use readyState to determine when to show content
+									if (document.readyState === 'loading') {
+										document.addEventListener('DOMContentLoaded', function() {
+											window.debugLog && window.debugLog('DOMContentLoaded fired');
+											requestAnimationFrame(function() {
+												completeLoading();
+											});
+										});
+									} else {
+										completeLoading();
+									}
+								}, loadingDelay);
+							});
+						}
+					});
+					
+					bodyObserver.observe(document.documentElement, { childList: true, subtree: true });
+					
+					function completeLoading() {
+						window.debugLog && window.debugLog('Completing loading sequence');
+						// Use requestAnimationFrame for timing with the browser's render cycle
+						requestAnimationFrame(function() {
+							document.documentElement.setAttribute('data-fully-loaded', 'true');
+							document.documentElement.classList.remove('js-loading');
+							window.debugLog && window.debugLog('data-fully-loaded set to true, page should now be visible');
+							
+							// Remove any debug observers to free resources if we're not on localhost
+							if (!window.location.hostname === 'localhost' && window._debugObserver) {
+								window._debugObserver.disconnect();
+								delete window._debugObserver;
+							}
+						});
+					}
+				} catch (e) {
+					console.error('Error in theme initialization:', e);
+					// Fast recovery in case of errors
+					document.documentElement.setAttribute('data-fully-loaded', 'true');
+					document.documentElement.classList.remove('js-loading');
+					if (document.body) {
+						document.body.setAttribute('data-theme-loaded', 'true');
+					}
 				}
-				
-				// Store the final theme decision so components can access it
-				window.initialTheme = savedTheme;
-				
-				// Make all SVGs visible immediately to prevent layout shifts
-				document.body.setAttribute('data-theme-loaded', 'true');
 			})();
 		</script>
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover" data-theme-loaded="true" class="size-adjust">
+	<body data-sveltekit-preload-data="hover" class="size-adjust">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

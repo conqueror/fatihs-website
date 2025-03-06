@@ -18,8 +18,7 @@ const PRECACHE_ASSETS = [
   '/404.html',
   '/offline.html', // Create this page for better offline experience
   '/manifest.json',
-  '/fonts/inter-var.woff2',
-  '/fonts/fira-code-var.woff2',
+  // Font files are now loaded from Google Fonts
   '/images/optimized/profile-320.webp', // Small version of profile for offline
   '/images/optimized/profile-placeholder.webp'
 ];

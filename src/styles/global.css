@@ -1,6 +1,5 @@
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+/* Import fonts - using Google Fonts for Fira Code and Inter */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 /* Tailwind directives */
 @tailwind base;
@@ -18,13 +17,35 @@
   --background-rgb: 17, 24, 39;
 }
 
+/* Font utility classes */
+.fira-code {
+  font-family: "Fira Code", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
 @layer base {
   body {
     @apply font-sans text-gray-800 bg-gray-50 transition-colors duration-200;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
   }
   
   .dark body {
     @apply bg-gray-900 text-gray-100;
+  }
+  
+  /* Ensure all code elements use Fira Code */
+  pre, code, kbd, samp {
+    font-family: 'Fira Code', monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
   }
   
   a {

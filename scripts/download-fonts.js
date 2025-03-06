@@ -1,12 +1,19 @@
 /**
- * Font download and optimization script
- * Downloads Inter and JetBrains Mono variable fonts and places them in the static/fonts directory
+ * [DEPRECATED] Font download and optimization script
+ * This script is no longer used as we've switched to loading fonts directly from Google Fonts.
+ * Kept for reference purposes only.
  */
 
 import fs from 'fs';
 import path from 'path';
 import https from 'https';
 import { fileURLToPath } from 'url';
+
+console.log('⚠️ WARNING: This script is deprecated as we now use Google Fonts directly.');
+console.log('If you want to use local fonts again, remove the Google Fonts imports from:');
+console.log('- src/routes/+layout.svelte');
+console.log('- src/styles/global.css');
+console.log('Then restore the font-face declarations in src/app.html');
 
 // Get the directory name in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -20,15 +27,15 @@ if (!fs.existsSync(FONTS_DIR)) {
   fs.mkdirSync(FONTS_DIR, { recursive: true });
 }
 
-// Font URLs
+// Font URLs (kept for reference)
 const FONTS = [
   {
     name: 'inter-var.woff2',
-    url: 'https://rsms.me/inter/font-files/Inter.var.woff2'
+    url: 'https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2'
   },
   {
     name: 'fira-code-var.woff2',
-    url: 'https://fonts.gstatic.com/s/firacode/v21/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKaJO.woff2'
+    url: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKaJO.woff2'
   }
 ];
 
