@@ -119,11 +119,29 @@
   
   <!-- Page header with center alignment -->
   <h1 class="text-5xl font-bold mb-4 text-center text-primary dark:text-blue-400" in:fly={{ y: -30, duration: 800, delay: 300 }}>Conference Appearances</h1>
-  <p class="text-lg text-center mb-12 max-w-3xl mx-auto text-gray-700 dark:text-gray-300" in:fly={{ y: 30, duration: 800, delay: 500 }}>
+  <p class="text-lg text-center mb-8 max-w-3xl mx-auto text-gray-700 dark:text-gray-300" in:fly={{ y: 30, duration: 800, delay: 500 }}>
     Here you'll find my upcoming and recent speaking engagements at conferences and events
     around the world. I regularly speak on topics including artificial intelligence,
     retail technology, and the practical application of data science.
   </p>
+
+  <!-- Call to action box - moved to top and enhanced -->
+  <AnimateInView type="fade" delay={700}>
+    <div class="mb-16 bg-gradient-to-r from-primary-600/90 to-indigo-600/90 p-8 rounded-lg shadow-xl border-2 border-primary-300 dark:border-primary-700 text-gray-800 dark:text-white relative overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+      
+      <h3 class="text-2xl font-bold mb-4 relative z-10">Interested in having me speak at your event?</h3>
+      <p class="mb-6 text-lg max-w-2xl relative z-10">
+        I'm available for speaking engagements on AI, machine learning, retail technology, 
+        and data science. Please get in touch via the contact page to discuss opportunities.
+      </p>
+      <a href="/contact" class="inline-block px-8 py-4 bg-white text-primary-700 font-bold rounded-lg hover:bg-gray-100 transition-colors shadow-md relative z-10">
+        Contact Me
+      </a>
+    </div>
+  </AnimateInView>
 
   {#if years.length > 0}
     {#each years as year}
@@ -205,18 +223,5 @@
       </div>
     </AnimateInView>
   {/if}
-
-  <AnimateInView type="fade" delay={700}>
-    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-      <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Interested in having me speak at your event?</h3>
-      <p class="mb-4">
-        I'm available for speaking engagements on AI, machine learning, retail technology, 
-        and data science. Please get in touch via the contact page to discuss opportunities.
-      </p>
-      <a href="/contact" class="inline-block px-6 py-3 bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors">
-        Contact Me
-      </a>
-    </div>
-  </AnimateInView>
 </div>
 {/if} 
