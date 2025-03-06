@@ -114,10 +114,7 @@
 	
 	<!-- Load fonts with font-display:swap to prevent render blocking -->
 	<style>
-		/* Import Google Fonts */
-		@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-		
-		/* Force immediate usage of fonts */
+		/* Font application styles */
 		body {
 			font-family: 'Inter', sans-serif;
 			font-optical-sizing: auto;
