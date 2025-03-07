@@ -6,6 +6,8 @@
 	import { generateWebsiteSchema } from '$lib/utils/structured-data';
 	import Navbar from '$lib/Navbar.svelte';
 	import ScrollToTop from '$lib/ScrollToTop.svelte';
+	import ThemeProvider from '$lib/components/ThemeProvider.svelte';
+	import FontPreload from '$lib/components/FontPreload.svelte';
 	
 	// Import analytics and cookie consent components
 	import CookieConsent from '$lib/components/CookieConsent.svelte';
@@ -130,6 +132,8 @@
 	yandexVerification="{YANDEX_VERIFICATION}"
 />
 
+<FontPreload />
+
 <svelte:head>
 	<!-- Mobile optimization meta tags -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
@@ -141,14 +145,8 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
 	
-	<!-- DNS prefetching and resource hints for faster mobile loading -->
-	<link rel="dns-prefetch" href="https://fonts.googleapis.com">
-	<link rel="dns-prefetch" href="https://fonts.gstatic.com">
-	<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	
-	<!-- Use Google Fonts for Fira Code and Inter -->
-	<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+	<!-- Use self-hosted fonts -->
+	<link rel="stylesheet" href="/fonts/fonts.css">
 	
 	<!-- Manifest for PWA support -->
 	<link rel="manifest" href="/manifest.json">
@@ -162,20 +160,12 @@
 	<style>
 		/* Font application styles */
 		body {
-			font-family: 'Inter', sans-serif;
-			font-optical-sizing: auto;
-			font-style: normal;
+			/* Font family now defined in fonts.css */
 			/* Mobile viewport height fix */
 			min-height: 100vh;
 			min-height: calc(var(--vh, 1vh) * 100);
 			/* Prevent pull-to-refresh on mobile */
 			overscroll-behavior-y: none;
-		}
-		
-		code {
-			font-family: 'Fira Code', monospace;
-			font-optical-sizing: auto;
-			font-style: normal;
 		}
 		
 		/* Fix for mobile tap highlight */
@@ -189,12 +179,21 @@
 				font-size: 110%;
 			}
 		}
+
+		/* Add font loading state styles */
+		.fonts-loading {
+			/* Avoid layout shifts during font loading */
+		}
+
+		.fonts-loaded {
+			/* Styles after fonts have loaded */
+		}
 	</style>
 	
 	<!-- iOS refresh handler script - load with defer -->
 	<script src="/refresh-handler.js" defer></script>
 	
-	<!-- Avoid FOUT (Flash of Unstyled Text) on mobile browsers -->
+	<!-- Font loading detection script -->
 	<script>
 		// Add class to body while fonts are loading
 		document.documentElement.classList.add('fonts-loading');
@@ -216,16 +215,18 @@
 	</script>
 </svelte:head>
 
-<div class="min-h-screen flex flex-col">
-	<Navbar />
-	<main class="flex-grow pt-16">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-			<slot />
-		</div>
-	</main>
-	<Footer />
-	<ScrollToTop />
-</div>
+<ThemeProvider>
+	<div class="min-h-screen flex flex-col">
+		<Navbar />
+		<main class="flex-grow pt-16">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+				<slot />
+			</div>
+		</main>
+		<Footer />
+		<ScrollToTop />
+	</div>
 
-<!-- Cookie consent banner -->
-<CookieConsent />
+	<!-- Cookie consent banner -->
+	<CookieConsent />
+</ThemeProvider>

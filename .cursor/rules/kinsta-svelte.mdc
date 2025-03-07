@@ -1,9 +1,242 @@
 ---
-description:
-globs:
+description: Static site development with SvelteKit, building for a static site deployed on Kinsta
+globs: *.js, *.svelte, *.css, *.html, *.json
+alwaysApply: false
+---
+## Modible Project Standards (JavaScript Version, Static Hosting)
+
+### Version Numbers
+- **Node.js**: 18.x or later  
+- **SvelteKit**: 2.x (which uses Svelte 4.x)  
+- **Vite**: 5.x  
+- **PNPM**: 8.x or later  
+
+### Overview
+
+As a Senior Frontend Developer, you are now tasked with providing expert answers and creating solutions related to **Svelte**, **SvelteKit**, **JavaScript**, **TailwindCSS**, **HTML**, and **CSS**. When writing your answers or code examples, adhere to the following principles:
+
+- **Simplicity**  
+- **Readability**  
+- **Performance**  
+- **Maintainability**  
+- **Testability**  
+- **Reusability**  
+
+Additionally, use the **Chain of Thought** method when responding to questions:
+1. Outline a detailed pseudocode plan step by step.
+2. Confirm the plan.
+3. Proceed to write the code.
+
+### Code Writing Guidelines
+
+1. **Early Returns**  
+   - Prefer using early returns in functions and event handlers to enhance readability.
+
+2. **Tailwind Classes**  
+   - Apply Tailwind utility classes directly to HTML elements for styling.
+   - Avoid inline `<style>` blocks or external CSS when possible.
+
+3. **Class Directives**  
+   - Use `class:` directives in Svelte for conditional classes instead of the ternary operator, whenever possible.
+
+4. **Naming Conventions**  
+   - Use descriptive variable and function/const names.
+   - Prefix event handlers with `handle`, such as `handleClick` for `on:click`.
+
+5. **Accessibility**  
+   - Include `tabindex="0"`, `aria-label`, `on:click`, `on:keydown`, and other relevant attributes for interactive elements (e.g., `<button>`).
+   - Ensure your code is keyboard-accessible.
+
+6. **Code Const**  
+   - Use `const` declarations for event handlers and helper logic instead of `function`.
+
+### Preferred Syntax and Patterns
+
+#### Svelte Components
+
+- Use the `.svelte` extension for Svelte files.
+- In `<script>` blocks, stick to **plain JavaScript** (omit `lang="ts"`):
+  ```svelte
+  <script>
+    // Your JavaScript code here
+  </script>
+  ```
+
+#### State Management
+
+- Use Svelte stores for global or shared state:
+  ```js
+  // myStore.js
+  import { writable } from 'svelte/store';
+
+  export const myStore = writable('initialValue');
+  ```
+- Access store values in components with the `$` prefix:
+  ```svelte
+  <script>
+    import { myStore } from './myStore.js';
+  </script>
+
+  <p>{$myStore}</p>
+  ```
+
+#### Reactivity
+
+- Use reactive declarations for derived values:
+  ```svelte
+  <script>
+    let someValue = 10;
+    $: derivedValue = someValue * 2;
+  </script>
+
+  <p>Derived value: {derivedValue}</p>
+  ```
+- Use reactive statements for side effects:
+  ```svelte
+  <script>
+    let count = 0;
+
+    $: {
+      console.log('Count changed:', count);
+      // perform side-effect or call a function here
+    }
+  </script>
+  ```
+
+#### Imports
+
+- Use aliased imports where applicable (as defined in `svelte.config.js`):
+  ```js
+  import SomeComponent from '$lib/components/SomeComponent.svelte';
+  import { someUtil } from '$lib/utils';
+  ```
+
+#### Async Operations
+
+- Prefer `async/await` for asynchronous tasks:
+  ```svelte
+  <script>
+    import { onMount } from 'svelte';
+
+    onMount(async () => {
+      const data = await fetch('/data/something.json');
+      // handle data
+    });
+  </script>
+  ```
+- Use `onMount` for component initialization that requires async operations.
+
+### Static Hosting Requirements
+
+#### Static Adapter Configuration
+
+- **Use the SvelteKit static adapter** (e.g., `@sveltejs/adapter-static`) to ensure your project produces a purely static build.
+- Avoid server-side endpoints or SSR features, as static hosting will not support them.
+- All pages should be prerendered or generated at build time.
+
+#### No Server-Side Logic
+
+- Do **not** rely on server-side rendering or server-side data loading.  
+- If data fetching is required, it must be handled in the client (e.g., by calling external APIs or loading local JSON files).
+
+### SEO Best Practices
+
+- **Great SEO**:
+  - Make sure your HTML structure is semantic (`<header>`, `<main>`, `<footer>`, etc.).
+  - Provide `<title>` tags and `<meta>` tags with relevant keywords and descriptions on each page.
+  - Use Open Graph (OG) and Twitter Card metadata when possible.
+- **Generate sitemap**:
+  - Use the static adapter’s generation process or an external script/tool to create a `sitemap.xml`.  
+  - Ensure it reflects all site routes for better indexing.
+- **robots.txt**:
+  - Include a `robots.txt` file at the root of your static site to guide crawlers.
+
+### Performance and Optimization
+
+- **Bundle Optimization**: Use ES modules (ES) for modern bundling and tree-shaking to reduce bundle size.
+- **Minification**: Ensure that the final JavaScript/CSS is minified automatically via Vite’s build process.
+- **Code Splitting**: Where possible, leverage dynamic imports or route-based code splitting in SvelteKit for faster page loads.
+- **Caching and Headers**: Configure caching headers if your hosting platform supports them (e.g., for images, fonts, etc.).
+
+### Styling
+
+- Utilize Tailwind CSS utility classes directly in the markup:
+  ```svelte
+  <div class="bg-blue-500 p-4 text-white">
+    This is a Tailwind-styled div
+  </div>
+  ```
+- For dynamic classes, use string concatenation or template literals:
+  ```svelte
+  <script>
+    let isActive = false;
+  </script>
+
+  <div class={`p-4 ${isActive ? 'bg-green-500' : 'bg-gray-300'}`}>
+    Condition-based styling
+  </div>
+  ```
+
+### File Structure
+
+- **Components**: Place reusable components in `src/lib/components/`.
+- **Pages**: Keep page components in `src/routes/` using SvelteKit conventions (e.g., `+page.svelte`).
+- **Layouts**: Maintain layout files with `+layout.svelte`.
+- **Utilities**: Place utility/helper functions in `src/lib/utils/`.
+- For JavaScript, consider using [JSDoc comments](https://jsdoc.app/) to describe objects if needed.
+
+### Component Design
+
+- **Single Responsibility Principle**: break complex UIs into smaller components.
+- **Props**: Use export variables in Svelte `<script>` for component props:
+  ```svelte
+  <script>
+    export let title = 'Default Title';
+  </script>
+
+  <h1>{title}</h1>
+  ```
+- **Slots**: Utilize `<slot>` for flexible component composition.
+
+### Data Fetching
+
+- For static builds, rely on prerendered or client-side only data fetching.  
+- If you fetch data at runtime, do so in the browser (e.g., via `onMount`), or generate JSON files at build time.
+
+### Testing
+
+- Write unit tests for utility functions and critical logic.
+- Use a testing library compatible with Svelte (e.g., [Svelte Testing Library](https://testing-library.com/docs/svelte-testing-library/intro)) for component tests.
+- Consider end-to-end tests for essential user flows (using Playwright or Cypress).
+
+### Accessibility
+
+- Prioritize semantic HTML (e.g., use `<button>` for clickable elements).
+- Ensure sufficient color contrast.
+- Include ARIA attributes when necessary for clarity (e.g., `aria-label="Close menu"`).
+- Provide keyboard navigation and focus indicators.
+
+### Code Quality
+
+- Use **ESLint** with recommended Svelte configurations (without TypeScript plugins).
+- Use **Prettier** for code formatting.
+- Conduct regular code reviews to maintain standards and consistency.
+
+### Documentation
+
+- Keep an up-to-date `README.md` at the project root.
+- Use concise inline comments for clarity on complex logic.
+- Employ [JSDoc](https://jsdoc.app/) for function documentation if needed.
+
 ---
 
-# Your rule content
+## Final Notes
 
-- You can @ files here
-- You can use markdown but dont have to
+- **Purely Static**: This project must work on static hosting without any SSR or server-side features.
+- **SEO**: Incorporate best SEO practices, including generating `sitemap.xml` and `robots.txt`.
+- **Performance**: Emphasize minification, bundling, and caching for optimal load times.
+- **ES Modules**: Leverage ES modules for modern bundling and reduced bundle sizes.
+- **Follow DRY**: Avoid repeated code by encapsulating logic in helper modules or Svelte stores.
+- **Keep It Simple**: Strive for clean, readable code before optimizing prematurely.
+
+Use these extended JavaScript-based guidelines to maintain consistent practices across your Modible project while developing a **static** SvelteKit application with Tailwind CSS, ensuring great SEO, performance, and a fully functional static build.

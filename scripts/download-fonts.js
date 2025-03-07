@@ -6,8 +6,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import https from 'https';
 import { fileURLToPath } from 'url';
+import https from 'https';
+import { createWriteStream } from 'fs';
 
 console.log('⚠️ WARNING: This script is deprecated as we now use Google Fonts directly.');
 console.log('If you want to use local fonts again, remove the Google Fonts imports from:');
@@ -15,37 +16,43 @@ console.log('- src/routes/+layout.svelte');
 console.log('- src/styles/global.css');
 console.log('Then restore the font-face declarations in src/app.html');
 
-// Get the directory name in ESM
+// Setup paths
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const fontsDir = path.join(__dirname, '../static/fonts');
 
-// Configure paths
-const FONTS_DIR = path.join(__dirname, '../static/fonts');
-
-// Create fonts directory if it doesn't exist
-if (!fs.existsSync(FONTS_DIR)) {
-  fs.mkdirSync(FONTS_DIR, { recursive: true });
+// Ensure fonts directory exists
+if (!fs.existsSync(fontsDir)) {
+  fs.mkdirSync(fontsDir, { recursive: true });
 }
 
-// Font URLs (kept for reference)
-const FONTS = [
+// Font configuration with display strategy
+const fonts = [
   {
-    name: 'inter-var.woff2',
-    url: 'https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2'
+    family: 'Inter',
+    weights: [400, 500, 600, 700],
+    styles: ['normal', 'italic'],
+    display: 'swap',    // Use 'swap' for better perceived performance
+    preload: [400, 700] // Weights to preload (most common ones)
+  },
+  {
+    family: 'Fira Code',
+    weights: [400, 500, 700],
+    styles: ['normal'],
+    display: 'swap',
+    preload: [400]      // Only preload regular weight for code
   }
-  // Fira Code font removed due to issues with the downloaded file
 ];
 
-// Download function
-function downloadFile(url, destination) {
+// Helper function to download a font
+async function downloadFont(url, outputPath) {
   return new Promise((resolve, reject) => {
-    console.log(`Downloading ${url} to ${destination}`);
+    console.log(`Downloading ${url}...`);
     
-    const file = fs.createWriteStream(destination);
-    
+    const file = createWriteStream(outputPath);
     https.get(url, (response) => {
       if (response.statusCode !== 200) {
-        reject(new Error(`Failed to download: HTTP status code ${response.statusCode}`));
+        reject(new Error(`Failed to download font: ${response.statusCode}`));
         return;
       }
       
@@ -53,46 +60,118 @@ function downloadFile(url, destination) {
       
       file.on('finish', () => {
         file.close();
-        console.log(`Successfully downloaded: ${destination}`);
+        console.log(`Downloaded ${outputPath}`);
         resolve();
       });
+      
+      file.on('error', (err) => {
+        fs.unlink(outputPath, () => {}); // Delete the file on error
+        reject(err);
+      });
     }).on('error', (err) => {
-      fs.unlink(destination, () => {}); // Clean up partial file
-      reject(err);
-    });
-    
-    file.on('error', (err) => {
-      fs.unlink(destination, () => {}); // Clean up partial file
+      fs.unlink(outputPath, () => {}); // Delete the file on error
       reject(err);
     });
   });
 }
 
-// Process fonts
+// Main function to download all fonts
 async function downloadFonts() {
-  console.log('🔤 Starting font downloads...');
-  
   try {
-    const downloadPromises = FONTS.map(font => {
-      const destination = path.join(FONTS_DIR, font.name);
-      
-      // Skip if file already exists
-      if (fs.existsSync(destination)) {
-        console.log(`Font ${font.name} already exists, skipping.`);
-        return Promise.resolve();
+    // Font download config
+    const fontPromises = [];
+    
+    // Process Inter font
+    const interBaseUrl = 'https://fonts.gstatic.com/s/inter';
+    const interFontUrls = [
+      // Regular (400)
+      {
+        url: `${interBaseUrl}/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2`,
+        path: path.join(fontsDir, 'Inter-400.woff2'),
+      },
+      // Medium (500)
+      {
+        url: `${interBaseUrl}/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7SUc.woff2`,
+        path: path.join(fontsDir, 'Inter-500.woff2'),
+      },
+      // Semi-bold (600)
+      {
+        url: `${interBaseUrl}/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7SUc.woff2`,
+        path: path.join(fontsDir, 'Inter-600.woff2'),
+      },
+      // Bold (700)
+      {
+        url: `${interBaseUrl}/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7SUc.woff2`,
+        path: path.join(fontsDir, 'Inter-700.woff2'),
+      },
+      // Italic (400 italic)
+      {
+        url: `${interBaseUrl}/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2`,
+        path: path.join(fontsDir, 'Inter-400i.woff2'),
+      },
+    ];
+    
+    // Process Fira Code font
+    const firaCodeBaseUrl = 'https://fonts.gstatic.com/s/firacode';
+    const firaCodeFontUrls = [
+      // Regular (400)
+      {
+        url: `${firaCodeBaseUrl}/v21/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sJV37Nv7g.woff2`,
+        path: path.join(fontsDir, 'FiraCode-400.woff2'),
+      },
+      // Medium (500)
+      {
+        url: `${firaCodeBaseUrl}/v21/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJV37Nv7g.woff2`,
+        path: path.join(fontsDir, 'FiraCode-500.woff2'),
+      },
+      // Bold (700)
+      {
+        url: `${firaCodeBaseUrl}/v21/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_NprJV37Nv7g.woff2`,
+        path: path.join(fontsDir, 'FiraCode-700.woff2'),
+      },
+    ];
+    
+    // Add all font downloads
+    [...interFontUrls, ...firaCodeFontUrls].forEach(font => {
+      if (!fs.existsSync(font.path)) {
+        fontPromises.push(downloadFont(font.url, font.path));
+      } else {
+        console.log(`Font already exists: ${font.path}`);
       }
-      
-      return downloadFile(font.url, destination);
     });
     
-    await Promise.all(downloadPromises);
-    console.log('✅ All fonts downloaded successfully!');
+    // Wait for all fonts to download
+    if (fontPromises.length > 0) {
+      await Promise.all(fontPromises);
+      console.log('All fonts downloaded successfully!');
+    } else {
+      console.log('All fonts already exist, no downloads needed.');
+    }
+    
+    return true;
   } catch (error) {
-    console.error('❌ Error downloading fonts:', error);
-    // We don't want to fail the build process, so we exit with 0
-    process.exit(0);
+    console.error('Error downloading fonts:', error);
+    return false;
   }
 }
 
-// Run the download
-downloadFonts(); 
+// Run the font download process
+async function main() {
+  console.log('Starting font download process...');
+  
+  try {
+    const success = await downloadFonts();
+    
+    if (success) {
+      console.log('Font processing completed successfully!');
+    } else {
+      console.error('Font processing completed with errors.');
+      process.exit(1);
+    }
+  } catch (error) {
+    console.error('Error in font processing:', error);
+    process.exit(1);
+  }
+}
+
+main(); 
