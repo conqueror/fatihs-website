@@ -1,5 +1,5 @@
 <script>
-  import Image from '$lib/components/Image.svelte';
+  import Image from '$lib/components/ui/Image.svelte';
   
   export let title = '';
   export let description = '';

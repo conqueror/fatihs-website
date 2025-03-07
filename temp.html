@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.ico" />
-		<link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
-		<link rel="apple-touch-icon-precomposed" href="%sveltekit.assets%/apple-touch-icon-precomposed.png" />
-		<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png" />
+		<link rel="manifest" href="/manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
 		<!-- Preload critical assets for better performance -->
@@ -16,9 +16,9 @@
 		<link rel="preload" as="font" href="https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2" crossorigin />
 		
 		<!-- Preload profile image variants for LCP optimization -->
-		<link rel="preload" as="image" href="%sveltekit.assets%/images/optimized/profile-640.avif" type="image/avif" fetchpriority="high" media="(min-width: 641px)" />
-		<link rel="preload" as="image" href="%sveltekit.assets%/images/optimized/profile-480.avif" type="image/avif" fetchpriority="high" media="(max-width: 640px) and (min-width: 321px)" />
-		<link rel="preload" as="image" href="%sveltekit.assets%/images/optimized/profile-320.avif" type="image/avif" fetchpriority="high" media="(max-width: 320px)" />
+		<link rel="preload" as="image" href="/images/optimized/profile-640.avif" type="image/avif" fetchpriority="high" media="(min-width: 641px)" />
+		<link rel="preload" as="image" href="/images/optimized/profile-480.avif" type="image/avif" fetchpriority="high" media="(max-width: 640px) and (min-width: 321px)" />
+		<link rel="preload" as="image" href="/images/optimized/profile-320.avif" type="image/avif" fetchpriority="high" media="(max-width: 320px)" />
 		
 		<!-- Critical inline styles to prevent flash of unstyled content and layout shifts -->
 		<style>
@@ -88,7 +88,7 @@
 		</style>
 		
 		<!-- Optimized theme initialization - inlined for performance -->
-		<script>
+		<script defer>
 			(function() {
 				// Initialize theme immediately to prevent flash
 				var savedTheme = localStorage.getItem('theme') || 
@@ -109,17 +109,40 @@
 			})();
 		</script>
 		
-		%sveltekit.head%
+		
+		<link href="/_app/immutable/assets/components.c08c9f19.css" rel="stylesheet">
+		<link href="/_app/immutable/assets/route-blog.a7cebc83.css" rel="stylesheet">
+		<link rel="modulepreload" href="/_app/immutable/entry/start.13428d60.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/components.38c56ecc.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/route-blog.13468dd5.js">
 	</head>
 	<body>
 		<!-- Loading overlay separate from body content -->
 		<div id="loading-overlay"></div>
 		
 		<!-- Main content container -->
-		<div>%sveltekit.body%</div>
+		<div>
+			<script defer>
+				{
+					__sveltekit_10etjbv = {
+						base: "",
+						env: {"PUBLIC_CSP_MODE":"development"}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/_app/immutable/entry/start.13428d60.js"),
+						import("/_app/immutable/entry/app.ba0aa930.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
 		
 		<!-- Minimal inline script to hide loader once everything is ready -->
-		<script>
+		<script defer>
 			window.addEventListener('load', function() {
 				document.documentElement.setAttribute('data-fully-loaded', 'true');
 			});

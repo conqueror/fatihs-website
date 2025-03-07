@@ -59,11 +59,14 @@
   };
   const articleData = { ...defaultArticle, ...article };
   
-  // Build canonical URL if not provided
+  // Build canonical URL if not provided - always use production domain
+  const SITE_URL = 'https://fatihnayebi.com';
   let canonicalUrl = canonical;
   if (!canonicalUrl && $page) {
-    const origin = 'https://fatihnayebi.com'; // Use hardcoded default for static builds
-    canonicalUrl = new URL($page.url.pathname, origin).href;
+    canonicalUrl = new URL($page.url.pathname, SITE_URL).href;
+  } else if (canonicalUrl && !canonicalUrl.startsWith('http')) {
+    // If a relative path was provided, make it absolute
+    canonicalUrl = new URL(canonicalUrl, SITE_URL).href;
   }
   
   // JSON-LD structured data
@@ -114,7 +117,7 @@
         "@type": "ListItem",
         "position": index + 1,
         "name": item.name,
-        "item": `https://fatihnayebi.com${item.path}`
+        "item": `${SITE_URL}${item.path}`
       }))
     };
   }
@@ -175,9 +178,9 @@
   <meta property="og:title" content="{og.title}" />
   <meta property="og:description" content="{og.description}" />
   <meta property="og:type" content="{og.type}" />
-  <meta property="og:url" content="{og.url}" />
+  <meta property="og:url" content="{canonicalUrl || `${SITE_URL}${$page.url.pathname}`}" />
   {#if og.image}
-    <meta property="og:image" content="{og.image}" />
+    <meta property="og:image" content="{og.image.startsWith('http') ? og.image : `${SITE_URL}${og.image}`}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
   {/if}
@@ -195,7 +198,7 @@
   <meta name="twitter:title" content="{tw.title}" />
   <meta name="twitter:description" content="{tw.description}" />
   {#if tw.image}
-    <meta name="twitter:image" content="{tw.image}" />
+    <meta name="twitter:image" content="{tw.image.startsWith('http') ? tw.image : `${SITE_URL}${tw.image}`}" />
     <meta name="twitter:image:alt" content="{title}" />
   {/if}
   

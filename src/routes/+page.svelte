@@ -2,9 +2,10 @@
 	import { onMount } from 'svelte';
 	import { fade, fly, scale, crossfade } from 'svelte/transition';
 	import { spring } from 'svelte/motion';
+	import Card from '$lib/Card.svelte';
 	import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
 	import AnimatedButton from '$lib/components/ui/AnimatedButton.svelte';
-	import Image from '$lib/components/ui/Image.svelte';
+	import ProfileImage from '$lib/components/ui/ProfileImage.svelte';
 	import PageContainer from '$lib/components/layout/PageContainer.svelte';
 	
 	export let data;
@@ -242,14 +243,17 @@
 							<!-- Profile image with enhanced rightward positioning -->
 							<div class="text-center order-1 md:order-2 md:col-span-5 md:-mr-2 lg:-mr-4" in:scale={{ duration: 1000, delay: 600, start: 0.8 }}>
 								<div class="profile-image-container ml-auto md:mr-0 relative rounded-2xl overflow-hidden shadow-2xl transform hover:rotate-0 transition-all duration-500">
-									<Image 
+									<ProfileImage 
 										src="/images/profile.avif" 
 										alt="Dr. Fatih Nayebi" 
-										className="w-full h-full object-cover transition-all duration-700"
+										className="w-full h-full transition-all duration-700"
 										style="transform: scale({$profileScale})"
 										width={600}
 										height={600}
 										sizes="(max-width: 767px) 400px, (max-width: 1023px) 500px, 600px"
+										mobileObjectPosition="center top" 
+										desktopObjectPosition="center center"
+										fetchpriority="high"
 									/>
 									
 									<!-- Text overlay on image -->

@@ -29,7 +29,7 @@
 	
 	// URL and site information
 	let currentUrl = '';
-	$: siteUrl = browser ? window.location.origin : 'https://fatihnayebi.com';
+	$: siteUrl = 'https://fatihnayebi.com';  // Always use the production URL
 	$: pageKey = $page.url.pathname; // Key for page transitions
 	
 	// Generate website schema for the homepage
@@ -81,12 +81,12 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<!-- Canonical URL -->
-	<link rel="canonical" href={currentUrl} />
+	<!-- Canonical URL - Always use the production domain for consistent SEO -->
+	<link rel="canonical" href={`${siteUrl}${$page.url.pathname}`} />
 	
 	<!-- Favicons and PWA -->
 	<link rel="icon" href="/favicon.ico" sizes="any" />
-	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml" /> -->
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 	<link rel="manifest" href="/manifest.json" />
 	
@@ -107,7 +107,7 @@
 	
 	<!-- Open Graph / Social media meta tags -->
 	<meta property="og:site_name" content="Fatih Nayebi | Data & AI Leader" />
-	<meta property="og:url" content={currentUrl} />
+	<meta property="og:url" content={`${siteUrl}${$page.url.pathname}`} />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="Fatih Nayebi, Ph.D. | Data & AI Leader" />
 	<meta property="og:description" content="Fatih Nayebi's personal website - Data & AI Leader, Faculty Lecturer at McGill University, and VP of Data & AI at ALDO Group." />

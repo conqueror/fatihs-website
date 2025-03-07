@@ -3,7 +3,7 @@
 	import { fade, fly, scale } from 'svelte/transition';
 	import { spring } from 'svelte/motion';
 	import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
-	import Image from '$lib/components/ui/Image.svelte';
+	import ProfileImage from '$lib/components/ui/ProfileImage.svelte';
 
 	let visible = false;
 	
@@ -42,15 +42,17 @@
 		<AnimateInView type="scale" delay={300}>
 			<div class="relative w-full">
 				<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
-					<Image 
+					<ProfileImage 
 						src="/images/profile.avif" 
 						alt="Dr. Fatih Nayebi" 
-						className="w-full object-cover transition-all duration-700 hover:scale-105"
+						className="w-full transition-all duration-700 hover:scale-105"
 						style="transform: scale({$profileScale})"
 						width={600}
 						height={600}
 						square={true}
 						sizes="(max-width: 768px) 100vw, 600px"
+						mobileObjectPosition="center 30%" 
+						desktopObjectPosition="center center"
 						disableLargestSizes={true}
 					/>
 				</div>
@@ -168,15 +170,17 @@
 			<AnimateInView type="scale" delay={300}>
 				<div class="sticky top-24">
 					<div class="rounded-xl shadow-lg overflow-hidden relative z-0">
-						<Image 
+						<ProfileImage 
 							src="/images/profile.avif" 
 							alt="Dr. Fatih Nayebi" 
-							className="w-full object-cover transition-all duration-700 hover:scale-105"
+							className="w-full transition-all duration-700 hover:scale-105"
 							style="transform: scale({$profileScale})"
 							width={600}
 							height={600}
 							square={true}
 							sizes="(max-width: 768px) 100vw, 600px"
+							mobileObjectPosition="center 30%" 
+							desktopObjectPosition="center center"
 							disableLargestSizes={true}
 						/>
 					</div>
