@@ -47,6 +47,15 @@ const contentTypes = [
     type: 'conferences',
     source: 'src/content/conferences',
     output: 'src/lib/generated'
+  },
+  {
+    type: 'events',
+    sources: [
+      { path: 'src/content/speaking', type: 'speaking' },
+      { path: 'src/content/organizing', type: 'organizing' },
+      { path: 'src/content/media', type: 'media' }
+    ],
+    output: 'src/lib/generated'
   }
 ];
 
@@ -283,13 +292,94 @@ function processDataFields(data) {
 }
 
 /**
- * Process content for a specific content type
- * @param {Object} contentType - The content type to process
- * @returns {Promise<void>}
+ * Process content of a specific type with multiple sources
+ * @param {Object} contentType The content type configuration
+ */
+async function processMultiSourceContentType(contentType) {
+  console.log(`Generating ${contentType.type}...`);
+  
+  const items = [];
+  
+  for (const source of contentType.sources) {
+    const contentDir = path.join(__dirname, '..', source.path);
+    
+    try {
+      await fs.promises.access(contentDir);
+    } catch (error) {
+      console.warn(`Content directory ${contentDir} does not exist. Skipping.`);
+      continue;
+    }
+    
+    // Read all files in the content directory
+    const files = await fs.promises.readdir(contentDir);
+    
+    for (const file of files) {
+      // Only process markdown files
+      if (!file.endsWith('.md')) continue;
+      
+      try {
+        // Read the file
+        const filePath = path.join(contentDir, file);
+        const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+        
+        // Fix line endings
+        const normalizedContent = fileContent.replace(/\r\n/g, '\n');
+        
+        // Process the content
+        const processedContent = await processContent(normalizedContent);
+        
+        // Create a slug from the filename
+        const slug = file.replace(/\.md$/, '');
+        
+        // Process data fields that might contain markdown
+        const processedData = processDataFields(processedContent.frontmatter);
+        
+        // Add the item to the array, ensuring type is set
+        items.push({
+          slug,
+          ...processedData,
+          type: processedData.type || source.type, // Use specified type or fallback to source type
+          content: processedContent.content,
+          html: processedContent.html
+        });
+      } catch (error) {
+        console.error(`Error processing file ${file}:`, error);
+      }
+    }
+  }
+  
+  // Sort items by date if available
+  items.sort((a, b) => {
+    if (a.date && b.date) {
+      return new Date(b.date) - new Date(a.date);
+    }
+    if (a.order !== undefined && b.order !== undefined) {
+      return a.order - b.order;
+    }
+    return 0;
+  });
+  
+  // Write the items to a JSON file
+  const outputFile = path.join(__dirname, '..', contentType.output, `${contentType.type}.json`);
+  await fs.promises.mkdir(path.dirname(outputFile), { recursive: true });
+  await fs.promises.writeFile(outputFile, JSON.stringify(items, null, 2));
+  
+  console.log(`Successfully generated ${items.length} ${contentType.type} items`);
+}
+
+/**
+ * Process content of a specific type
+ * @param {Object} contentType The content type configuration
  */
 async function processContentType(contentType) {
   console.log(`Generating ${contentType.type}...`);
   
+  // Check if this is a multi-source content type
+  if (contentType.sources) {
+    return processMultiSourceContentType(contentType);
+  }
+  
+  // Original single-source processing
   // Check if the content directory exists
   const contentDir = path.join(__dirname, '..', contentType.source);
   try {

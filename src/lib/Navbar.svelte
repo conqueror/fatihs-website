@@ -60,8 +60,8 @@
 					<a href="/blog" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">Blog</span>
 					</a>
-					<a href="/conferences" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/conferences') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
-						<span class="relative">Conferences</span>
+					<a href="/events" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/events') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
+						<span class="relative">Events</span>
 					</a>
 					<a href="/contact" class="relative text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:scale-110 {$page.url.pathname.startsWith('/contact') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<span class="relative">Contact</span>
@@ -83,7 +83,7 @@
 					<span class="relative text-transparent px-2 py-1 w-[85px]">Research</span>
 					<span class="relative text-transparent px-2 py-1 w-[106px]">Publications</span>
 					<span class="relative text-transparent px-2 py-1 w-[48px]">Blog</span>
-					<span class="relative text-transparent px-2 py-1 w-[105px]">Conferences</span>
+					<span class="relative text-transparent px-2 py-1 w-[62px]">Events</span>
 					<span class="relative text-transparent px-2 py-1 w-[76px]">Contact</span>
 					<span class="relative text-transparent px-2 py-1 w-[75px] flex flex-row items-center">
 						<span class="w-4 h-4 mr-1 inline-block flex-shrink-0"></span>
@@ -138,7 +138,7 @@
 					<a href="/research" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/research') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Research</a>
 					<a href="/publications" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/publications') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Publications</a>
 					<a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/blog') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Blog</a>
-					<a href="/conferences" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/conferences') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Conferences</a>
+					<a href="/events" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/events') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Events</a>
 					<a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/contact') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">Contact</a>
 					<a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 transform hover:translate-x-2 py-2 {$page.url.pathname.startsWith('/search') ? 'text-primary dark:text-blue-400 font-semibold' : ''}">
 						<div class="flex flex-row items-center">

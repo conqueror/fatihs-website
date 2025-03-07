@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "node scripts/generate-content.js && vite dev",
-		"build": "node scripts/generate-content.js && node scripts/download-fonts.js && (node scripts/generate-sitemap.js || true) && (node scripts/optimize-images.js || true) && vite build || echo 'Build failed, see error above'",
+		"build": "node scripts/generate-content.js && node scripts/download-fonts.js && (node scripts/generate-sitemap.js || true) && (node scripts/optimize-images.js || true) && node scripts/generate-prerender-entries.js && vite build || echo 'Build failed, see error above'",
 		"optimize-images": "node scripts/optimize-images.js",
 		"preview": "vite preview",
 		"preview-spa": "node preview-server.js",
@@ -21,7 +21,7 @@
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.20.4",
 		"autoprefixer": "^10.4.14",
-		"glob": "^10.3.3",
+		"glob": "^10.4.5",
 		"hast-util-to-html": "^9.0.5",
 		"postcss": "^8.4.24",
 		"sharp": "^0.32.5",

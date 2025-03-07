@@ -1,16 +1,8 @@
-# www.robotstxt.org
-
-# Allow crawling of all content
+# robots.txt file for fatihnayebi.com
 User-agent: *
 Allow: /
 
-# Disallow utility and internal paths
-Disallow: /api/
-Disallow: /_app/
-Disallow: /admin/
-Disallow: /dashboard/
-
-# Sitemap location
+# Sitemap
 Sitemap: https://fatihnayebi.com/sitemap.xml
 
 # Additional instructions for specific bots

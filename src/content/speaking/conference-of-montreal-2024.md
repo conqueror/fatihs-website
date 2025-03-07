@@ -1,12 +1,19 @@
 ---
-title: "Decision Making in the Digital Age"
-date: "2024-06-10"
-location: "Montreal, QC"
-event: "Conference of Montreal 2024"
-slug: "conference-of-montreal-2024"
+title: Decision Making in the Digital Age
+date: '2024-06-10'
+location: 'Montreal, QC'
+event: Conference of Montreal 2024
+slug: conference-of-montreal-2024
 excerpt: "Fatih Nayebi participated in a panel discussion at the Conference of Montreal 2024, focusing on decision-making in the digital age. The panel explored AI's role in crisis response, ethical considerations of AI implementation, and the critical balance between AI capabilities and human oversight in complex decision-making scenarios."
-tags: ["AI", "Decision Making", "Crisis Management", "Ethics", "Leadership", "Cybersecurity"]
+tags:
+  - AI
+  - Decision Making
+  - Crisis Management
+  - Ethics
+  - Leadership
+  - Cybersecurity
 featured: true
+type: speaking
 ---
 
 # Conference of Montreal 2024 - 30th Anniversary – Montreal, QC (2024)

@@ -41,6 +41,17 @@
     @apply bg-gray-900 text-gray-100;
   }
   
+  /* Add smooth transitions for dark mode switching */
+  * {
+    @apply transition-colors duration-200;
+  }
+  
+  /* Transition for borders, shadows, and backgrounds */
+  .card, .btn, input, select, textarea, .shadow-md, .shadow-lg, .shadow-xl,
+  [class*='border'], [class*='bg-'], [class*='text-'], [class*='ring'] {
+    @apply transition-all duration-200;
+  }
+  
   /* Ensure all code elements use Fira Code */
   pre, code, kbd, samp {
     font-family: 'Fira Code', monospace;

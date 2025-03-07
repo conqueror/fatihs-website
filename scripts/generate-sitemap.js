@@ -20,6 +20,10 @@ const PAGES = [
   { url: '/about', changefreq: 'monthly', priority: '0.8' },
   { url: '/blog', changefreq: 'weekly', priority: '0.9' },
   { url: '/publications', changefreq: 'monthly', priority: '0.8' },
+  { url: '/events', changefreq: 'weekly', priority: '0.9' },
+  { url: '/events/speaking', changefreq: 'weekly', priority: '0.8' },
+  { url: '/events/organizing', changefreq: 'weekly', priority: '0.8' },
+  { url: '/events/media', changefreq: 'weekly', priority: '0.8' },
   { url: '/contact', changefreq: 'monthly', priority: '0.7' }
 ];
 
@@ -43,6 +47,59 @@ function generateSitemap() {
     sitemap += `    <priority>${page.priority}</priority>\n`;
     sitemap += '  </url>\n';
   });
+
+  // Try to add dynamic pages from JSON data
+  try {
+    // Add blog posts
+    if (fs.existsSync(path.join(__dirname, '../src/lib/generated/blog-posts.json'))) {
+      const blogPostsData = fs.readFileSync(path.join(__dirname, '../src/lib/generated/blog-posts.json'), 'utf8');
+      const blogPosts = JSON.parse(blogPostsData);
+      
+      blogPosts.forEach(post => {
+        sitemap += '  <url>\n';
+        sitemap += `    <loc>${BASE_URL}/blog/${post.slug}</loc>\n`;
+        sitemap += `    <lastmod>${currentDate}</lastmod>\n`;
+        sitemap += `    <changefreq>monthly</changefreq>\n`;
+        sitemap += `    <priority>0.7</priority>\n`;
+        sitemap += '  </url>\n';
+      });
+    }
+    
+    // Add publications
+    if (fs.existsSync(path.join(__dirname, '../src/lib/generated/publications.json'))) {
+      const publicationsData = fs.readFileSync(path.join(__dirname, '../src/lib/generated/publications.json'), 'utf8');
+      const publications = JSON.parse(publicationsData);
+      
+      publications.forEach(pub => {
+        sitemap += '  <url>\n';
+        sitemap += `    <loc>${BASE_URL}/publications/${pub.slug}</loc>\n`;
+        sitemap += `    <lastmod>${currentDate}</lastmod>\n`;
+        sitemap += `    <changefreq>monthly</changefreq>\n`;
+        sitemap += `    <priority>0.7</priority>\n`;
+        sitemap += '  </url>\n';
+      });
+    }
+    
+    // Add events
+    if (fs.existsSync(path.join(__dirname, '../src/lib/generated/events.json'))) {
+      const eventsData = fs.readFileSync(path.join(__dirname, '../src/lib/generated/events.json'), 'utf8');
+      const events = JSON.parse(eventsData);
+      
+      events.forEach(event => {
+        // Make sure the event has both type and slug
+        if (event.type && event.slug) {
+          sitemap += '  <url>\n';
+          sitemap += `    <loc>${BASE_URL}/events/${event.type}/${event.slug}</loc>\n`;
+          sitemap += `    <lastmod>${currentDate}</lastmod>\n`;
+          sitemap += `    <changefreq>monthly</changefreq>\n`;
+          sitemap += `    <priority>0.7</priority>\n`;
+          sitemap += '  </url>\n';
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error adding dynamic pages to sitemap:', error);
+  }
 
   sitemap += '</urlset>';
   return sitemap;

@@ -6,6 +6,7 @@
     import { browser } from '$app/environment';
     import { getAllBlogPosts } from '$lib/utils/markdown';
     import { getAllPublications } from '$lib/utils/publications';
+    import { getAllEvents } from '$lib/utils/events';
     
     export let data;
     export let form;
@@ -16,6 +17,7 @@
     let results = form?.results ?? data.results ?? [];
     let blogResults = form?.blogResults ?? data.blogResults ?? [];
     let publicationResults = form?.publicationResults ?? data.publicationResults ?? [];
+    let eventResults = form?.eventResults ?? data.eventResults ?? [];
     let isSearchReady = false;
     
     // Total count for display
@@ -55,17 +57,36 @@
             type: 'publication'
         }));
         
+        // Search in events
+        const events = getAllEvents().filter(event => {
+            return (
+                event.title.toLowerCase().includes(lowerQuery) ||
+                event.event.toLowerCase().includes(lowerQuery) ||
+                (event.excerpt && event.excerpt.toLowerCase().includes(lowerQuery)) ||
+                (event.content && event.content.toLowerCase().includes(lowerQuery)) ||
+                (event.location && event.location.toLowerCase().includes(lowerQuery)) ||
+                (event.tags && event.tags.some(tag => tag.toLowerCase().includes(lowerQuery)))
+            );
+        }).map(event => ({
+            ...event,
+            searchType: 'event',
+            eventType: event.type  // Store original event type
+        }));
+        
         // Filter by type and combine results
         if (searchType === 'blog') {
             results = blogPosts;
         } else if (searchType === 'publication') {
             results = publications;
+        } else if (searchType === 'event') {
+            results = events;
         } else {
-            results = [...blogPosts, ...publications].sort((a, b) => new Date(b.date) - new Date(a.date));
+            results = [...blogPosts, ...publications, ...events].sort((a, b) => new Date(b.date) - new Date(a.date));
         }
         
         blogResults = blogPosts;
         publicationResults = publications;
+        eventResults = events;
         
         // Update URL without reloading the page
         goto(`/search?query=${encodeURIComponent(searchQuery)}&type=${searchType}`, { 
@@ -117,6 +138,55 @@
             performSearch(urlQuery, urlType);
         }
     });
+    
+    // Function to get proper URL for a search result
+    function getResultUrl(result) {
+        if (result.type === 'blog') {
+            return `/blog/${result.slug}`;
+        } else if (result.type === 'publication') {
+            return `/publications/${result.slug}`;
+        } else if (result.searchType === 'event') {
+            return `/events/${result.eventType}/${result.slug}`;
+        }
+        return '#';
+    }
+    
+    // Function to get proper display type for a search result
+    function getResultTypeDisplay(result) {
+        if (result.type === 'blog') {
+            return 'Blog Post';
+        } else if (result.type === 'publication') {
+            return 'Publication';
+        } else if (result.searchType === 'event') {
+            // Map event types to display names
+            const eventTypeDisplay = {
+                'speaking': 'Speaking Engagement',
+                'organizing': 'Organizing Event',
+                'media': 'Media Appearance'
+            };
+            return eventTypeDisplay[result.eventType] || 'Event';
+        }
+        return 'Content';
+    }
+    
+    // Function to get type-specific badge colors for search results
+    function getResultTypeBadgeClass(result) {
+        if (result.type === 'blog') {
+            return 'bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300';
+        } else if (result.type === 'publication') {
+            return 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300';
+        } else if (result.searchType === 'event') {
+            if (result.eventType === 'speaking') {
+                return 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300';
+            } else if (result.eventType === 'organizing') {
+                return 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300';
+            } else if (result.eventType === 'media') {
+                return 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300';
+            }
+            return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300';
+        }
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+    }
 </script>
 
 {#if browser && isSearchReady}
@@ -132,7 +202,7 @@
             <input 
                 type="text" 
                 name="query" 
-                placeholder="Search for blog posts, publications..." 
+                placeholder="Search for blog posts, publications, events..." 
                 value={query} 
                 class="search-input w-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 relative z-10 text-black dark:text-gray-100"
                 aria-label="Search query"
@@ -156,6 +226,10 @@
                 <input type="radio" name="type" value="publication" checked={type === 'publication'} />
                 <span class="filter-label text-black dark:text-gray-100">Publications</span>
             </label>
+            <label class="filter-option">
+                <input type="radio" name="type" value="event" checked={type === 'event'} />
+                <span class="filter-label text-black dark:text-gray-100">Events</span>
+            </label>
         </div>
     </form>
     
@@ -170,6 +244,7 @@
                     {totalResults} results found
                 {/if}
                 {#if query} for "<span class="query-text">{query}</span>"{/if}
+                {#if type !== 'all'} in {type === 'blog' ? 'blog posts' : type === 'publication' ? 'publications' : 'events'}{/if}
             </h2>
         </div>
         
@@ -183,8 +258,8 @@
                     <div class="search-result-item bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transform transition-all duration-300 hover:shadow-md hover:-translate-y-1">
                         <div class="result-meta mb-6 pb-4 border-b border-gray-100 dark:border-gray-700">
                             <div class="flex flex-wrap justify-between items-center">
-                                <span class="result-type bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300 px-3 py-1 rounded-full text-sm">
-                                    {result.type === 'blog' ? 'Blog Post' : 'Publication'}
+                                <span class="result-type {getResultTypeBadgeClass(result)} px-3 py-1 rounded-full text-sm">
+                                    {getResultTypeDisplay(result)}
                                 </span>
                                 <span class="result-date text-gray-500 dark:text-gray-400 text-sm italic">
                                     {new Date(result.date).toLocaleDateString('en-US', {
@@ -197,23 +272,31 @@
                         </div>
                         
                         <h3 class="result-title text-2xl font-semibold mb-4 text-gray-800 dark:text-white">
-                            <a href={result.type === 'blog' ? `/blog/${result.slug}` : `/publications/${result.slug}`}>
+                            <a href={getResultUrl(result)}>
                                 {result.title}
                             </a>
                         </h3>
                         
-                        {#if result.type === 'blog' && result.excerpt}
+                        {#if result.searchType === 'event' && result.event}
+                            <div class="result-subtitle text-xl text-primary-600 dark:text-primary-400 mb-4">
+                                {result.event}
+                            </div>
+                        {/if}
+                        
+                        {#if result.excerpt}
                             <p class="result-excerpt text-gray-600 dark:text-gray-300 mb-6">{result.excerpt}</p>
                         {/if}
                         
-                        {#if result.type === 'publication' && (result.abstract || result.excerpt)}
-                            <p class="result-excerpt text-gray-600 dark:text-gray-300 mb-6">{result.abstract || result.excerpt}</p>
+                        {#if result.searchType === 'event' && result.location}
+                            <div class="result-meta text-gray-600 dark:text-gray-300 mb-4">
+                                <span class="font-semibold">Location:</span> {result.location}
+                            </div>
                         {/if}
                         
                         {#if result.tags && result.tags.length > 0}
                             <div class="result-tags flex flex-wrap gap-2 mb-6">
                                 {#each result.tags as tag}
-                                    <span class="tag bg-primary/10 text-primary dark:bg-blue-900/50 dark:text-blue-300 px-3 py-1 rounded-full text-sm">
+                                    <span class="tag bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">
                                         {tag}
                                     </span>
                                 {/each}
@@ -225,7 +308,7 @@
         </div>
     {:else}
         <div class="search-instructions bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
-            <p class="text-lg text-gray-600 dark:text-gray-300">Enter a search term above to find blog posts and publications.</p>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Enter a search term above to find blog posts, publications, and events.</p>
         </div>
     {/if}
 </div>

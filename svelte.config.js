@@ -25,7 +25,32 @@ const config = {
 		}),
 		prerender: {
 			crawl: true,
-			entries: ['*', '/sitemap.xml', '/robots.txt'],
+			entries: [
+  "*",
+  "/sitemap.xml",
+  "/robots.txt",
+  "/events/speaking",
+  "/events/organizing",
+  "/events/media",
+  "/events/speaking/scaling-ai-initiatives-in-retail-gen-ai-reality-check-2025-07",
+  "/events/speaking/big-data-analytics-summit-canada-2025",
+  "/events/speaking/newsweek-ai-impact-awards-2025",
+  "/events/speaking/generative-ai-and-the-next-generation-of-search-2025-03",
+  "/events/speaking/mcgill-data-network-retail-panel-2025",
+  "/events/speaking/from-conversational-to-agentic-ai-how-ai-agents-are-reshaping-retail-2025-02",
+  "/events/speaking/leveraging-ai-for-retail-innovation-aldos-success-stories-2025-02",
+  "/events/speaking/personalization-at-scale-cxsphere-2024",
+  "/events/speaking/scaling-ai-initiatives-in-retail-odsc-west-2024",
+  "/events/organizing/retail-gen-ai-hackathon-2024",
+  "/events/speaking/big-data-analytics-montreal-summit-2024",
+  "/events/speaking/all-in-2024",
+  "/events/speaking/conference-of-montreal-2024",
+  "/events/media/ai-with-sach-podcast-2024",
+  "/events/media/behind-the-growth-podcast-2024",
+  "/events/speaking/unleashing-the-power-of-data-ai-to-drive-business-value-and-innovation-2024-04",
+  "/events/speaking/unleashing-the-power-of-generative-ai-for-tabular-data-in-machine-learning-applications-2023-10",
+  "/events/organizing/retail-gen-ai-hackathon-2023"
+],
 			handleHttpError: 'warn'
 		},
 		// Ensure we're using absolute paths for better compatibility
