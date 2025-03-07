@@ -82,7 +82,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<!-- Canonical URL - Always use the production domain for consistent SEO -->
-	<link rel="canonical" href={`${siteUrl}${$page.url.pathname}`} />
+	<link rel="canonical" href="https://fatihnayebi.com{$page.url.pathname}" />
 	
 	<!-- Favicons and PWA -->
 	<link rel="icon" href="/favicon.ico" sizes="any" />
