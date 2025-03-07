@@ -76,7 +76,7 @@ export function generatePersonSchema(person = {}, siteUrl = 'https://fatihnayebi
   const defaultPerson = {
     name: 'Fatih Nayebi',
     jobTitle: 'AI Researcher and Developer',
-    email: 'contact@fatihnayebi.com',
+    email: 'fatih@gradientdivergence.com',
     description: 'AI researcher focusing on machine learning and natural language processing',
     image: '/images/profile.avif',
     sameAs: [

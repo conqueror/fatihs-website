@@ -75,7 +75,7 @@
         .catch(error => {
             console.error('Error submitting form:', error);
             isSubmitting = false;
-            alert('Sorry, there was a problem sending your message. Please try again or contact me directly at contact@fatihnayebi.com');
+            alert('Sorry, there was a problem sending your message. Please try again or contact me directly at fatih@gradientdivergence.com');
         });
     }
     
@@ -117,9 +117,9 @@
                     </svg>
                     Email
                 </h2>
-                <a href="mailto:contact@fatihnayebi.com" 
+                <a href="mailto:fatih@gradientdivergence.com" 
                    class="text-primary dark:text-blue-400 hover:underline flex items-center group mb-8 text-lg">
-                    <span class="group-hover:translate-x-1 transition-transform">contact@fatihnayebi.com</span>
+                    <span class="group-hover:translate-x-1 transition-transform">fatih@gradientdivergence.com</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>

@@ -61,7 +61,7 @@ MIT
 
 ## Contact
 
-For any inquiries, please reach out via the contact form on the website or directly at contact@fatihnayebi.com.
+For any inquiries, please reach out via the contact form on the website or directly at fatih@gradientdivergence.com.
 
 ## Adding New Blog Posts
 

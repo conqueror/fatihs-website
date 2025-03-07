@@ -698,7 +698,7 @@ Create plugins that allow AI assistants like ChatGPT to interact with your conte
     "url": "https://fatihnayebi.com/.well-known/openapi.json"
   },
   "logo_url": "https://fatihnayebi.com/logo.png",
-  "contact_email": "contact@fatihnayebi.com",
+  "contact_email": "fatih@gradientdivergence.com",
   "legal_info_url": "https://fatihnayebi.com/legal"
 }
 ```
