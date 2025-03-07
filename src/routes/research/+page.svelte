@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { fade, fly, scale } from 'svelte/transition';
-    import AnimateInView from '$lib/AnimateInView.svelte';
+    import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
 
     let visible = false;
     export let data;

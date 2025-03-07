@@ -44,10 +44,10 @@
   
   onMount(async () => {
     if (event.mediaType === 'youtube') {
-      const module = await import('./YouTubeEmbed.svelte');
+      const module = await import('../media/YouTubeEmbed.svelte');
       YouTubeEmbed = module.default;
     } else if (event.mediaType === 'spotify') {
-      const module = await import('./SpotifyEmbed.svelte');
+      const module = await import('../media/SpotifyEmbed.svelte');
       SpotifyEmbed = module.default;
     }
   });

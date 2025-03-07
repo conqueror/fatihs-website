@@ -3,7 +3,7 @@
     import DOMPurify from 'isomorphic-dompurify';
     import { browser } from '$app/environment';
     import { marked } from 'marked';
-    import SEO from '$lib/components/SEO.svelte';
+    import SEO from '$lib/components/seo/SEO.svelte';
     import { generatePublicationSchema } from '$lib/utils/structured-data';
     import { page } from '$app/stores';
     

@@ -1,10 +1,10 @@
 <script>
   import { fade, fly, scale } from 'svelte/transition';
   import { spring } from 'svelte/motion';
-  import AnimateInView from '$lib/AnimateInView.svelte';
-  import AnimatedButton from '$lib/AnimatedButton.svelte';
-  import Accordion from '$lib/Accordion.svelte';
-  import Modal from '$lib/Modal.svelte';
+  import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
+  import AnimatedButton from '$lib/components/ui/AnimatedButton.svelte';
+  import Accordion from '$lib/components/ui/Accordion.svelte';
+  import Modal from '$lib/components/ui/Modal.svelte';
   
   // Button showcase
   const buttonVariants = ['primary', 'secondary', 'outline'];

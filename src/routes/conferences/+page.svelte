@@ -1,8 +1,8 @@
 <script>
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
-  import AnimateInView from '$lib/AnimateInView.svelte';
-  import SEO from '$lib/components/SEO.svelte';
+  import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
+  import SEO from '$lib/components/seo/SEO.svelte';
   
   export let data;
   const { conferences } = data;

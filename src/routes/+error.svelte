@@ -1,6 +1,6 @@
 <script>
   import { page } from '$app/stores';
-  import SEO from '$lib/components/SEO.svelte';
+  import SEO from '$lib/components/seo/SEO.svelte';
 
   // Determine if this is a 404 error
   $: is404 = $page.status === 404;

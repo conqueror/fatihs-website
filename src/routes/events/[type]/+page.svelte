@@ -1,9 +1,9 @@
 <script>
   import { fade, fly } from 'svelte/transition';
   import { onMount } from 'svelte';
-  import SEO from '$lib/components/SEO.svelte';
-  import EventCard from '$lib/components/EventCard.svelte';
-  import EventCalendar from '$lib/components/EventCalendar.svelte';
+  import SEO from '$lib/components/seo/SEO.svelte';
+  import EventCard from '$lib/components/ui/EventCard.svelte';
+  import EventCalendar from '$lib/components/ui/EventCalendar.svelte';
   
   export let data;
   const { events, type } = data;

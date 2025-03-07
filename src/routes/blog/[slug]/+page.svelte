@@ -3,7 +3,7 @@
     import DOMPurify from 'dompurify';
     import { storage } from '$lib/utils/storage';
     import { browser } from '$app/environment';
-    import SEO from '$lib/components/SEO.svelte';
+    import SEO from '$lib/components/seo/SEO.svelte';
     import { generateBlogPostSchema } from '$lib/utils/structured-data';
     import { page } from '$app/stores';
     

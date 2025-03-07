@@ -1,16 +1,16 @@
 <script>
 	import '../styles/global.css';
 	import { page } from '$app/stores';
-	import Footer from '$lib/Footer.svelte';
-	import SEO from '$lib/components/SEO.svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
+	import SEO from '$lib/components/seo/SEO.svelte';
 	import { generateWebsiteSchema } from '$lib/utils/structured-data';
-	import Navbar from '$lib/Navbar.svelte';
-	import ScrollToTop from '$lib/ScrollToTop.svelte';
-	import ThemeProvider from '$lib/components/ThemeProvider.svelte';
-	import FontPreload from '$lib/components/FontPreload.svelte';
+	import Navbar from '$lib/components/navigation/Navbar.svelte';
+	import ScrollToTop from '$lib/components/ui/ScrollToTop.svelte';
+	import ThemeProvider from '$lib/components/layout/ThemeProvider.svelte';
+	import FontPreload from '$lib/components/seo/FontPreload.svelte';
 	
 	// Import analytics and cookie consent components
-	import CookieConsent from '$lib/components/CookieConsent.svelte';
+	import CookieConsent from '$lib/components/ui/CookieConsent.svelte';
 	import { initAnalytics, trackPageView, isDoNotTrackEnabled } from '$lib/services/analytics';
 	import { browser } from '$app/environment';
 	

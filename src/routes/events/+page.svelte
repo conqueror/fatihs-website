@@ -4,16 +4,16 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import { browser } from '$app/environment';
-  import SEO from '$lib/components/SEO.svelte';
-  import EventCard from '$lib/components/EventCard.svelte';
-  import EventCalendar from '$lib/components/EventCalendar.svelte';
+  import SEO from '$lib/components/seo/SEO.svelte';
+  import EventCard from '$lib/components/ui/EventCard.svelte';
+  import EventCalendar from '$lib/components/ui/EventCalendar.svelte';
   
   // Import any required components for animation
   // Assuming there's an AnimateInView component as shown in the plan
   let AnimateInView;
   
   onMount(async () => {
-    const module = await import('$lib/AnimateInView.svelte');
+    const module = await import('$lib/components/ui/AnimateInView.svelte');
     AnimateInView = module.default;
     
     // Apply URL search params to state

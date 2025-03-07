@@ -1,9 +1,9 @@
 <script>
   import { fade, fly } from 'svelte/transition';
   import { onMount } from 'svelte';
-  import SEO from '$lib/components/SEO.svelte';
-  import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-  import SpotifyEmbed from '$lib/components/SpotifyEmbed.svelte';
+  import SEO from '$lib/components/seo/SEO.svelte';
+  import YouTubeEmbed from '$lib/components/media/YouTubeEmbed.svelte';
+  import SpotifyEmbed from '$lib/components/media/SpotifyEmbed.svelte';
   
   export let data;
   const { event } = data;

@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import AnimateInView from '$lib/AnimateInView.svelte';
+    import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
     import { browser } from '$app/environment';
     import { fade, fly } from 'svelte/transition';
     

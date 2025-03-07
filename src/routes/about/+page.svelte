@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 	import { fade, fly, scale } from 'svelte/transition';
 	import { spring } from 'svelte/motion';
-	import AnimateInView from '$lib/AnimateInView.svelte';
-	import Image from '$lib/components/Image.svelte';
+	import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
+	import Image from '$lib/components/ui/Image.svelte';
 
 	let visible = false;
 	
