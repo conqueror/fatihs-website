@@ -1,3 +1,8 @@
+# Redirect HTTP to HTTPS and www to non-www (URL Canonicalization)
+http://fatihnayebi.com/*         https://fatihnayebi.com/:splat         301!
+http://www.fatihnayebi.com/*     https://fatihnayebi.com/:splat         301!
+https://www.fatihnayebi.com/*    https://fatihnayebi.com/:splat         301!
+
 # Redirects for SPA routing on static site
 # This ensures that when users refresh the page or directly access a route,
 # they are properly directed to the index.html file which will handle the routing
