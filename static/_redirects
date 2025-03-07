@@ -1,4 +1,7 @@
-# Redirect HTTP to HTTPS and www to non-www (URL Canonicalization)
+# URL Canonicalization Rules for SEO Optimization
+# These rules ensure all visitors are directed to the canonical version of the site
+# Benefits: Prevents duplicate content issues, improves SEO, and provides a consistent user experience
+# The 301! indicates a permanent redirect with high priority
 http://fatihnayebi.com/*         https://fatihnayebi.com/:splat         301!
 http://www.fatihnayebi.com/*     https://fatihnayebi.com/:splat         301!
 https://www.fatihnayebi.com/*    https://fatihnayebi.com/:splat         301!
