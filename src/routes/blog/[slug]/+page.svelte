@@ -6,6 +6,7 @@
     import SEO from '$lib/components/seo/SEO.svelte';
     import { generateBlogPostSchema } from '$lib/utils/structured-data';
     import { page } from '$app/stores';
+    import PageContainer from '$lib/components/layout/PageContainer.svelte';
     
     export let data;
     // Ensure post is always at least an empty object to prevent undefined errors
@@ -155,19 +156,19 @@
     }}
 />
 
-{#if isLoading}
-    <div class="loading-container">
-        <div class="loading-spinner"></div>
-        <p class="dark:text-white">Loading post...</p>
-    </div>
-{:else if hasError}
-    <div class="error-container">
-        <h1 class="dark:text-white">Error Loading Content</h1>
-        <p class="dark:text-white">Sorry, there was an error loading this blog post.</p>
-        <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
-    </div>
-{:else if post?.title}
-    <div class="container mx-auto px-4 py-12">
+<PageContainer>
+    {#if isLoading}
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p class="dark:text-white">Loading post...</p>
+        </div>
+    {:else if hasError}
+        <div class="error-container">
+            <h1 class="dark:text-white">Error Loading Content</h1>
+            <p class="dark:text-white">Sorry, there was an error loading this blog post.</p>
+            <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
+        </div>
+    {:else if post?.title}
         <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
             <div class="blog-header">
                 <h1 class="dark:text-white">{post.title}</h1>
@@ -199,14 +200,14 @@
                 <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
             </div>
         </div>
-    </div>
-{:else}
-    <div class="error-container">
-        <h1 class="dark:text-white">Post Not Found</h1>
-        <p class="dark:text-white">Sorry, we couldn't find the blog post you're looking for.</p>
-        <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
-    </div>
-{/if}
+    {:else}
+        <div class="error-container">
+            <h1 class="dark:text-white">Post Not Found</h1>
+            <p class="dark:text-white">Sorry, we couldn't find the blog post you're looking for.</p>
+            <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
+        </div>
+    {/if}
+</PageContainer>
 
 <style>
     .error-container {

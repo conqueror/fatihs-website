@@ -7,7 +7,10 @@
 	import Navbar from '$lib/components/navigation/Navbar.svelte';
 	import ScrollToTop from '$lib/components/ui/ScrollToTop.svelte';
 	import ThemeProvider from '$lib/components/layout/ThemeProvider.svelte';
-	import FontPreload from '$lib/components/seo/FontPreload.svelte';
+	import FontPreload from '$lib/components/ui/FontPreload.svelte';
+	import ScriptLoader from '$lib/components/ui/ScriptLoader.svelte';
+	import PageTransition from '$lib/components/ui/PageTransition.svelte';
+	import { initFonts, fontsLoaded } from '$lib/services/fonts';
 	
 	// Import analytics and cookie consent components
 	import CookieConsent from '$lib/components/ui/CookieConsent.svelte';
@@ -27,6 +30,7 @@
 	// URL and site information
 	let currentUrl = '';
 	$: siteUrl = browser ? window.location.origin : 'https://fatihnayebi.com';
+	$: pageKey = $page.url.pathname; // Key for page transitions
 	
 	// Generate website schema for the homepage
 	$: websiteSchema = generateWebsiteSchema(siteUrl);
@@ -45,188 +49,137 @@
 		}
 	}
 	
-	// Reactive statement to apply theme class
-	$: if (browser && $theme === 'dark') {
-		document.documentElement.classList.add('dark');
-	} else if (browser) {
-		document.documentElement.classList.remove('dark');
-	}
-	
-	// Device detection for conditional features
-	let isMobileDevice = false;
-	
-	// Initialize theme based on localStorage or system preference
+	// Initialize analytics and theme
 	onMount(() => {
+		if (!isDoNotTrackEnabled()) {
+			initAnalytics();
+		}
+		
+		// Initialize fonts
+		initFonts();
+		
+		// Check for older browsers
 		if (browser) {
-			// Check stored preference
-			const savedTheme = localStorage.getItem('theme');
-			if (savedTheme) {
-				theme.set(savedTheme);
-			} else {
-				// Use system preference if no stored preference
-				const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-				theme.set(prefersDarkMode ? 'dark' : 'light');
-			}
-			
-			// Initialize analytics only if user hasn't opted out
-			if (!isDoNotTrackEnabled()) {
-				initAnalytics();
-			}
-			
-			// Mobile detection
-			isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-			
-			// Set viewport height fix for mobile browsers
-			if (isMobileDevice) {
-				// Fix for mobile viewport height issues (100vh problem)
-				const setVh = () => {
-					const vh = window.innerHeight * 0.01;
-					document.documentElement.style.setProperty('--vh', `${vh}px`);
-				};
-				
-				window.addEventListener('resize', setVh);
-				window.addEventListener('orientationchange', setVh);
-				setVh();
+			try {
+				// Simple feature detection for modern browsers
+				if (!('IntersectionObserver' in window) || !('querySelector' in document)) {
+					document.getElementById('old-browser-warning').classList.remove('hidden');
+				}
+			} catch (e) {
+				console.warn('Browser feature detection failed', e);
 			}
 		}
 	});
-	
-	// Detect system theme changes
-	if (browser) {
-		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-		
-		// Update theme when system preference changes (if user hasn't manually set a theme)
-		mediaQuery.addEventListener('change', (e) => {
-			if (!localStorage.getItem('theme')) {
-				theme.set(e.matches ? 'dark' : 'light');
-			}
-		});
-	}
-
-	// Register service worker for better routing
-	if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-		window.addEventListener('load', () => {
-			navigator.serviceWorker.register('/sw.js')
-				.then(registration => {
-					console.log('ServiceWorker registration successful');
-					
-					// Check for updates for the service worker
-					setInterval(() => {
-						registration.update();
-					}, 60 * 60 * 1000); // Check for updates hourly
-				})
-				.catch(error => {
-					console.log('ServiceWorker registration failed:', error);
-				});
-		});
-	}
 </script>
 
-<!-- Base SEO component that will be present on all pages -->
-<SEO 
-	title="Fatih Nayebi | AI Researcher and Developer"
-	description="Personal website of Fatih Nayebi, featuring research in AI, machine learning, and software development."
-	structuredData={structuredData}
-	googleVerification="{GOOGLE_VERIFICATION}"
-	bingVerification="{BING_VERIFICATION}"
-	yandexVerification="{YANDEX_VERIFICATION}"
-/>
-
-<FontPreload />
-
 <svelte:head>
-	<!-- Mobile optimization meta tags -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-	<meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)">
-	<meta name="format-detection" content="telephone=no">
-	<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
-	
-	<!-- Use self-hosted fonts -->
-	<link rel="stylesheet" href="/fonts/fonts.css">
-	
-	<!-- Manifest for PWA support -->
-	<link rel="manifest" href="/manifest.json">
-	
-	<!-- iOS specific icons -->
-	<link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/images/icons/apple-touch-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon-180x180.png">
-	
-	<!-- Load fonts with font-display:swap to prevent render blocking -->
-	<style>
-		/* Font application styles */
-		body {
-			/* Font family now defined in fonts.css */
-			/* Mobile viewport height fix */
-			min-height: 100vh;
-			min-height: calc(var(--vh, 1vh) * 100);
-			/* Prevent pull-to-refresh on mobile */
-			overscroll-behavior-y: none;
-		}
-		
-		/* Fix for mobile tap highlight */
-		* {
-			-webkit-tap-highlight-color: transparent;
-		}
-		
-		/* Improve mobile readability with slightly larger text */
-		@media (max-width: 640px) {
-			html {
-				font-size: 110%;
-			}
-		}
+	<!-- SEO -->
+	<title>Fatih Nayebi, Ph.D. | Data & AI Leader</title>
+	<meta name="description" content="Fatih Nayebi's personal website - Data & AI Leader, Faculty Lecturer at McGill University, and VP of Data & AI at ALDO Group." />
 
-		/* Add font loading state styles */
-		.fonts-loading {
-			/* Avoid layout shifts during font loading */
-		}
+	<!-- Charset and viewport -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		.fonts-loaded {
-			/* Styles after fonts have loaded */
-		}
-	</style>
+	<!-- Canonical URL -->
+	<link rel="canonical" href={currentUrl} />
 	
-	<!-- iOS refresh handler script - load with defer -->
-	<script src="/refresh-handler.js" defer></script>
+	<!-- Favicons and PWA -->
+	<link rel="icon" href="/favicon.ico" sizes="any" />
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link rel="manifest" href="/manifest.json" />
 	
-	<!-- Font loading detection script -->
-	<script>
-		// Add class to body while fonts are loading
-		document.documentElement.classList.add('fonts-loading');
-		if ('fonts' in document) {
-			Promise.all([
-				document.fonts.load('1em Inter'),
-				document.fonts.load('1em Fira Code')
-			]).then(() => {
-				document.documentElement.classList.remove('fonts-loading');
-				document.documentElement.classList.add('fonts-loaded');
-			}).catch(() => {
-				// Fallback if font loading fails
-				document.documentElement.classList.remove('fonts-loading');
-			});
-		} else {
-			// Browsers without font loading API
-			document.documentElement.classList.remove('fonts-loading');
-		}
-	</script>
+	<!-- Preload resources for performance -->
+	<link rel="dns-prefetch" href="https://api.fatihnayebi.com" />
+	<link rel="preconnect" href="https://api.fatihnayebi.com" crossorigin />
+	
+	<!-- Search engine verification -->
+	{#if GOOGLE_VERIFICATION}
+		<meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
+	{/if}
+	{#if BING_VERIFICATION}
+		<meta name="msvalidate.01" content={BING_VERIFICATION} />
+	{/if}
+	{#if YANDEX_VERIFICATION}
+		<meta name="yandex-verification" content={YANDEX_VERIFICATION} />
+	{/if}
+	
+	<!-- Open Graph / Social media meta tags -->
+	<meta property="og:site_name" content="Fatih Nayebi | Data & AI Leader" />
+	<meta property="og:url" content={currentUrl} />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Fatih Nayebi, Ph.D. | Data & AI Leader" />
+	<meta property="og:description" content="Fatih Nayebi's personal website - Data & AI Leader, Faculty Lecturer at McGill University, and VP of Data & AI at ALDO Group." />
+	<meta property="og:image" content={`${siteUrl}/images/social-card.jpg`} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	
+	<!-- Twitter Card data -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@FatihNayebi" />
+	<meta name="twitter:title" content="Fatih Nayebi, Ph.D. | Data & AI Leader" />
+	<meta name="twitter:description" content="Fatih Nayebi's personal website - Data & AI Leader, Faculty Lecturer at McGill University, and VP of Data & AI at ALDO Group." />
+	<meta name="twitter:image" content={`${siteUrl}/images/social-card.jpg`} />
+	
+	<!-- Preload critical resources -->
+	<link rel="preload" href="/images/background.jpg" as="image" />
+	
+	<!-- Author information -->
+	<meta name="author" content="Fatih Nayebi" />
+	
+	<!-- Robots directive -->
+	<meta name="robots" content="index, follow" />
 </svelte:head>
 
+<!-- Font preloading -->
+<FontPreload />
+
+<!-- Notification for older browsers -->
+<div class="bg-yellow-300 text-black px-4 py-2 text-center hidden" id="old-browser-warning">
+	You are using an outdated browser. Please upgrade for the best experience.
+</div>
+
+<!-- Theme management -->
 <ThemeProvider>
 	<div class="min-h-screen flex flex-col">
+		<!-- Header -->
 		<Navbar />
-		<main class="flex-grow pt-16">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+		
+		<!-- Main content with SEO and page transitions -->
+		<main class="flex-grow z-0">
+			<SEO />
+			<PageTransition key={pageKey}>
 				<slot />
-			</div>
+			</PageTransition>
 		</main>
+		
+		<!-- Footer -->
 		<Footer />
+		
+		<!-- Cookie consent banner -->
+		<CookieConsent />
+		
+		<!-- Back to top button -->
 		<ScrollToTop />
 	</div>
-
-	<!-- Cookie consent banner -->
-	<CookieConsent />
 </ThemeProvider>
+
+<!-- Load third-party scripts -->
+<ScriptLoader />
+
+<style>
+	/* Global styles specific to the layout */
+	:global(body) {
+		/* System fonts fallback handled by FontPreload component */
+	}
+	
+	:global(.page-transition) {
+		position: relative;
+	}
+	
+	/* Styles for the old browser warning */
+	#old-browser-warning {
+		font-family: system-ui, sans-serif; /* Ensure this works in older browsers */
+	}
+</style>

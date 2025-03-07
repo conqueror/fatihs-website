@@ -4,6 +4,7 @@
   import SEO from '$lib/components/seo/SEO.svelte';
   import EventCard from '$lib/components/ui/EventCard.svelte';
   import EventCalendar from '$lib/components/ui/EventCalendar.svelte';
+  import PageContainer from '$lib/components/layout/PageContainer.svelte';
   
   export let data;
   const { events, type } = data;
@@ -128,30 +129,12 @@
 </script>
 
 <SEO 
-  title="{pageTitle} | Fatih Nayebi"
-  description={pageDescription}
-  keywords={`${type} events, ${tags.slice(0, 5).join(', ')}`}
-  canonical={`https://fatihnayebi.com/events/${type}`}
-  openGraph={{
-    title: pageTitle,
-    description: pageDescription,
-    url: `https://fatihnayebi.com/events/${type}`,
-    type: 'website'
-  }}
-  twitter={{
-    card: 'summary',
-    title: pageTitle,
-    description: pageDescription
-  }}
+  title={`${type.charAt(0).toUpperCase() + type.slice(1)} Events`}
+  description={`Browse my ${type} events, including ${type === 'speaking' ? 'talks, keynotes, and panel discussions' : type === 'organizing' ? 'conferences, meetups, and workshops' : 'podcasts, interviews, and media appearances'}.`}
 />
 
-<div class="container mx-auto px-4 py-8">
-  <!-- SEO component with appropriate metadata -->
-  <SEO 
-    title={`${type.charAt(0).toUpperCase() + type.slice(1)} Events`}
-    description={`Browse my ${type} events, including ${type === 'speaking' ? 'talks, keynotes, and panel discussions' : type === 'organizing' ? 'conferences, meetups, and workshops' : 'podcasts, interviews, and media appearances'}.`}
-  />
-
+{#if visible}
+<PageContainer>
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
       {type.charAt(0).toUpperCase() + type.slice(1)} Events
@@ -250,11 +233,7 @@
           {#each tags as tag}
             <button 
               on:click={() => toggleTag(tag)}
-              class="px-3 py-1 text-sm rounded-full transition-colors border
-              {selectedTags.includes(tag) 
-                ? 'bg-primary-100 text-primary-800 dark:bg-primary-900/50 dark:text-primary-300 border-primary-300 dark:border-primary-700' 
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 border-gray-200 dark:border-gray-600'} 
-              focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
+              class="px-3 py-1 text-sm rounded-full transition-colors {selectedTags.includes(tag) ? 'bg-primary-500 dark:bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'}"
             >
               {tag}
             </button>
@@ -263,47 +242,42 @@
       </div>
     {/if}
   </div>
-  
-  <!-- Events display -->
+    
+  <!-- Display info about type -->
+  {#if typeInfo[type]}
+    <div class="mb-8">
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/20 border border-gray-200 dark:border-gray-700 prose prose-sm dark:prose-invert max-w-none">
+        <h2>{typeInfo[type].title}</h2>
+        <p>{typeInfo[type].description}</p>
+      </div>
+    </div>
+  {/if}
+    
+  <!-- Display events according to view mode -->
   {#if viewMode === 'list'}
-    <!-- List view -->
     {#if filteredEvents.length > 0}
-      <div class="grid gap-8 mt-8">
-        {#each filteredEvents as event, i}
-          {#if i === 0 || visible}
+      <div class="space-y-6">
+        {#each filteredEvents as event}
+          <div in:fade={{ duration: 300 }}>
             <EventCard {event} />
-          {/if}
+          </div>
         {/each}
       </div>
     {:else}
-      <div class="text-center py-12 mt-8 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
-        <h2 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">No Events Found</h2>
-        <p class="text-gray-700 dark:text-gray-300 mb-4">Try adjusting your filters to find events.</p>
+      <div class="p-10 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 text-center">
+        <p class="text-gray-600 dark:text-gray-300">No events found matching your criteria</p>
         <button 
           on:click={resetFilters}
-          class="px-4 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white rounded-md transition-colors"
+          class="mt-4 px-4 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-600 dark:hover:bg-primary-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400 dark:focus:ring-primary-400"
         >
           Reset Filters
         </button>
       </div>
     {/if}
   {:else}
-    <!-- Calendar view -->
-    <div class="mt-8">
-      <EventCalendar events={events.filter(event => {
-        // Apply the same filters
-        let matchesYear = selectedYear === 'all' || 
-          (event.date && new Date(event.date).getFullYear().toString() === selectedYear);
-          
-        let matchesTags = selectedTags.length === 0 || 
-          (event.tags && selectedTags.some(tag => event.tags.includes(tag)));
-          
-        let matchesSearch = !searchQuery || 
-          (event.title && event.title.toLowerCase().includes(searchQuery.toLowerCase())) || 
-          (event.excerpt && event.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
-          
-        return matchesYear && matchesTags && matchesSearch;
-      })} />
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/20 border border-gray-200 dark:border-gray-700 p-4">
+      <EventCalendar events={filteredEvents} />
     </div>
   {/if}
-</div> 
+</PageContainer>
+{/if} 

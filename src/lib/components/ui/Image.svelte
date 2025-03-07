@@ -8,276 +8,434 @@
   - Square option for consistent proportions
 -->
 <script>
-  // Core image properties
+  // Image props
   export let src = '';
   export let alt = '';
   export let width = undefined;
   export let height = undefined;
-  
-  // Optional properties for optimization
+  export let aspectRatio = undefined;
   export let lazy = true;
-  export let sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'; // Default to more conservative sizing
+  export let fetchpriority = 'auto';
   export let className = '';
+  export let sizes = '100vw';
   export let objectFit = 'cover';
   export let objectPosition = 'center';
-  export let blurhash = null;
-  export let style = '';
-  export let square = false; // New option to force square aspect ratio
-  export let debug = false; // Debug flag, default to false
-  export let disableLargestSizes = false; // Option to limit max size for performance
+  export let loading = lazy ? 'lazy' : 'eager';
+  export let blurPlaceholder = true;
+  export let debug = false; // Disable debugging by default
+  export let square = false; // Add square property for 1:1 aspect ratio
+  export let disableLargestSizes = false; // Add disableLargestSizes property
+  export let transitionDuration = '0.5s'; // Allow customizing transition duration
+  export let fadeIn = true; // Allow disabling fade-in effect
   
-  // For debugging
-  let srcPath = src;
+  import { onMount, afterUpdate, tick } from 'svelte';
   
-  // Generate srcset based on the original image
-  // This assumes your build process creates responsive versions
-  // or you're manually creating them
-  function generateSrcset(src) {
-    // Skip for external URLs
-    if (src.startsWith('http') || src.startsWith('data:')) {
-      return {
-        avif: '',
-        webp: '',
-        original: ''
-      };
+  // Calculate aspect ratio if dimensions are provided
+  const calculatedAspectRatio = square ? '1/1' : (aspectRatio || (width && height ? `${width}/${height}` : undefined));
+  
+  // Standardize width to match available optimized sizes
+  // This helps avoid 404s when requesting sizes that don't exist
+  function standardizeWidth(requestedWidth) {
+    if (!requestedWidth) return 640; // Default to 640 if no width provided
+    
+    // Available widths from the optimizer
+    const availableWidths = [320, 640, 960, 1280, 1920];
+    
+    // Find the closest available width
+    let closestWidth = availableWidths[0];
+    let minDiff = Math.abs(requestedWidth - closestWidth);
+    
+    for (let i = 1; i < availableWidths.length; i++) {
+      const diff = Math.abs(requestedWidth - availableWidths[i]);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestWidth = availableWidths[i];
+      }
     }
     
-    // Extract file extension and path
-    const fileExt = src.split('.').pop().toLowerCase();
-    const basePath = src.substring(0, src.lastIndexOf('.'));
+    return closestWidth;
+  }
+  
+  // Standardize the width if provided
+  const standardWidth = width ? standardizeWidth(width) : undefined;
+  
+  // HELPERS FOR PATH CONSTRUCTION
+  // Extract the file name from the source path
+  function getFilename(path) {
+    if (!path) return '';
     
-    // Convert path to use optimized folder path if it's not already there
-    let optimizedBasePath = basePath;
-    if (!optimizedBasePath.includes('/optimized/')) {
-      const parts = optimizedBasePath.split('/');
-      const filename = parts.pop();
-      optimizedBasePath = [...parts, 'optimized', filename].join('/');
+    // Get the part after the last slash
+    const filename = path.split('/').pop();
+    
+    // Remove the extension if present
+    return filename ? (filename.includes('.') ? filename.split('.')[0] : filename) : '';
+  }
+  
+  // Build an optimized image path
+  function buildOptimizedPath(name, width, format = 'avif', isPlaceholder = false) {
+    // Always use the /images/optimized/ path for consistency
+    const optimizedDir = '/images/optimized';
+    
+    // For placeholder
+    if (isPlaceholder) {
+      return `${optimizedDir}/${name}-placeholder.webp`;
     }
     
-    // Different size variations - exclude largest sizes if needed
-    const widths = disableLargestSizes 
-      ? [320, 640, 960] 
-      : [320, 640, 960, 1280, 1920];
+    // For regular optimized image with width
+    if (width) {
+      return `${optimizedDir}/${name}-${width}.${format}`;
+    }
     
-    // Generate AVIF srcset (best compression)
-    const avifSrcset = widths
-      .map(w => `${optimizedBasePath}-${w}.avif ${w}w`)
-      .join(', ');
+    // Original path fallback
+    return `${optimizedDir}/${name}.${format}`;
+  }
+  
+  // State variables
+  let imgRef;
+  let placeholderImgRef;
+  let loaded = false;
+  let placeholderLoaded = false;
+  let visible = !lazy;
+  let error = false; // Track loading errors
+  let observer;
+  let preloading = false; // Track if image is being preloaded
+  let currentSrc = src; // Keep track of current src to detect changes
+  let requestId = Math.random().toString(36).substring(2, 15); // Unique ID for this component instance
+  let loadStartTime = 0; // Track when loading started
+  let transitionStarted = false; // Track if transition has started
+  
+  // Store image paths
+  let filename;
+  let placeholderSrc;
+  let finalSrc;
+  let finalSrcset = '';
+  
+  // Create a preload image element to load the final image in the background
+  // This reduces flickering by ensuring the final image is ready before showing it
+  function preloadFinalImage() {
+    if (preloading || !finalSrc) return;
     
-    // Generate WebP srcset (good compatibility)
-    const webpSrcset = widths
-      .map(w => `${optimizedBasePath}-${w}.webp ${w}w`)
-      .join(', ');
+    loadStartTime = performance.now();
+    preloading = true;
+    if (debug) console.log(`[${requestId}] Preloading final image:`, finalSrc);
+    
+    const preloadImg = new Image();
+    preloadImg.src = finalSrc;
+    if (finalSrcset) preloadImg.srcset = finalSrcset;
+    preloadImg.onload = () => {
+      const loadTime = performance.now() - loadStartTime;
+      loaded = true;
+      preloading = false;
+      if (debug) console.log(`[${requestId}] Preload complete in ${loadTime.toFixed(0)}ms:`, finalSrc);
       
-    // Generate original format srcset as fallback
-    const originalSrcset = widths
-      .map(w => `${optimizedBasePath}-${w}.${fileExt} ${w}w`)
-      .join(', ');
-    
-    return {
-      avif: avifSrcset,
-      webp: webpSrcset,
-      original: originalSrcset
+      // Add a small delay for smoother transition (only if placeholder was shown)
+      if (placeholderLoaded && !transitionStarted) {
+        transitionStarted = true;
+        setTimeout(() => {
+          // This is when the transition actually starts
+          if (debug) console.log(`[${requestId}] Starting image transition`);
+        }, 50); // Small delay for smoother transition
+      }
+    };
+    preloadImg.onerror = () => {
+      error = true;
+      preloading = false;
+      if (debug) console.error(`[${requestId}] Preload failed:`, finalSrc);
     };
   }
   
-  // Generate srcsets if width and height are provided
-  const srcsets = generateSrcset(src);
-  
-  // Set default dimensions if not provided to prevent layout shifts
-  let imgWidth = width;
-  let imgHeight = height;
-  let aspectRatio = '';
-  
-  // If square option is enabled, force 1:1 aspect ratio
-  if (square) {
-    aspectRatio = '1/1';
-  } else if (width && height) {
-    aspectRatio = `${width}/${height}`;
-  }
-  
-  // Calculate padding-bottom for the aspect ratio placeholder
-  // This ensures space is reserved before the image loads
-  let paddingBottom = '';
-  if (square) {
-    paddingBottom = '100%';
-  } else if (width && height) {
-    paddingBottom = `${(height / width) * 100}%`;
-  }
-  
-  // Placeholder image path
-  let placeholder = null;
-  if (!blurhash && src && !src.startsWith('http') && !src.startsWith('data:')) {
-    const fileExt = src.split('.').pop().toLowerCase();
-    const basePath = src.substring(0, src.lastIndexOf('.'));
-    
-    // Convert path to use optimized folder path if it's not already there
-    let optimizedBasePath = basePath;
-    if (!optimizedBasePath.includes('/optimized/')) {
-      const parts = optimizedBasePath.split('/');
-      const filename = parts.pop();
-      optimizedBasePath = [...parts, 'optimized', filename].join('/');
+  // Update image paths when src changes
+  function updateImagePaths() {
+    // Reset state when src changes
+    if (currentSrc !== src) {
+      loaded = false;
+      placeholderLoaded = false;
+      error = false;
+      preloading = false;
+      transitionStarted = false;
+      currentSrc = src;
+      
+      if (debug) console.log(`[${requestId}] Source changed, updating paths`);
     }
     
-    placeholder = `${optimizedBasePath}-placeholder.webp`;
+    // Extract the filename from the src
+    filename = getFilename(src);
+    
+    // Generate paths
+    placeholderSrc = buildOptimizedPath(filename, null, null, true);
+    finalSrc = buildOptimizedPath(filename, standardWidth, 'avif', false);
+    
+    // Generate srcset for responsive loading
+    if (filename) {
+      try {
+        // Generate srcset with multiple sizes
+        const breakpoints = disableLargestSizes 
+          ? [320, 640, 960] 
+          : [320, 640, 960, 1280, 1920];
+          
+        finalSrcset = breakpoints
+          .map(bp => {
+            const optimizedPath = buildOptimizedPath(filename, bp, 'avif', false);
+            return `${optimizedPath} ${bp}w`;
+          })
+          .join(', ');
+        
+        if (debug) console.log(`[${requestId}] Generated srcset:`, finalSrcset);
+      } catch (err) {
+        if (debug) console.error(`[${requestId}] Error generating srcset:`, err);
+        finalSrcset = '';
+      }
+    }
+    
+    // Debug output - log all component parameters when debug mode is enabled
+    if (debug && typeof console !== 'undefined') {
+      console.log(`[${requestId}] Image component debug info:`);
+      console.log(`[${requestId}] - Original src:`, src);
+      console.log(`[${requestId}] - Extracted filename:`, filename);
+      console.log(`[${requestId}] - Standardized width:`, standardWidth);
+      console.log(`[${requestId}] - Placeholder src:`, placeholderSrc);
+      console.log(`[${requestId}] - Final src:`, finalSrc);
+      console.log(`[${requestId}] - Width/Height:`, width, height);
+      console.log(`[${requestId}] - Aspect Ratio:`, calculatedAspectRatio);
+      console.log(`[${requestId}] - Square:`, square);
+      console.log(`[${requestId}] - Lazy Loading:`, lazy);
+      console.log(`[${requestId}] - disableLargestSizes:`, disableLargestSizes);
+    }
   }
   
-  // Loading state tracking
-  let loadingComplete = false;
+  // Setup IntersectionObserver for lazy loading
+  function setupObserver() {
+    if (lazy && 'IntersectionObserver' in window && imgRef) {
+      if (debug) console.log(`[${requestId}] Setting up IntersectionObserver for lazy loading`);
+      
+      // Disconnect previous observer if it exists
+      if (observer) observer.disconnect();
+      
+      observer = new IntersectionObserver(
+        entries => {
+          if (entries[0].isIntersecting) {
+            if (debug) console.log(`[${requestId}] Image is now visible in viewport`);
+            visible = true;
+            observer.disconnect();
+            
+            // Start preloading the final image once visible
+            tick().then(() => {
+              if (blurPlaceholder && placeholderImgRef) {
+                // If we're using placeholders, wait for the placeholder to load
+                if (placeholderLoaded) {
+                  preloadFinalImage();
+                }
+              } else {
+                // Otherwise, start preloading immediately
+                preloadFinalImage();
+              }
+            });
+          }
+        },
+        { rootMargin: '200px' }
+      );
+      
+      observer.observe(imgRef);
+      if (debug) console.log(`[${requestId}] Observer attached to image element`);
+    } else {
+      // If not using lazy loading or no IntersectionObserver, make visible immediately
+      visible = true;
+      // Start preloading the final image immediately
+      tick().then(() => preloadFinalImage());
+    }
+  }
   
-  // Handle image load event
+  // Initial path generation and updates when src changes
+  updateImagePaths();
+  
+  // Handle component lifecycle
+  onMount(() => {
+    if (debug) console.log(`[${requestId}] Image component mounted, lazy:`, lazy);
+    setupObserver();
+    
+    return () => {
+      if (observer) observer.disconnect();
+    };
+  });
+  
+  // Update image paths and re-observe when src changes
+  afterUpdate(() => {
+    if (currentSrc !== src) {
+      updateImagePaths();
+      setupObserver();
+    }
+  });
+  
   function handleLoad() {
-    loadingComplete = true;
+    const loadTime = performance.now() - loadStartTime;
+    if (debug) console.log(`[${requestId}] Image loaded successfully in ${loadTime.toFixed(0)}ms:`, finalSrc);
+    loaded = true;
   }
   
-  // Handle image error event - fallback to original
+  function handlePlaceholderLoad() {
+    if (debug) console.log(`[${requestId}] Placeholder loaded successfully:`, placeholderSrc);
+    placeholderLoaded = true;
+    // Start preloading the final image once placeholder is loaded
+    preloadFinalImage();
+  }
+  
   function handleError(e) {
-    console.error('Image failed to load:', e);
-    // If optimized image fails, fallback to original
-    if (e.target.src.includes('/optimized/')) {
+    if (debug) {
+      console.error(`[${requestId}] Image failed to load:`, e.target.src);
+      console.log(`[${requestId}] Attempting to use original src as fallback`);
+    }
+    
+    // Try falling back to the unoptimized source if it's different
+    if (e.target.src !== src && src) {
+      error = true;
       e.target.src = src;
+    } else {
+      // If we're already using the original src or there is no original,
+      // just mark as error but don't try to load anything else
+      error = true;
     }
   }
   
-  // Extract file extension for fallback type
-  const fileExt = src.split('.').pop().toLowerCase();
+  function handlePlaceholderError() {
+    if (debug) console.log(`[${requestId}] Placeholder image failed to load:`, placeholderSrc);
+    // If placeholder fails, just try loading the final image
+    preloadFinalImage();
+  }
 </script>
 
-<div class="image-container enhanced-image {className}" 
-     style="{aspectRatio ? `aspect-ratio: ${aspectRatio};` : ''} 
-            {paddingBottom ? `padding-bottom: ${paddingBottom};` : ''} 
-            {style}"
-     data-width={width}
-     data-height={height}>
-  
-  {#if placeholder || blurhash}
-    <div 
-      class="blur-placeholder" 
-      style="background-image: url({blurhash || placeholder}); opacity: {loadingComplete ? 0 : 1};"
-      aria-hidden="true">
-    </div>
-  {/if}
-  
-  <!-- Fallback text for debugging - only visible when debug mode is enabled -->
+<div 
+  class="image-wrapper {className}" 
+  style:aspect-ratio={calculatedAspectRatio}
+  style:width={width ? `${width}px` : '100%'}
+  style:max-width={width ? `${width}px` : 'none'}
+  data-debug={debug}
+  data-error={error}
+  data-loaded={loaded}
+  data-visible={visible}
+  data-request-id={requestId}
+>
   {#if debug}
-    <div class="image-debug" style="opacity: {loadingComplete ? 0 : 0.7};">
-      Loading: {src.split('/').pop()}
+    <!-- Debug info overlay, only shown in debug mode -->
+    <div class="debug-info">
+      <div>id: {requestId.slice(0, 5)}</div>
+      <div>src: {src.split('/').pop()}</div>
+      <div>status: {error ? 'error' : (loaded ? 'loaded' : 'loading')}</div>
+      <div>filename: {filename}</div>
+    </div>
+  {/if}
+
+  {#if !loaded && blurPlaceholder}
+    <div class="placeholder" aria-hidden="true">
+      {#if visible}
+        <img 
+          bind:this={placeholderImgRef}
+          src={placeholderSrc} 
+          alt="" 
+          class="placeholder-img" 
+          width={standardWidth || width} 
+          height={height}
+          on:load={handlePlaceholderLoad}
+          on:error={handlePlaceholderError}
+        />
+      {/if}
     </div>
   {/if}
   
-  <picture class="image-picture">
-    <!-- AVIF format for modern browsers with best compression -->
-    {#if srcsets.avif}
-      <source 
-        type="image/avif" 
-        srcset={srcsets.avif} 
-        sizes={sizes} />
-    {/if}
-      
-    <!-- WebP format for broader browser support -->
-    {#if srcsets.webp}
-      <source 
-        type="image/webp" 
-        srcset={srcsets.webp} 
-        sizes={sizes} />
-    {/if}
-    
-    <!-- Original format as fallback -->
-    {#if srcsets.original}
-      <source 
-        type={`image/${fileExt === 'jpg' ? 'jpeg' : fileExt}`} 
-        srcset={srcsets.original} 
-        sizes={sizes} />
-    {/if}
-    
-    <!-- Direct fallback to original image -->
-    <source 
-      srcset={src}
-      sizes={sizes} />
-    
-    <!-- Fallback img tag with explicit dimensions -->
-    <img 
-      {src} 
-      {alt} 
-      width={imgWidth}
-      height={imgHeight}
-      loading={lazy ? "lazy" : "eager"} 
-      decoding="async"
-      fetchpriority={lazy ? "auto" : "high"}
-      style="object-fit: {objectFit}; object-position: {objectPosition};"
+  {#if visible}
+    <img
+      bind:this={imgRef}
+      src={finalSrc}
+      {alt}
+      width={standardWidth || width}
+      height={height}
+      {loading}
+      {sizes}
+      {fetchpriority}
+      style:object-fit={objectFit}
+      style:object-position={objectPosition}
+      class="image"
+      class:loaded
+      class:fade-in={fadeIn}
+      style:--transition-duration={transitionDuration}
       on:load={handleLoad}
-      on:error={handleError} />
-  </picture>
+      on:error={handleError}
+      srcset={finalSrcset}
+      decoding="async"
+    />
+  {/if}
 </div>
 
 <style>
-  .image-container {
+  .image-wrapper {
     position: relative;
     overflow: hidden;
+    background-color: #f5f5f5;
+    display: inline-block;
     width: 100%;
-    display: block;
-    background-color: #f0f0f0; /* Placeholder color before image loads */
-    min-height: 0; /* Remove minimum height to prevent layout shifts */
+    height: auto;
   }
   
-  /* Dark mode support for placeholder background */
-  @media (prefers-color-scheme: dark) {
-    .image-container {
-      background-color: #2a2a2a;
-    }
+  :global(.dark) .image-wrapper {
+    background-color: #374151;
   }
   
-  .enhanced-image {
-    /* Remove the min-height to prevent layout shifts */
-    /* This container now uses padding-bottom instead */
-  }
-  
-  .image-picture {
+  .placeholder {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: block;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
-  .image-debug {
-    position: absolute;
-    z-index: 10;
-    top: 50%;
-    left: 0;
+  :global(.dark) .placeholder {
+    background-color: #374151;
+  }
+  
+  .placeholder-img {
     width: 100%;
-    text-align: center;
-    font-size: 10px;
-    color: #000;
-    background: rgba(255,255,255,0.7);
-    padding: 2px;
-    transform: translateY(-50%);
-    transition: opacity 0.3s ease;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(10px);
+    transform: scale(1.05);
+    opacity: 0.7;
   }
   
-  img {
+  .image {
     display: block;
     width: 100%;
     height: 100%;
-    max-width: 100%;
-    transition: opacity 0.3s ease;
-    object-fit: var(--object-fit, cover);
-    object-position: var(--object-position, center);
+    opacity: 0;
     position: relative;
-    z-index: 2;
+    z-index: 1;
+    transform: scale(1.03); /* Slightly scaled up initially */
   }
   
-  .blur-placeholder {
+  .image.loaded {
+    opacity: 1;
+    transform: scale(1); /* Scale to normal size when loaded */
+  }
+  
+  .image.fade-in {
+    transition: 
+      opacity var(--transition-duration, 0.5s) ease-out,
+      transform var(--transition-duration, 0.5s) cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  /* Debug info styling */
+  .debug-info {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-size: cover;
-    background-position: center;
-    filter: blur(20px);
-    transition: opacity 0.3s ease;
-    z-index: 1;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    z-index: 10;
+    pointer-events: none;
+    border-radius: 0 0 4px 0;
   }
 </style> 

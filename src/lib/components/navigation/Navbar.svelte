@@ -8,6 +8,12 @@
 	
 	function toggleMenu() {
 		isMenuOpen = !isMenuOpen;
+		// When menu is opened, prevent scrolling on the body
+		if (isMenuOpen) {
+			document.body.classList.add('overflow-hidden');
+		} else {
+			document.body.classList.remove('overflow-hidden');
+		}
 	}
 	
 	// Close menu when clicking outside
@@ -21,6 +27,7 @@
 			// Close if menu is open and click is outside the menu
 			if (isMenuOpen && !event.target.closest('.mobile-menu')) {
 				isMenuOpen = false;
+				document.body.classList.remove('overflow-hidden');
 			}
 		};
 		
@@ -37,7 +44,7 @@
 	});
 </script>
 
-<header class="fixed top-0 z-50 bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800 border-b border-gray-200 dark:border-gray-800 w-full">
+<header class="fixed top-0 z-[90] w-full bg-white/90 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm dark:shadow-gray-800 border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
 	<div class="container mx-auto px-4">
 		<nav class="flex items-center justify-between py-4">
 			<a href="/" class="text-xl font-bold text-gray-900 dark:text-white">Dr. Fatih Nayebi</a>
@@ -70,5 +77,11 @@
 		stroke: currentColor !important;
 		fill: none !important;
 		overflow: hidden;
+	}
+	
+	/* Ensure the menu layer appears above all content */
+	:global(.mobile-nav-layer) {
+		position: relative;
+		z-index: 1000;
 	}
 </style>

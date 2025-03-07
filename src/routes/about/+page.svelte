@@ -33,7 +33,7 @@
 </svelte:head>
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0 overflow-x-hidden about-page">
+<div in:fade={{ duration: 800 }} class="pt-24 md:pt-32 pb-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0 overflow-x-hidden about-page">
 	
 	<h1 class="text-5xl font-bold mb-8 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>About Me</h1>
 

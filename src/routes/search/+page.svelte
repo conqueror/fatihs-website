@@ -7,6 +7,7 @@
     import { getAllBlogPosts } from '$lib/utils/markdown';
     import { getAllPublications } from '$lib/utils/publications';
     import { getAllEvents } from '$lib/utils/events';
+    import PageContainer from '$lib/components/layout/PageContainer.svelte';
     
     export let data;
     export let form;
@@ -190,7 +191,7 @@
 </script>
 
 {#if browser && isSearchReady}
-<div class="search-container py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+<PageContainer heroSection={true}>
     <!-- Background decorative elements, set to lower z-index to avoid interaction issues -->
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl -z-10 pointer-events-none"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl -z-10 pointer-events-none"></div>
@@ -311,7 +312,7 @@
             <p class="text-lg text-gray-600 dark:text-gray-300">Enter a search term above to find blog posts, publications, and events.</p>
         </div>
     {/if}
-</div>
+</PageContainer>
 {:else}
 <div class="search-loading">
     <p>Loading search functionality...</p>

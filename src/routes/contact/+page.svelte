@@ -3,6 +3,7 @@
     import { fade, fly, scale } from 'svelte/transition';
     import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
     import { browser } from '$app/environment';
+    import PageContainer from '$lib/components/layout/PageContainer.svelte';
     
     let visible = false;
     let name = '';
@@ -97,7 +98,7 @@
 </svelte:head>
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+<PageContainer heroSection={true}>
     <!-- Background decorative elements -->
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
@@ -218,5 +219,5 @@
             </div>
         </AnimateInView>
     </div>
-</div>
+</PageContainer>
 {/if} 

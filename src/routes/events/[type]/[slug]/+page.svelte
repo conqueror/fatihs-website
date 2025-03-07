@@ -4,13 +4,55 @@
   import SEO from '$lib/components/seo/SEO.svelte';
   import YouTubeEmbed from '$lib/components/media/YouTubeEmbed.svelte';
   import SpotifyEmbed from '$lib/components/media/SpotifyEmbed.svelte';
+  import PageContainer from '$lib/components/layout/PageContainer.svelte';
+  import { marked } from 'marked';
+  import DOMPurify from 'isomorphic-dompurify';
   
   export let data;
   const { event } = data;
   
   let visible = false;
+  let parsedContent = '';
   
   onMount(() => {
+    // Parse markdown content if it exists
+    if (event && event.content) {
+      try {
+        // Check if content is HTML or Markdown
+        if (event.content.trim().startsWith('<') && event.content.includes('</')) {
+          // Content seems to be HTML, just sanitize it
+          if (typeof DOMPurify !== 'undefined') {
+            const sanitizeOptions = {
+              ADD_TAGS: ['pre', 'code', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+              ADD_ATTR: ['class', 'language-*'],
+              ALLOW_DATA_ATTR: true
+            };
+            parsedContent = DOMPurify.sanitize(event.content, sanitizeOptions);
+          } else {
+            parsedContent = event.content;
+          }
+        } else {
+          // Content is markdown, parse it
+          const rawHtml = marked.parse(event.content);
+          
+          // Sanitize the parsed HTML
+          if (typeof DOMPurify !== 'undefined') {
+            const sanitizeOptions = {
+              ADD_TAGS: ['pre', 'code', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+              ADD_ATTR: ['class', 'language-*'],
+              ALLOW_DATA_ATTR: true
+            };
+            parsedContent = DOMPurify.sanitize(rawHtml, sanitizeOptions);
+          } else {
+            parsedContent = rawHtml;
+          }
+        }
+      } catch (error) {
+        console.error('Error processing event content:', error);
+        parsedContent = event.content; // Fallback to raw content
+      }
+    }
+    
     visible = true;
   });
   
@@ -154,15 +196,17 @@
 />
 
 {#if !event}
-  <div class="container mx-auto px-4 py-16 text-center">
-    <h1 class="text-3xl font-bold mb-4">Event Not Found</h1>
-    <p class="mb-8">The event you're looking for could not be found.</p>
-    <a href="/events" class="inline-block px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-      Back to Events
-    </a>
-  </div>
+  <PageContainer>
+    <div class="text-center">
+      <h1 class="text-3xl font-bold mb-4">Event Not Found</h1>
+      <p class="mb-8">The event you're looking for could not be found.</p>
+      <a href="/events" class="inline-block px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+        Back to Events
+      </a>
+    </div>
+  </PageContainer>
 {:else if visible}
-  <div class="container mx-auto px-4 py-12 lg:py-16 relative" in:fade={{ duration: 300 }}>
+  <PageContainer>
     <!-- Background decorative elements -->
     <div class="absolute top-0 right-10 -z-10 opacity-10 w-64 h-64 bg-primary-600/20 dark:bg-primary-400/5 rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 -z-10 opacity-10 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-300/5 rounded-full blur-3xl"></div>
@@ -200,134 +244,114 @@
         </span>
       </div>
       
-      <!-- Event Title -->
-      <h1 class="text-4xl lg:text-5xl font-bold mb-4 text-gray-900 dark:text-white" in:fly={{ y: 30, duration: 500, delay: 200 }}>
+      <!-- Event title -->
+      <h1 class="text-4xl font-bold mb-6 text-gray-900 dark:text-white leading-tight" in:fly={{ y: 20, duration: 500, delay: 200 }}>
         {event.title}
       </h1>
       
-      <!-- Event Name -->
-      <div class="text-2xl lg:text-3xl text-primary-600 dark:text-primary-400 mb-6" in:fly={{ y: 30, duration: 500, delay: 300 }}>
-        {event.event}
-      </div>
-      
-      <!-- Date and Location -->
-      <div class="flex flex-wrap items-center gap-y-2 gap-x-8 text-lg mb-8" in:fly={{ y: 30, duration: 500, delay: 400 }}>
+      <!-- Event details row -->
+      <div class="flex flex-wrap gap-y-4 gap-x-8 text-md text-gray-600 dark:text-gray-300" in:fly={{ y: 20, duration: 500, delay: 300 }}>
         {#if event.date}
           <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <svg class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
             <span>{formatDate(event.date)}</span>
+          </div>
+        {/if}
+        
+        {#if event.event}
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span>{event.event}</span>
           </div>
         {/if}
         
         {#if event.location}
           <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <svg class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
             <span>{event.location}</span>
           </div>
         {/if}
         
-        {#if event.mediaDuration}
+        {#if event.role}
           <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span>{event.mediaDuration}</span>
+            <svg class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>{event.role}</span>
           </div>
         {/if}
       </div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 mb-10" in:fly={{ y: 30, duration: 500, delay: 400 }}>
+      <!-- Content based on type -->
+      {#if event.content}
+        <div class="prose dark:prose-invert max-w-none mb-10 text-gray-800 dark:text-gray-200">
+          {@html parsedContent}
+        </div>
+      {:else if event.excerpt}
+        <div class="prose dark:prose-invert max-w-none mb-10 text-gray-800 dark:text-gray-200">
+          <p>{event.excerpt}</p>
+        </div>
+      {/if}
+      
+      <!-- Media section -->
+      {#if event.mediaType === 'youtube' && event.mediaUrl}
+        <div class="mt-8">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Watch the Presentation</h2>
+          <div class="aspect-video">
+            <YouTubeEmbed url={event.mediaUrl} title={event.title} />
+          </div>
+        </div>
+      {:else if event.mediaType === 'spotify' && event.mediaUrl}
+        <div class="mt-8">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Listen to the Podcast Episode</h2>
+          <SpotifyEmbed url={event.mediaUrl} title={event.title} />
+        </div>
+      {/if}
       
       <!-- Tags -->
       {#if event.tags && event.tags.length > 0}
-        <div class="flex flex-wrap gap-2 mb-8" in:fly={{ y: 30, duration: 500, delay: 500 }}>
-          {#each event.tags as tag}
-            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm rounded-full border border-gray-200 dark:border-gray-700">
-              {tag}
-            </span>
-          {/each}
+        <div class="mt-10">
+          <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Topics</h3>
+          <div class="flex flex-wrap gap-2">
+            {#each event.tags as tag}
+              <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm">
+                {tag}
+              </span>
+            {/each}
+          </div>
         </div>
       {/if}
     </div>
     
-    <!-- Media Embed for podcast/video -->
-    {#if event.mediaUrl && event.mediaType}
-      <div class="mb-12 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-lg dark:shadow-xl dark:shadow-gray-900/10" in:fade={{ duration: 800, delay: 600 }}>
-        {#if event.mediaType === 'youtube'}
-          <div class="aspect-w-16 aspect-h-9">
-            <YouTubeEmbed url={event.mediaUrl} title={event.title} />
-          </div>
-        {:else if event.mediaType === 'spotify'}
-          <div class="p-4 bg-gray-50 dark:bg-gray-800/50">
-            <SpotifyEmbed url={event.mediaUrl} title={event.title} />
-          </div>
-        {/if}
-      </div>
-    {/if}
-    
-    <!-- Additional Information Panels -->
-    <div class="grid md:grid-cols-3 gap-8 mb-12">
-      <!-- Role (for organizing) -->
-      {#if event.role}
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/10 border border-gray-200 dark:border-gray-700" in:fade={{ duration: 500, delay: 700 }}>
-          <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Role</h3>
-          <p class="text-gray-700 dark:text-gray-300">{event.role}</p>
+    <!-- CTA Section -->
+    <div in:fly={{ y: 30, duration: 500, delay: 500 }}>
+      {#if event.registrationUrl}
+        <div class="mb-8 text-center">
+          <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer" 
+             class="inline-block px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+            Register for this Event
+          </a>
         </div>
       {/if}
       
-      <!-- Host (for media) -->
-      {#if event.host}
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/10 border border-gray-200 dark:border-gray-700" in:fade={{ duration: 500, delay: 700 }}>
-          <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Host</h3>
-          <p class="text-gray-700 dark:text-gray-300">{event.host}</p>
-        </div>
-      {/if}
-      
-      <!-- Additional slots for future extensions -->
-      {#if event.participants}
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/10 border border-gray-200 dark:border-gray-700" in:fade={{ duration: 500, delay: 700 }}>
-          <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Participants</h3>
-          <p class="text-gray-700 dark:text-gray-300">{event.participants}</p>
-        </div>
-      {/if}
-    </div>
-    
-    <!-- Main Content -->
-    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/10 mb-12 border border-gray-200 dark:border-gray-700" in:fade={{ duration: 500, delay: 800 }}>
-      <div class="prose dark:prose-invert max-w-none">
-        {#if event.html}
-          {@html event.html}
-        {:else if event.content}
-          <p class="text-lg text-gray-700 dark:text-gray-300">{event.content}</p>
-        {:else}
-          <p class="text-lg text-gray-700 dark:text-gray-300">{event.excerpt}</p>
-        {/if}
+      <div class="text-center">
+        <a href="/events/{event.type}" class="inline-block mr-4 text-primary-600 dark:text-primary-400 hover:underline">
+          ← Back to {typeLabels[event.type] || 'Events'}
+        </a>
+        <a href="/events" class="inline-block text-primary-600 dark:text-primary-400 hover:underline">
+          View All Events
+        </a>
       </div>
     </div>
-    
-    <!-- Navigation and Related -->
-    <div class="flex flex-col md:flex-row gap-8 mb-8" in:fade={{ duration: 500, delay: 900 }}>
-      <!-- Back to all events -->
-      <a 
-        href="/events" 
-        class="flex-1 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/10 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow group flex items-center justify-between"
-      >
-        <div class="flex items-center">
-          <svg class="w-6 h-6 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-          </svg>
-          <span class="font-medium group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">All Events</span>
-        </div>
-      </a>
-      
-      <!-- Browse by type -->
-      <a 
-        href="/events/{event.type}" 
-        class="flex-1 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/10 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow group flex items-center justify-between"
-      >
-        <div class="flex items-center">
-          <svg class="w-6 h-6 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
-          </svg>
-          <span class="font-medium group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">More {typeLabels[event.type] || event.type} Events</span>
-        </div>
-      </a>
-    </div>
-  </div>
+  </PageContainer>
 {/if} 

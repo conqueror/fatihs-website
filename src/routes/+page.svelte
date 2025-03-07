@@ -213,13 +213,13 @@
 		<div class="decorative-circle-1 dark:opacity-0" class:visible={decorativeElementsVisible}></div>
 		<div class="decorative-circle-2 dark:opacity-0" class:visible={decorativeElementsVisible}></div>
 		
-		<div class="container mx-auto px-4">
-			<section class="bg-gradient-to-br from-primary/5 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl shadow-sm backdrop-blur-[2px] mb-10 py-6 md:py-8 px-2 md:px-4">
+		<div class="container mx-auto px-2 md:px-3">
+			<section class="bg-gradient-to-br from-primary/5 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl shadow-sm backdrop-blur-[2px] mb-10 py-6 md:py-8 px-1 md:px-2">
 				<PageContainer heroSection={true} noPadding={true}>
 					<div class="component-fade-in" class:visible={heroVisible}>
-						<div class="grid grid-cols-1 md:grid-cols-12 items-center">
-							<!-- Text content with reduced left padding -->
-							<div class="hero-text-container order-2 md:order-1 mt-6 md:mt-0 md:col-span-7 pl-1 md:pl-2 lg:pl-3 pr-3 md:pr-6">
+						<div class="grid grid-cols-1 md:grid-cols-12 items-center md:gap-0">
+							<!-- Text content with enhanced leftward positioning -->
+							<div class="hero-text-container order-2 md:order-1 mt-6 md:mt-0 md:col-span-7 -ml-1 md:-ml-3 lg:-ml-4 pr-3 md:pr-4">
 								<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-gray-800 dark:text-gray-100 critical-content" in:fly={{ y: -30, duration: 800, delay: 300 }}>
 									Data & AI Leader, <span class="text-primary dark:text-blue-400">Innovator</span>, and Educator
 								</h1>
@@ -239,8 +239,8 @@
 								</div>
 							</div>
 
-							<!-- Profile image with reduced right padding -->
-							<div class="text-center order-1 md:order-2 md:col-span-5 pr-1 md:pr-2 lg:pr-1" in:scale={{ duration: 1000, delay: 600, start: 0.8 }}>
+							<!-- Profile image with enhanced rightward positioning -->
+							<div class="text-center order-1 md:order-2 md:col-span-5 md:-mr-2 lg:-mr-4" in:scale={{ duration: 1000, delay: 600, start: 0.8 }}>
 								<div class="profile-image-container ml-auto md:mr-0 relative rounded-2xl overflow-hidden shadow-2xl transform hover:rotate-0 transition-all duration-500">
 									<Image 
 										src="/images/profile.avif" 

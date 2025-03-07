@@ -7,6 +7,7 @@
   import SEO from '$lib/components/seo/SEO.svelte';
   import EventCard from '$lib/components/ui/EventCard.svelte';
   import EventCalendar from '$lib/components/ui/EventCalendar.svelte';
+  import PageContainer from '$lib/components/layout/PageContainer.svelte';
   
   // Import any required components for animation
   // Assuming there's an AnimateInView component as shown in the plan
@@ -204,7 +205,7 @@
 />
 
 {#if visible}
-<div in:fade={{ duration: 800 }} class="py-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
+<PageContainer heroSection={true}>
   <!-- Background decorative elements with dark mode specific colors -->
   <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary-600/20 dark:bg-primary-400/5 rounded-full blur-3xl"></div>
   <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-300/5 rounded-full blur-3xl"></div>
@@ -524,5 +525,5 @@
       })} />
     </div>
   {/if}
-</div>
+</PageContainer>
 {/if} 

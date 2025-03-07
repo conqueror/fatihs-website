@@ -202,13 +202,25 @@
   }
   
   button.primary {
-    background-color: #3b82f6;
+    /* Darker blue for better contrast - meets WCAG AA 4.5:1 ratio */
+    background-color: #1a4bbd;
     color: white;
-    border-color: #3b82f6;
+    border-color: #1a4bbd;
   }
   
   button.primary:hover {
-    background-color: #2563eb;
-    border-color: #2563eb;
+    background-color: #1e40af;
+    border-color: #1e40af;
+  }
+  
+  /* Dark mode button overrides */
+  :global(html.dark) button.primary {
+    background-color: #1e40af;
+    border-color: #1e40af;
+  }
+  
+  :global(html.dark) button.primary:hover {
+    background-color: #1e3a8a;
+    border-color: #1e3a8a;
   }
 </style> 
