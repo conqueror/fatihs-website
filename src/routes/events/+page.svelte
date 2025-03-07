@@ -6,6 +6,7 @@
   import { browser } from '$app/environment';
   import SEO from '$lib/components/SEO.svelte';
   import EventCard from '$lib/components/EventCard.svelte';
+  import EventCalendar from '$lib/components/EventCalendar.svelte';
   
   // Import any required components for animation
   // Assuming there's an AnimateInView component as shown in the plan
@@ -36,6 +37,9 @@
   let filteredEvents = {};
   let visible = false;
   let showFilterPanel = false;
+  
+  // Add a view state
+  let viewMode = 'list'; // 'list' or 'calendar'
   
   // Function to apply search params from URL to state
   function applySearchParamsToState() {
@@ -280,6 +284,24 @@
     </div>
   </div>
 
+  <!-- View Toggle Buttons -->
+  <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+    <button 
+      class="py-2 px-4 font-medium text-sm {viewMode === 'list' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+      on:click={() => viewMode = 'list'}
+      aria-label="List view"
+    >
+      List View
+    </button>
+    <button 
+      class="py-2 px-4 font-medium text-sm {viewMode === 'calendar' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+      on:click={() => viewMode = 'calendar'}
+      aria-label="Calendar view"
+    >
+      Calendar View
+    </button>
+  </div>
+
   <!-- Search and Filter Controls with improved dark mode styling -->
   <div class="mb-8">
     <!-- Search input -->
@@ -387,8 +409,8 @@
         
         <!-- Tags filter with improved dark mode styling -->
         <div class="mt-6">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</label>
-          <div class="flex flex-wrap gap-2">
+          <label for="tags-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</label>
+          <div id="tags-filter" role="group" aria-label="Filter by tags" class="flex flex-wrap gap-2">
             {#each tags as tag}
               <button 
                 on:click={() => toggleTag(tag)}
@@ -408,10 +430,22 @@
   </div>
 
   <!-- Display events by year with improved dark mode styling -->
-  {#if Object.keys(filteredEvents).length > 0}
-    {#each Object.keys(filteredEvents).sort((a, b) => b - a) as year}
-      {#if AnimateInView}
-        <svelte:component this={AnimateInView} type="fade" delay={300}>
+  {#if viewMode === 'list'}
+    {#if Object.keys(filteredEvents).length > 0}
+      {#each Object.keys(filteredEvents).sort((a, b) => b - a) as year}
+        {#if AnimateInView}
+          <svelte:component this={AnimateInView} type="fade" delay={300}>
+            <div class="mb-20">
+              <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2">{year} Events</h2>
+              
+              <div class="grid gap-8">
+                {#each filteredEvents[year] as event, i}
+                  <EventCard {event} />
+                {/each}
+              </div>
+            </div>
+          </svelte:component>
+        {:else}
           <div class="mb-20">
             <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2">{year} Events</h2>
             
@@ -421,22 +455,25 @@
               {/each}
             </div>
           </div>
+        {/if}
+      {/each}
+    {:else}
+      {#if AnimateInView}
+        <svelte:component this={AnimateInView} type="fade" delay={500}>
+          <div class="mb-8 text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">No Events Found</h2>
+            <p class="text-gray-700 dark:text-gray-300 mb-8">
+              No events matching the selected filters are available.
+            </p>
+            <button 
+              on:click={resetFilters}
+              class="px-6 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+            >
+              Reset Filters
+            </button>
+          </div>
         </svelte:component>
       {:else}
-        <div class="mb-20">
-          <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2">{year} Events</h2>
-          
-          <div class="grid gap-8">
-            {#each filteredEvents[year] as event, i}
-              <EventCard {event} />
-            {/each}
-          </div>
-        </div>
-      {/if}
-    {/each}
-  {:else}
-    {#if AnimateInView}
-      <svelte:component this={AnimateInView} type="fade" delay={500}>
         <div class="mb-8 text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
           <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">No Events Found</h2>
           <p class="text-gray-700 dark:text-gray-300 mb-8">
@@ -449,21 +486,43 @@
             Reset Filters
           </button>
         </div>
-      </svelte:component>
-    {:else}
-      <div class="mb-8 text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
-        <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">No Events Found</h2>
-        <p class="text-gray-700 dark:text-gray-300 mb-8">
-          No events matching the selected filters are available.
-        </p>
-        <button 
-          on:click={resetFilters}
-          class="px-6 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-        >
-          Reset Filters
-        </button>
-      </div>
+      {/if}
     {/if}
+  {:else}
+    <!-- Calendar view -->
+    <div class="mb-8">
+      <EventCalendar events={allEvents.filter(event => {
+        // Apply the same filters as we do for the list view
+        let matchesType = selectedType === 'all' || event.type === selectedType;
+        
+        let matchesYear = true;
+        if (selectedYear !== 'all') {
+          const eventDate = new Date(event.date);
+          matchesYear = eventDate.getFullYear().toString() === selectedYear.toString();
+        }
+        
+        let matchesLocation = true;
+        if (selectedLocation !== 'all') {
+          matchesLocation = event.location && event.location.includes(selectedLocation);
+        }
+        
+        let matchesTags = true;
+        if (selectedTags.length > 0) {
+          matchesTags = event.tags && selectedTags.some(tag => event.tags.includes(tag));
+        }
+        
+        let matchesSearch = true;
+        if (searchQuery) {
+          const query = searchQuery.toLowerCase();
+          matchesSearch = 
+            (event.title && event.title.toLowerCase().includes(query)) ||
+            (event.excerpt && event.excerpt.toLowerCase().includes(query)) ||
+            (event.location && event.location.toLowerCase().includes(query));
+        }
+        
+        return matchesType && matchesYear && matchesLocation && matchesTags && matchesSearch;
+      })} />
+    </div>
   {/if}
 </div>
 {/if} 

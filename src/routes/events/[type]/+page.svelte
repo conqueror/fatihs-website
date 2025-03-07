@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import SEO from '$lib/components/SEO.svelte';
   import EventCard from '$lib/components/EventCard.svelte';
+  import EventCalendar from '$lib/components/EventCalendar.svelte';
   
   export let data;
   const { events, type } = data;
@@ -14,6 +15,7 @@
   let searchQuery = '';
   let selectedYear = 'all';
   let selectedTags = [];
+  let viewMode = 'list'; // 'list' or 'calendar'
   
   onMount(() => {
     // Extract all years from events
@@ -143,48 +145,48 @@
   }}
 />
 
-{#if visible}
-<div class="container mx-auto px-4 py-12 relative" in:fade={{ duration: 300 }}>
-  <!-- Background decorative elements -->
-  <div class="absolute top-0 right-10 -z-10 opacity-10 w-64 h-64 
-    {pageColor === 'blue' ? 'bg-blue-600/20 dark:bg-blue-400/5' :
-     pageColor === 'green' ? 'bg-green-600/20 dark:bg-green-400/5' :
-     pageColor === 'purple' ? 'bg-purple-600/20 dark:bg-purple-400/5' :
-     'bg-primary-600/20 dark:bg-primary-400/5'} 
-    rounded-full blur-3xl"></div>
-  <div class="absolute bottom-40 left-10 -z-10 opacity-10 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-300/5 rounded-full blur-3xl"></div>
-  
-  <!-- Breadcrumb Navigation -->
-  <div class="mb-8" in:fly={{ y: -30, duration: 500 }}>
-    <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
-      <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-      </svg>
-      <a href="/events" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Events</a>
-      <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-      </svg>
-      <span class="text-gray-800 dark:text-gray-300 capitalize">{pageTitle}</span>
-    </div>
-  </div>
-  
-  <!-- Page Header -->
-  <div class="mb-12 text-center" in:fly={{ y: 30, duration: 500, delay: 100 }}>
-    <h1 class="text-5xl font-bold mb-6 flex justify-center items-center
-      {pageColor === 'blue' ? 'text-blue-600 dark:text-blue-400' :
-       pageColor === 'green' ? 'text-green-600 dark:text-green-400' :
-       pageColor === 'purple' ? 'text-purple-600 dark:text-purple-400' :
-       'text-primary-600 dark:text-primary-400'}">
-      <span class="mr-4 text-4xl">{pageEmoji}</span>
-      {pageTitle}
+<div class="container mx-auto px-4 py-8">
+  <!-- SEO component with appropriate metadata -->
+  <SEO 
+    title={`${type.charAt(0).toUpperCase() + type.slice(1)} Events`}
+    description={`Browse my ${type} events, including ${type === 'speaking' ? 'talks, keynotes, and panel discussions' : type === 'organizing' ? 'conferences, meetups, and workshops' : 'podcasts, interviews, and media appearances'}.`}
+  />
+
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
+      {type.charAt(0).toUpperCase() + type.slice(1)} Events
     </h1>
-    <p class="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
-      {pageDescription}
-    </p>
+    
+    <a 
+      href="/events" 
+      class="inline-flex items-center text-primary-600 dark:text-primary-400 hover:underline"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to All Events
+    </a>
   </div>
   
-  <!-- Search and Filter Controls -->
+  <!-- View Toggle Buttons -->
+  <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+    <button 
+      class="py-2 px-4 font-medium text-sm {viewMode === 'list' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+      on:click={() => viewMode = 'list'}
+      aria-label="List view"
+    >
+      List View
+    </button>
+    <button 
+      class="py-2 px-4 font-medium text-sm {viewMode === 'calendar' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+      on:click={() => viewMode = 'calendar'}
+      aria-label="Calendar view"
+    >
+      Calendar View
+    </button>
+  </div>
+  
+  <!-- Filter controls -->
   <div class="mb-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/20 border border-gray-200 dark:border-gray-700" in:fly={{ y: 30, duration: 500, delay: 200 }}>
     <!-- Search input -->
     <div class="mb-4">
@@ -243,8 +245,8 @@
     <!-- Tags filter -->
     {#if tags.length > 0}
       <div class="mt-6">
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</label>
-        <div class="flex flex-wrap gap-2">
+        <label for="type-tags-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</label>
+        <div id="type-tags-filter" role="group" aria-label="Filter by tags" class="flex flex-wrap gap-2">
           {#each tags as tag}
             <button 
               on:click={() => toggleTag(tag)}
@@ -262,42 +264,46 @@
     {/if}
   </div>
   
-  <!-- Results Section -->
-  {#if filteredEvents.length === 0}
-    <div class="text-center py-16 text-gray-600 dark:text-gray-400" in:fly={{ y: 30, duration: 500, delay: 300 }}>
-      <svg class="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <h3 class="text-xl font-bold mb-2">No events found</h3>
-      <p>Try adjusting your filters or search criteria.</p>
-      <button 
-        on:click={resetFilters}
-        class="mt-4 px-4 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-600 dark:hover:bg-primary-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-      >
-        Reset Filters
-      </button>
-    </div>
+  <!-- Events display -->
+  {#if viewMode === 'list'}
+    <!-- List view -->
+    {#if filteredEvents.length > 0}
+      <div class="grid gap-8 mt-8">
+        {#each filteredEvents as event, i}
+          {#if i === 0 || visible}
+            <EventCard {event} />
+          {/if}
+        {/each}
+      </div>
+    {:else}
+      <div class="text-center py-12 mt-8 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+        <h2 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">No Events Found</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">Try adjusting your filters to find events.</p>
+        <button 
+          on:click={resetFilters}
+          class="px-4 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white rounded-md transition-colors"
+        >
+          Reset Filters
+        </button>
+      </div>
+    {/if}
   {:else}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" in:fly={{ y: 30, duration: 500, delay: 300 }}>
-      {#each filteredEvents as event}
-        <a href="/events/{type}/{event.slug}" class="block">
-          <EventCard {event} />
-        </a>
-      {/each}
+    <!-- Calendar view -->
+    <div class="mt-8">
+      <EventCalendar events={events.filter(event => {
+        // Apply the same filters
+        let matchesYear = selectedYear === 'all' || 
+          (event.date && new Date(event.date).getFullYear().toString() === selectedYear);
+          
+        let matchesTags = selectedTags.length === 0 || 
+          (event.tags && selectedTags.some(tag => event.tags.includes(tag)));
+          
+        let matchesSearch = !searchQuery || 
+          (event.title && event.title.toLowerCase().includes(searchQuery.toLowerCase())) || 
+          (event.excerpt && event.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
+          
+        return matchesYear && matchesTags && matchesSearch;
+      })} />
     </div>
   {/if}
-  
-  <!-- Back to all events -->
-  <div class="mt-12 text-center" in:fade={{ duration: 300, delay: 400 }}>
-    <a 
-      href="/events" 
-      class="inline-flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium text-lg"
-    >
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      View All Event Types
-    </a>
-  </div>
-</div>
-{/if} 
+</div> 
