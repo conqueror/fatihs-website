@@ -6,14 +6,14 @@ import SearchIcon from './icons/SearchIcon.svelte';
  * and simplifies adding or removing navigation items
  */
 export const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/research', label: 'Research' },
-  { href: '/publications', label: 'Publications' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/events', label: 'Events' },
-  { href: '/contact', label: 'Contact' },
-  { href: '/search', label: 'Search', icon: SearchIcon }
+  { href: '/', label: 'Home', iconName: 'home' },
+  { href: '/about', label: 'About', iconName: 'about' },
+  { href: '/research', label: 'Research', iconName: 'research' },
+  { href: '/publications', label: 'Publications', iconName: 'publications' },
+  { href: '/blog', label: 'Blog', iconName: 'blog' },
+  { href: '/events', label: 'Events', iconName: 'events' },
+  { href: '/contact', label: 'Contact', iconName: 'contact' },
+  { href: '/search', label: 'Search', icon: SearchIcon, iconName: 'search' }
 ];
 
 /**
@@ -22,13 +22,13 @@ export const navItems = [
  */
 export function getPlaceholderWidth(label) {
   switch (label) {
-    case 'Home': return '55px';
-    case 'About': return '58px';
-    case 'Research': return '85px';
-    case 'Publications': return '106px';
-    case 'Blog': return '48px';
-    case 'Events': return '62px';
-    case 'Contact': return '76px';
+    case 'Home': return '75px';
+    case 'About': return '78px';
+    case 'Research': return '105px';
+    case 'Publications': return '126px';
+    case 'Blog': return '68px';
+    case 'Events': return '82px';
+    case 'Contact': return '96px';
     case 'Search': return '75px';
     default: return 'auto';
   }

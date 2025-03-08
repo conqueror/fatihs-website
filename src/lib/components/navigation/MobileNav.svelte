@@ -50,7 +50,14 @@
 			
 			<div class="flex flex-col space-y-4 bg-white dark:bg-gray-900">
 				{#each navItems as item}
-					<NavLink href={item.href} label={item.label} icon={item.icon} isMobile={true} />
+					<NavLink 
+						href={item.href} 
+						label={item.label} 
+						icon={item.icon} 
+						iconName={item.iconName} 
+						isMobile={true} 
+						inMobileMenu={true}
+					/>
 				{/each}
 				
 				<div class="pt-4 border-t border-gray-200 dark:border-gray-700">

@@ -10,7 +10,12 @@
 <div class="hidden md:flex items-center space-x-6 nav-container">
 	{#if mounted}
 		{#each navItems as item}
-			<NavLink href={item.href} label={item.label} icon={item.icon} />
+			<NavLink 
+				href={item.href} 
+				label={item.label} 
+				icon={item.icon} 
+				iconName={item.iconName} 
+			/>
 		{/each}
 		
 		<ThemeToggle />
