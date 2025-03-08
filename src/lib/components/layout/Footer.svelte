@@ -1,5 +1,28 @@
 <script>
+	import FooterIcon from '$lib/components/ui/FooterIcon.svelte';
 	const year = new Date().getFullYear();
+	
+	// Map icons to links for easy reference
+	const navIcons = {
+		'Home': 'home',
+		'About': 'about',
+		'Research': 'research',
+		'Publications': 'publications'
+	};
+	
+	const resourceIcons = {
+		'Blog': 'blog',
+		'Events': 'events',
+		'Contact': 'contact',
+		'Search': 'search',
+		'Privacy Policy': 'policy'
+	};
+	
+	const connectIcons = {
+		'LinkedIn': 'linkedin',
+		'Google Scholar': 'scholar',
+		'GitHub': 'github'
+	};
 </script>
 
 <footer class="bg-gray-100 dark:bg-gray-900 dark:border-t dark:border-gray-800 pt-16 pb-6 mt-20">
@@ -16,34 +39,50 @@
 				<div class="w-1/2 md:w-1/3 mb-8">
 					<h4 class="text-gray-800 dark:text-gray-100 font-semibold mb-4">Navigation</h4>
 					<ul class="space-y-2">
-						<li><a href="/" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Home</a></li>
-						<li><a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">About</a></li>
-						<li><a href="/research" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Research</a></li>
-						<li><a href="/publications" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Publications</a></li>
+						{#each Object.entries(navIcons) as [name, icon]}
+							<li>
+								<a href="/{name.toLowerCase() === 'home' ? '' : name.toLowerCase()}" 
+									class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors group">
+									<FooterIcon name={icon} size={16} />
+									<span class="ml-2">{name}</span>
+								</a>
+							</li>
+						{/each}
 					</ul>
 				</div>
 				
 				<div class="w-1/2 md:w-1/3 mb-8">
 					<h4 class="text-gray-800 dark:text-gray-100 font-semibold mb-4">Resources</h4>
 					<ul class="space-y-2">
-						<li><a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Blog</a></li>
-						<li><a href="/events" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Events</a></li>
-						<li><a href="/contact" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Contact</a></li>
-						<li><a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Search</a></li>
-						<li><a href="/privacy" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+						{#each Object.entries(resourceIcons) as [name, icon]}
+							<li>
+								<a href="/{name.toLowerCase().replace(' ', '-')}" 
+									class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors group">
+									<FooterIcon name={icon} size={16} />
+									<span class="ml-2">{name}</span>
+								</a>
+							</li>
+						{/each}
 					</ul>
 				</div>
 				
 				<div class="w-full md:w-1/3 mb-8">
 					<h4 class="text-gray-800 dark:text-gray-100 font-semibold mb-4">Connect</h4>
-					<div class="flex space-x-4">
-						<a href="https://linkedin.com/in/thefatih" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" 
-							class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">LinkedIn</a>
-						<a href="https://scholar.google.com/citations?user=s6lWpdEAAAAJ" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar" 
-							class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">Google Scholar</a>
-						<a href="https://github.com/conqueror" target="_blank" rel="noopener noreferrer" aria-label="GitHub" 
-							class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">GitHub</a>
-					</div>
+					<ul class="space-y-2">
+						{#each Object.entries(connectIcons) as [name, icon]}
+							<li>
+								<a href={name === 'LinkedIn' ? 'https://linkedin.com/in/thefatih' : 
+										name === 'Google Scholar' ? 'https://scholar.google.com/citations?user=s6lWpdEAAAAJ' : 
+										'https://github.com/conqueror'} 
+									target="_blank" 
+									rel="noopener noreferrer"
+									class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors group">
+									<FooterIcon name={icon} size={16} />
+									<span class="ml-2">{name}</span>
+								</a>
+							</li>
+						{/each}
+					</ul>
 				</div>
 			</div>
 		</div>
