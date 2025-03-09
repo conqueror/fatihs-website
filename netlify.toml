@@ -97,7 +97,24 @@
     Cache-Control = "public, max-age=43200"
 
 [[redirects]]
+  from = "/search/*"
+  to = "/search"
+  status = 200
+
+[[redirects]]
+  from = "/search"
+  to = "/search"
+  status = 200
+  query = {query = ":query"}
+
+# Handle trailing slashes consistently
+[[redirects]]
+  from = "/search/"
+  to = "/search"
+  status = 301
+
+# SPA fallback
+[[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
-  force = false 
+  status = 200 

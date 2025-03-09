@@ -24,11 +24,27 @@ async function generatePrerenderEntries() {
     // Generate entries for each event
     const eventEntries = eventsData.map(event => `/events/${event.type}/${event.slug}`);
     
+    // Define base routes that should always be prerendered
+    const baseRoutes = [
+      '/',
+      '/about',
+      '/blog',
+      '/publications',
+      '/research',
+      '/events',
+      '/conferences',
+      '/consulting',
+      '/contact',
+      '/search', // Add search route explicitly
+      '/privacy'
+    ];
+    
     // Combine all entries
     const allEntries = [
       '*',
       '/sitemap.xml',
       '/robots.txt',
+      ...baseRoutes,
       ...typeEntries,
       ...eventEntries
     ];

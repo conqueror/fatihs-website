@@ -1,6 +1,6 @@
 # JavaScript Optimization Report
 
-Generated on: 3/7/2025, 1:47:07 PM
+Generated on: 3/8/2025, 10:30:33 PM
 
 ## Large Components
 
@@ -19,8 +19,10 @@ These components or modules may benefit from dynamic/lazy loading:
 
 - src/lib/components/ui/EnhancedImage.svelte (Hidden content could be loaded on demand)
 - src/lib/components/navigation/Navbar.svelte (Could be dynamically imported)
+- src/lib/components/navigation/NavLink.svelte (Could be dynamically imported)
 - src/lib/components/navigation/MobileNav.svelte (Could be dynamically imported)
 - src/lib/components/navigation/DesktopNav.svelte (Could be dynamically imported)
+- src/lib/components/layout/Footer.svelte (Could be dynamically imported)
 
 ## General Recommendations
 

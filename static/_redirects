@@ -44,4 +44,14 @@ https://www.fatihnayebi.com/*    https://fatihnayebi.com/:splat         301!
 /apple-touch-icon-precomposed.png /apple-touch-icon-precomposed.png  200
 
 # Explicit redirect for /blog
-/blog    /blog.html   200 
+/blog    /blog.html   200
+
+# Redirect search with parameters to the base search page
+/search/?query=*  /search  200
+/search?query=*   /search  200
+
+# Handle trailing slashes consistently 
+/search/          /search  301
+ 
+# SPA fallback - serve index.html for all 404s
+/*                /index.html  200 

@@ -5,319 +5,319 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://fatihnayebi.com/</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/about</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/organizing</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/media</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/contact</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/build-time-syntax-highlighting-in-SvelteKit</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/building-responsive-websites</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/optimizing-for-ai-agents</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/assortment-planning-optimization-rl</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/agentic-ai-future-automation</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/aws-reinvent-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/assortment-planning-optimization</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/decision-making-digital-age</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/ai-for-decarbonization</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/trust-digital-age</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/decoding-ai-math-theorems</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/statistical-experimentation-soccer-analytics</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/code-formatting-example</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/machine-learning-trends</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/exploring-large-language-models</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/ai-healthcare</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/getting-started-with-svelte</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/blog/ethical-ai</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/inside-aldos-in-house-generative-ai-strategy</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/aldo-ai-shoe-inventory-innovation</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/strategizing-for-the-future-ai-generative-ai</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/transformer-architectures</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/unleashing-ml-potential-enterprise</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/transformer-optimization-techniques</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/ml-interpretability</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/publications/neural-networks-paper</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/scaling-ai-initiatives-in-retail-gen-ai-reality-check-2025-07</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/big-data-analytics-summit-canada-2025</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/newsweek-ai-impact-awards-2025</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/generative-ai-and-the-next-generation-of-search-2025-03</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/mcgill-data-network-retail-panel-2025</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/from-conversational-to-agentic-ai-how-ai-agents-are-reshaping-retail-2025-02</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/leveraging-ai-for-retail-innovation-aldos-success-stories-2025-02</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/personalization-at-scale-cxsphere-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/scaling-ai-initiatives-in-retail-odsc-west-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/organizing/retail-gen-ai-hackathon-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/big-data-analytics-montreal-summit-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/all-in-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/conference-of-montreal-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/media/ai-with-sach-podcast-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/media/behind-the-growth-podcast-2024</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/unleashing-the-power-of-data-ai-to-drive-business-value-and-innovation-2024-04</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/speaking/unleashing-the-power-of-generative-ai-for-tabular-data-in-machine-learning-applications-2023-10</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://fatihnayebi.com/events/organizing/retail-gen-ai-hackathon-2023</loc>
-    <lastmod>2025-03-07T18:47:07.904Z</lastmod>
+    <lastmod>2025-03-09T03:30:33.449Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
