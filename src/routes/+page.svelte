@@ -33,7 +33,6 @@
 	
 	// State for sequential component loading
 	let heroVisible = false;
-	let decorativeElementsVisible = false;
 	let statsVisible = false;
 	let workVisible = false;
 	let featuredVisible = false;
@@ -51,9 +50,6 @@
 			profileScale.set(1.03);
 			setTimeout(() => profileScale.set(1), 600);
 		}, 800);
-		
-		// Delay decorative elements until after hero content is loaded
-		setTimeout(() => decorativeElementsVisible = true, 1500);
 		
 		setTimeout(() => statsVisible = true, 1000);
 		setTimeout(() => workVisible = true, 1300);
@@ -116,45 +112,6 @@
 		z-index: 10; /* Ensure text is above image */
 		position: relative; /* Add position relative for z-index to work */
 	}
-
-	/* Decorative elements for hero section */
-	.decorative-circle-1 {
-		position: absolute;
-		top: 20px;
-		right: 10%;
-		width: 18rem;
-		height: 18rem;
-		background: rgba(59, 130, 246, 0.05);
-		border-radius: 50%;
-		filter: blur(3rem);
-		z-index: 0;
-		will-change: opacity;
-		opacity: 0;
-		transition: opacity 1.2s ease-in-out;
-	}
-
-	.decorative-circle-1.visible {
-		opacity: 0.7;
-	}
-
-	.decorative-circle-2 {
-		position: absolute;
-		bottom: 40px;
-		left: 10%;
-		width: 24rem;
-		height: 24rem;
-		background: rgba(99, 102, 241, 0.05);
-		border-radius: 50%;
-		filter: blur(3rem);
-		z-index: 0;
-		will-change: opacity;
-		opacity: 0;
-		transition: opacity 1.2s ease-in-out;
-	}
-
-	.decorative-circle-2.visible {
-		opacity: 0.7;
-	}
 	
 	/* Featured content grid */
 	.featured-grid {
@@ -210,10 +167,6 @@
 <div class="page-wrapper" class:visible={visible}>
 	<!-- Hero Section with updated styling -->
 	<div class="relative overflow-hidden pt-24 md:pt-28 pb-8 md:pb-12">
-		<!-- Decorative circles only visible in light mode -->
-		<div class="decorative-circle-1 dark:opacity-0" class:visible={decorativeElementsVisible}></div>
-		<div class="decorative-circle-2 dark:opacity-0" class:visible={decorativeElementsVisible}></div>
-		
 		<div class="container mx-auto px-2 md:px-3">
 			<section class="bg-gradient-to-br from-primary/5 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl shadow-sm backdrop-blur-[2px] mb-10 py-6 md:py-8 px-1 md:px-2">
 				<PageContainer heroSection={true} noPadding={true}>

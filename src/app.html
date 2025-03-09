@@ -109,6 +109,30 @@
 			})();
 		</script>
 		
+		<!-- Static site search fix script -->
+		<script>
+			// Fix for Static Site Search with query parameters
+			(function() {
+				// Only run this script when loaded directly, not during hydration
+				if (window.location.pathname === '/' && window.location.search.includes('query=')) {
+					const searchParams = new URLSearchParams(window.location.search);
+					const query = searchParams.get('query');
+					const type = searchParams.get('type') || 'all';
+					
+					// If we have search parameters but we're on the homepage
+					// This likely means we got redirected from a non-existent /search page
+					if (query) {
+						// Save the search parameters
+						sessionStorage.setItem('searchQuery', query);
+						sessionStorage.setItem('searchType', type);
+						
+						// Redirect to the search page, without parameters
+						window.location.href = '/search';
+					}
+				}
+			})();
+		</script>
+		
 		%sveltekit.head%
 	</head>
 	<body>
