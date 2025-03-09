@@ -19,12 +19,11 @@
     let blogResults = form?.blogResults ?? data.blogResults ?? [];
     let publicationResults = form?.publicationResults ?? data.publicationResults ?? [];
     let eventResults = form?.eventResults ?? data.eventResults ?? [];
-    let isSearchReady = false;
     
     // Total count for display
     $: totalResults = results.length;
     
-    // Client-side search function
+    // Client-side search function that enhances the server-provided results
     function performSearch(searchQuery, searchType) {
         if (!browser) return;
         
@@ -115,28 +114,45 @@
     let searchInput;
     
     onMount(() => {
-        // Set search as ready for rendering
-        isSearchReady = true;
-        
         // Auto-focus the search input when no query is present
         if (!query && searchInput) {
             searchInput.focus();
         }
         
-        // If there's a query in the URL when the page loads, perform search
-        if (query) {
-            performSearch(query, type);
+        // Check for stored search parameters from static site redirect
+        if (browser && !query) {
+            const storedQuery = sessionStorage.getItem('searchQuery');
+            const storedType = sessionStorage.getItem('searchType');
+            
+            if (storedQuery) {
+                // Clear the stored values to avoid loop
+                sessionStorage.removeItem('searchQuery');
+                sessionStorage.removeItem('searchType');
+                
+                // Update local state
+                query = storedQuery;
+                type = storedType || 'all';
+                
+                // Perform search with stored parameters
+                performSearch(query, type);
+            }
         }
         
-        // Ensure search works when loaded directly (for static sites)
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlQuery = urlParams.get('query');
-        const urlType = urlParams.get('type') || 'all';
-        
-        if (urlQuery && urlQuery !== query) {
-            query = urlQuery;
-            type = urlType;
-            performSearch(urlQuery, urlType);
+        // Check if client-side data is different from server-side data
+        // If so, re-run the search to get fresh results
+        if (query) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlQuery = urlParams.get('query');
+            const urlType = urlParams.get('type') || 'all';
+            
+            // Only run client-side search if URL parameters differ from what we have
+            if (urlQuery !== query || urlType !== type) {
+                query = urlQuery || query;
+                type = urlType || type;
+            }
+            
+            // Always perform client-side search to ensure fresh results
+            performSearch(query, type);
         }
     });
     
@@ -149,7 +165,7 @@
         } else if (result.searchType === 'event') {
             return `/events/${result.eventType}/${result.slug}`;
         }
-        return '#';
+        return '/';
     }
     
     // Function to get proper display type for a search result
@@ -190,51 +206,50 @@
     }
 </script>
 
-{#if browser && isSearchReady}
-<PageContainer heroSection={true}>
-    <!-- Background decorative elements, set to lower z-index to avoid interaction issues -->
-    <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl -z-10 pointer-events-none"></div>
-    <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-    
-    <h1 class="text-5xl font-bold mb-4 text-center text-primary dark:text-[#3b82f6]">Search</h1>
-    
-    <form on:submit={handleSearchSubmit} class="search-form relative z-10 text-black dark:text-gray-100">
-        <div class="search-input-wrapper relative z-10 text-black dark:text-gray-100">
-            <input 
-                type="text" 
-                name="query" 
-                placeholder="Search for blog posts, publications, events..." 
-                value={query} 
-                class="search-input w-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 relative z-10 text-black dark:text-gray-100"
-                aria-label="Search query"
-                bind:this={searchInput}
-            />
-            <button type="submit" class="search-button flex-shrink-0 relative z-10 bg-primary dark:bg-[#3b82f6] hover:bg-primary-hover dark:hover:bg-blue-600">
-                <span>Search</span>
-            </button>
-        </div>
+{#if query}
+    <PageContainer heroSection={true}>
+        <!-- Background decorative elements, set to lower z-index to avoid interaction issues -->
+        <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl -z-10 pointer-events-none"></div>
+        <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl -z-10 pointer-events-none"></div>
         
-        <div class="search-filters">
-            <label class="filter-option">
-                <input type="radio" name="type" value="all" checked={type === 'all'} />
-                <span class="filter-label text-black dark:text-gray-100">All Content</span>
-            </label>
-            <label class="filter-option">
-                <input type="radio" name="type" value="blog" checked={type === 'blog'} />
-                <span class="filter-label text-black dark:text-gray-100">Blog Posts</span>
-            </label>
-            <label class="filter-option">
-                <input type="radio" name="type" value="publication" checked={type === 'publication'} />
-                <span class="filter-label text-black dark:text-gray-100">Publications</span>
-            </label>
-            <label class="filter-option">
-                <input type="radio" name="type" value="event" checked={type === 'event'} />
-                <span class="filter-label text-black dark:text-gray-100">Events</span>
-            </label>
-        </div>
-    </form>
-    
-    {#if query}
+        <h1 class="text-5xl font-bold mb-4 text-center text-primary dark:text-[#3b82f6]">Search</h1>
+        
+        <form on:submit={handleSearchSubmit} class="search-form relative z-10 text-black dark:text-gray-100">
+            <div class="search-input-wrapper relative z-10 text-black dark:text-gray-100">
+                <input 
+                    type="text" 
+                    name="query" 
+                    placeholder="Search for blog posts, publications, events..." 
+                    value={query} 
+                    class="search-input w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 relative z-10 text-gray-900 dark:text-gray-100 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    aria-label="Search query"
+                    bind:this={searchInput}
+                />
+                <button type="submit" class="search-button flex-shrink-0 relative z-10 bg-primary dark:bg-[#3b82f6] hover:bg-primary-hover dark:hover:bg-blue-600">
+                    <span>Search</span>
+                </button>
+            </div>
+            
+            <div class="search-filters">
+                <label class="filter-option">
+                    <input type="radio" name="type" value="all" checked={type === 'all'} />
+                    <span class="filter-label text-black dark:text-gray-100">All Content</span>
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="type" value="blog" checked={type === 'blog'} />
+                    <span class="filter-label text-black dark:text-gray-100">Blog Posts</span>
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="type" value="publication" checked={type === 'publication'} />
+                    <span class="filter-label text-black dark:text-gray-100">Publications</span>
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="type" value="event" checked={type === 'event'} />
+                    <span class="filter-label text-black dark:text-gray-100">Events</span>
+                </label>
+            </div>
+        </form>
+        
         <div class="search-results-header">
             <h2 class="search-results-heading text-black dark:text-gray-100">
                 {#if totalResults === 0}
@@ -307,16 +322,55 @@
                 {/each}
             {/if}
         </div>
-    {:else}
+    </PageContainer>
+{:else}
+    <PageContainer heroSection={true}>
+        <!-- Background decorative elements -->
+        <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl -z-10 pointer-events-none"></div>
+        <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+        
+        <h1 class="text-5xl font-bold mb-4 text-center text-primary dark:text-[#3b82f6]">Search</h1>
+        
+        <form on:submit={handleSearchSubmit} class="search-form relative z-10 text-black dark:text-gray-100">
+            <div class="search-input-wrapper relative z-10 text-black dark:text-gray-100">
+                <input 
+                    type="text" 
+                    name="query" 
+                    placeholder="Search for blog posts, publications, events..." 
+                    value={query} 
+                    class="search-input w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 relative z-10 text-gray-900 dark:text-gray-100 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    aria-label="Search query"
+                    bind:this={searchInput}
+                />
+                <button type="submit" class="search-button flex-shrink-0 relative z-10 bg-primary dark:bg-[#3b82f6] hover:bg-primary-hover dark:hover:bg-blue-600">
+                    <span>Search</span>
+                </button>
+            </div>
+            
+            <div class="search-filters">
+                <label class="filter-option">
+                    <input type="radio" name="type" value="all" checked={type === 'all'} />
+                    <span class="filter-label text-black dark:text-gray-100">All Content</span>
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="type" value="blog" checked={type === 'blog'} />
+                    <span class="filter-label text-black dark:text-gray-100">Blog Posts</span>
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="type" value="publication" checked={type === 'publication'} />
+                    <span class="filter-label text-black dark:text-gray-100">Publications</span>
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="type" value="event" checked={type === 'event'} />
+                    <span class="filter-label text-black dark:text-gray-100">Events</span>
+                </label>
+            </div>
+        </form>
+        
         <div class="search-instructions bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
             <p class="text-lg text-gray-600 dark:text-gray-300">Enter a search term above to find blog posts, publications, and events.</p>
         </div>
-    {/if}
-</PageContainer>
-{:else}
-<div class="search-loading">
-    <p>Loading search functionality...</p>
-</div>
+    </PageContainer>
 {/if}
 
 <style>
@@ -360,7 +414,6 @@
         font-size: 1rem;
         border: 1px solid;
         border-radius: 8px;
-        color: #1e293b;
         box-shadow: none;
         width: 100%;
         transition: all 0.3s ease;
@@ -463,7 +516,6 @@
         }
         
         .search-input {
-            color: #f9fafb;
             border-color: #374151;
         }
         
