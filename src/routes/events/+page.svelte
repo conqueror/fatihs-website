@@ -207,35 +207,35 @@
 
   <!-- Call to action box with improved dark mode styling -->
   {#if AnimateInView}
-    <svelte:component this={AnimateInView} type="fade" delay={100}>
-      <div class="mb-16 bg-gradient-to-r from-primary-600/90 to-indigo-600/90 p-8 rounded-lg shadow-xl border-2 border-primary-300 dark:border-primary-700/50 text-gray-800 dark:text-white relative overflow-hidden">
+    <svelte:component this={AnimateInView} type="fade" delay={500}>
+      <div class="mb-16 bg-gradient-to-br from-primary/5 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 p-8 rounded-xl shadow-lg backdrop-blur-[2px] border border-primary-200 dark:border-primary-800/50 text-gray-800 dark:text-gray-100 relative overflow-hidden">
         <!-- Decorative elements -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 dark:bg-blue-500/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 bg-indigo-100/20 dark:bg-indigo-500/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
         
-        <h3 class="text-2xl font-bold mb-4 relative z-10">Interested in having me speak at your event?</h3>
+        <h3 class="text-2xl font-bold mb-4 relative z-10 text-primary-700 dark:text-blue-400">Interested in having me speak at your event?</h3>
         <p class="mb-6 text-lg max-w-2xl relative z-10">
           I'm available for speaking engagements, podcast appearances, and hackathon judging/mentoring on AI, machine learning, retail technology, 
           and data science. Please get in touch via the contact page to discuss opportunities.
         </p>
-        <a href="/contact" class="inline-block px-8 py-4 bg-white text-primary-700 font-bold rounded-lg hover:bg-gray-100 transition-colors shadow-md relative z-10 focus:outline-none focus:ring-2 focus:ring-white/50">
+        <a href="/contact" class="inline-block px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary-600 transition-colors shadow-md relative z-10 focus:outline-none focus:ring-2 focus:ring-primary/50 transform hover:scale-105 duration-300">
           Contact Me
         </a>
       </div>
     </svelte:component>
   {:else}
     <!-- Same CTA box without animation wrapper -->
-    <div class="mb-16 bg-gradient-to-r from-primary-600/90 to-indigo-600/90 p-8 rounded-lg shadow-xl border-2 border-primary-300 dark:border-primary-700/50 text-gray-800 dark:text-white relative overflow-hidden">
-      <!-- Content is identical to the animated version -->
-      <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-      <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+    <div class="mb-16 bg-gradient-to-br from-primary/5 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 p-8 rounded-xl shadow-lg backdrop-blur-[2px] border border-primary-200 dark:border-primary-800/50 text-gray-800 dark:text-gray-100 relative overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 dark:bg-blue-500/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-32 h-32 bg-indigo-100/20 dark:bg-indigo-500/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
       
-      <h3 class="text-2xl font-bold mb-4 relative z-10">Interested in having me speak at your event?</h3>
+      <h3 class="text-2xl font-bold mb-4 relative z-10 text-primary-700 dark:text-blue-400">Interested in having me speak at your event?</h3>
       <p class="mb-6 text-lg max-w-2xl relative z-10">
         I'm available for speaking engagements, podcast appearances, and hackathon judging/mentoring on AI, machine learning, retail technology, 
         and data science. Please get in touch via the contact page to discuss opportunities.
       </p>
-      <a href="/contact" class="inline-block px-8 py-4 bg-white text-primary-700 font-bold rounded-lg hover:bg-gray-100 transition-colors shadow-md relative z-10 focus:outline-none focus:ring-2 focus:ring-white/50">
+      <a href="/contact" class="inline-block px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary-600 transition-colors shadow-md relative z-10 focus:outline-none focus:ring-2 focus:ring-primary/50 transform hover:scale-105 duration-300">
         Contact Me
       </a>
     </div>
