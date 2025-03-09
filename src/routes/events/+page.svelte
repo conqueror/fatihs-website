@@ -186,23 +186,10 @@
   }
 </script>
 
-<SEO 
-  title="Professional Events | Fatih Nayebi"
-  description="Conferences, hackathons, podcasts, and other professional events featuring Fatih Nayebi, focusing on AI, retail technology, and data science."
-  keywords="speaking events, conferences, hackathons, podcasts, AI, retail technology, Fatih Nayebi"
-  canonical="https://fatihnayebi.com/events"
-  openGraph={{
-    title: "Professional Events | Fatih Nayebi",
-    description: "Conferences, hackathons, podcasts, and other professional events featuring Fatih Nayebi, focusing on AI, retail technology, and data science.",
-    url: "https://fatihnayebi.com/events",
-    type: "website"
-  }}
-  twitter={{
-    card: "summary_large_image",
-    title: "Professional Events | Fatih Nayebi",
-    description: "Conferences, hackathons, podcasts, and other professional events featuring Fatih Nayebi, focusing on AI, retail technology, and data science."
-  }}
-/>
+<svelte:head>
+  <title>Events | Dr. Fatih Nayebi</title>
+  <meta name="description" content="Speaking engagements, event organization, and media appearances by Dr. Fatih Nayebi.">
+</svelte:head>
 
 {#if visible}
 <PageContainer heroSection={true}>
@@ -210,15 +197,17 @@
   <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary-600/20 dark:bg-primary-400/5 rounded-full blur-3xl"></div>
   <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-300/5 rounded-full blur-3xl"></div>
   
-  <!-- Page header -->
-  <h1 class="text-5xl font-bold mb-4 text-center text-primary dark:text-blue-400" in:fly={{ y: -30, duration: 800, delay: 300 }}>Professional Events</h1>
-  <p class="text-lg text-center mb-8 max-w-3xl mx-auto text-gray-700 dark:text-gray-300" in:fly={{ y: 30, duration: 800, delay: 500 }}>
+  <!-- Title and Introduction Section -->
+  <h1 class="text-5xl font-bold mb-4 text-center text-primary dark:text-blue-400" in:fly={{ y: -30, duration: 800, delay: 100 }}>
+    Professional Events
+  </h1>
+  <p class="text-lg text-center mb-8 max-w-3xl mx-auto text-gray-700 dark:text-gray-300" in:fly={{ y: 30, duration: 800, delay: 300 }}>
     Explore my professional activities including conference talks, hackathons I've organized, and podcast appearances where I discuss artificial intelligence, retail technology, and data science.
   </p>
 
   <!-- Call to action box with improved dark mode styling -->
   {#if AnimateInView}
-    <svelte:component this={AnimateInView} type="fade" delay={700}>
+    <svelte:component this={AnimateInView} type="fade" delay={100}>
       <div class="mb-16 bg-gradient-to-r from-primary-600/90 to-indigo-600/90 p-8 rounded-lg shadow-xl border-2 border-primary-300 dark:border-primary-700/50 text-gray-800 dark:text-white relative overflow-hidden">
         <!-- Decorative elements -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
@@ -253,104 +242,228 @@
   {/if}
 
   <!-- Event Categories Section with explicit links for crawlers -->
-  <div class="mb-12">
-    <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Browse by Category</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Speaking Events Card -->
-      <a href="/events/speaking" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center mb-4">
-          <span class="text-3xl mr-3">🎤</span>
-          <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400">Speaking</h3>
-        </div>
-        <p class="text-gray-600 dark:text-gray-300">Conference talks, workshops, and panels where I share insights on AI, ML, and retail technology.</p>
-      </a>
-      
-      <!-- Organizing Events Card -->
-      <a href="/events/organizing" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center mb-4">
-          <span class="text-3xl mr-3">👥</span>
-          <h3 class="text-xl font-bold text-green-600 dark:text-green-400">Organizing</h3>
-        </div>
-        <p class="text-gray-600 dark:text-gray-300">Hackathons, conferences, and community events that I've helped organize, judge, or mentor.</p>
-      </a>
-      
-      <!-- Media Appearances Card -->
-      <a href="/events/media" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center mb-4">
-          <span class="text-3xl mr-3">🎙️</span>
-          <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">Media</h3>
-        </div>
-        <p class="text-gray-600 dark:text-gray-300">Podcast interviews, video appearances, and other media engagements on technology trends and AI.</p>
-      </a>
-    </div>
-  </div>
-
-  <!-- View Toggle Buttons -->
-  <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
-    <button 
-      class="py-2 px-4 font-medium text-sm {viewMode === 'list' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
-      on:click={() => viewMode = 'list'}
-      aria-label="List view"
-    >
-      List View
-    </button>
-    <button 
-      class="py-2 px-4 font-medium text-sm {viewMode === 'calendar' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
-      on:click={() => viewMode = 'calendar'}
-      aria-label="Calendar view"
-    >
-      Calendar View
-    </button>
-  </div>
-
-  <!-- Search and Filter Controls with improved dark mode styling -->
-  <div class="mb-8">
-    <!-- Search input -->
-    <div class="mb-4">
-      <div class="relative">
-        <input 
-          type="text" 
-          bind:value={searchQuery}
-          placeholder="Search events..."
-          class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 placeholder-gray-500 dark:placeholder-gray-400"
-        />
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
+  {#if AnimateInView}
+    <svelte:component this={AnimateInView} type="fade" delay={700}>
+      <div class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Browse by Category</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Speaking Events Card -->
+          <a href="/events/speaking" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center mb-4">
+              <span class="text-3xl mr-3">🎤</span>
+              <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400">Speaking</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300">Conference talks, workshops, and panels where I share insights on AI, ML, and retail technology.</p>
+          </a>
+          
+          <!-- Organizing Events Card -->
+          <a href="/events/organizing" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center mb-4">
+              <span class="text-3xl mr-3">👥</span>
+              <h3 class="text-xl font-bold text-green-600 dark:text-green-400">Organizing</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300">Hackathons, conferences, and community events that I've helped organize, judge, or mentor.</p>
+          </a>
+          
+          <!-- Media Appearances Card -->
+          <a href="/events/media" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center mb-4">
+              <span class="text-3xl mr-3">🎙️</span>
+              <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">Media</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300">Podcast interviews, video appearances, and other media engagements on technology trends and AI.</p>
+          </a>
         </div>
       </div>
+    </svelte:component>
+  {:else}
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Browse by Category</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Speaking Events Card -->
+        <a href="/events/speaking" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">🎤</span>
+            <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400">Speaking</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Conference talks, workshops, and panels where I share insights on AI, ML, and retail technology.</p>
+        </a>
+        
+        <!-- Organizing Events Card -->
+        <a href="/events/organizing" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">👥</span>
+            <h3 class="text-xl font-bold text-green-600 dark:text-green-400">Organizing</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Hackathons, conferences, and community events that I've helped organize, judge, or mentor.</p>
+        </a>
+        
+        <!-- Media Appearances Card -->
+        <a href="/events/media" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">🎙️</span>
+            <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">Media</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300">Podcast interviews, video appearances, and other media engagements on technology trends and AI.</p>
+        </a>
+      </div>
     </div>
+  {/if}
 
-    <!-- Type filtering tabs with improved dark mode styling -->
-    <div class="flex flex-wrap justify-center mb-6 sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm py-4 rounded-lg shadow dark:shadow-gray-800/50 border border-gray-100 dark:border-gray-700/50">
+  <!-- View Toggle Buttons with animation -->
+  {#if AnimateInView}
+    <svelte:component this={AnimateInView} type="fade" delay={900}>
+      <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+        <button 
+          class="py-2 px-4 font-medium text-sm {viewMode === 'list' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+          on:click={() => viewMode = 'list'}
+          aria-label="List view"
+        >
+          List View
+        </button>
+        <button 
+          class="py-2 px-4 font-medium text-sm {viewMode === 'calendar' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+          on:click={() => viewMode = 'calendar'}
+          aria-label="Calendar view"
+        >
+          Calendar View
+        </button>
+      </div>
+    </svelte:component>
+  {:else}
+    <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
       <button 
-        class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'all' ? 'bg-primary-600 text-white dark:bg-primary-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
-        on:click={() => selectedType = 'all'}
+        class="py-2 px-4 font-medium text-sm {viewMode === 'list' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+        on:click={() => viewMode = 'list'}
+        aria-label="List view"
       >
-        All
+        List View
       </button>
       <button 
-        class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'speaking' ? 'bg-blue-600 text-white dark:bg-blue-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-        on:click={() => selectedType = 'speaking'}
+        class="py-2 px-4 font-medium text-sm {viewMode === 'calendar' ? 'text-primary-600 border-b-2 border-primary-600 dark:text-primary-400 dark:border-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'}"
+        on:click={() => viewMode = 'calendar'}
+        aria-label="Calendar view"
       >
-        Speaking
-      </button>
-      <button 
-        class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'organizing' ? 'bg-green-600 text-white dark:bg-green-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400"
-        on:click={() => selectedType = 'organizing'}
-      >
-        Organizing
-      </button>
-      <button 
-        class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'media' ? 'bg-purple-600 text-white dark:bg-purple-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400"
-        on:click={() => selectedType = 'media'}
-      >
-        Media
+        Calendar View
       </button>
     </div>
+  {/if}
+
+  <!-- Search and Filter Controls with improved dark mode styling and animation -->
+  {#if AnimateInView}
+    <svelte:component this={AnimateInView} type="fade" delay={1100}>
+      <div class="mb-8">
+        <!-- Search input -->
+        <div class="mb-4">
+          <div class="relative">
+            <input 
+              type="text" 
+              bind:value={searchQuery}
+              placeholder="Search events..."
+              class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 placeholder-gray-500 dark:placeholder-gray-400"
+            />
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Type filtering tabs with improved dark mode styling -->
+        <div class="flex flex-wrap justify-center mb-6 sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm py-4 rounded-lg shadow dark:shadow-gray-800/50 border border-gray-100 dark:border-gray-700/50">
+          <button 
+            class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'all' ? 'bg-primary-600 text-white dark:bg-primary-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
+            on:click={() => selectedType = 'all'}
+          >
+            All
+          </button>
+          <button 
+            class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'speaking' ? 'bg-blue-600 text-white dark:bg-blue-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+            on:click={() => selectedType = 'speaking'}
+          >
+            Speaking
+          </button>
+          <button 
+            class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'organizing' ? 'bg-green-600 text-white dark:bg-green-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400"
+            on:click={() => selectedType = 'organizing'}
+          >
+            Organizing
+          </button>
+          <button 
+            class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'media' ? 'bg-purple-600 text-white dark:bg-purple-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400"
+            on:click={() => selectedType = 'media'}
+          >
+            Media
+          </button>
+        </div>
+      </div>
+    </svelte:component>
+  {:else}
+    <div class="mb-8">
+      <!-- Search input -->
+      <div class="mb-4">
+        <div class="relative">
+          <input 
+            type="text" 
+            bind:value={searchQuery}
+            placeholder="Search events..."
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 placeholder-gray-500 dark:placeholder-gray-400"
+          />
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type filtering tabs with improved dark mode styling -->
+      <div class="flex flex-wrap justify-center mb-6 sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm py-4 rounded-lg shadow dark:shadow-gray-800/50 border border-gray-100 dark:border-gray-700/50">
+        <button 
+          class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'all' ? 'bg-primary-600 text-white dark:bg-primary-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
+          on:click={() => selectedType = 'all'}
+        >
+          All
+        </button>
+        <button 
+          class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'speaking' ? 'bg-blue-600 text-white dark:bg-blue-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          on:click={() => selectedType = 'speaking'}
+        >
+          Speaking
+        </button>
+        <button 
+          class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'organizing' ? 'bg-green-600 text-white dark:bg-green-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400"
+          on:click={() => selectedType = 'organizing'}
+        >
+          Organizing
+        </button>
+        <button 
+          class="px-6 py-2 mx-2 mb-2 rounded-full {selectedType === 'media' ? 'bg-purple-600 text-white dark:bg-purple-500 dark:text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'} transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400"
+          on:click={() => selectedType = 'media'}
+        >
+          Media
+        </button>
+      </div>
+    </div>
+  {/if}
     
-    <!-- Advanced filters toggle with improved dark mode styling -->
+  <!-- Advanced filters toggle with improved dark mode styling and animation -->
+  {#if AnimateInView}
+    <svelte:component this={AnimateInView} type="fade" delay={1300}>
+      <div class="flex justify-center mb-6">
+        <button 
+          on:click={() => showFilterPanel = !showFilterPanel}
+          class="px-4 py-2 text-sm font-medium flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 rounded"
+        >
+          {showFilterPanel ? 'Hide Filters' : 'Show Advanced Filters'}
+          <svg class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={showFilterPanel ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"} />
+          </svg>
+        </button>
+      </div>
+    </svelte:component>
+  {:else}
     <div class="flex justify-center mb-6">
       <button 
         on:click={() => showFilterPanel = !showFilterPanel}
@@ -362,73 +475,73 @@
         </svg>
       </button>
     </div>
+  {/if}
     
-    <!-- Advanced filter panel with improved dark mode styling -->
-    {#if showFilterPanel}
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/20 p-6 mb-8 border border-gray-200 dark:border-gray-700" transition:fade={{ duration: 200 }}>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Year filter -->
-          <div>
-            <label for="year-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Year</label>
-            <select 
-              id="year-filter"
-              bind:value={selectedYear}
-              class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-800 dark:text-gray-200"
-            >
-              <option value="all">All Years</option>
-              {#each years as year}
-                <option value={year}>{year}</option>
-              {/each}
-            </select>
-          </div>
-          
-          <!-- Location filter -->
-          <div>
-            <label for="location-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Location</label>
-            <select 
-              id="location-filter"
-              bind:value={selectedLocation}
-              class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-800 dark:text-gray-200"
-            >
-              <option value="all">All Locations</option>
-              {#each locations as location}
-                <option value={location}>{location}</option>
-              {/each}
-            </select>
-          </div>
-          
-          <!-- Reset filters button -->
-          <div class="flex items-end">
-            <button 
-              on:click={resetFilters}
-              class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500"
-            >
-              Reset All Filters
-            </button>
-          </div>
+  <!-- Advanced filter panel with improved dark mode styling -->
+  {#if showFilterPanel}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-xl dark:shadow-gray-900/20 p-6 mb-8 border border-gray-200 dark:border-gray-700" transition:fade={{ duration: 200 }}>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Year filter -->
+        <div>
+          <label for="year-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Year</label>
+          <select 
+            id="year-filter"
+            bind:value={selectedYear}
+            class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-800 dark:text-gray-200"
+          >
+            <option value="all">All Years</option>
+            {#each years as year}
+              <option value={year}>{year}</option>
+            {/each}
+          </select>
         </div>
         
-        <!-- Tags filter with improved dark mode styling -->
-        <div class="mt-6">
-          <label for="tags-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</label>
-          <div id="tags-filter" role="group" aria-label="Filter by tags" class="flex flex-wrap gap-2">
-            {#each tags as tag}
-              <button 
-                on:click={() => toggleTag(tag)}
-                class="px-3 py-1 text-sm rounded-full transition-colors border
-                {selectedTags.includes(tag) 
-                  ? 'bg-primary-100 text-primary-800 dark:bg-primary-900/50 dark:text-primary-300 border-primary-300 dark:border-primary-700' 
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 border-gray-200 dark:border-gray-600'} 
-                focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
-              >
-                {tag}
-              </button>
+        <!-- Location filter -->
+        <div>
+          <label for="location-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Location</label>
+          <select 
+            id="location-filter"
+            bind:value={selectedLocation}
+            class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-800 dark:text-gray-200"
+          >
+            <option value="all">All Locations</option>
+            {#each locations as location}
+              <option value={location}>{location}</option>
             {/each}
-          </div>
+          </select>
+        </div>
+        
+        <!-- Reset filters button -->
+        <div class="flex items-end">
+          <button 
+            on:click={resetFilters}
+            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500"
+          >
+            Reset All Filters
+          </button>
         </div>
       </div>
-    {/if}
-  </div>
+      
+      <!-- Tags filter with improved dark mode styling -->
+      <div class="mt-6">
+        <label for="tags-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</label>
+        <div id="tags-filter" role="group" aria-label="Filter by tags" class="flex flex-wrap gap-2">
+          {#each tags as tag}
+            <button 
+              on:click={() => toggleTag(tag)}
+              class="px-3 py-1 text-sm rounded-full transition-colors border
+              {selectedTags.includes(tag) 
+                ? 'bg-primary-100 text-primary-800 dark:bg-primary-900/50 dark:text-primary-300 border-primary-300 dark:border-primary-700' 
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 border-gray-200 dark:border-gray-600'} 
+              focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
+            >
+              {tag}
+            </button>
+          {/each}
+        </div>
+      </div>
+    </div>
+  {/if}
 
   <!-- Display events by year with improved dark mode styling -->
   {#if viewMode === 'list'}
