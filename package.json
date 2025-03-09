@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "node scripts/ensure-fonts.js && node scripts/generate-content.js && vite dev",
-		"build": "node scripts/ensure-fonts.js && node scripts/generate-content.js && node scripts/download-fonts.js && node scripts/generate-icons.js && node scripts/process-profile-images.js && (node scripts/optimize-images.js || true) && (node scripts/optimize-js.js || true) && (node scripts/generate-sitemap.js || true) && node scripts/generate-prerender-entries.js && vite build && (node scripts/inline-critical-css.js || true) || echo 'Build failed, see error above'",
+		"build": "node scripts/ensure-fonts.js && node scripts/generate-content.js && node scripts/download-fonts.js && node scripts/generate-icons.js && node scripts/process-profile-images.js && (node scripts/optimize-images.js || true) && (node scripts/optimize-js.js || true) && (node scripts/generate-sitemap.js || true) && node scripts/generate-prerender-entries.js && vite build && (node scripts/inline-critical-css.js || true) && node scripts/post-build.js || echo 'Build failed, see error above'",
 		"optimize-images": "node scripts/optimize-images.js",
 		"optimize-js": "node scripts/optimize-js.js",
 		"generate-icons": "node scripts/generate-icons.js",

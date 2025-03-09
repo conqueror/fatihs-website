@@ -29,6 +29,17 @@ const config = {
   "*",
   "/sitemap.xml",
   "/robots.txt",
+  "/",
+  "/about",
+  "/blog",
+  "/publications",
+  "/research",
+  "/events",
+  "/conferences",
+  "/consulting",
+  "/contact",
+  "/search",
+  "/privacy",
   "/events/speaking",
   "/events/organizing",
   "/events/media",
@@ -51,7 +62,16 @@ const config = {
   "/events/speaking/unleashing-the-power-of-generative-ai-for-tabular-data-in-machine-learning-applications-2023-10",
   "/events/organizing/retail-gen-ai-hackathon-2023"
 ],
-			handleHttpError: 'warn'
+			handleHttpError: ({ status, path, referrer, referenceType }) => {
+				// Special handling for search paths
+				if (path.startsWith('/search')) {
+					console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ''} - Redirecting to search page`);
+					return '/search';
+				}
+				
+				// Default for everything else is to warn only
+				console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ''}`);
+			}
 		},
 		// Ensure we're using absolute paths for better compatibility
 		paths: {
