@@ -10,7 +10,7 @@ tags:
   - digital transformation
   - business strategy
   - AI implementation
-featured: true
+featured: false
 ---
 
 ## Summary

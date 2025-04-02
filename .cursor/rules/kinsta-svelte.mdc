@@ -183,7 +183,7 @@ Additionally, use the **Chain of Thought** method when responding to questions:
 - **Pages**: Keep page components in `src/routes/` using SvelteKit conventions (e.g., `+page.svelte`).
 - **Layouts**: Maintain layout files with `+layout.svelte`.
 - **Utilities**: Place utility/helper functions in `src/lib/utils/`.
-- For JavaScript, consider using [JSDoc comments](https://jsdoc.app/) to describe objects if needed.
+- For JavaScript, consider using [JSDoc comments](mdc:https:/jsdoc.app) to describe objects if needed.
 
 ### Component Design
 
@@ -206,7 +206,7 @@ Additionally, use the **Chain of Thought** method when responding to questions:
 ### Testing
 
 - Write unit tests for utility functions and critical logic.
-- Use a testing library compatible with Svelte (e.g., [Svelte Testing Library](https://testing-library.com/docs/svelte-testing-library/intro)) for component tests.
+- Use a testing library compatible with Svelte (e.g., [Svelte Testing Library](mdc:https:/testing-library.com/docs/svelte-testing-library/intro)) for component tests.
 - Consider end-to-end tests for essential user flows (using Playwright or Cypress).
 
 ### Accessibility
@@ -226,7 +226,7 @@ Additionally, use the **Chain of Thought** method when responding to questions:
 
 - Keep an up-to-date `README.md` at the project root.
 - Use concise inline comments for clarity on complex logic.
-- Employ [JSDoc](https://jsdoc.app/) for function documentation if needed.
+- Employ [JSDoc](mdc:https:/jsdoc.app) for function documentation if needed.
 
 ---
 

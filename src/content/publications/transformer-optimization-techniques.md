@@ -7,7 +7,7 @@ author: "Fatih Nayebi, Alex Johnson, Sarah Chen"
 venue: "International Conference on Machine Learning (ICML)"
 paperUrl: "https://example.com/papers/transformer-optimization.pdf"
 codeUrl: "https://github.com/username/transformer-optimization"
-featured: true
+featured: false
 ---
 
 # Advanced Optimization Techniques for Transformer-Based Language Models

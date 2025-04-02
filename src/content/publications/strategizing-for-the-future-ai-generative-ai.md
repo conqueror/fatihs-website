@@ -10,7 +10,7 @@ tags:
   - data strategy
   - business transformation
   - ethical AI
-featured: true
+featured: false
 ---
 
 ## Summary

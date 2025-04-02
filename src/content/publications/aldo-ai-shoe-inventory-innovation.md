@@ -10,7 +10,7 @@ tags:
   - retail innovation
   - predictive analytics
   - sustainability
-featured: true
+featured: false
 ---
 
 ## Summary

@@ -1,4 +1,5 @@
-import { getBlogPostBySlug } from '$lib/utils/markdown';
+import { getBlogPostBySlug, getFilteredBlogPosts } from '$lib/utils/markdown';
+import { getFilteredPublications } from '$lib/utils/publications';
 import { error } from '@sveltejs/kit';
 
 // Disable prerendering for this page so we can access URL parameters
@@ -27,6 +28,13 @@ export function load({ url }) {
     }
   }
   
-  // Normal home page load, don't do anything special
-  return {};
+  // Get featured blog posts and publications for the home page
+  const featuredPosts = getFilteredBlogPosts({ featured: true });
+  const featuredPublications = getFilteredPublications({ featured: true });
+  
+  // Return the featured content
+  return {
+    featuredPosts,
+    featuredPublications
+  };
 } 

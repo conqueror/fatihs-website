@@ -4,7 +4,7 @@ date: "2023-06-15"
 excerpt: "Learn the basics of Svelte, a radical new approach to building user interfaces that offers a refreshing alternative to React and Vue."
 tags: ["Svelte", "Web Development", "JavaScript", "Frontend"]
 author: "Fatih Nayebi"
-featured: true
+featured: false
 ---
 
 # Getting Started with Svelte: A Beginner's Guide

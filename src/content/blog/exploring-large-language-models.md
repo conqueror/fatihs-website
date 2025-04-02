@@ -4,7 +4,7 @@ date: "2023-08-15"
 excerpt: "An in-depth exploration of modern large language models, their capabilities, and the challenges they face."
 tags: ["AI", "NLP", "Deep Learning", "LLMs"]
 author: "Fatih Nayebi"
-featured: true
+featured: false
 ---
 
 # Exploring Large Language Models: Capabilities and Limitations

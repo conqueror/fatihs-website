@@ -10,7 +10,7 @@ tags:
   - retail technology
   - data strategy
   - first-party data
-featured: true
+featured: false
 ---
 
 ## Summary

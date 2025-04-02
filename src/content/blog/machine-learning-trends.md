@@ -4,7 +4,7 @@ date: "2024-03-04"
 excerpt: "Exploring the latest trends and advancements in machine learning that are shaping the industry in 2024."
 tags: ["Machine Learning", "AI", "Trends", "Technology"]
 author: "Fatih Nayebi"
-featured: true
+featured: false
 ---
 
 # Machine Learning Trends in 2024

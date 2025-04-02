@@ -3,7 +3,7 @@ title: Optimizing Applications, Websites, and Services for Discoverability and U
 date: '2025-02-23'
 excerpt: How to make your digital products more discoverable and usable by AI agents in an increasingly AI-driven world.
 author: Fatih Nayebi
-featured: true
+featured: false
 tags:
   - AI
   - UX Design

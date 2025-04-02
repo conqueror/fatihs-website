@@ -9,7 +9,7 @@ tags:
   - interpretability
   - healthcare
   - clinical decision support
-featured: true
+featured: false
 ---
 
 ## Abstract

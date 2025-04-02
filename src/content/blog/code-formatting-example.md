@@ -4,7 +4,7 @@ date: "2024-03-04"
 excerpt: "Best practices for formatting code in technical documentation with examples in multiple languages"
 tags: ["Programming", "Documentation", "Best Practices", "Code Snippets"]
 author: "Fatih Nayebi"
-featured: true
+featured: false
 ---
 
 # Code Formatting in Technical Documentation

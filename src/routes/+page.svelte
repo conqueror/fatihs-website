@@ -375,8 +375,8 @@
 								{:else}
 									<div class="border-b border-gray-200 dark:border-gray-700 pb-6 group" in:fly={{ x: -20, duration: 500 }}>
 										<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">June 15, 2023</div>
-										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">AI in Healthcare: Current Applications and Future Possibilities</h3>
-										<p class="text-gray-600 dark:text-gray-300 mb-3">Exploring how artificial intelligence is transforming healthcare diagnosis, treatment, and patient care.</p>
+										<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary transition-colors">Assortment Planning and Optimization with Reinforcement Learning</h3>
+										<p class="text-gray-600 dark:text-gray-300 mb-3">Exploring how artificial intelligence is transforming Assortment Planning and Optimization by deciding which products to carry, in what quantities, and at which locations</p>
 										<a href="/blog" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 											Read post
 											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -425,8 +425,8 @@
 							{:else}
 								<div class="border-b border-gray-200 dark:border-gray-700 pb-6 group" in:fly={{ x: 20, duration: 500 }}>
 									<div class="text-sm text-gray-500 dark:text-white mb-2">2023</div>
-									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-white dark:group-hover:text-primary transition-colors">Neural Network Architectures for Computer Vision</h3>
-									<p class="text-sm text-gray-600 dark:text-white italic mb-3">Journal of AI Research</p>
+									<h3 class="text-lg font-semibold mb-2 group-hover:text-primary dark:text-white dark:group-hover:text-primary transition-colors">Foundations of Agentic AI for Retail</h3>
+									<p class="text-sm text-gray-600 dark:text-white italic mb-3">Book published by Gradient Divergence</p>
 									<a href="/publications" class="inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg px-4 py-2 text-sm bg-transparent text-primary dark:text-blue-400 border border-primary dark:border-blue-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-blue-900/30 dark:hover:text-white transform hover:scale-105">
 										View details
 										<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
