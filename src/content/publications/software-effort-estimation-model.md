@@ -1,8 +1,12 @@
 ---
 title: "Automated Selection of a Software Effort Estimation Model Based on Accuracy and Uncertainty"
 date: "2015-08-15"
-journal: "Journal of Artificial Intelligence Research"
-authors: ["Fatih Nayebi", "Alain Abran","Jean-Marc Desharnais"]
+journal: "Artificial Intelligence Research"
+authors: [
+  "Fatih Nayebi",
+  "Alain Abran",
+  "Jean-Marc Desharnais"
+]
 doi: "10.5430/air.v4n2p45"
 url: "https://www.sciedupress.com/journal/index.php/air/article/view/6897"
 tags: ["Software Engineering", "Effort Estimation", "Machine Learning", "Software Metrics", "Uncertainty Analysis"]

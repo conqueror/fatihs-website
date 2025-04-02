@@ -2,7 +2,9 @@
 title: "iOS Application User Rating Prediction Using Usability Evaluation and Machine Learning"
 date: "2015-12-10"
 journal: "PhD Dissertation, École de Technologie Supérieure"
-authors: ["Fatih Nayebi"]
+authors: [
+  "Fatih Nayebi"
+]
 url: "https://depot.etsmtl.ca/id/eprint/1678/"
 tags: ["iOS", "Usability", "Machine Learning", "App Store", "User Ratings", "Predictive Modeling"]
 featured: false

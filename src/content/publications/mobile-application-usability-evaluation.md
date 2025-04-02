@@ -2,7 +2,11 @@
 title: "The State of the Art of Mobile Application Usability Evaluation"
 date: "2012-05-15"
 journal: "25th IEEE Canadian Conference on Electrical and Computer Engineering"
-authors: ["Fatih Nayebi","Jean-Marc Desharnais","Alain Abran"]
+authors: [
+  "Fatih Nayebi",
+  "Jean-Marc Desharnais",
+  "Alain Abran"
+]
 doi: "10.1109/CCECE.2012.6334930"
 url: "https://ieeexplore.ieee.org/document/6334930"
 tags: ["Mobile", "Usability", "Human-Computer Interaction", "Software Engineering"]
