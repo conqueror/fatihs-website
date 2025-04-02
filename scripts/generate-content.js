@@ -250,6 +250,9 @@ async function processContent(content) {
           console.warn(`Error parsing ${key}: ${error.message}`);
           frontmatter[key] = [value.trim()]; // Fallback to single value
         }
+      } else if (key === 'featured') {
+        // Convert 'featured' to a proper boolean
+        frontmatter[key] = value.toLowerCase() === 'true';
       } else {
         frontmatter[key] = value;
       }

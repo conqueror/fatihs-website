@@ -25,6 +25,11 @@ const posts = files.map(file => {
   // Ensure date is a string
   const date = data.date instanceof Date ? data.date : new Date(data.date);
   
+  // Convert featured to a proper boolean
+  const featured = typeof data.featured === 'string' 
+    ? data.featured.toLowerCase() === 'true'
+    : Boolean(data.featured);
+  
   return {
     slug,
     title: data.title,
@@ -32,7 +37,7 @@ const posts = files.map(file => {
     excerpt: data.excerpt,
     tags: data.tags || [],
     author: data.author || 'Fatih Nayebi',
-    featured: data.featured || false,
+    featured: featured,
     content: html,
     rawContent: markdownContent
   };
