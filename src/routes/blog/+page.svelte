@@ -4,6 +4,7 @@
     import { browser } from '$app/environment';
     import { fade, fly } from 'svelte/transition';
     import PageContainer from '$lib/components/layout/PageContainer.svelte';
+    import { jsonLdToString } from '$lib/utils/structured-data';
     
     // Access the data loaded in +page.js
     export let data;
@@ -11,14 +12,62 @@
     
     let visible = false;
     
+    // Generate structured data for blog list
+    const getBlogListSchema = () => {
+        return {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            'name': 'Retail AI & Agentic Systems Blog | Dr. Fatih Nayebi',
+            'description': 'Articles and insights on AI for Retail, Agentic AI systems, and data science applications by Dr. Fatih Nayebi',
+            'mainEntity': {
+                '@type': 'ItemList',
+                'itemListElement': blogPosts.map((post, index) => ({
+                    '@type': 'ListItem',
+                    'position': index + 1,
+                    'item': {
+                        '@type': 'BlogPosting',
+                        'headline': post.title,
+                        'author': {
+                            '@type': 'Person',
+                            'name': 'Fatih Nayebi',
+                            'jobTitle': 'VP of Data & AI',
+                            'affiliation': 'ALDO Group'
+                        },
+                        'datePublished': post.date,
+                        'description': post.excerpt,
+                        'keywords': post.tags ? post.tags.join(', ') : '',
+                        'url': `https://fatihnayebi.com/blog/${post.slug}`
+                    }
+                }))
+            }
+        };
+    };
+    
     onMount(() => {
         visible = true;
     });
 </script>
 
 <svelte:head>
-    <title>Blog | Dr. Fatih Nayebi</title>
-    <meta name="description" content="Thoughts and insights on AI, machine learning, and technology by Dr. Fatih Nayebi.">
+    <title>Retail AI & Agentic Systems Blog | Dr. Fatih Nayebi</title>
+    <meta name="description" content="Insights and analysis on AI for Retail, Agentic AI systems, machine learning applications, inventory optimization, and retail technology innovation.">
+    <meta name="keywords" content="Retail AI blog, Agentic AI insights, inventory optimization, AI ethics, retail machine learning, assortment planning, Fatih Nayebi">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Retail AI & Agentic Systems Blog | Dr. Fatih Nayebi">
+    <meta property="og:description" content="Expert insights on AI for Retail, Agentic AI systems, and retail technology innovation from Dr. Fatih Nayebi, VP of Data & AI at ALDO Group.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fatihnayebi.com/blog">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Retail AI & Agentic Systems Blog | Dr. Fatih Nayebi">
+    <meta name="twitter:description" content="Expert insights on AI for Retail, Agentic AI systems, and retail technology innovation.">
+    
+    <!-- Structured data for blog collection -->
+    {#if blogPosts && blogPosts.length > 0}
+        {@html jsonLdToString(getBlogListSchema())}
+    {/if}
 </svelte:head>
 
 {#if visible}
@@ -27,9 +76,9 @@
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
     
-    <h1 class="text-5xl font-bold mb-4 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Blog</h1>
+    <h1 class="text-5xl font-bold mb-4 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Retail AI & Agentic Systems Insights</h1>
     <p class="text-lg text-center mb-12 max-w-3xl mx-auto text-gray-700 dark:text-white" in:fly={{ y: 30, duration: 800, delay: 500 }}>
-        Thoughts and insights on AI, machine learning, and technology.
+        Expert perspectives on AI for retail innovation, inventory optimization, assortment planning, and autonomous agentic systems that are transforming the retail industry.
     </p>
     
     <div class="space-y-12">

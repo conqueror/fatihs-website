@@ -3,11 +3,40 @@
     import { fade, fly, scale } from 'svelte/transition';
     import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
     import PageContainer from '$lib/components/layout/PageContainer.svelte';
+    import SEO from '$lib/components/seo/SEO.svelte';
+    import { generatePublicationSchema, jsonLdToString } from '$lib/utils/structured-data';
     
     export let data;
     const { publications } = data;
     
     let visible = false;
+    
+    // Generate structured data for the page
+    const getPublicationsListSchema = () => {
+        return {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            'name': 'Dr. Fatih Nayebi\'s Research Publications',
+            'description': 'Research publications by Dr. Fatih Nayebi on AI, machine learning, retail technology, and agentic systems',
+            'mainEntity': {
+                '@type': 'ItemList',
+                'itemListElement': publications.map((publication, index) => ({
+                    '@type': 'ListItem',
+                    'position': index + 1,
+                    'item': {
+                        '@type': 'ScholarlyArticle',
+                        'headline': publication.title,
+                        'author': Array.isArray(publication.authors) 
+                            ? publication.authors.map(name => ({ '@type': 'Person', 'name': name }))
+                            : [{ '@type': 'Person', 'name': publication.authors || 'Fatih Nayebi' }],
+                        'datePublished': publication.date,
+                        'publisher': publication.journal,
+                        'url': publication.url || `/publications/${publication.slug}`
+                    }
+                }))
+            }
+        };
+    };
     
     onMount(() => {
         visible = true;
@@ -15,8 +44,25 @@
 </script>
 
 <svelte:head>
-    <title>Publications | Dr. Fatih Nayebi</title>
-    <meta name="description" content="Explore Dr. Fatih Nayebi's published academic papers, articles, and books on AI, machine learning, and technology.">
+    <title>Research Publications on Retail AI & Agentic Systems | Dr. Fatih Nayebi</title>
+    <meta name="description" content="Explore Dr. Fatih Nayebi's research publications on AI for Retail, Agentic AI systems, machine learning, and advanced data science applications.">
+    <meta name="keywords" content="Retail AI research, Agentic AI publications, AI for inventory optimization, machine learning in retail, assortment planning, Fatih Nayebi publications">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Research Publications on Retail AI & Agentic Systems | Dr. Fatih Nayebi">
+    <meta property="og:description" content="Academic and industry research publications on AI for Retail, Agentic AI systems, and advanced machine learning applications by Dr. Fatih Nayebi.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fatihnayebi.com/publications">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Research Publications on Retail AI & Agentic Systems | Dr. Fatih Nayebi">
+    <meta name="twitter:description" content="Academic and industry research publications on AI for Retail, Agentic AI systems, and advanced machine learning applications.">
+    
+    <!-- Structured data for publication collection -->
+    {#if publications && publications.length > 0}
+        {@html jsonLdToString(getPublicationsListSchema())}
+    {/if}
 </svelte:head>
 
 {#if visible}
@@ -25,9 +71,9 @@
     <div class="absolute top-20 right-10 opacity-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
     <div class="absolute bottom-40 left-10 opacity-10 w-96 h-96 bg-indigo-400 rounded-full blur-3xl"></div>
     
-    <h1 class="text-5xl font-bold mb-4 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Publications</h1>
+    <h1 class="text-5xl font-bold mb-4 text-center text-primary" in:fly={{ y: -30, duration: 800, delay: 300 }}>Retail AI & Agentic Systems Research</h1>
     <p class="text-lg text-center mb-12 max-w-3xl mx-auto" in:fly={{ y: 30, duration: 800, delay: 500 }}>
-        A collection of my published academic papers, articles, and books.
+        Publications exploring the intersection of artificial intelligence, retail operations, and autonomous agentic systems. My research focuses on practical applications of AI to solve real-world retail challenges through innovative approaches.
     </p>
     
     <div class="space-y-12">

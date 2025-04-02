@@ -158,9 +158,23 @@
 </style>
 
 <svelte:head>
-	<title>Dr. Fatih Nayebi | Data & AI Leader, Innovator, and Educator</title>
-	<meta name="description" content="Personal website of Dr. Fatih Nayebi, a Data & AI leader in Montreal, Canada. Expertise in machine learning, AI ethics, and data strategy." />
-	<meta name="keywords" content="Fatih Nayebi, AI, Machine Learning, Data Science, Montreal" />
+	<title>Dr. Fatih Nayebi | Retail AI Leader, Agentic AI Expert & Data Innovator</title>
+	<meta name="description" content="Dr. Fatih Nayebi is a leading expert in AI for Retail and Agentic AI systems. VP of Data & AI at ALDO Group, innovating retail technology through data-driven AI solutions." />
+	<meta name="keywords" content="Fatih Nayebi, Retail AI, Agentic AI, AI for Retail, Inventory Optimization, Assortment Planning, Machine Learning, ALDO Group, Data Science" />
+	
+	<!-- Open Graph specific for home page -->
+	<meta property="og:title" content="Dr. Fatih Nayebi | Retail AI Leader & Agentic AI Expert" />
+	<meta property="og:description" content="Leading expert in AI for Retail and Agentic AI systems. Transforming retail through data-driven AI solutions and innovative technology." />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://fatihnayebi.com/images/social-card.jpg" />
+	
+	<!-- Twitter specific for home page -->
+	<meta name="twitter:title" content="Dr. Fatih Nayebi | Retail AI & Agentic AI Expert" />
+	<meta name="twitter:description" content="Leading expert in AI for Retail and Agentic systems. Learn about my work transforming retail through data-driven AI solutions." />
+	
+	<!-- Additional meaningful keywords for search engines -->
+	<meta name="ai-focus-areas" content="Retail AI, Inventory Optimization, Agentic AI, Assortment Planning" />
+	<meta name="industry-expertise" content="Retail, E-commerce, Fashion, Footwear" />
 </svelte:head>
 
 <!-- Main page wrapper with animation -->
@@ -175,13 +189,13 @@
 							<!-- Text content with enhanced leftward positioning -->
 							<div class="hero-text-container order-2 md:order-1 mt-6 md:mt-0 md:col-span-7 -ml-1 md:-ml-3 lg:-ml-4 pr-3 md:pr-4">
 								<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-gray-800 dark:text-gray-100 critical-content" in:fly={{ y: -30, duration: 800, delay: 300 }}>
-									Data & AI Leader, <span class="text-primary dark:text-blue-400">Innovator</span>, and Educator
+									Retail AI & <span class="text-primary dark:text-blue-400">Agentic Systems</span> Leader
 								</h1>
 								<p class="text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 mb-3 md:mb-4" in:fly={{ y: 30, duration: 800, delay: 500 }}>
-									Transforming business through data-driven technology and artificial intelligence
+									Transforming retail through data-driven AI innovation and autonomous systems
 								</p>
 								<p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 max-w-2xl" in:fly={{ y: 30, duration: 800, delay: 700 }}>
-									VP of Data & AI at the ALDO Group, Faculty Lecturer at McGill University, and AI Ethics advocate. Passionate about building AI systems that are ethical, explainable, and deliver business value.
+									VP of Data & AI at the ALDO Group, Faculty Lecturer at McGill University, and expert in building AI systems that optimize retail operations through intelligent automation and agentic technology.
 								</p>
 								<div class="flex flex-wrap gap-4" in:fly={{ y: 30, duration: 800, delay: 900 }}>
 									<a href="/contact" class="px-8 py-3 text-lg bg-primary text-white rounded-lg shadow-md hover:bg-primary-dark transition duration-300 transform hover:scale-105">
@@ -264,12 +278,17 @@
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
 							</svg>
 						</div>
-						<h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-100">Enterprise AI</h3>
+						<h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-100">Retail AI & Agentic Systems</h3>
 						<p class="text-gray-600 dark:text-gray-300 mb-4">
-							Leading data-driven transformation at ALDO Group. Building advanced analytics capabilities and AI-powered solutions that drive business value.
+							Leading retail transformation at ALDO Group through advanced AI. Specializing in inventory optimization, assortment planning, and developing autonomous agentic systems that drive operational efficiency and business growth.
 						</p>
-						<a href="/research" class="text-primary dark:text-blue-400 font-medium flex items-center transition duration-300 transform hover:scale-105">
-							Explore Enterprise AI Research
+						<div class="flex flex-wrap gap-2 mb-4">
+							<span class="bg-primary/10 text-primary dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded-md text-xs">Inventory Optimization</span>
+							<span class="bg-primary/10 text-primary dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded-md text-xs">Assortment Planning</span>
+							<span class="bg-primary/10 text-primary dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded-md text-xs">Agentic AI</span>
+						</div>
+						<a href="/blog" class="text-primary dark:text-blue-400 font-medium flex items-center transition duration-300 transform hover:scale-105">
+							Explore Retail AI Insights
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
 							</svg>
