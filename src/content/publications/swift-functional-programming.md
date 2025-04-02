@@ -1,11 +1,9 @@
 ---
-title: "Swift Functional Programming"
-date: "2017-04-26"
+title: "Swift 3 Functional Programming"
+date: "2016-06-30"
 journal: "Book, Packt Publishing"
-authors: [
-  "Fatih Nayebi"
-]
-url: "https://www.packtpub.com/product/swift-functional-programming/9781785883880"
+authors: ["Fatih Nayebi"]
+url: "https://www.amazon.com/Swift-Functional-Programming-Fatih-Nayebi/dp/1785883887"
 tags: ["Swift", "Functional Programming", "iOS Development", "Apple", "Programming Languages"]
 featured: false
 ---
@@ -28,4 +26,4 @@ This book has helped bridge the gap between traditional object-oriented iOS deve
 
 ## Access
 
-The book is available from [Packt Publishing](https://www.packtpub.com/product/swift-functional-programming/9781785883880) and major book retailers. 
+The book is available from [Packt Publishing](https://www.amazon.com/Swift-Functional-Programming-Fatih-Nayebi/dp/1785883887) and major book retailers. 

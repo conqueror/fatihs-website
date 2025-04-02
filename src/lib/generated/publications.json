@@ -72,36 +72,18 @@
     "html": "<h2>Summary</h2>\n<p>In this CIOReview article, Fatih Nayebi explores comprehensive strategies for organizations to maximize the value of machine learning implementations. The piece addresses the challenges businesses face when scaling AI initiatives and provides actionable insights on building effective machine learning pipelines, establishing proper data governance frameworks, and integrating AI solutions with existing business processes.</p>\n<h2>Key Insights</h2>\n<ol>\n<li>The importance of aligning machine learning initiatives with clear business objectives and strategic goals</li>\n<li>Building robust data foundations as a prerequisite for successful machine learning deployment</li>\n<li>Developing cross-functional teams that bridge the gap between technical ML expertise and domain knowledge</li>\n<li>Implementing effective model monitoring and governance structures for responsible AI deployment</li>\n<li>Creating a culture of experimentation and continuous learning to drive innovation through machine learning</li>\n</ol>\n<h2>Impact</h2>\n<p>This article provides enterprise leaders and technology executives with practical guidance for transforming their organizations through machine learning. By emphasizing both technical implementation aspects and organizational change management, it offers a holistic approach to AI adoption that maximizes business value while addressing common pitfalls in enterprise AI initiatives.</p>\n<h2>Access</h2>\n<p>The full article is available on <a href=\"https://www.cioreview.com/news/unleashing-the-full-potential-of-machine-learning-for-enterprise-success-nid-37389-cid-244.html\">CIOReview</a>. </p>\n"
   },
   {
-    "slug": "mastering-swift-functional-programming",
-    "title": "Mastering Swift Functional Programming",
-    "date": "2019-02-28",
-    "journal": "Book, Packt Publishing",
-    "authors": [
-      "["
-    ],
-    "url": "https://www.packtpub.com/product/mastering-swift-functional-programming-second-edition/9781839211874",
-    "tags": [
-      "Swift",
-      "Functional Programming",
-      "Advanced iOS",
-      "Apple",
-      "Programming Languages",
-      "Reactive Programming"
-    ],
-    "featured": false,
-    "content": "\n## Summary\n\nThis advanced book builds on functional programming foundations to explore sophisticated techniques and patterns for professional Swift development. Moving beyond basic functional concepts, it delves into advanced topics such as functional reactive programming, property-based testing, and functional domain modeling. The book offers in-depth guidance on applying these techniques to real-world iOS and macOS application development, with a focus on building scalable, maintainable architectures that leverage Swift's functional capabilities to their fullest extent.\n\n## Key Insights\n\n1. Advanced techniques for managing state and side effects in large-scale applications using functional programming patterns\n2. Implementation of custom functional data structures and operations to extend Swift's standard library capabilities\n3. Practical applications of functional reactive programming using frameworks like Combine and RxSwift to handle asynchronous events and data streams\n4. Property-based testing strategies that leverage functional programming's mathematical foundations to improve test coverage and reliability\n5. Architectural patterns for structuring complex applications around functional principles, including approaches to dependency management and component composition\n\n## Impact\n\nThis book has been instrumental in advancing the adoption of functional programming in professional Swift development. By demonstrating how functional techniques can be applied to solve complex real-world problems, it has helped elevate Swift programming practices beyond basic functional transformations to comprehensive architectural solutions. Many development teams have incorporated the patterns and approaches presented in this book to improve code quality, reduce bugs related to state management, and enhance the maintainability of their Swift codebases.\n\n## Access\n\nThe book is available from [Packt Publishing](https://www.packtpub.com/product/mastering-swift-functional-programming-second-edition/9781839211874) and major book retailers. ",
-    "html": "<h2>Summary</h2>\n<p>This advanced book builds on functional programming foundations to explore sophisticated techniques and patterns for professional Swift development. Moving beyond basic functional concepts, it delves into advanced topics such as functional reactive programming, property-based testing, and functional domain modeling. The book offers in-depth guidance on applying these techniques to real-world iOS and macOS application development, with a focus on building scalable, maintainable architectures that leverage Swift&#39;s functional capabilities to their fullest extent.</p>\n<h2>Key Insights</h2>\n<ol>\n<li>Advanced techniques for managing state and side effects in large-scale applications using functional programming patterns</li>\n<li>Implementation of custom functional data structures and operations to extend Swift&#39;s standard library capabilities</li>\n<li>Practical applications of functional reactive programming using frameworks like Combine and RxSwift to handle asynchronous events and data streams</li>\n<li>Property-based testing strategies that leverage functional programming&#39;s mathematical foundations to improve test coverage and reliability</li>\n<li>Architectural patterns for structuring complex applications around functional principles, including approaches to dependency management and component composition</li>\n</ol>\n<h2>Impact</h2>\n<p>This book has been instrumental in advancing the adoption of functional programming in professional Swift development. By demonstrating how functional techniques can be applied to solve complex real-world problems, it has helped elevate Swift programming practices beyond basic functional transformations to comprehensive architectural solutions. Many development teams have incorporated the patterns and approaches presented in this book to improve code quality, reduce bugs related to state management, and enhance the maintainability of their Swift codebases.</p>\n<h2>Access</h2>\n<p>The book is available from <a href=\"https://www.packtpub.com/product/mastering-swift-functional-programming-second-edition/9781839211874\">Packt Publishing</a> and major book retailers. </p>\n"
-  },
-  {
     "slug": "atm-cash-management-system",
     "title": "System and Method for Cash Management in ATMs",
     "date": "2018-06-12",
     "journal": "Patent Application, Turkish Patent Institute",
     "authors": [
-      "["
+      "Fatih Nayebi",
+      "Aziz Berçin"
     ],
     "url": "https://portal.turkpatent.gov.tr/",
     "tags": [
+      "Machine Learning",
+      "Optimization",
       "FinTech",
       "ATM",
       "Cash Management",
@@ -113,14 +95,35 @@
     "html": "<h2>Summary</h2>\n<p>This patent application describes an innovative system and method for optimizing cash management in Automated Teller Machines (ATMs). The invention addresses the significant operational challenges faced by banking institutions in maintaining appropriate cash levels across their ATM networks. By using advanced predictive algorithms and real-time data analysis, the system dynamically optimizes cash loading schedules and amounts, reducing both cash immobilization costs and the risk of ATM cash depletion events.</p>\n<h2>Key Insights</h2>\n<ol>\n<li>The system utilizes historical transaction data, seasonal patterns, and location-specific factors to predict cash usage with greater accuracy than traditional methods</li>\n<li>A novel optimization algorithm balances the competing costs of cash transportation, cash immobilization, and potential revenue loss from ATM downtime</li>\n<li>The system incorporates real-time monitoring capabilities that can trigger alert thresholds and automated response procedures</li>\n<li>Integration with existing banking infrastructure requires minimal modifications while providing significant operational benefits</li>\n<li>Field testing demonstrated a 23% reduction in cash immobilization costs and a 47% decrease in cash-out incidents compared to conventional cash management approaches</li>\n</ol>\n<h2>Impact</h2>\n<p>This invention has significant implications for banking operations and customer service quality. By optimizing cash management across ATM networks, financial institutions can substantially reduce operational costs while improving service reliability. The system is particularly valuable in regions with high banking transaction volatility or limited banking infrastructure, where efficient cash management is especially critical. The approach described in this patent has influenced how banking institutions approach their ATM network management strategies.</p>\n<h2>Access</h2>\n<p>Patent application details are available through the <a href=\"https://portal.turkpatent.gov.tr/\">Turkish Patent Institute</a> database. </p>\n"
   },
   {
-    "slug": "swift-functional-programming",
-    "title": "Swift Functional Programming",
+    "slug": "mastering-swift-functional-programming",
+    "title": "Swift Functional Programming - Second Edition",
     "date": "2017-04-26",
     "journal": "Book, Packt Publishing",
     "authors": [
-      "["
+      "Fatih Nayebi"
     ],
-    "url": "https://www.packtpub.com/product/swift-functional-programming/9781785883880",
+    "url": "https://www.packtpub.com/en-us/product/swift-functional-programming-9781787283459",
+    "tags": [
+      "Swift",
+      "Functional Programming",
+      "Advanced iOS",
+      "Apple",
+      "Programming Languages",
+      "Reactive Programming"
+    ],
+    "featured": false,
+    "content": "\n## Summary\n\nThis advanced book builds on functional programming foundations to explore sophisticated techniques and patterns for professional Swift development. Moving beyond basic functional concepts, it delves into advanced topics such as functional reactive programming, property-based testing, and functional domain modeling. The book offers in-depth guidance on applying these techniques to real-world iOS and macOS application development, with a focus on building scalable, maintainable architectures that leverage Swift's functional capabilities to their fullest extent.\n\n## Key Insights\n\n1. Advanced techniques for managing state and side effects in large-scale applications using functional programming patterns\n2. Implementation of custom functional data structures and operations to extend Swift's standard library capabilities\n3. Practical applications of functional reactive programming using frameworks like Combine and RxSwift to handle asynchronous events and data streams\n4. Property-based testing strategies that leverage functional programming's mathematical foundations to improve test coverage and reliability\n5. Architectural patterns for structuring complex applications around functional principles, including approaches to dependency management and component composition\n\n## Impact\n\nThis book has been instrumental in advancing the adoption of functional programming in professional Swift development. By demonstrating how functional techniques can be applied to solve complex real-world problems, it has helped elevate Swift programming practices beyond basic functional transformations to comprehensive architectural solutions. Many development teams have incorporated the patterns and approaches presented in this book to improve code quality, reduce bugs related to state management, and enhance the maintainability of their Swift codebases.\n\n## Access\n\nThe book is available from [Packt Publishing](https://www.packtpub.com/en-us/product/swift-functional-programming-9781787283459) and major book retailers. ",
+    "html": "<h2>Summary</h2>\n<p>This advanced book builds on functional programming foundations to explore sophisticated techniques and patterns for professional Swift development. Moving beyond basic functional concepts, it delves into advanced topics such as functional reactive programming, property-based testing, and functional domain modeling. The book offers in-depth guidance on applying these techniques to real-world iOS and macOS application development, with a focus on building scalable, maintainable architectures that leverage Swift&#39;s functional capabilities to their fullest extent.</p>\n<h2>Key Insights</h2>\n<ol>\n<li>Advanced techniques for managing state and side effects in large-scale applications using functional programming patterns</li>\n<li>Implementation of custom functional data structures and operations to extend Swift&#39;s standard library capabilities</li>\n<li>Practical applications of functional reactive programming using frameworks like Combine and RxSwift to handle asynchronous events and data streams</li>\n<li>Property-based testing strategies that leverage functional programming&#39;s mathematical foundations to improve test coverage and reliability</li>\n<li>Architectural patterns for structuring complex applications around functional principles, including approaches to dependency management and component composition</li>\n</ol>\n<h2>Impact</h2>\n<p>This book has been instrumental in advancing the adoption of functional programming in professional Swift development. By demonstrating how functional techniques can be applied to solve complex real-world problems, it has helped elevate Swift programming practices beyond basic functional transformations to comprehensive architectural solutions. Many development teams have incorporated the patterns and approaches presented in this book to improve code quality, reduce bugs related to state management, and enhance the maintainability of their Swift codebases.</p>\n<h2>Access</h2>\n<p>The book is available from <a href=\"https://www.packtpub.com/en-us/product/swift-functional-programming-9781787283459\">Packt Publishing</a> and major book retailers. </p>\n"
+  },
+  {
+    "slug": "swift-functional-programming",
+    "title": "Swift 3 Functional Programming",
+    "date": "2016-06-30",
+    "journal": "Book, Packt Publishing",
+    "authors": [
+      "Fatih Nayebi"
+    ],
+    "url": "https://www.amazon.com/Swift-Functional-Programming-Fatih-Nayebi/dp/1785883887",
     "tags": [
       "Swift",
       "Functional Programming",
@@ -129,8 +132,8 @@
       "Programming Languages"
     ],
     "featured": false,
-    "content": "\n## Summary\n\nThis book provides a comprehensive introduction to functional programming principles and techniques using Apple's Swift programming language. It bridges the gap between theory and practice by demonstrating how functional programming concepts can be applied to build robust, maintainable iOS and macOS applications. The book guides readers through a progressive journey from imperative to functional programming paradigms, offering practical examples and design patterns that leverage Swift's support for functional programming.\n\n## Key Insights\n\n1. Introduction to fundamental functional programming concepts including first-class functions, pure functions, and immutability using Swift's syntax and capabilities\n2. Implementation of higher-order functions, function composition, and partial application to create more flexible and composable code\n3. Effective use of Swift's native functional features including map, filter, reduce, and flatMap to replace imperative loops with more declarative alternatives\n4. Practical approaches to handling side effects and asynchronous operations in a functional style using techniques like monads and functional reactive programming\n5. Design patterns and architectural guidelines for developing iOS applications using functional programming principles\n\n## Impact\n\nThis book has helped bridge the gap between traditional object-oriented iOS development and the functional programming paradigm. By introducing Swift developers to functional thinking, it has contributed to the adoption of more declarative, composable coding practices within the Apple development community. The approaches presented in the book help developers write code that is more concise, testable, and resistant to certain classes of bugs, particularly those related to shared mutable state.\n\n## Access\n\nThe book is available from [Packt Publishing](https://www.packtpub.com/product/swift-functional-programming/9781785883880) and major book retailers. ",
-    "html": "<h2>Summary</h2>\n<p>This book provides a comprehensive introduction to functional programming principles and techniques using Apple&#39;s Swift programming language. It bridges the gap between theory and practice by demonstrating how functional programming concepts can be applied to build robust, maintainable iOS and macOS applications. The book guides readers through a progressive journey from imperative to functional programming paradigms, offering practical examples and design patterns that leverage Swift&#39;s support for functional programming.</p>\n<h2>Key Insights</h2>\n<ol>\n<li>Introduction to fundamental functional programming concepts including first-class functions, pure functions, and immutability using Swift&#39;s syntax and capabilities</li>\n<li>Implementation of higher-order functions, function composition, and partial application to create more flexible and composable code</li>\n<li>Effective use of Swift&#39;s native functional features including map, filter, reduce, and flatMap to replace imperative loops with more declarative alternatives</li>\n<li>Practical approaches to handling side effects and asynchronous operations in a functional style using techniques like monads and functional reactive programming</li>\n<li>Design patterns and architectural guidelines for developing iOS applications using functional programming principles</li>\n</ol>\n<h2>Impact</h2>\n<p>This book has helped bridge the gap between traditional object-oriented iOS development and the functional programming paradigm. By introducing Swift developers to functional thinking, it has contributed to the adoption of more declarative, composable coding practices within the Apple development community. The approaches presented in the book help developers write code that is more concise, testable, and resistant to certain classes of bugs, particularly those related to shared mutable state.</p>\n<h2>Access</h2>\n<p>The book is available from <a href=\"https://www.packtpub.com/product/swift-functional-programming/9781785883880\">Packt Publishing</a> and major book retailers. </p>\n"
+    "content": "\n## Summary\n\nThis book provides a comprehensive introduction to functional programming principles and techniques using Apple's Swift programming language. It bridges the gap between theory and practice by demonstrating how functional programming concepts can be applied to build robust, maintainable iOS and macOS applications. The book guides readers through a progressive journey from imperative to functional programming paradigms, offering practical examples and design patterns that leverage Swift's support for functional programming.\n\n## Key Insights\n\n1. Introduction to fundamental functional programming concepts including first-class functions, pure functions, and immutability using Swift's syntax and capabilities\n2. Implementation of higher-order functions, function composition, and partial application to create more flexible and composable code\n3. Effective use of Swift's native functional features including map, filter, reduce, and flatMap to replace imperative loops with more declarative alternatives\n4. Practical approaches to handling side effects and asynchronous operations in a functional style using techniques like monads and functional reactive programming\n5. Design patterns and architectural guidelines for developing iOS applications using functional programming principles\n\n## Impact\n\nThis book has helped bridge the gap between traditional object-oriented iOS development and the functional programming paradigm. By introducing Swift developers to functional thinking, it has contributed to the adoption of more declarative, composable coding practices within the Apple development community. The approaches presented in the book help developers write code that is more concise, testable, and resistant to certain classes of bugs, particularly those related to shared mutable state.\n\n## Access\n\nThe book is available from [Packt Publishing](https://www.amazon.com/Swift-Functional-Programming-Fatih-Nayebi/dp/1785883887) and major book retailers. ",
+    "html": "<h2>Summary</h2>\n<p>This book provides a comprehensive introduction to functional programming principles and techniques using Apple&#39;s Swift programming language. It bridges the gap between theory and practice by demonstrating how functional programming concepts can be applied to build robust, maintainable iOS and macOS applications. The book guides readers through a progressive journey from imperative to functional programming paradigms, offering practical examples and design patterns that leverage Swift&#39;s support for functional programming.</p>\n<h2>Key Insights</h2>\n<ol>\n<li>Introduction to fundamental functional programming concepts including first-class functions, pure functions, and immutability using Swift&#39;s syntax and capabilities</li>\n<li>Implementation of higher-order functions, function composition, and partial application to create more flexible and composable code</li>\n<li>Effective use of Swift&#39;s native functional features including map, filter, reduce, and flatMap to replace imperative loops with more declarative alternatives</li>\n<li>Practical approaches to handling side effects and asynchronous operations in a functional style using techniques like monads and functional reactive programming</li>\n<li>Design patterns and architectural guidelines for developing iOS applications using functional programming principles</li>\n</ol>\n<h2>Impact</h2>\n<p>This book has helped bridge the gap between traditional object-oriented iOS development and the functional programming paradigm. By introducing Swift developers to functional thinking, it has contributed to the adoption of more declarative, composable coding practices within the Apple development community. The approaches presented in the book help developers write code that is more concise, testable, and resistant to certain classes of bugs, particularly those related to shared mutable state.</p>\n<h2>Access</h2>\n<p>The book is available from <a href=\"https://www.amazon.com/Swift-Functional-Programming-Fatih-Nayebi/dp/1785883887\">Packt Publishing</a> and major book retailers. </p>\n"
   },
   {
     "slug": "ios-user-rating-prediction",
@@ -138,7 +141,7 @@
     "date": "2015-12-10",
     "journal": "PhD Dissertation, École de Technologie Supérieure",
     "authors": [
-      "["
+      "Fatih Nayebi"
     ],
     "url": "https://depot.etsmtl.ca/id/eprint/1678/",
     "tags": [
@@ -157,9 +160,11 @@
     "slug": "software-effort-estimation-model",
     "title": "Automated Selection of a Software Effort Estimation Model Based on Accuracy and Uncertainty",
     "date": "2015-08-15",
-    "journal": "Artificial Intelligence Research",
+    "journal": "Journal of Artificial Intelligence Research",
     "authors": [
-      "["
+      "Fatih Nayebi",
+      "Alain Abran",
+      "Jean-Marc Desharnais"
     ],
     "doi": "10.5430/air.v4n2p45",
     "url": "https://www.sciedupress.com/journal/index.php/air/article/view/6897",
@@ -201,7 +206,9 @@
     "date": "2012-11-30",
     "journal": "Technical Report, École de Technologie Supérieure",
     "authors": [
-      "["
+      "Fatih Nayebi",
+      "Jean-Marc Desharnais",
+      "Alain Abran"
     ],
     "url": "https://depot.etsmtl.ca/id/eprint/447/",
     "tags": [
@@ -221,7 +228,9 @@
     "date": "2012-05-15",
     "journal": "25th IEEE Canadian Conference on Electrical and Computer Engineering",
     "authors": [
-      "["
+      "Fatih Nayebi",
+      "Jean-Marc Desharnais",
+      "Alain Abran"
     ],
     "doi": "10.1109/CCECE.2012.6334930",
     "url": "https://ieeexplore.ieee.org/document/6334930",

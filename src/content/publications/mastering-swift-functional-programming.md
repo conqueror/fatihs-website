@@ -1,11 +1,9 @@
 ---
-title: "Mastering Swift Functional Programming"
-date: "2019-02-28"
+title: "Swift Functional Programming - Second Edition"
+date: "2017-04-26"
 journal: "Book, Packt Publishing"
-authors: [
-  "Fatih Nayebi"
-]
-url: "https://www.packtpub.com/product/mastering-swift-functional-programming-second-edition/9781839211874"
+authors: ["Fatih Nayebi"]
+url: "https://www.packtpub.com/en-us/product/swift-functional-programming-9781787283459"
 tags: ["Swift", "Functional Programming", "Advanced iOS", "Apple", "Programming Languages", "Reactive Programming"]
 featured: false
 ---
@@ -28,4 +26,4 @@ This book has been instrumental in advancing the adoption of functional programm
 
 ## Access
 
-The book is available from [Packt Publishing](https://www.packtpub.com/product/mastering-swift-functional-programming-second-edition/9781839211874) and major book retailers. 
+The book is available from [Packt Publishing](https://www.packtpub.com/en-us/product/swift-functional-programming-9781787283459) and major book retailers. 

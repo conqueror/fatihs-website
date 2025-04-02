@@ -2,11 +2,7 @@
 title: "The State of the Art of Mobile Game Application Usability Evaluation"
 date: "2012-11-30"
 journal: "Technical Report, École de Technologie Supérieure"
-authors: [
-  "Fatih Nayebi",
-  "Jean-Marc Desharnais",
-  "Alain Abran"
-]
+authors: ["Fatih Nayebi","Jean-Marc Desharnais","Alain Abran"]
 url: "https://depot.etsmtl.ca/id/eprint/447/"
 tags: ["Mobile Gaming", "Usability", "Human-Computer Interaction", "Game Design", "User Experience"]
 featured: false
