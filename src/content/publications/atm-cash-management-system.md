@@ -2,13 +2,9 @@
 title: "System and Method for Cash Management in ATMs"
 date: "2018-06-12"
 journal: "Patent Application, Turkish Patent Institute"
-authors: [
-  "Fatih Nayebi",
-  "Ali Berçin",
-  "Zafer Özsoy"
-]
+authors: ["Fatih Nayebi", "Ali Berçin", "Zafer Özsoy"]
 url: "https://portal.turkpatent.gov.tr/"
-tags: ["Machine Learning", "Optimization", "FinTech", "ATM", "Cash Management", "Banking Technology", "Patent"]
+tags: ["FinTech", "ATM", "Cash Management", "Banking Technology", "Patent"]
 featured: false
 ---
 

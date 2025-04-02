@@ -2,9 +2,7 @@
 title: "Swift 3 Functional Programming"
 date: "2016-06-30"
 journal: "Book, Packt Publishing"
-authors: [
-  "Fatih Nayebi"
-]
+authors: ["Fatih Nayebi"]
 url: "https://www.amazon.com/Swift-Functional-Programming-Fatih-Nayebi/dp/1785883887"
 tags: ["Swift", "Functional Programming", "iOS Development", "Apple", "Programming Languages"]
 featured: false

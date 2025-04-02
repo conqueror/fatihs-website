@@ -2,7 +2,11 @@
 title: "An Expert-Based Framework for Evaluating iOS Application Usability"
 date: "2013-10-22"
 journal: "Joint Conference of the 23rd International Workshop on Software Measurement and the 8th International Conference on Software Process and Product Measurement"
-authors: ["Fatih Nayebi", "Jean-Marc Desharnais", "Alain Abran"]
+authors: [
+  "Fatih Nayebi",
+  "Jean-Marc Desharnais",
+  "Alain Abran"
+]
 doi: "10.1109/IWSM-Mensura.2013.30"
 url: "https://ieeexplore.ieee.org/document/6693226"
 tags: ["iOS", "Usability", "Mobile", "Evaluation Framework", "Human-Computer Interaction"]

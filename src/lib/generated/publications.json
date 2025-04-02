@@ -77,12 +77,12 @@
     "date": "2018-06-12",
     "journal": "Patent Application, Turkish Patent Institute",
     "authors": [
-      "["
+      "Fatih Nayebi",
+      "Ali Berçin",
+      "Zafer Özsoy"
     ],
     "url": "https://portal.turkpatent.gov.tr/",
     "tags": [
-      "Machine Learning",
-      "Optimization",
       "FinTech",
       "ATM",
       "Cash Management",
@@ -99,7 +99,7 @@
     "date": "2017-04-26",
     "journal": "Book, Packt Publishing",
     "authors": [
-      "["
+      "Fatih Nayebi"
     ],
     "url": "https://www.packtpub.com/en-us/product/swift-functional-programming-9781787283459",
     "tags": [
@@ -120,7 +120,7 @@
     "date": "2016-06-30",
     "journal": "Book, Packt Publishing",
     "authors": [
-      "["
+      "Fatih Nayebi"
     ],
     "url": "https://www.amazon.com/Swift-Functional-Programming-Fatih-Nayebi/dp/1785883887",
     "tags": [
@@ -140,7 +140,7 @@
     "date": "2015-12-10",
     "journal": "PhD Dissertation, École de Technologie Supérieure",
     "authors": [
-      "["
+      "Fatih Nayebi"
     ],
     "url": "https://depot.etsmtl.ca/id/eprint/1678/",
     "tags": [
@@ -160,7 +160,11 @@
     "title": "Automated Selection of a Software Effort Estimation Model Based on Accuracy and Uncertainty",
     "date": "2015-08-15",
     "journal": "Artificial Intelligence Research",
-    "authors": "Fatih Nayebi, Alain Abran, Jean-Marc Desharnais",
+    "authors": [
+      "Fatih Nayebi",
+      "Alain Abran",
+      "Jean-Marc Desharnais"
+    ],
     "doi": "10.5430/air.v4n2p45",
     "url": "https://www.sciedupress.com/journal/index.php/air/article/view/6897",
     "tags": [
@@ -180,9 +184,7 @@
     "date": "2013-10-22",
     "journal": "Joint Conference of the 23rd International Workshop on Software Measurement and the 8th International Conference on Software Process and Product Measurement",
     "authors": [
-      "Fatih Nayebi",
-      "Jean-Marc Desharnais",
-      "Alain Abran"
+      "["
     ],
     "doi": "10.1109/IWSM-Mensura.2013.30",
     "url": "https://ieeexplore.ieee.org/document/6693226",
@@ -203,7 +205,9 @@
     "date": "2012-11-30",
     "journal": "Technical Report, École de Technologie Supérieure",
     "authors": [
-      "["
+      "Fatih Nayebi",
+      "Jean-Marc Desharnais",
+      "Alain Abran"
     ],
     "url": "https://depot.etsmtl.ca/id/eprint/447/",
     "tags": [
@@ -222,7 +226,11 @@
     "title": "The State of the Art of Mobile Application Usability Evaluation",
     "date": "2012-05-15",
     "journal": "25th IEEE Canadian Conference on Electrical and Computer Engineering",
-    "authors": [],
+    "authors": [
+      "Fatih Nayebi",
+      "Jean-Marc Desharnais",
+      "Alain Abran"
+    ],
     "doi": "10.1109/CCECE.2012.6334930",
     "url": "https://ieeexplore.ieee.org/document/6334930",
     "tags": [
