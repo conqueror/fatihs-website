@@ -155,7 +155,7 @@
 						Publications
 					</h3>
 					<div class="space-y-3">
-						{#each ['Swift Functional Programming - Second Edition', 'The State of the Art of Mobile Application Usability Evaluation', 'Automated Selection of a Software Effort Estimation Model based on Accuracy and Uncertainty', 'Swift 3 Functional Programming', 'An Expert-based Framework for Evaluating iOS Application Usability'] as pub, i}
+						{#each ['Foundations of Agentic AI for Retail', 'Swift Functional Programming - Second Edition', 'The State of the Art of Mobile Application Usability Evaluation', 'Automated Selection of a Software Effort Estimation Model based on Accuracy and Uncertainty', 'Swift 3 Functional Programming', 'An Expert-based Framework for Evaluating iOS Application Usability'] as pub, i}
 							<div class="p-3 border-l-4 border-purple-400 dark:border-purple-500 rounded-r-lg bg-purple-50 dark:bg-purple-900/20 transform transition-all duration-500 hover:translate-x-2 hover:bg-purple-100 dark:hover:bg-purple-900/30" style="transition-delay: {i * 100}ms">
 								<p class="text-gray-800 dark:text-gray-200">{pub}</p>
 							</div>

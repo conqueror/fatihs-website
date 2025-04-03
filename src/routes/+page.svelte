@@ -158,7 +158,7 @@
 </style>
 
 <svelte:head>
-	<title>Dr. Fatih Nayebi | Retail AI Leader, Agentic AI Expert & Data Innovator</title>
+	<title>Dr. Fatih Nayebi | Data & AI Leader, Innovator, and Educator</title>
 	<meta name="description" content="Dr. Fatih Nayebi is a leading expert in AI for Retail and Agentic AI systems. VP of Data & AI at ALDO Group, innovating retail technology through data-driven AI solutions." />
 	<meta name="keywords" content="Fatih Nayebi, Retail AI, Agentic AI, AI for Retail, Inventory Optimization, Assortment Planning, Machine Learning, ALDO Group, Data Science" />
 	
