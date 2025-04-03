@@ -189,7 +189,7 @@
 							<!-- Text content with enhanced leftward positioning -->
 							<div class="hero-text-container order-2 md:order-1 mt-6 md:mt-0 md:col-span-7 -ml-1 md:-ml-3 lg:-ml-4 pr-3 md:pr-4">
 								<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-gray-800 dark:text-gray-100 critical-content" in:fly={{ y: -30, duration: 800, delay: 300 }}>
-									Retail AI & <span class="text-primary dark:text-blue-400">Agentic Systems</span> Leader
+									Data & AI Leader, <span class="text-primary dark:text-blue-400">Innovator</span>, and Educator
 								</h1>
 								<p class="text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 mb-3 md:mb-4" in:fly={{ y: 30, duration: 800, delay: 500 }}>
 									Transforming retail through data-driven AI innovation and autonomous systems
