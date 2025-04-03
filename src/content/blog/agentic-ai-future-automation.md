@@ -4,7 +4,7 @@ date: "2025-01-10"
 excerpt: "Exploring how agentic AI systems are reshaping automation and creating new opportunities for human-AI collaboration."
 tags: ["AI", "Automation", "Future of Work"]
 author: "Fatih Nayebi"
-featured: true
+featured: false
 ---
 
 # Agentic AI and the Future of Automation
