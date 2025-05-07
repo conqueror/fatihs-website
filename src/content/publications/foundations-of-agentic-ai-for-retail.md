@@ -35,7 +35,7 @@ featured: true
     </td>
     <td width="60%" align="center" valign="center">
       <a href="https://www.amazon.com/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606">
-        <img src="https://raw.githubusercontent.com/gradient-divergence/.github/main/book-cover.png" alt="Book Cover: Foundations of Agentic AI for Retail" width="300"/>
+        <img src="https://raw.githubusercontent.com/gradient-divergence/.github/main/book-cover.png" alt="Book Cover: Foundations of Agentic AI for Retail" width="600"/>
       </a>
     </td>
   </tr>
