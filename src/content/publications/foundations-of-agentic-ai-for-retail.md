@@ -1,6 +1,6 @@
 ---
 title: "Foundations of Agentic AI for Retail"
-date: "2025-04-01"
+date: "2025-05-05"
 journal: "Book Publication"
 authors: ["Fatih Nayebi"]
 url: "https://www.amazon.com/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"
