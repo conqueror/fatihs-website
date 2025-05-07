@@ -37,6 +37,8 @@ featured: true
       <a href="https://www.amazon.com/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>Amazon US</strong></a> | <a href="https://www.amazon.ca/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>CA</strong></a> | <a href="https://www.amazon.co.jp/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>JP</strong></a> | <a href="https://www.amazon.co.uk/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>UK</strong></a> | <a href="https://www.amazon.de/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>DE</strong></a> | <a href="https://www.amazon.fr/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>FR</strong></a> | <a href="https://www.amazon.in/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>IN</strong></a> | <a href="https://www.amazon.it/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>IT</strong></a> | <a href="https://www.amazon.es/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606"><strong>ES</strong></a>
       <br><br>
       <strong>Access Companion Code & Notebooks:</strong> <a href="https://github.com/gradient-divergence/agentic-retail-foundations"><strong>GitHub Repository</strong></a>
+      <br><br>
+      <strong>Download a Free Sample Chapter:</strong> <a href="/samples/Foundations-of-Agentic-AI-for-Retail-Sample-Not-for-Redistribution.pdf" target="_blank" rel="noopener noreferrer"><strong>Download PDF Sample</strong></a>
       <br>
       <strong>Join the Community:</strong> <a href="https://gradientdivergence.com"><strong>GradientDivergence.com</strong></a>
     </td>
