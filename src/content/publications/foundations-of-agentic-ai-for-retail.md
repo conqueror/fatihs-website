@@ -21,7 +21,7 @@ featured: true
 
 <table>
   <tr>
-    <td width="60%" valign="top">
+    <td width="40%" valign="top">
       <p><strong>Are you ready to revolutionize your retail business?</strong> This book is the definitive, end-to-end playbook showing you how to design, code, and deploy autonomous agents that <strong>think, learn, and act in real time</strong>—transforming every aspect of your retail operations.</p>
       <p>Dive into the future where AI doesn't just provide insights, but autonomously senses environments, makes critical decisions, implements strategies, and continuously learns from every outcome. It's time to move beyond traditional analytics to truly autonomous, continuously learning agentic ecosystems.</p>
       <br>
@@ -33,7 +33,7 @@ featured: true
       <br>
       <strong>Join the Community:</strong> <a href="https://gradientdivergence.com"><strong>GradientDivergence.com</strong></a>
     </td>
-    <td width="40%" align="center" valign="center">
+    <td width="60%" align="center" valign="center">
       <a href="https://www.amazon.com/Foundations-Agentic-Retail-Technologies-Architectures/dp/1069422606">
         <img src="https://raw.githubusercontent.com/gradient-divergence/.github/main/book-cover.png" alt="Book Cover: Foundations of Agentic AI for Retail" width="300"/>
       </a>
