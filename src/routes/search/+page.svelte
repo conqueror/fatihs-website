@@ -8,6 +8,7 @@
     import { getAllPublications } from '$lib/utils/publications';
     import { getAllEvents } from '$lib/utils/events';
     import PageContainer from '$lib/components/layout/PageContainer.svelte';
+    import SEO from '$lib/components/seo/SEO.svelte';
     
     export let data;
     export let form;
@@ -204,7 +205,20 @@
         }
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
     }
+
+    // SEO Data
+    const pageTitle = query ? `Search Results for "${query}"` : "Search Site";
+    const pageDescription = `Search results for "${query}" on Dr. Fatih Nayebi's personal website.`;
+    const canonicalUrl = `https://fatihnayebi.com/search${$page.url.search}`; // Include query params in canonical
 </script>
+
+<SEO 
+    title={pageTitle}
+    description={pageDescription}
+    canonical={canonicalUrl}
+    noindex={true}
+    type="website" 
+/>
 
 {#if query}
     <PageContainer heroSection={true}>

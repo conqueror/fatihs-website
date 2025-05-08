@@ -42,11 +42,27 @@ async function inlineCriticalCSS() {
     
     console.log(`Found ${htmlFiles.length} HTML files to process`);
     
+    let processedCount = 0;
+    let skippedCount = 0;
+    let errorCount = 0;
+    
+    // Collect CSS assets for reuse
+    const cssAssets = {};
+    
     // Process each HTML file
     for (const htmlFile of htmlFiles) {
       try {
         // Read the HTML file
         const html = fs.readFileSync(htmlFile, 'utf8');
+        
+        // Detect if SvelteKit already inlined critical CSS
+        // or if this is a different type of HTML file like a 404 page
+        if (html.includes('id="critical-css"') || 
+            html.includes('id="svelte-css"') || 
+            isSpecialPage(htmlFile)) {
+          skippedCount++;
+          continue;
+        }
         
         // Extract CSS link tags
         const cssLinkRegex = /<link[^>]*rel="stylesheet"[^>]*href="([^"]*)"[^>]*>/g;
@@ -61,7 +77,18 @@ async function inlineCriticalCSS() {
         }
         
         if (cssLinks.length === 0) {
-          console.log(`No CSS links found in ${htmlFile}. Skipping.`);
+          // Check for inline style tags which may indicate that SvelteKit 
+          // already handled the CSS
+          if (html.includes('<style id="svelte"') || html.includes('<style>')) {
+            skippedCount++;
+            continue;
+          }
+          
+          // Log only if it's an actual page, not a special file
+          if (!isSpecialPage(htmlFile)) {
+            console.log(`Note: ${path.relative(BUILD_DIR, htmlFile)} already optimized.`);
+          }
+          skippedCount++;
           continue;
         }
         
@@ -73,13 +100,22 @@ async function inlineCriticalCSS() {
           // Resolve the CSS file path
           const cssPath = path.join(BUILD_DIR, href.startsWith('/') ? href.slice(1) : href);
           
-          if (!fs.existsSync(cssPath)) {
-            console.log(`CSS file ${cssPath} not found. Skipping.`);
+          let css;
+          
+          // Check if we've already processed this CSS file
+          if (cssAssets[href]) {
+            css = cssAssets[href];
+          } else if (fs.existsSync(cssPath)) {
+            // Read the CSS file
+            css = fs.readFileSync(cssPath, 'utf8');
+            // Store for reuse
+            cssAssets[href] = css;
+          } else {
+            console.log(`Note: CSS file ${path.relative(BUILD_DIR, cssPath)} not found. This may be expected in SvelteKit builds.`);
             continue;
           }
           
-          // Read the CSS file
-          const css = fs.readFileSync(cssPath, 'utf8');
+          if (!css) continue;
           
           // Extract critical CSS (simplified approach)
           const cssRules = extractCssRules(css);
@@ -89,7 +125,10 @@ async function inlineCriticalCSS() {
             rule.includes('html') || 
             rule.includes('main') ||
             rule.includes('header') ||
-            rule.includes('@font-face')
+            rule.includes('@font-face') ||
+            rule.includes('@keyframes') ||
+            rule.includes('transform') ||
+            rule.includes('transition')
           );
           
           criticalCss += criticalRules.join('\n');
@@ -105,17 +144,26 @@ async function inlineCriticalCSS() {
         if (criticalCss) {
           const inlineStyle = `<style id="critical-css">${criticalCss}</style>`;
           modifiedHtml = modifiedHtml.replace('</head>', `${inlineStyle}\n</head>`);
+          
+          // Write the modified HTML back
+          fs.writeFileSync(htmlFile, modifiedHtml);
+          processedCount++;
+          console.log(`✅ Processed: ${path.relative(BUILD_DIR, htmlFile)}`);
+        } else {
+          skippedCount++;
         }
-        
-        // Write the modified HTML back
-        fs.writeFileSync(htmlFile, modifiedHtml);
-        console.log(`✅ Processed: ${path.relative(BUILD_DIR, htmlFile)}`);
       } catch (error) {
-        console.error(`Error processing ${htmlFile}:`, error);
+        console.error(`Error processing ${path.relative(BUILD_DIR, htmlFile)}:`, error);
+        errorCount++;
       }
     }
     
-    console.log('🎉 Critical CSS inlining complete!');
+    console.log(`
+🎉 Critical CSS inlining complete!
+✅ Processed: ${processedCount} files
+⏭️ Skipped: ${skippedCount} files (already optimized or special pages)
+❌ Errors: ${errorCount} files
+    `);
   } catch (error) {
     console.error('Error during critical CSS inlining:', error);
   }
@@ -131,6 +179,20 @@ function extractCssRules(css) {
     .map(rule => rule.trim())
     .filter(rule => rule.length > 0)
     .map(rule => rule + '}');
+}
+
+// Helper function to determine if a page is a special case
+function isSpecialPage(filePath) {
+  const specialPages = [
+    'offline.html',
+    '404.html',
+    '500.html',
+    'google-verification-placeholder.html',
+    '200.html' // Sometimes used for SPA fallbacks
+  ];
+  
+  const filename = path.basename(filePath);
+  return specialPages.includes(filename);
 }
 
 // Run the inliner

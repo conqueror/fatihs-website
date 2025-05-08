@@ -7,6 +7,7 @@
 	import AnimatedButton from '$lib/components/ui/AnimatedButton.svelte';
 	import ProfileImage from '$lib/components/ui/ProfileImage.svelte';
 	import PageContainer from '$lib/components/layout/PageContainer.svelte';
+	import SEO from '$lib/components/seo/SEO.svelte';
 	
 	export let data;
 	const { featuredPosts, featuredPublications, redirectedBlogPost } = data;
@@ -56,6 +57,61 @@
 		setTimeout(() => featuredVisible = true, 1600);
 		setTimeout(() => ctaVisible = true, 1900);
 	});
+
+	// SEO MetaData for the Homepage
+	const pageTitle = "Dr. Fatih Nayebi | Data & AI Leader, Innovator, and Educator";
+	const pageDescription = "Dr. Fatih Nayebi is a leading expert in AI for Retail and Agentic AI systems. VP of Data & AI at ALDO Group, innovating retail technology through data-driven AI solutions.";
+	const pageKeywords = "Fatih Nayebi, Retail AI, Agentic AI, AI for Retail, Inventory Optimization, Assortment Planning, Machine Learning, ALDO Group, Data Science, AI in Retail, Agentic Systems";
+
+	const openGraphData = {
+	  title: "Dr. Fatih Nayebi | Retail AI Leader & Agentic AI Expert",
+	  description: "Leading expert in AI for Retail and Agentic AI systems. Transforming retail through data-driven AI solutions and innovative technology.",
+	  type: "website", // Homepage is 'website', articles would be 'article'
+	  image: "https://fatihnayebi.com/images/social-card.jpg", // Ensure this image exists and is optimal (1200x630)
+	  url: "https://fatihnayebi.com/"
+	};
+
+	const twitterData = {
+	  card: "summary_large_image",
+	  site: "@FatihNayebi", // Site's Twitter handle
+	  creator: "@FatihNayebi", // Content creator's Twitter handle
+	  title: "Dr. Fatih Nayebi | Retail AI & Agentic AI Expert",
+	  description: "Leading expert in AI for Retail and Agentic systems. Learn about my work transforming retail through data-driven AI solutions.",
+	  image: "https://fatihnayebi.com/images/social-card.jpg" // Ensure this image is optimal for Twitter cards
+	};
+	
+	// Homepage specific Person and WebSite schema
+	// WebSite schema might also be in +layout.svelte - ensure they complement, not conflict.
+	// The SEO component's breadcrumb logic will also add BreadcrumbList.
+	const homePageStructuredData = [
+	  {
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"name": "Dr. Fatih Nayebi",
+		"url": "https://fatihnayebi.com",
+		"image": "https://fatihnayebi.com/images/optimized/profile-640.avif", // Using the profile image here
+		"jobTitle": "VP, Data & AI",
+		"worksFor": {
+		  "@type": "Organization",
+		  "name": "ALDO Group"
+		},
+		"sameAs": [
+		  "https://www.linkedin.com/in/fatihnayebi/", // Add your LinkedIn
+		  "https://twitter.com/FatihNayebi",       // Add your Twitter
+		  "https://scholar.google.com/citations?user=your_scholar_id" // Add Google Scholar if applicable
+		  // Add other relevant professional profiles
+		],
+		"alumniOf": [
+		  {
+			"@type": "CollegeOrUniversity",
+			"name": "McGill University" // Assuming based on lecturer role
+		  }
+		  // Add other relevant alma maters
+		],
+		"knowsAbout": ["Retail AI", "Agentic AI", "Inventory Optimization", "Assortment Planning", "Machine Learning", "Data Science", "AI Ethics", "Software Engineering"],
+		"description": "Expert in applying AI and data science to transform retail operations, specializing in agentic systems, inventory optimization, and assortment planning. VP Data & AI at ALDO Group and Faculty Lecturer at McGill University."
+	  }
+	];
 </script>
 
 <style>
@@ -157,24 +213,21 @@
 	}
 </style>
 
+<SEO
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonical="https://fatihnayebi.com/"
+  type="website" 
+  openGraph={openGraphData}
+  twitter={twitterData}
+  structuredData={homePageStructuredData}
+/>
+
+<!-- Add preconnect hints to help with image loading -->
 <svelte:head>
-	<title>Dr. Fatih Nayebi | Data & AI Leader, Innovator, and Educator</title>
-	<meta name="description" content="Dr. Fatih Nayebi is a leading expert in AI for Retail and Agentic AI systems. VP of Data & AI at ALDO Group, innovating retail technology through data-driven AI solutions." />
-	<meta name="keywords" content="Fatih Nayebi, Retail AI, Agentic AI, AI for Retail, Inventory Optimization, Assortment Planning, Machine Learning, ALDO Group, Data Science" />
-	
-	<!-- Open Graph specific for home page -->
-	<meta property="og:title" content="Dr. Fatih Nayebi | Retail AI Leader & Agentic AI Expert" />
-	<meta property="og:description" content="Leading expert in AI for Retail and Agentic AI systems. Transforming retail through data-driven AI solutions and innovative technology." />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content="https://fatihnayebi.com/images/social-card.jpg" />
-	
-	<!-- Twitter specific for home page -->
-	<meta name="twitter:title" content="Dr. Fatih Nayebi | Retail AI & Agentic AI Expert" />
-	<meta name="twitter:description" content="Leading expert in AI for Retail and Agentic systems. Learn about my work transforming retail through data-driven AI solutions." />
-	
-	<!-- Additional meaningful keywords for search engines -->
-	<meta name="ai-focus-areas" content="Retail AI, Inventory Optimization, Agentic AI, Assortment Planning" />
-	<meta name="industry-expertise" content="Retail, E-commerce, Fashion, Footwear" />
+  <link rel="preload" href="/images/optimized/profile-640.avif" as="image" type="image/avif" fetchpriority="high" />
+  <link rel="preload" href="/images/optimized/profile-placeholder.webp" as="image" type="image/webp" fetchpriority="high" />
 </svelte:head>
 
 <!-- Main page wrapper with animation -->
@@ -221,6 +274,10 @@
 										mobileObjectPosition="center top" 
 										desktopObjectPosition="center center"
 										fetchpriority="high"
+										lazy={false}
+										loading="eager"
+										blurPlaceholder={true}
+										transitionDuration="0.5s"
 									/>
 									
 									<!-- Text overlay on image -->
@@ -300,7 +357,7 @@
 						<div class="p-3 bg-indigo-100 dark:bg-indigo-900/30 w-16 h-16 rounded-lg mb-4 flex items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path d="M12 14l9-5-9-5-9 5 9 5z" />
-								<path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+								<path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998a12.078 12.078 0 01.665-6.479L12 14z" />
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998a12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
 							</svg>
 						</div>

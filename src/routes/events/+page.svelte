@@ -184,12 +184,50 @@
     searchQuery = '';
     showFilterPanel = false;
   }
+
+  // SEO MetaData for the Main Events Page
+  const pageTitle = "Events | Dr. Fatih Nayebi - Speaking, Organizing, Media";
+  const pageDescription = "Explore professional events featuring Dr. Fatih Nayebi, including speaking engagements, organized hackathons, media appearances, and podcast interviews on AI and retail technology.";
+  const keywords = "Fatih Nayebi events, AI speaker, retail technology conference, data science podcast, AI hackathon";
+  const siteUrl = "https://fatihnayebi.com";
+  const canonicalUrl = `${siteUrl}/events`;
+
+  const openGraphData = {
+    title: pageTitle,
+    description: pageDescription,
+    type: "website",
+    url: canonicalUrl,
+    image: `${siteUrl}/images/social-card.jpg`
+  };
+
+  const twitterData = {
+    card: "summary_large_image",
+    title: pageTitle,
+    description: pageDescription,
+    image: `${siteUrl}/images/social-card.jpg`
+  };
+
+  // Basic structured data (Website/CollectionPage). SEO component adds Breadcrumbs.
+  const eventsPageStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": pageTitle,
+    "description": pageDescription,
+    "url": canonicalUrl
+    // Potentially add mainEntity listing the categories if desired
+  };
 </script>
 
-<svelte:head>
-  <title>Events | Dr. Fatih Nayebi</title>
-  <meta name="description" content="Speaking engagements, event organization, and media appearances by Dr. Fatih Nayebi.">
-</svelte:head>
+<SEO 
+  title={pageTitle}
+  description={pageDescription}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  type="website"
+  openGraph={openGraphData}
+  twitter={twitterData}
+  structuredData={eventsPageStructuredData}
+/>
 
 {#if visible}
 <PageContainer heroSection={true}>

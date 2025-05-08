@@ -4,6 +4,7 @@
     import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
     import { browser } from '$app/environment';
     import PageContainer from '$lib/components/layout/PageContainer.svelte';
+    import SEO from '$lib/components/seo/SEO.svelte';
     
     let visible = false;
     let name = '';
@@ -90,12 +91,65 @@
             console.warn('Could not retrieve email from sessionStorage:', err);
         }
     }
+
+    // SEO MetaData for the Contact Page
+    const pageTitle = "Contact Dr. Fatih Nayebi | Collaborations & Inquiries";
+    const pageDescription = "Reach out to Dr. Fatih Nayebi for collaborations, speaking engagements, media appearances, or inquiries related to AI, data science, and retail technology.";
+    const siteUrl = "https://fatihnayebi.com"; // Define siteUrl or import from a config
+    const canonicalUrl = `${siteUrl}/contact`;
+
+    const openGraphData = {
+      title: pageTitle,
+      description: pageDescription,
+      type: "website", // or 'profile' if more relevant, but 'website' is safe
+      image: `${siteUrl}/images/social-card.jpg`, // Use consistent social card
+      url: canonicalUrl
+    };
+
+    const twitterData = {
+      card: "summary_large_image",
+      site: "@FatihNayebi",
+      creator: "@FatihNayebi",
+      title: pageTitle,
+      description: pageDescription,
+      image: `${siteUrl}/images/social-card.jpg`
+    };
+
+    // Structured data for Contact Page
+    const contactPageStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": pageTitle,
+      "description": pageDescription,
+      "url": canonicalUrl,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalUrl
+      },
+      "breadcrumb": {
+        // SEO component likely adds breadcrumbs already, 
+        // but you could define specific ones here if needed.
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "email": "fatih@gradientdivergence.com",
+          "contactType": "customer support" // Or "sales", "technical support", "billing support" etc. Choose most appropriate
+        }
+        // You could add points for LinkedIn etc. if desired, though Person schema handles that better
+      ]
+    };
 </script>
 
-<svelte:head>
-    <title>Contact | Dr. Fatih Nayebi</title>
-    <meta name="description" content="Get in touch with Dr. Fatih Nayebi for collaborations, speaking engagements, or inquiries.">
-</svelte:head>
+<SEO 
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalUrl}
+  type="website"
+  openGraph={openGraphData}
+  twitter={twitterData}
+  structuredData={contactPageStructuredData}
+/>
 
 {#if visible}
 <PageContainer heroSection={true}>

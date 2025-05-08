@@ -94,6 +94,24 @@
 	<link rel="dns-prefetch" href="https://api.fatihnayebi.com" />
 	<link rel="preconnect" href="https://api.fatihnayebi.com" crossorigin />
 	
+	<!-- Enhanced resource hints for common services -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+	<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+	
+	<!-- Prefetch important pages for faster navigation -->
+	<link rel="prefetch" href="/about" as="document" />
+	<link rel="prefetch" href="/blog" as="document" />
+	<link rel="prefetch" href="/publications" as="document" />
+	<link rel="prefetch" href="/contact" as="document" />
+	
+	<!-- Preload critical resources -->
+	<link rel="preload" href="/images/background.jpg" as="image" fetchpriority="high" />
+	<link rel="preload" href="/images/optimized/profile-640.avif" as="image" type="image/avif" fetchpriority="high" />
+	<link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
+	<link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+	
 	<!-- Search engine verification -->
 	{#if GOOGLE_VERIFICATION}
 		<meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
@@ -122,9 +140,6 @@
 	<meta name="twitter:description" content="Fatih Nayebi's personal website - Data & AI Leader, Faculty Lecturer at McGill University, and VP of Data & AI at ALDO Group." />
 	<meta name="twitter:image" content={`${siteUrl}/images/social-card.jpg`} />
 	
-	<!-- Preload critical resources -->
-	<link rel="preload" href="/images/background.jpg" as="image" />
-	
 	<!-- Author information -->
 	<meta name="author" content="Fatih Nayebi" />
 	
@@ -148,7 +163,6 @@
 		
 		<!-- Main content with SEO and page transitions -->
 		<main class="flex-grow z-0">
-			<SEO />
 			<PageTransition key={pageKey}>
 				<slot />
 			</PageTransition>

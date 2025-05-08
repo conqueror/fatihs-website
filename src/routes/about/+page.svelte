@@ -4,6 +4,7 @@
 	import { spring } from 'svelte/motion';
 	import AnimateInView from '$lib/components/ui/AnimateInView.svelte';
 	import ProfileImage from '$lib/components/ui/ProfileImage.svelte';
+	import SEO from '$lib/components/seo/SEO.svelte';
 
 	let visible = false;
 	
@@ -25,12 +26,83 @@
 			}, 500);
 		}, 1500);
 	});
+
+	// SEO MetaData for the About Page
+	const pageTitle = "About Me | Dr. Fatih Nayebi - Data & AI Leader";
+	const pageDescription = "Discover the background, expertise, and professional journey of Dr. Fatih Nayebi, VP of Data & AI at ALDO Group and Faculty Lecturer at McGill University. Learn about his contributions to retail AI, agentic systems, and data-driven innovation.";
+	const siteUrl = "https://fatihnayebi.com";
+	const canonicalUrl = `${siteUrl}/about`;
+
+	const openGraphData = {
+	  title: "About Dr. Fatih Nayebi | Data & AI Leadership",
+	  description: pageDescription,
+	  type: "profile", // OG type for a person's profile page
+	  image: `${siteUrl}/images/social-card.jpg`, // Consistent social card
+	  url: canonicalUrl
+	};
+
+	const twitterData = {
+	  card: "summary_large_image",
+	  site: "@FatihNayebi",
+	  creator: "@FatihNayebi",
+	  title: "About Dr. Fatih Nayebi | Data & AI Leadership",
+	  description: pageDescription,
+	  image: `${siteUrl}/images/social-card.jpg`
+	};
+
+	// Reusing a similar Person schema as the homepage, focused on the 'about' context
+	// The SEO component automatically adds BreadcrumbList
+	const aboutPageStructuredData = [
+	  {
+		"@context": "https://schema.org",
+		"@type": "ProfilePage", // Specific type for a profile page
+		"name": pageTitle,
+		"url": canonicalUrl,
+		"mainEntity": {
+		  "@type": "Person",
+		  "name": "Dr. Fatih Nayebi",
+		  "url": siteUrl, // Link to the main site URL for the person
+		  "image": `${siteUrl}/images/optimized/profile-640.avif`,
+		  "jobTitle": "VP, Data & AI",
+		  "worksFor": {
+			"@type": "Organization",
+			"name": "ALDO Group"
+		  },
+		  "alumniOf": [
+			{
+			  "@type": "CollegeOrUniversity",
+			  "name": "McGill University"
+			},
+			{
+			  "@type": "CollegeOrUniversity",
+			  "name": "École de technologie supérieure"
+			},
+			{
+			  "@type": "CollegeOrUniversity",
+			  "name": "Boğaziçi Üniversitesi"
+			}
+		  ],
+		  "knowsAbout": ["Retail AI", "Agentic AI", "Inventory Optimization", "Assortment Planning", "Machine Learning", "Data Science", "AI Ethics", "Software Engineering", "Supply Chain Optimization", "Demand Forecasting"],
+		  "description": "Dr. Fatih Nayebi is a distinguished leader in Data & AI, applying his expertise to revolutionize retail operations and educate the next generation of data scientists.",
+		  "sameAs": [
+			"https://www.linkedin.com/in/fatihnayebi/",
+			"https://twitter.com/FatihNayebi",
+			"https://scholar.google.com/citations?user=s6lWpdEAAAAJ" // Ensure this is your actual scholar ID
+		  ]
+		}
+	  }
+	];
 </script>
 
-<svelte:head>
-	<title>About Me | Dr. Fatih Nayebi</title>
-	<meta name="description" content="Learn about Dr. Fatih Nayebi, VP of Data & AI at ALDO Group and Faculty Lecturer at McGill University.">
-</svelte:head>
+<SEO 
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalUrl}
+  type="profile" 
+  openGraph={openGraphData}
+  twitter={twitterData}
+  structuredData={aboutPageStructuredData}
+/>
 
 {#if visible}
 <div in:fade={{ duration: 800 }} class="pt-24 md:pt-32 pb-12 container mx-auto px-4 sm:px-6 lg:px-8 relative z-0 overflow-x-hidden about-page">

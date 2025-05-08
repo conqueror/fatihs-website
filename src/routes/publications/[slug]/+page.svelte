@@ -101,6 +101,8 @@
     description={publication?.abstract || "Details about a publication by Fatih Nayebi."}
     keywords={publication?.keywords?.join(', ') || "research, publication, academic"}
     canonical={publication ? `https://fatihnayebi.com/publications/${publication.slug}` : undefined}
+    type="article"
+    structuredData={publicationSchema}
     openGraph={{
         title: publication ? `${publication.title} | Publications` : 'Publication',
         description: publication?.abstract || "Details about a publication by Fatih Nayebi.",
@@ -108,7 +110,7 @@
         type: 'article',
         article: {
             publishedTime: publication?.date,
-            tags: publication?.keywords
+            tags: publication?.tags || publication?.keywords
         }
     }}
     twitter={{

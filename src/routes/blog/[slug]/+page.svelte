@@ -145,12 +145,13 @@
     structuredData={blogPostSchema}
     article={articleProps}
     openGraph={{
-        title: post?.title,
+        title: title,
         description: description,
-        image: ogImage
+        image: ogImage,
+        type: "article"
     }}
     twitter={{
-        title: post?.title,
+        title: title,
         description: description,
         image: ogImage
     }}
