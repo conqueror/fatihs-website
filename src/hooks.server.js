@@ -5,6 +5,17 @@
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
   const url = new URL(event.request.url);
+  
+  // Handle case insensitivity for route paths
+  const lowerPath = url.pathname.toLowerCase();
+  if (url.pathname !== lowerPath && !url.pathname.match(/\.(jpe?g|png|gif|svg|webp|avif|woff2?|css|js)$/i)) {
+    // Only redirect non-asset URLs with different case
+    return new Response(null, {
+      status: 301,
+      headers: { 'Location': lowerPath + url.search + url.hash }
+    });
+  }
+
   const isAsset = url.pathname.match(/\.(jpe?g|png|gif|svg|webp|avif|woff2?|css|js)$/i);
   const isImage = url.pathname.match(/\.(jpe?g|png|gif|svg|webp|avif)$/i);
   const isFont = url.pathname.match(/\.(woff2?)$/i);

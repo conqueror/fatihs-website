@@ -15,7 +15,7 @@
 		'Events': 'events',
 		'Contact': 'contact',
 		'Search': 'search',
-		'Privacy Policy': 'policy'
+		'Privacy Policy': 'privacy'
 	};
 	
 	const connectIcons = {
@@ -56,7 +56,7 @@
 					<ul class="space-y-2">
 						{#each Object.entries(resourceIcons) as [name, icon]}
 							<li>
-								<a href="/{name.toLowerCase().replace(' ', '-')}" 
+								<a href={name === 'Privacy Policy' ? '/privacy' : '/' + name.toLowerCase().replace(' ', '-')} 
 									class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors group">
 									<FooterIcon name={icon} size={16} />
 									<span class="ml-2">{name}</span>

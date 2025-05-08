@@ -55,3 +55,18 @@ https://www.fatihnayebi.com/*    https://fatihnayebi.com/:splat         301!
  
 # SPA fallback - serve index.html for all 404s
 /*                /index.html  200 
+
+# Lowercase URL redirects for common paths
+/About/* /about/:splat 301
+/Blog/* /blog/:splat 301
+/Publications/* /publications/:splat 301
+/Research/* /research/:splat 301
+/Events/* /events/:splat 301
+/Conferences/* /conferences/:splat 301
+/Contact/* /contact/:splat 301
+/Search/* /search/:splat 301
+/Privacy/* /privacy/:splat 301
+/Consulting/* /consulting/:splat 301
+
+# Handle any capitalized path version
+/* /:splat 200! 

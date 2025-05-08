@@ -81,7 +81,7 @@ function generateFontCss() {
   // Generate preload statements
   let preloadStatements = '';
   fonts.forEach(font => {
-    const formattedFamily = font.family.toLowerCase().replace(/\s+/g, '-');
+    const formattedFamily = font.family.replace(/\s+/g, '-').toLowerCase();
     
     font.weights.forEach(weight => {
       font.styles.forEach(style => {
@@ -101,7 +101,8 @@ function generateFontCss() {
     font.weights.forEach(weight => {
       font.styles.forEach(style => {
         const styleStr = style === 'normal' ? '' : 'i';
-        const filename = `${font.family.toLowerCase().replace(/\s+/g, '-')}-${weight}${styleStr}.woff2`;
+        const formattedFamily = font.family.replace(/\s+/g, '-').toLowerCase();
+        const filename = `${formattedFamily}-${weight}${styleStr}.woff2`;
         
         css += `@font-face {
   font-family: "${font.family}";
