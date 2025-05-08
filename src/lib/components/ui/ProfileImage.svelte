@@ -32,16 +32,18 @@
   // Responsive sizes props
   export let sizes = '(max-width: 768px) 100vw, 600px';
   
-  import { onMount, tick } from 'svelte';
+  import { onMount, tick, beforeUpdate, afterUpdate } from 'svelte';
   import { browser } from '$app/environment';
   
   // State variables
   let loaded = false;
   let placeholderLoaded = false;
   let imageContainer;
-  let isVisible = !lazy;
+  let isVisible = !lazy || browser; // Show immediately if not lazy or if in browser
   let observer;
   let isMobile = false;
+  let initialRender = true; // Track initial render for hydration
+  let imageElement;
   
   // Extract file info from src path
   const getFileInfo = (path) => {
@@ -122,12 +124,42 @@
     placeholderLoaded = true;
   };
   
-  onMount(() => {
+  // Check if image is already loaded (for browser cache hits)
+  const checkImageCached = () => {
+    if (browser && imageElement && fetchpriority === 'high' && !lazy) {
+      // For high priority images that should appear immediately, 
+      // check if they're already complete (from browser cache)
+      if (imageElement.complete && imageElement.naturalWidth > 0) {
+        loaded = true;
+      }
+    }
+  };
+  
+  beforeUpdate(() => {
+    // Handle server-side rendering properly
+    if (!browser && !lazy) {
+      isVisible = true; // Always render on server
+    }
+  });
+  
+  afterUpdate(() => {
+    // If this is an initial client render after hydration
+    if (browser && initialRender) {
+      initialRender = false;
+      checkImageCached();
+    }
+  });
+  
+  onMount(async () => {
     updateViewport();
     
     // Set up resize listener
     if (browser) {
       window.addEventListener('resize', updateViewport);
+      
+      // Check if image might already be loaded from cache
+      await tick(); // Wait for DOM to be updated
+      checkImageCached();
     }
     
     // Set up intersection observer
@@ -167,7 +199,7 @@
   {/if}
   
   <!-- Actual image with responsive sources -->
-  {#if isVisible}
+  {#if isVisible || !lazy}
     <div class="image-container">
       <picture class="image-picture">
         <!-- AVIF format sources - best compression -->
@@ -192,6 +224,7 @@
         
         <!-- Fallback image -->
         <img 
+          bind:this={imageElement}
           src={getOptimizedPath(640, originalExt)} 
           {alt}
           width={width} 
