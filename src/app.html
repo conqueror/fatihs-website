@@ -9,17 +9,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
 		<!-- Preload critical assets for better performance -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Removed preconnects to Google Fonts as we are self-hosting -->
 		
-		<!-- Preload critical font for fast heading rendering -->
-		<link rel="preload" as="font" href="https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2" crossorigin />
+		<!-- Removed preload for Google Fonts version of Inter -->
 		
-		<!-- Preload profile image variants for LCP optimization -->
+		<!-- Preload profile image variants for LCP optimization (using original media queries) -->
 		<link rel="preload" as="image" href="%sveltekit.assets%/images/optimized/profile-640.avif" type="image/avif" fetchpriority="high" media="(min-width: 641px)" />
 		<link rel="preload" as="image" href="%sveltekit.assets%/images/optimized/profile-480.avif" type="image/avif" fetchpriority="high" media="(max-width: 640px) and (min-width: 321px)" />
 		<link rel="preload" as="image" href="%sveltekit.assets%/images/optimized/profile-320.avif" type="image/avif" fetchpriority="high" media="(max-width: 320px)" />
-		
+
+		<!-- Preload self-hosted Critical Fonts -->
+		<link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/inter-700.woff2" as="font" type="font/woff2" crossorigin>
+		<!-- End Preloads -->
+
 		<!-- Critical inline styles to prevent flash of unstyled content and layout shifts -->
 		<style>
 			/* Performance optimization - minimal critical CSS */
@@ -110,6 +113,8 @@
 		</script>
 		
 		%sveltekit.head%
+
+		<!-- Removed my previous generic image preload and font preloads as they are now consolidated or corrected above -->
 	</head>
 	<body>
 		<!-- Loading overlay separate from body content -->
