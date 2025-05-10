@@ -228,8 +228,8 @@
   
   <!-- Breadcrumb JSON-LD -->
   {#if breadcrumbData}
-    <script type="application/ld+json">
-      {JSON.stringify(breadcrumbData)}
+    <script type="application/ld+json" data-svelte-ignore="true">
+      {@html JSON.stringify(breadcrumbData, null, 2)}
     </script>
   {/if}
 </svelte:head> 

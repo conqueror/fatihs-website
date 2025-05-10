@@ -107,10 +107,10 @@
 	<link rel="prefetch" href="/contact" as="document" />
 	
 	<!-- Preload critical resources -->
-	<link rel="preload" href="/images/background.jpg" as="image" fetchpriority="high" />
-	<link rel="preload" href="/images/optimized/profile-640.avif" as="image" type="image/avif" fetchpriority="high" />
-	<link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
-	<link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+	<!-- <link rel="preload" href="/images/background.jpg" as="image" fetchpriority="high" /> -->
+	<!-- <link rel="preload" href="/images/optimized/profile-640.avif" as="image" type="image/avif" fetchpriority="high" /> -->
+	<link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" fetchpriority="high" />
+	<!-- <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin /> -->
 	
 	<!-- Search engine verification -->
 	{#if GOOGLE_VERIFICATION}
