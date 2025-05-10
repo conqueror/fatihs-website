@@ -61,9 +61,21 @@
         })
         .then(response => {
             if (response.ok) {
-                return response.json();
+                return response.json(); // Success
             }
-            throw new Error('Network response was not ok');
+            // If response is not OK, try to parse error JSON from Formspree
+            return response.json().then(errData => {
+                // Create an error object that includes status and Formspree's error data
+                const error = new Error(errData.error || 'Form submission failed');
+                error.status = response.status;
+                error.formspreeError = errData; // Attach full Formspree error data
+                throw error;
+            }).catch(() => {
+                // Fallback if parsing Formspree error JSON fails
+                const error = new Error('Network response was not ok and could not parse Formspree error details.');
+                error.status = response.status;
+                throw error;
+            });
         })
         .then(data => {
             // Handle success
@@ -76,7 +88,16 @@
         .catch(error => {
             console.error('Error submitting form:', error);
             isSubmitting = false;
-            alert('Sorry, there was a problem sending your message. Please try again or contact me directly at fatih@gradientdivergence.com');
+            
+            let alertMessage = 'Sorry, there was a problem sending your message. Please try again or contact me directly at fatih@gradientdivergence.com';
+
+            if (error.formspreeError && error.formspreeError.error) {
+                // Use specific error from Formspree if available
+                alertMessage = `Submission Error: ${error.formspreeError.error}. Please check your input or contact fatih@gradientdivergence.com if the issue persists.`;
+            } else if (error.message) {
+                alertMessage = `Submission Error: ${error.message}. Please try again or contact fatih@gradientdivergence.com.`;
+            }
+            alert(alertMessage);
         });
     }
     
