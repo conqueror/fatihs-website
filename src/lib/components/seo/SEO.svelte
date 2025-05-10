@@ -90,6 +90,20 @@
   
   // Generate breadcrumb structured data for better navigation
   $: breadcrumbData = generateBreadcrumbs($page?.url?.pathname || '/');
+  let stringifiedBreadcrumbData = '';
+
+  $: {
+    if (breadcrumbData) {
+      try {
+        stringifiedBreadcrumbData = JSON.stringify(breadcrumbData, null, 2);
+      } catch (e) {
+        console.error("Error stringifying breadcrumbData:", e);
+        stringifiedBreadcrumbData = '{}';
+      }
+    } else {
+      stringifiedBreadcrumbData = '';
+    }
+  }
   
   function generateBreadcrumbs(path) {
     if (path === '/') return null;
@@ -227,9 +241,7 @@
   {@html parseStructuredData()}
   
   <!-- Breadcrumb JSON-LD -->
-  {#if breadcrumbData}
-    <script type="application/ld+json" data-svelte-ignore="true">
-      {@html JSON.stringify(breadcrumbData, null, 2)}
-    </script>
+  {#if breadcrumbData && stringifiedBreadcrumbData}
+    <script type="application/ld+json" data-svelte-ignore="true">{@html stringifiedBreadcrumbData}</script>
   {/if}
 </svelte:head> 
