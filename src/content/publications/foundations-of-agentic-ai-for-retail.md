@@ -14,7 +14,7 @@ tags:
 featured: true
 ---
 
-### 🚀 Are you ready to revolutionize your retail business with autonmouns Agentic AI systems?
+#### 🚀 Are you ready to revolutionize your retail business?
 
 <table>
   <tr>
