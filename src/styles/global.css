@@ -391,8 +391,8 @@ img, iframe, video {
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.5;
-  margin-top: 1.75rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .prose p, .prose ul, .prose ol {
@@ -592,6 +592,25 @@ img, iframe, video {
 
 .markdown-content {
   width: 100%;
+}
+
+/* Add tighter spacing for tables in markdown content */
+.markdown-content :global(table) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content :global(td) {
+  padding: 0.5rem;
+}
+
+/* Reduce spacing around h4 headings in markdown content */
+.markdown-content :global(h4) {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--heading-color, #1a202c);
 }
 
 /* Add global mobile navigation z-index rules to ensure the menu is always on top */
