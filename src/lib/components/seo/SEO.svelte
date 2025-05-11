@@ -71,6 +71,7 @@
   
   // JSON-LD structured data
   export let structuredData = null;
+  export let breadcrumbOverride = null; // New prop
   
   // Function to sanitize and safely parse JSON-LD
   function parseStructuredData() {
@@ -86,54 +87,6 @@
       return jsonLdToString(structuredData);
     }
     return '';
-  }
-  
-  // Generate breadcrumb structured data for better navigation
-  $: breadcrumbData = generateBreadcrumbs($page?.url?.pathname || '/');
-  let stringifiedBreadcrumbData = '';
-
-  $: {
-    if (breadcrumbData) {
-      try {
-        stringifiedBreadcrumbData = JSON.stringify(breadcrumbData, null, 2);
-      } catch (e) {
-        console.error("Error stringifying breadcrumbData:", e);
-        stringifiedBreadcrumbData = '{}';
-      }
-    } else {
-      stringifiedBreadcrumbData = '';
-    }
-  }
-  
-  function generateBreadcrumbs(path) {
-    if (path === '/') return null;
-    
-    const segments = path.split('/').filter(Boolean);
-    const items = [{ name: 'Home', path: '/' }];
-    
-    let currentPath = '';
-    for (const segment of segments) {
-      currentPath += `/${segment}`;
-      const readableName = segment
-        .replace(/-/g, ' ')
-        .replace(/\b\w/g, l => l.toUpperCase());
-      
-      items.push({
-        name: readableName,
-        path: currentPath
-      });
-    }
-    
-    return {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": items.map((item, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "name": item.name,
-        "item": `${SITE_URL}${item.path}`
-      }))
-    };
   }
   
   // Search engine verification - update these with actual values from verification process
@@ -239,9 +192,4 @@
   
   <!-- Structured Data (JSON-LD) -->
   {@html parseStructuredData()}
-  
-  <!-- Breadcrumb JSON-LD -->
-  {#if breadcrumbData && stringifiedBreadcrumbData}
-    <script type="application/ld+json" data-svelte-ignore="true">{@html stringifiedBreadcrumbData}</script>
-  {/if}
 </svelte:head> 

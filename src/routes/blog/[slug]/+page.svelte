@@ -37,6 +37,33 @@
         tags: post?.tags || []
     };
 
+    // Create breadcrumb JSON-LD
+    $: breadcrumbJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://fatihnayebi.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://fatihnayebi.com/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": post?.title || "Blog Post",
+          "item": canonical
+        }
+      ]
+    };
+    $: breadcrumbJsonLdString = JSON.stringify(breadcrumbJsonLd, null, 2);
+
     onMount(() => {
         try {
             if (post?.html) {
@@ -135,6 +162,13 @@
     });
 </script>
 
+<svelte:head>
+  <!-- Breadcrumb for blog post page -->
+  <script type="application/ld+json">
+    {breadcrumbJsonLdString}
+  </script>
+</svelte:head>
+
 <!-- Add SEO component with blog post specific metadata -->
 <SEO
     title={title}
@@ -170,6 +204,21 @@
             <a href="/blog" class="back-link dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">← Back to all posts</a>
         </div>
     {:else if post?.title}
+        <!-- Breadcrumb Navigation -->
+        <div class="mb-8">
+            <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
+                <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <a href="/blog" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Blog</a>
+                <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <span class="text-gray-800 dark:text-gray-300 truncate max-w-[180px] sm:max-w-none">{post.title}</span>
+            </div>
+        </div>
+        
         <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
             <div class="blog-header">
                 <h1 class="dark:text-white">{post.title}</h1>

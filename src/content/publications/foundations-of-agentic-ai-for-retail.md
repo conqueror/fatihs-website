@@ -13,11 +13,6 @@ tags:
   - decision-making frameworks
 featured: true
 ---
-# 🚀 Master Retail's Autonomous Future with Agentic AI! 🚀
-
-## Foundations of Agentic AI for Retail (Full-Color Edition)
-
----
 
 <table>
   <tr>
