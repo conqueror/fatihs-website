@@ -137,7 +137,7 @@
         <div class="absolute bottom-40 left-20 -z-10 opacity-10 w-96 h-96 bg-indigo-400/30 dark:bg-indigo-300/5 rounded-full blur-3xl"></div>
         
         <!-- Breadcrumb -->
-        <div class="mb-8" in:fly={{ y: -30, duration: 500 }}>
+        <div class="mb-4" in:fly={{ y: -30, duration: 500 }}>
             <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
                 <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
                 <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,16 +152,16 @@
         </div>
         
         <!-- Publication Header -->
-        <div class="mb-12">
-            <h1 class="text-4xl font-bold mb-6 text-gray-900 dark:text-white leading-tight" in:fly={{ y: 20, duration: 500, delay: 200 }}>
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white leading-tight" in:fly={{ y: 20, duration: 500, delay: 200 }}>
                 {publication.title}
             </h1>
             
             <!-- Publication Metadata -->
-            <div class="flex flex-wrap gap-y-3 gap-x-6 mb-8" in:fly={{ y: 20, duration: 500, delay: 300 }}>
+            <div class="flex flex-wrap gap-y-3 gap-x-6 mb-6" in:fly={{ y: 20, duration: 500, delay: 300 }}>
                 {#if publication.authors}
-                    <div class="flex items-center text-gray-700 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex items-center text-gray-700 dark:text-gray-300 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                         <span>{publication.authors}</span>
@@ -169,8 +169,8 @@
                 {/if}
                 
                 {#if publication.date}
-                    <div class="flex items-center text-gray-700 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex items-center text-gray-700 dark:text-gray-300 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         <span>{formatDate(publication.date)}</span>
@@ -178,8 +178,8 @@
                 {/if}
                 
                 {#if publication.venue || publication.journal}
-                    <div class="flex items-center text-gray-700 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex items-center text-gray-700 dark:text-gray-300 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                         <span>{publication.venue || publication.journal}</span>
@@ -190,7 +190,7 @@
             <!-- Publication Types -->
             {#if publication.type}
                 <div class="mb-6" in:fly={{ y: 20, duration: 500, delay: 400 }}>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm font-medium">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-xs font-medium">
                         {publication.type}
                     </span>
                 </div>
@@ -304,38 +304,46 @@
     .markdown-content :global(h2) {
         font-size: 1.5rem;
         font-weight: 700;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
+        margin-top: 1.25rem;
+        margin-bottom: 0.75rem;
         color: var(--heading-color, #1a202c);
     }
     
     .markdown-content :global(h3) {
         font-size: 1.25rem;
         font-weight: 600;
-        margin-top: 1.25rem;
-        margin-bottom: 0.75rem;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        color: var(--heading-color, #1a202c);
+    }
+    
+    .markdown-content :global(h4) {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        margin-bottom: 0.25rem;
         color: var(--heading-color, #1a202c);
     }
     
     .markdown-content :global(p) {
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
         line-height: 1.6;
     }
     
     .markdown-content :global(ul), .markdown-content :global(ol) {
         margin-left: 1.5rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
     }
     
     .markdown-content :global(li) {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
     }
     
     .markdown-content :global(blockquote) {
         border-left: 4px solid #E5E7EB;
         padding-left: 1rem;
         font-style: italic;
-        margin: 1rem 0;
+        margin: 0.75rem 0;
     }
     
     .markdown-content :global(code) {
